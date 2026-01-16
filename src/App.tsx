@@ -24,6 +24,12 @@ const App = () => (
             <Route path="/travel" element={<Travel />} />
             <Route path="/ibadah" element={<Ibadah />} />
             <Route path="/business" element={<Business />} />
+            <Route path="/discover" element={<Home />} />
+            <Route path="/saved" element={<Home />} />
+            <Route path="/profile" element={<Home />} />
+            <Route path="/cargo" element={<Home />} />
+            <Route path="/mosques" element={<Ibadah />} />
+            <Route path="/eco" element={<Home />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <BottomNavigation />
