@@ -1,8 +1,10 @@
 import { useState, useRef, useCallback } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera, Upload, ScanLine, X, Check, AlertTriangle, Loader2 } from "lucide-react";
+import { Camera, Upload, ScanLine, X, Check, AlertTriangle, Loader2, FileSearch } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { AuthModal } from "@/components/AuthModal";
 
 type ScanResult = "halol" | "haram" | "shubhali" | null;
 
@@ -42,9 +44,11 @@ const resultConfig = {
 };
 
 export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
+  const { user } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<ScanResult>(null);
+  const [showAuthModal, setShowAuthModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -232,16 +236,39 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
                 </div>
               </div>
 
-              <Button
-                onClick={handleReset}
-                variant="outline"
-                className="w-full mt-4 border-border/50 hover:bg-secondary/50"
-              >
-                Yangidan skanerlash
-              </Button>
+              <div className="flex gap-2 mt-4">
+                <Button
+                  onClick={handleReset}
+                  variant="outline"
+                  className="flex-1 border-border/50 hover:bg-secondary/50"
+                >
+                  Yangidan skanerlash
+                </Button>
+                <Button
+                  onClick={() => {
+                    if (!user) {
+                      setShowAuthModal(true);
+                    } else {
+                      // Would trigger deep check in production
+                      alert("Chuqur tekshiruv boshlanmoqda...");
+                    }
+                  }}
+                  className="flex-1 bg-gradient-to-r from-primary to-accent text-primary-foreground"
+                >
+                  <FileSearch className="w-4 h-4 mr-2" />
+                  Chuqur tekshiruv
+                </Button>
+              </div>
             </div>
           )}
         </div>
+
+        {/* Auth Modal for Deep Check */}
+        <AuthModal
+          open={showAuthModal}
+          onOpenChange={setShowAuthModal}
+          triggerReason="Chuqur tekshiruv uchun tizimga kiring"
+        />
       </DialogContent>
     </Dialog>
   );
