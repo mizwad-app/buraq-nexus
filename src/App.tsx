@@ -12,6 +12,8 @@ import Business from "./pages/Business";
 import Profile from "./pages/Profile";
 import Cargo from "./pages/Cargo";
 import Rewards from "./pages/Rewards";
+import DeepCheckRequest from "./pages/DeepCheckRequest";
+import AdminDeepChecks from "./pages/AdminDeepChecks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -32,6 +34,8 @@ const App = () => (
               <Route path="/profile" element={<Profile />} />
               <Route path="/cargo" element={<Cargo />} />
               <Route path="/rewards" element={<Rewards />} />
+              <Route path="/deep-check" element={<DeepCheckRequest />} />
+              <Route path="/admin/deep-checks" element={<AdminDeepChecks />} />
               <Route path="/discover" element={<Home />} />
               <Route path="/saved" element={<Rewards />} />
               <Route path="/mosques" element={<Ibadah />} />

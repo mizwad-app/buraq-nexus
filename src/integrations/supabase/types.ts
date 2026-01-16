@@ -56,6 +56,66 @@ export type Database = {
         }
         Relationships: []
       }
+      deep_checks: {
+        Row: {
+          admin_notes: string | null
+          amount_paid: number | null
+          created_at: string
+          halal_status: string | null
+          id: string
+          manufacturer_name: string
+          payment_type: string
+          points_spent: number | null
+          product_image_url: string | null
+          product_name: string
+          report_pdf_url: string | null
+          result_summary: string | null
+          reviewed_at: string | null
+          reviewed_by: string | null
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          amount_paid?: number | null
+          created_at?: string
+          halal_status?: string | null
+          id?: string
+          manufacturer_name: string
+          payment_type: string
+          points_spent?: number | null
+          product_image_url?: string | null
+          product_name: string
+          report_pdf_url?: string | null
+          result_summary?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          amount_paid?: number | null
+          created_at?: string
+          halal_status?: string | null
+          id?: string
+          manufacturer_name?: string
+          payment_type?: string
+          points_spent?: number | null
+          product_image_url?: string | null
+          product_name?: string
+          report_pdf_url?: string | null
+          result_summary?: string | null
+          reviewed_at?: string | null
+          reviewed_by?: string | null
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       gift_redemptions: {
         Row: {
           created_at: string
@@ -324,14 +384,42 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
+      app_role: "admin" | "moderator" | "user"
       halal_status: "halol" | "haram" | "shubhali"
     }
     CompositeTypes: {
@@ -460,6 +548,7 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
+      app_role: ["admin", "moderator", "user"],
       halal_status: ["halol", "haram", "shubhali"],
     },
   },

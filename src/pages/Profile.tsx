@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
+import { MyReports } from "@/components/MyReports";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   User, 
   Settings, 
@@ -10,33 +13,90 @@ import {
   LogOut, 
   ChevronRight,
   Scan,
-  Heart,
-  Bell
+  FileText,
+  Bell,
+  Star,
+  Shield
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const menuItems = [
-  { icon: History, label: "Skanerlash tarixi", count: 12 },
-  { icon: MapPin, label: "Saqlangan joylar", count: 5 },
-  { icon: Heart, label: "Sevimlilar", count: 8 },
-  { icon: Bell, label: "Bildirishnomalar" },
-  { icon: Settings, label: "Sozlamalar" },
-];
-
 const Profile = () => {
+  const navigate = useNavigate();
   const { user, loading, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showReports, setShowReports] = useState(false);
+  const [userPoints, setUserPoints] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [stats, setStats] = useState({ scans: 0, places: 0, reports: 0 });
 
   useEffect(() => {
-    // Show auth modal if not logged in
     if (!loading && !user) {
       setShowAuthModal(true);
     }
   }, [user, loading]);
 
+  useEffect(() => {
+    if (user) {
+      fetchUserData();
+    }
+  }, [user]);
+
+  const fetchUserData = async () => {
+    // Fetch points
+    const { data: pointsData } = await supabase
+      .from("user_points")
+      .select("total_points")
+      .eq("user_id", user?.id)
+      .maybeSingle();
+    
+    if (pointsData) {
+      setUserPoints(pointsData.total_points);
+    }
+
+    // Check admin role
+    const { data: roleData } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", user?.id)
+      .eq("role", "admin")
+      .maybeSingle();
+    
+    setIsAdmin(!!roleData);
+
+    // Fetch stats
+    const { count: reportsCount } = await supabase
+      .from("deep_checks")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user?.id);
+
+    const { count: cargoCount } = await supabase
+      .from("cargo_trackings")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user?.id);
+
+    const { count: placesCount } = await supabase
+      .from("saved_places")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", user?.id);
+
+    setStats({
+      scans: cargoCount || 0,
+      places: placesCount || 0,
+      reports: reportsCount || 0,
+    });
+  };
+
   const handleSignOut = async () => {
     await signOut();
   };
+
+  const menuItems = [
+    { icon: FileText, label: "Mening hisobotlarim", count: stats.reports, action: () => setShowReports(!showReports) },
+    { icon: History, label: "Skanerlash tarixi", count: stats.scans },
+    { icon: MapPin, label: "Saqlangan joylar", count: stats.places },
+    { icon: Bell, label: "Bildirishnomalar" },
+    { icon: Settings, label: "Sozlamalar" },
+  ];
 
   if (loading) {
     return (
@@ -104,22 +164,26 @@ const Profile = () => {
               <p className="text-sm text-muted-foreground">
                 {userPhone}
               </p>
+              <div className="flex items-center gap-1 mt-1">
+                <Star className="w-4 h-4 text-amber-400" />
+                <span className="text-sm font-bold text-amber-400">{userPoints.toLocaleString()} ball</span>
+              </div>
             </div>
           </div>
 
           {/* Stats */}
           <div className="relative grid grid-cols-3 gap-4 mt-5 pt-5 border-t border-border/30">
             <div className="text-center">
-              <p className="text-xl font-bold text-primary">12</p>
-              <p className="text-xs text-muted-foreground">Skanerlar</p>
+              <p className="text-xl font-bold text-primary">{stats.scans}</p>
+              <p className="text-xs text-muted-foreground">Yuklar</p>
             </div>
             <div className="text-center border-x border-border/30">
-              <p className="text-xl font-bold text-primary">5</p>
+              <p className="text-xl font-bold text-primary">{stats.places}</p>
               <p className="text-xs text-muted-foreground">Joylar</p>
             </div>
             <div className="text-center">
-              <p className="text-xl font-bold text-primary">8</p>
-              <p className="text-xs text-muted-foreground">Sevimli</p>
+              <p className="text-xl font-bold text-primary">{stats.reports}</p>
+              <p className="text-xs text-muted-foreground">Hisobotlar</p>
             </div>
           </div>
         </div>
@@ -128,20 +192,44 @@ const Profile = () => {
       {/* Quick Actions */}
       <section className="px-5 mb-6">
         <div className="grid grid-cols-2 gap-3">
-          <button className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all">
+          <button 
+            onClick={() => navigate("/deep-check")}
+            className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+          >
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Scan className="w-5 h-5 text-primary" />
             </div>
-            <span className="text-sm font-medium text-foreground">Yangi skan</span>
+            <span className="text-sm font-medium text-foreground">Chuqur tekshiruv</span>
           </button>
-          <button className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all">
-            <div className="w-10 h-10 rounded-lg bg-accent/10 flex items-center justify-center">
-              <MapPin className="w-5 h-5 text-accent" />
+          <button 
+            onClick={() => navigate("/rewards")}
+            className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+          >
+            <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
+              <Star className="w-5 h-5 text-amber-400" />
             </div>
-            <span className="text-sm font-medium text-foreground">Joy qo'shish</span>
+            <span className="text-sm font-medium text-foreground">Mukofotlar</span>
           </button>
         </div>
       </section>
+
+      {/* Admin Access */}
+      {isAdmin && (
+        <section className="px-5 mb-4">
+          <button
+            onClick={() => navigate("/admin/deep-checks")}
+            className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/10 border border-amber-500/30 hover:border-amber-500/50 transition-all"
+          >
+            <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+              <Shield className="w-5 h-5 text-amber-400" />
+            </div>
+            <span className="flex-1 text-left text-sm font-medium text-foreground">
+              Admin Panel
+            </span>
+            <ChevronRight className="w-5 h-5 text-muted-foreground" />
+          </button>
+        </section>
+      )}
 
       {/* Menu Items */}
       <section className="px-5 mb-6">
@@ -151,6 +239,7 @@ const Profile = () => {
             return (
               <button
                 key={item.label}
+                onClick={item.action}
                 className={cn(
                   "w-full flex items-center gap-4 p-4 hover:bg-secondary/30 transition-colors",
                   index !== menuItems.length - 1 && "border-b border-border/30"
@@ -162,7 +251,7 @@ const Profile = () => {
                 <span className="flex-1 text-left text-sm font-medium text-foreground">
                   {item.label}
                 </span>
-                {item.count !== undefined && (
+                {item.count !== undefined && item.count > 0 && (
                   <span className="px-2 py-0.5 rounded-full bg-primary/10 text-xs font-medium text-primary">
                     {item.count}
                   </span>
@@ -173,6 +262,16 @@ const Profile = () => {
           })}
         </div>
       </section>
+
+      {/* My Reports Section */}
+      {showReports && (
+        <section className="px-5 mb-6">
+          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+            Mening hisobotlarim
+          </h3>
+          <MyReports />
+        </section>
+      )}
 
       {/* Sign Out */}
       <section className="px-5 pb-8">
