@@ -14,7 +14,146 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      products: {
+        Row: {
+          barcode: string | null
+          created_at: string
+          description: string | null
+          halal_status: Database["public"]["Enums"]["halal_status"]
+          id: string
+          image_url: string | null
+          ingredients: string[] | null
+          manufacturer: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          barcode?: string | null
+          created_at?: string
+          description?: string | null
+          halal_status?: Database["public"]["Enums"]["halal_status"]
+          id?: string
+          image_url?: string | null
+          ingredients?: string[] | null
+          manufacturer?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          barcode?: string | null
+          created_at?: string
+          description?: string | null
+          halal_status?: Database["public"]["Enums"]["halal_status"]
+          id?: string
+          image_url?: string | null
+          ingredients?: string[] | null
+          manufacturer?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          full_name: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      saved_places: {
+        Row: {
+          address: string | null
+          created_at: string
+          id: string
+          latitude: number | null
+          longitude: number | null
+          notes: string | null
+          place_name: string
+          place_type: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          notes?: string | null
+          place_name: string
+          place_type: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          notes?: string | null
+          place_name?: string
+          place_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      scan_history: {
+        Row: {
+          confidence_score: number | null
+          created_at: string
+          id: string
+          product_id: string | null
+          result: Database["public"]["Enums"]["halal_status"]
+          scanned_image_url: string | null
+          user_id: string
+        }
+        Insert: {
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          result: Database["public"]["Enums"]["halal_status"]
+          scanned_image_url?: string | null
+          user_id: string
+        }
+        Update: {
+          confidence_score?: number | null
+          created_at?: string
+          id?: string
+          product_id?: string | null
+          result?: Database["public"]["Enums"]["halal_status"]
+          scanned_image_url?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "scan_history_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +162,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      halal_status: "halol" | "haram" | "shubhali"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +289,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      halal_status: ["halol", "haram", "shubhali"],
+    },
   },
 } as const
