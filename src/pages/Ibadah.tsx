@@ -1,163 +1,203 @@
+import { useState } from "react";
 import {
-  Moon,
   Utensils,
-  Clock,
   MapPin,
-  BookOpen,
-  Heart,
+  ScanLine,
+  AlertTriangle,
   ChevronRight,
+  Star,
+  Shield,
+  XCircle,
 } from "lucide-react";
-import { ModuleCard } from "@/components/ModuleCard";
+import { AIScannerModal } from "@/components/AIScannerModal";
 
-const prayerTimes = [
-  { name: "Bomdod", time: "05:42", active: false },
-  { name: "Peshin", time: "12:15", active: true },
-  { name: "Asr", time: "15:48", active: false },
-  { name: "Shom", time: "18:23", active: false },
-  { name: "Xufton", time: "19:45", active: false },
+// Ingredients to avoid
+const harmfulIngredients = [
+  { name: "Jelatin (cho'chqa)", category: "Haram", severity: "high" },
+  { name: "E120 (Karmin)", category: "Shubhali", severity: "medium" },
+  { name: "E441 (Jelatin)", category: "Shubhali", severity: "medium" },
+  { name: "Alkogol", category: "Haram", severity: "high" },
+  { name: "E422 (Glitserin)", category: "Shubhali", severity: "low" },
+  { name: "E471 (Mono va diglitseridlar)", category: "Shubhali", severity: "medium" },
+];
+
+// Halal certified restaurants
+const halalRestaurants = [
+  {
+    id: 1,
+    name: "Afsona Restaurant",
+    address: "Amir Temur ko'chasi, Toshkent",
+    rating: 4.8,
+    certified: true,
+    distance: "0.5 km",
+  },
+  {
+    id: 2,
+    name: "Caravan",
+    address: "Shota Rustaveli, Toshkent",
+    rating: 4.6,
+    certified: true,
+    distance: "1.2 km",
+  },
+  {
+    id: 3,
+    name: "Sim-Sim",
+    address: "Navoiy ko'chasi, Toshkent",
+    rating: 4.7,
+    certified: true,
+    distance: "2.1 km",
+  },
 ];
 
 const Ibadah = () => {
+  const [scannerOpen, setScannerOpen] = useState(false);
+
   return (
-    <div className="min-h-screen eco-gradient-soft safe-bottom">
+    <div className="min-h-screen bg-background safe-bottom">
       {/* Header */}
       <header className="px-5 pt-12 pb-6">
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 eco-gradient rounded-xl shadow-eco">
-              <Moon className="w-5 h-5 text-primary-foreground" />
+            <div className="p-2 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg">
+              <Utensils className="w-5 h-5 text-white" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              Ibodat
+              Halol Taomlar
             </span>
           </div>
           <h1 className="text-2xl font-display font-bold text-foreground">
-            Halol hayot tarzi
+            Halol ovqatlanish
           </h1>
           <p className="text-muted-foreground mt-1">
-            Namoz vaqtlari va halol ovqat
+            AI skaner va sertifikatlangan restoranlar
           </p>
         </div>
       </header>
 
-      {/* Prayer Times Card */}
+      {/* AI Scanner Card */}
       <section className="px-5 mb-6">
-        <div className="bg-card rounded-3xl p-5 shadow-card animate-scale-in">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-eco-emerald-light rounded-xl">
-                <Clock className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="font-display font-semibold text-foreground">
-                  Namoz vaqtlari
-                </h2>
-                <p className="text-xs text-muted-foreground">
-                  Toshkent, O'zbekiston
-                </p>
+        <button
+          onClick={() => setScannerOpen(true)}
+          className="w-full text-left"
+        >
+          <div className="relative rounded-2xl overflow-hidden animate-scale-in">
+            {/* Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-emerald-600/30" />
+            
+            {/* Content */}
+            <div className="relative p-5">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
+                  <ScanLine className="w-7 h-7 text-primary-foreground" />
+                </div>
+                <div className="flex-1">
+                  <h2 className="font-display font-semibold text-foreground text-lg">
+                    AI Skaner
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Mahsulotni tekshirish uchun skanerlang
+                  </p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </div>
             </div>
-            <button className="text-primary text-sm font-medium">
-              Joylashuvni o'zgartirish
-            </button>
           </div>
-
-          <div className="grid grid-cols-5 gap-2">
-            {prayerTimes.map((prayer, index) => (
-              <div
-                key={prayer.name}
-                className={`text-center p-3 rounded-xl transition-all animate-fade-in ${
-                  prayer.active
-                    ? "eco-gradient shadow-eco"
-                    : "bg-muted"
-                }`}
-                style={{ animationDelay: `${index * 50}ms` }}
-              >
-                <p
-                  className={`text-[10px] font-medium ${
-                    prayer.active
-                      ? "text-primary-foreground/80"
-                      : "text-muted-foreground"
-                  }`}
-                >
-                  {prayer.name}
-                </p>
-                <p
-                  className={`text-sm font-bold mt-1 ${
-                    prayer.active ? "text-primary-foreground" : "text-foreground"
-                  }`}
-                >
-                  {prayer.time}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
+        </button>
       </section>
 
-      {/* Halal Food Section */}
+      {/* Halal Restaurants Section */}
       <section className="px-5 mb-6">
-        <div
-          className="bg-gradient-to-br from-eco-mint to-eco-sage rounded-3xl p-5 animate-scale-in"
-          style={{ animationDelay: "100ms" }}
-        >
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-primary/20 rounded-xl">
-              <Utensils className="w-5 h-5 text-eco-forest" />
-            </div>
-            <span className="text-sm font-medium text-eco-forest">
-              Halol ovqat
-            </span>
-          </div>
-          <h2 className="text-lg font-display font-bold text-eco-forest mb-2">
-            Yaqin atrofdagi halol restoranlar
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-display font-semibold text-foreground">
+            Halol restoranlar
           </h2>
-          <p className="text-sm text-eco-forest/80 mb-4">
-            Sertifikatlangan halol mahsulotlar va xizmatlar
-          </p>
-          <button className="flex items-center gap-2 text-sm font-semibold text-eco-forest bg-primary/10 px-4 py-2 rounded-xl">
-            Xaritada ko'rish
-            <MapPin className="w-4 h-4" />
+          <button className="text-xs text-primary font-medium flex items-center gap-1">
+            <MapPin className="w-3 h-3" />
+            Xaritada
           </button>
         </div>
-      </section>
 
-      {/* Categories */}
-      <section className="px-5 pb-8">
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
-          Xizmatlar
-        </h2>
         <div className="space-y-3">
-          <ModuleCard
-            icon={MapPin}
-            title="Masjidlar xaritasi"
-            description="Eng yaqin masjidlarni toping"
-            iconBgClass="bg-eco-mint"
-            delay={0}
-          />
-          <ModuleCard
-            icon={Utensils}
-            title="Halol restoranlar"
-            description="Sertifikatlangan joylar ro'yxati"
-            iconBgClass="bg-eco-sage"
-            delay={100}
-          />
-          <ModuleCard
-            icon={BookOpen}
-            title="Islomiy bilim"
-            description="Qur'on, hadis va maqolalar"
-            iconBgClass="bg-secondary"
-            delay={200}
-          />
-          <ModuleCard
-            icon={Heart}
-            title="Sadaqa va xayriya"
-            description="Yaxshilik qilish oson"
-            iconBgClass="bg-eco-emerald-light"
-            delay={300}
-          />
+          {halalRestaurants.map((restaurant, index) => (
+            <div
+              key={restaurant.id}
+              className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
+              style={{ animationDelay: `${index * 100}ms` }}
+            >
+              <div className="flex items-start justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <h3 className="font-semibold text-foreground">{restaurant.name}</h3>
+                    {restaurant.certified && (
+                      <Shield className="w-4 h-4 text-emerald-500" />
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground">{restaurant.address}</p>
+                  <div className="flex items-center gap-3 mt-2">
+                    <div className="flex items-center gap-1 text-amber-500">
+                      <Star className="w-3 h-3 fill-current" />
+                      <span className="text-xs font-medium">{restaurant.rating}</span>
+                    </div>
+                    <span className="text-xs text-muted-foreground">{restaurant.distance}</span>
+                  </div>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </div>
+            </div>
+          ))}
         </div>
       </section>
+
+      {/* Ingredients to Avoid */}
+      <section className="px-5 pb-32">
+        <div className="flex items-center gap-2 mb-4">
+          <AlertTriangle className="w-5 h-5 text-amber-500" />
+          <h2 className="text-lg font-display font-semibold text-foreground">
+            Saqlanish kerak bo'lgan ingredientlar
+          </h2>
+        </div>
+
+        <div className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+          {harmfulIngredients.map((ingredient, index) => (
+            <div
+              key={ingredient.name}
+              className="flex items-center justify-between p-4 border-b border-border/50 last:border-b-0 animate-fade-in"
+              style={{ animationDelay: `${index * 50}ms` }}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${
+                  ingredient.severity === "high" 
+                    ? "bg-red-500/10" 
+                    : ingredient.severity === "medium"
+                      ? "bg-amber-500/10"
+                      : "bg-yellow-500/10"
+                }`}>
+                  <XCircle className={`w-4 h-4 ${
+                    ingredient.severity === "high" 
+                      ? "text-red-500" 
+                      : ingredient.severity === "medium"
+                        ? "text-amber-500"
+                        : "text-yellow-500"
+                  }`} />
+                </div>
+                <div>
+                  <p className="font-medium text-foreground text-sm">{ingredient.name}</p>
+                </div>
+              </div>
+              <span className={`text-xs font-medium px-2 py-1 rounded-lg ${
+                ingredient.category === "Haram"
+                  ? "bg-red-500/10 text-red-500"
+                  : "bg-amber-500/10 text-amber-500"
+              }`}>
+                {ingredient.category}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* AI Scanner Modal */}
+      <AIScannerModal open={scannerOpen} onOpenChange={setScannerOpen} />
     </div>
   );
 };
