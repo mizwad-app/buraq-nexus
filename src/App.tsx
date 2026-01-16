@@ -11,6 +11,7 @@ import Ibadah from "./pages/Ibadah";
 import Business from "./pages/Business";
 import Profile from "./pages/Profile";
 import Cargo from "./pages/Cargo";
+import Rewards from "./pages/Rewards";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,8 +31,9 @@ const App = () => (
               <Route path="/business" element={<Business />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/cargo" element={<Cargo />} />
+              <Route path="/rewards" element={<Rewards />} />
               <Route path="/discover" element={<Home />} />
-              <Route path="/saved" element={<Home />} />
+              <Route path="/saved" element={<Rewards />} />
               <Route path="/mosques" element={<Ibadah />} />
               <Route path="/eco" element={<Home />} />
               <Route path="*" element={<NotFound />} />

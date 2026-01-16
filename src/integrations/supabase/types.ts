@@ -14,6 +14,149 @@ export type Database = {
   }
   public: {
     Tables: {
+      cargo_trackings: {
+        Row: {
+          created_at: string
+          destination: string | null
+          estimated_delivery: string | null
+          id: string
+          origin: string | null
+          points_earned: number
+          status: string
+          tracking_number: string
+          updated_at: string
+          user_id: string
+          volume_m3: number | null
+        }
+        Insert: {
+          created_at?: string
+          destination?: string | null
+          estimated_delivery?: string | null
+          id?: string
+          origin?: string | null
+          points_earned?: number
+          status?: string
+          tracking_number: string
+          updated_at?: string
+          user_id: string
+          volume_m3?: number | null
+        }
+        Update: {
+          created_at?: string
+          destination?: string | null
+          estimated_delivery?: string | null
+          id?: string
+          origin?: string | null
+          points_earned?: number
+          status?: string
+          tracking_number?: string
+          updated_at?: string
+          user_id?: string
+          volume_m3?: number | null
+        }
+        Relationships: []
+      }
+      gift_redemptions: {
+        Row: {
+          created_at: string
+          gift_id: string | null
+          id: string
+          points_spent: number
+          status: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          gift_id?: string | null
+          id?: string
+          points_spent: number
+          status?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          gift_id?: string | null
+          id?: string
+          points_spent?: number
+          status?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gift_redemptions_gift_id_fkey"
+            columns: ["gift_id"]
+            isOneToOne: false
+            referencedRelation: "gifts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      gifts: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          name: string
+          points_required: number
+          stock: number | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name: string
+          points_required: number
+          stock?: number | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          name?: string
+          points_required?: number
+          stock?: number | null
+        }
+        Relationships: []
+      }
+      points_transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          description: string
+          id: string
+          reference_id: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          description: string
+          id?: string
+          reference_id?: string | null
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          description?: string
+          id?: string
+          reference_id?: string | null
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       products: {
         Row: {
           barcode: string | null
@@ -153,6 +296,33 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      user_points: {
+        Row: {
+          created_at: string
+          id: string
+          lifetime_points: number
+          total_points: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          lifetime_points?: number
+          total_points?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          lifetime_points?: number
+          total_points?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {
