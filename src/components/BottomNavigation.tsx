@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
-import { Home, Compass, Bookmark, User, ScanLine } from "lucide-react";
+import { Home, Compass, Gift, User, ScanLine } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AIScannerModal } from "./AIScannerModal";
 
 const navItems = [
   { path: "/", icon: Home, label: "Bosh" },
-  { path: "/discover", icon: Compass, label: "Kashf et" },
+  { path: "/cargo", icon: Compass, label: "Yuk" },
 ];
 
 const rightNavItems = [
-  { path: "/saved", icon: Bookmark, label: "Saqlangan" },
+  { path: "/rewards", icon: Gift, label: "Mukofot" },
   { path: "/profile", icon: User, label: "Profil" },
 ];
 
