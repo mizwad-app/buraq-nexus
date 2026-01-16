@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import {
   Briefcase,
   TrendingUp,
@@ -8,6 +9,7 @@ import {
   ChevronRight,
   ArrowUpRight,
   ArrowDownRight,
+  FileSearch,
 } from "lucide-react";
 import { ModuleCard } from "@/components/ModuleCard";
 
@@ -18,13 +20,15 @@ const stats = [
 ];
 
 const Business = () => {
+  const navigate = useNavigate();
+
   return (
-    <div className="min-h-screen eco-gradient-soft safe-bottom">
+    <div className="min-h-screen bg-background safe-bottom">
       {/* Header */}
       <header className="px-5 pt-12 pb-6">
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 eco-gradient rounded-xl shadow-eco">
+            <div className="p-2 bg-gradient-to-br from-primary to-accent rounded-xl shadow-glow">
               <Briefcase className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
@@ -40,13 +44,39 @@ const Business = () => {
         </div>
       </header>
 
+      {/* Deep Check Banner */}
+      <section className="px-5 mb-6">
+        <button
+          onClick={() => navigate("/deep-check")}
+          className="w-full text-left"
+        >
+          <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 via-accent/10 to-amber-500/10 p-4 border border-primary/20">
+            <div className="absolute -top-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
+            <div className="relative flex items-center gap-4">
+              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-glow">
+                <FileSearch className="w-6 h-6 text-primary-foreground" />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-display font-bold text-foreground">
+                  Chuqur Tekshiruv
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  Mahsulot yoki kompaniyani to'liq tahlil qiling
+                </p>
+              </div>
+              <ChevronRight className="w-5 h-5 text-muted-foreground" />
+            </div>
+          </div>
+        </button>
+      </section>
+
       {/* Stats Overview */}
       <section className="px-5 mb-6">
         <div className="grid grid-cols-3 gap-3">
           {stats.map((stat, index) => (
             <div
               key={stat.label}
-              className="bg-card rounded-2xl p-4 shadow-card animate-fade-in"
+              className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <p className="text-xs text-muted-foreground font-medium">
@@ -75,12 +105,12 @@ const Business = () => {
       {/* Chart Placeholder */}
       <section className="px-5 mb-6">
         <div
-          className="bg-card rounded-3xl p-5 shadow-card animate-scale-in"
+          className="bg-card rounded-3xl p-5 border border-border/50 animate-scale-in"
           style={{ animationDelay: "100ms" }}
         >
           <div className="flex items-center justify-between mb-4">
             <div className="flex items-center gap-3">
-              <div className="p-2 bg-eco-emerald-light rounded-xl">
+              <div className="p-2 bg-primary/10 rounded-xl">
                 <BarChart3 className="w-5 h-5 text-primary" />
               </div>
               <div>
@@ -103,7 +133,7 @@ const Business = () => {
             {[65, 45, 80, 55, 90, 75, 85].map((height, index) => (
               <div
                 key={index}
-                className="flex-1 eco-gradient rounded-t-lg transition-all duration-500 animate-slide-up"
+                className="flex-1 bg-gradient-to-t from-primary to-accent rounded-t-lg transition-all duration-500 animate-slide-up"
                 style={{
                   height: `${height}%`,
                   animationDelay: `${index * 100}ms`,
@@ -133,14 +163,14 @@ const Business = () => {
             icon={Store}
             title="Bozor maydoni"
             description="Mahsulotlarni sotish va xarid qilish"
-            iconBgClass="bg-eco-mint"
+            iconBgClass="bg-primary/10"
             delay={0}
           />
           <ModuleCard
             icon={TrendingUp}
             title="Bozor tahlili"
             description="Narxlar va trendlar"
-            iconBgClass="bg-eco-sage"
+            iconBgClass="bg-accent/10"
             delay={100}
           />
           <ModuleCard
@@ -154,7 +184,7 @@ const Business = () => {
             icon={ShoppingBag}
             title="Buyurtmalar"
             description="Faol buyurtmalarni boshqarish"
-            iconBgClass="bg-eco-emerald-light"
+            iconBgClass="bg-primary/10"
             delay={300}
           />
         </div>
