@@ -302,6 +302,7 @@ const Home = () => {
               title={module.title}
               onClick={() => navigate(module.route)}
               delay={index * 60}
+              isPremium={module.id === "business"}
             />
           ))}
         </div>
