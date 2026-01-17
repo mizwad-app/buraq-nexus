@@ -58,6 +58,35 @@
     "noResults": "Natija topilmadi",
     "viewAll": "Barchasini ko'rish"
   },
+  "mosques": {
+    "title": "Masjidlar",
+    "subtitle": "Namoz vaqtlari va masjidlar",
+    "findNearby": "Yaqin atrofdagi masjidlarni toping",
+    "prayerTimes": "Namoz vaqtlari",
+    "nearbyMosques": "Yaqin atrofdagi masjidlar",
+    "viewOnMap": "Xaritada ko'rish",
+    "directions": "Yo'nalish",
+    "detectLocation": "Joylashuvni aniqlash",
+    "locationDetected": "Joylashuvingiz aniqlandi",
+    "locationError": "Joylashuvni aniqlab bo'lmadi",
+    "fridayPrayer": "Juma namozi",
+    "womensSection": "Ayollar bo'limi",
+    "change": "O'zgartirish"
+  },
+  "halal": {
+    "title": "Halol Taomlar",
+    "subtitle": "AI skaner va sertifikatlangan restoranlar",
+    "aiScanner": "AI Skaner",
+    "scanProduct": "Mahsulotni tekshirish uchun skanerlang",
+    "restaurants": "Halol restoranlar",
+    "shopping": "Savdo markazlari",
+    "viewOnMap": "Xaritada",
+    "halalCertified": "Halol sertifikatlangan",
+    "hasHalalFood": "Halol taom mavjud",
+    "ingredientsToAvoid": "Saqlanish kerak bo'lgan ingredientlar",
+    "haram": "Harom",
+    "suspicious": "Shubhali"
+  },
   "profile": {
     "title": "Profil",
     "login": "Kirish / Ro'yxatdan o'tish",

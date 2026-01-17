@@ -28,6 +28,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { useCity } from "@/contexts/CityContext";
+import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 
 interface WholesaleMarket {
   id: string;
@@ -143,10 +145,10 @@ const Business = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { getField, currentLanguage } = useTranslatedField();
+  const { selectedCity, setSelectedCity } = useCity();
   const [activeTab, setActiveTab] = useState("markets");
   
-  // City-based discovery
-  const [selectedCity, setSelectedCity] = useState<string>("all");
+  // Category filter
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   
   // Search states

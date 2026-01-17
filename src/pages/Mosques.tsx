@@ -1,86 +1,108 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import { 
   Moon, 
   Clock, 
   MapPin, 
   Navigation,
-  ChevronRight,
   Phone,
-  Star
+  Star,
+  Check,
+  Users
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const prayerTimes = [
-  { name: "Bomdod", time: "05:42", active: false },
-  { name: "Peshin", time: "12:15", active: true },
-  { name: "Asr", time: "15:48", active: false },
-  { name: "Shom", time: "18:23", active: false },
-  { name: "Xufton", time: "19:45", active: false },
-];
+import { supabase } from "@/integrations/supabase/client";
+import { useCity } from "@/contexts/CityContext";
+import { GlobalCityFilter } from "@/components/GlobalCityFilter";
+import { useTranslatedField } from "@/hooks/useTranslatedField";
 
 interface Mosque {
-  id: number;
+  id: string;
   name: string;
-  address: string;
-  distance: string;
-  rating: number;
-  phone?: string;
-  latitude: number;
-  longitude: number;
+  city: string;
+  country: string;
+  address: string | null;
+  description: string | null;
+  has_friday_prayer: boolean;
+  has_womens_section: boolean;
+  latitude: number | null;
+  longitude: number | null;
+  name_uz?: string | null;
+  name_ru?: string | null;
+  name_en?: string | null;
+  name_ar?: string | null;
+  description_uz?: string | null;
+  description_ru?: string | null;
+  description_en?: string | null;
+  description_ar?: string | null;
+  city_uz?: string | null;
+  city_ru?: string | null;
+  city_en?: string | null;
+  city_ar?: string | null;
+  address_uz?: string | null;
+  address_ru?: string | null;
+  address_en?: string | null;
+  address_ar?: string | null;
+  [key: string]: unknown;
 }
 
-const nearbyMosques: Mosque[] = [
-  {
-    id: 1,
-    name: "Minor Masjidi",
-    address: "Minor ko'chasi, Toshkent",
-    distance: "0.8 km",
-    rating: 4.9,
-    phone: "+998 71 234 5678",
-    latitude: 41.3116,
-    longitude: 69.2797,
-  },
-  {
-    id: 2,
-    name: "Xo'ja Ahror Valiy Masjidi",
-    address: "Registon ko'chasi, Toshkent",
-    distance: "1.2 km",
-    rating: 4.8,
-    latitude: 41.3108,
-    longitude: 69.2787,
-  },
-  {
-    id: 3,
-    name: "Oq Masjid",
-    address: "Chorsu, Toshkent",
-    distance: "2.1 km",
-    rating: 4.7,
-    phone: "+998 71 345 6789",
-    latitude: 41.3276,
-    longitude: 69.2326,
-  },
-  {
-    id: 4,
-    name: "Kukaldosh Madrasasi",
-    address: "Chorsu bazori yonida, Toshkent",
-    distance: "2.3 km",
-    rating: 4.9,
-    latitude: 41.3285,
-    longitude: 69.2295,
-  },
+const prayerTimes = [
+  { name: "Fajr", nameKey: "fajr", time: "05:42", active: false },
+  { name: "Dhuhr", nameKey: "dhuhr", time: "12:15", active: true },
+  { name: "Asr", nameKey: "asr", time: "15:48", active: false },
+  { name: "Maghrib", nameKey: "maghrib", time: "18:23", active: false },
+  { name: "Isha", nameKey: "isha", time: "19:45", active: false },
 ];
 
 const Mosques = () => {
+  const { t, i18n } = useTranslation();
+  const { selectedCity } = useCity();
+  const { getField, currentLanguage } = useTranslatedField();
+  const [mosques, setMosques] = useState<Mosque[]>([]);
+  const [loading, setLoading] = useState(true);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
+
+  useEffect(() => {
+    fetchMosques();
+  }, []);
+
+  const fetchMosques = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("mosques")
+        .select("*")
+        .order("name", { ascending: true });
+
+      if (error) throw error;
+      if (data) setMosques(data as Mosque[]);
+    } catch (error) {
+      console.error("Error fetching mosques:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter mosques by selected city
+  const filteredMosques = useMemo(() => {
+    if (selectedCity === "all") return mosques;
+    return mosques.filter(m => m.city === selectedCity);
+  }, [mosques, selectedCity]);
+
+  // Get translated city name for header
+  const selectedCityTranslated = useMemo(() => {
+    if (selectedCity === "all") return t("common.all");
+    const mosque = mosques.find(m => m.city === selectedCity);
+    return mosque ? getField(mosque, 'city') : selectedCity;
+  }, [selectedCity, mosques, currentLanguage, t]);
 
   const requestLocation = () => {
     setLoadingLocation(true);
     setLocationError(null);
     
     if (!navigator.geolocation) {
-      setLocationError("Brauzeringiz joylashuvni qo'llab-quvvatlamaydi");
+      setLocationError(t("mosques.locationError"));
       setLoadingLocation(false);
       return;
     }
@@ -94,7 +116,7 @@ const Mosques = () => {
         setLoadingLocation(false);
       },
       (error) => {
-        setLocationError("Joylashuvni aniqlab bo'lmadi");
+        setLocationError(t("mosques.locationError"));
         setLoadingLocation(false);
         console.error("Geolocation error:", error);
       }
@@ -102,42 +124,48 @@ const Mosques = () => {
   };
 
   const openMosqueInMaps = (mosque: Mosque) => {
-    const url = `https://www.google.com/maps/search/?api=1&query=${mosque.latitude},${mosque.longitude}`;
-    window.open(url, '_blank');
+    if (mosque.latitude && mosque.longitude) {
+      const url = `https://www.google.com/maps/search/?api=1&query=${mosque.latitude},${mosque.longitude}`;
+      window.open(url, '_blank');
+    }
   };
 
   const openDirections = (mosque: Mosque) => {
-    const origin = userLocation 
-      ? `${userLocation.lat},${userLocation.lng}`
-      : "";
-    const destination = `${mosque.latitude},${mosque.longitude}`;
-    const url = userLocation
-      ? `https://www.google.com/maps/dir/${origin}/${destination}`
-      : `https://www.google.com/maps/search/?api=1&query=${destination}`;
-    window.open(url, '_blank');
+    if (mosque.latitude && mosque.longitude) {
+      const origin = userLocation 
+        ? `${userLocation.lat},${userLocation.lng}`
+        : "";
+      const destination = `${mosque.latitude},${mosque.longitude}`;
+      const url = userLocation
+        ? `https://www.google.com/maps/dir/${origin}/${destination}`
+        : `https://www.google.com/maps/search/?api=1&query=${destination}`;
+      window.open(url, '_blank');
+    }
   };
 
   return (
-    <div className="min-h-screen bg-background safe-bottom">
+    <div className="min-h-screen bg-background safe-bottom pb-24">
       {/* Header */}
-      <header className="px-5 pt-12 pb-6">
+      <header className="px-5 pt-12 pb-4">
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-2">
             <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-lg">
               <Moon className="w-5 h-5 text-white" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              Masjidlar
+              {t("mosques.subtitle")}
             </span>
           </div>
           <h1 className="text-2xl font-display font-bold text-foreground">
-            Namoz vaqtlari va masjidlar
+            {t("mosques.title")}
           </h1>
-          <p className="text-muted-foreground mt-1">
-            Eng yaqin masjidlarni toping
-          </p>
         </div>
       </header>
+
+      {/* Global City Filter */}
+      <section className="px-5 mb-4">
+        <GlobalCityFilter />
+      </section>
 
       {/* Prayer Times Card */}
       <section className="px-5 mb-6">
@@ -149,15 +177,15 @@ const Mosques = () => {
               </div>
               <div>
                 <h2 className="font-display font-semibold text-foreground">
-                  Namoz vaqtlari
+                  {t("mosques.prayerTimes")}
                 </h2>
                 <p className="text-xs text-muted-foreground">
-                  Toshkent, O'zbekiston
+                  {selectedCityTranslated}, China
                 </p>
               </div>
             </div>
             <button className="text-primary text-sm font-medium">
-              O'zgartirish
+              {t("mosques.change")}
             </button>
           </div>
 
@@ -206,10 +234,10 @@ const Mosques = () => {
         >
           <Navigation className={cn("w-5 h-5", loadingLocation && "animate-pulse")} />
           {loadingLocation 
-            ? "Joylashuv aniqlanmoqda..." 
+            ? t("common.loading")
             : userLocation 
-              ? "Joylashuv yangilash" 
-              : "Joylashuvni aniqlash"
+              ? t("mosques.locationDetected")
+              : t("mosques.detectLocation")
           }
         </button>
         {locationError && (
@@ -217,16 +245,16 @@ const Mosques = () => {
         )}
         {userLocation && (
           <p className="text-xs text-muted-foreground text-center mt-2">
-            Joylashuvingiz aniqlandi ✓
+            {t("mosques.locationDetected")} ✓
           </p>
         )}
       </section>
 
-      {/* Nearby Mosques */}
+      {/* Mosques List */}
       <section className="px-5 pb-32">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-display font-semibold text-foreground">
-            Yaqin atrofdagi masjidlar
+            {t("mosques.nearbyMosques")}
           </h2>
           <button 
             onClick={() => {
@@ -238,59 +266,73 @@ const Mosques = () => {
             className="text-xs text-primary font-medium flex items-center gap-1"
           >
             <MapPin className="w-3 h-3" />
-            Xaritada ko'rish
+            {t("mosques.viewOnMap")}
           </button>
         </div>
 
-        <div className="space-y-3">
-          {nearbyMosques.map((mosque, index) => (
-            <div
-              key={mosque.id}
-              className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex items-start justify-between mb-3">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-foreground">{mosque.name}</h3>
-                    <div className="flex items-center gap-0.5 text-amber-500">
-                      <Star className="w-3 h-3 fill-current" />
-                      <span className="text-xs font-medium">{mosque.rating}</span>
+        {loading ? (
+          <div className="flex justify-center py-8">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : filteredMosques.length === 0 ? (
+          <div className="text-center py-8 text-muted-foreground">
+            {t("business.noResults")}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {filteredMosques.map((mosque, index) => (
+              <div
+                key={mosque.id}
+                className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
+                style={{ animationDelay: `${index * 100}ms` }}
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-foreground">{getField(mosque, 'name')}</h3>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {getField(mosque, 'address') || `${getField(mosque, 'city')}, ${mosque.country}`}
+                    </p>
+                    {getField(mosque, 'description') && (
+                      <p className="text-xs text-muted-foreground mt-2">
+                        {getField(mosque, 'description')}
+                      </p>
+                    )}
+                    <div className="flex items-center gap-3 mt-2">
+                      {mosque.has_friday_prayer && (
+                        <div className="flex items-center gap-1 text-emerald-500">
+                          <Check className="w-3 h-3" />
+                          <span className="text-xs font-medium">{t("mosques.fridayPrayer")}</span>
+                        </div>
+                      )}
+                      {mosque.has_womens_section && (
+                        <div className="flex items-center gap-1 text-primary">
+                          <Users className="w-3 h-3" />
+                          <span className="text-xs font-medium">{t("mosques.womensSection")}</span>
+                        </div>
+                      )}
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">{mosque.address}</p>
                 </div>
-                <span className="text-xs font-medium text-primary bg-primary/10 px-2 py-1 rounded-lg">
-                  {mosque.distance}
-                </span>
-              </div>
 
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => openDirections(mosque)}
-                  className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium"
-                >
-                  <Navigation className="w-4 h-4" />
-                  Yo'nalish
-                </button>
-                {mosque.phone && (
-                  <a
-                    href={`tel:${mosque.phone}`}
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => openDirections(mosque)}
+                    className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium"
+                  >
+                    <Navigation className="w-4 h-4" />
+                    {t("mosques.directions")}
+                  </button>
+                  <button
+                    onClick={() => openMosqueInMaps(mosque)}
                     className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors"
                   >
-                    <Phone className="w-5 h-5 text-muted-foreground" />
-                  </a>
-                )}
-                <button
-                  onClick={() => openMosqueInMaps(mosque)}
-                  className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors"
-                >
-                  <MapPin className="w-5 h-5 text-muted-foreground" />
-                </button>
+                    <MapPin className="w-5 h-5 text-muted-foreground" />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

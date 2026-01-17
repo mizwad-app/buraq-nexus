@@ -58,6 +58,35 @@
     "noResults": "No results found",
     "viewAll": "View all"
   },
+  "mosques": {
+    "title": "Mosques",
+    "subtitle": "Prayer times and mosques",
+    "findNearby": "Find nearby mosques",
+    "prayerTimes": "Prayer times",
+    "nearbyMosques": "Nearby mosques",
+    "viewOnMap": "View on map",
+    "directions": "Directions",
+    "detectLocation": "Detect location",
+    "locationDetected": "Location detected",
+    "locationError": "Could not detect location",
+    "fridayPrayer": "Friday prayer",
+    "womensSection": "Women's section",
+    "change": "Change"
+  },
+  "halal": {
+    "title": "Halal Food",
+    "subtitle": "AI scanner and certified restaurants",
+    "aiScanner": "AI Scanner",
+    "scanProduct": "Scan product to check",
+    "restaurants": "Halal restaurants",
+    "shopping": "Shopping malls",
+    "viewOnMap": "On map",
+    "halalCertified": "Halal certified",
+    "hasHalalFood": "Has halal food",
+    "ingredientsToAvoid": "Ingredients to avoid",
+    "haram": "Haram",
+    "suspicious": "Suspicious"
+  },
   "profile": {
     "title": "Profile",
     "login": "Sign In / Sign Up",

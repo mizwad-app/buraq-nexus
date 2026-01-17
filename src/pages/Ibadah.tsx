@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useTranslation } from "react-i18next";
 import {
   Utensils,
   MapPin,
@@ -8,71 +9,142 @@ import {
   Star,
   Shield,
   XCircle,
+  ShoppingBag,
+  Check,
 } from "lucide-react";
 import { AIScannerModal } from "@/components/AIScannerModal";
+import { supabase } from "@/integrations/supabase/client";
+import { useCity } from "@/contexts/CityContext";
+import { GlobalCityFilter } from "@/components/GlobalCityFilter";
+import { useTranslatedField } from "@/hooks/useTranslatedField";
+
+interface Restaurant {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  cuisine_type: string;
+  address: string | null;
+  description: string | null;
+  rating: number | null;
+  is_halal_certified: boolean;
+  name_uz?: string | null;
+  name_ru?: string | null;
+  name_en?: string | null;
+  name_ar?: string | null;
+  description_uz?: string | null;
+  description_ru?: string | null;
+  description_en?: string | null;
+  description_ar?: string | null;
+  city_uz?: string | null;
+  city_ru?: string | null;
+  city_en?: string | null;
+  city_ar?: string | null;
+  cuisine_type_uz?: string | null;
+  cuisine_type_ru?: string | null;
+  cuisine_type_en?: string | null;
+  cuisine_type_ar?: string | null;
+  [key: string]: unknown;
+}
+
+interface ShoppingMall {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  address: string | null;
+  description: string | null;
+  has_halal_food: boolean;
+  rating: number | null;
+  name_uz?: string | null;
+  name_ru?: string | null;
+  name_en?: string | null;
+  name_ar?: string | null;
+  description_uz?: string | null;
+  description_ru?: string | null;
+  description_en?: string | null;
+  description_ar?: string | null;
+  city_uz?: string | null;
+  city_ru?: string | null;
+  city_en?: string | null;
+  city_ar?: string | null;
+  [key: string]: unknown;
+}
 
 // Ingredients to avoid
 const harmfulIngredients = [
-  { name: "Jelatin (cho'chqa)", category: "Haram", severity: "high" },
-  { name: "E120 (Karmin)", category: "Shubhali", severity: "medium" },
-  { name: "E441 (Jelatin)", category: "Shubhali", severity: "medium" },
-  { name: "Alkogol", category: "Haram", severity: "high" },
-  { name: "E422 (Glitserin)", category: "Shubhali", severity: "low" },
-  { name: "E471 (Mono va diglitseridlar)", category: "Shubhali", severity: "medium" },
-];
-
-// Halal certified restaurants
-const halalRestaurants = [
-  {
-    id: 1,
-    name: "Afsona Restaurant",
-    address: "Amir Temur ko'chasi, Toshkent",
-    rating: 4.8,
-    certified: true,
-    distance: "0.5 km",
-  },
-  {
-    id: 2,
-    name: "Caravan",
-    address: "Shota Rustaveli, Toshkent",
-    rating: 4.6,
-    certified: true,
-    distance: "1.2 km",
-  },
-  {
-    id: 3,
-    name: "Sim-Sim",
-    address: "Navoiy ko'chasi, Toshkent",
-    rating: 4.7,
-    certified: true,
-    distance: "2.1 km",
-  },
+  { name: "Gelatin (pork)", nameKey: "gelatin", category: "haram", severity: "high" },
+  { name: "E120 (Carmine)", nameKey: "e120", category: "suspicious", severity: "medium" },
+  { name: "E441 (Gelatin)", nameKey: "e441", category: "suspicious", severity: "medium" },
+  { name: "Alcohol", nameKey: "alcohol", category: "haram", severity: "high" },
+  { name: "E422 (Glycerin)", nameKey: "e422", category: "suspicious", severity: "low" },
+  { name: "E471 (Mono and diglycerides)", nameKey: "e471", category: "suspicious", severity: "medium" },
 ];
 
 const Ibadah = () => {
+  const { t } = useTranslation();
+  const { selectedCity } = useCity();
+  const { getField, currentLanguage } = useTranslatedField();
   const [scannerOpen, setScannerOpen] = useState(false);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
+  const [malls, setMalls] = useState<ShoppingMall[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [activeSection, setActiveSection] = useState<'restaurants' | 'shopping'>('restaurants');
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const [restaurantsRes, mallsRes] = await Promise.all([
+        supabase.from("restaurants").select("*").order("rating", { ascending: false }),
+        supabase.from("shopping_malls").select("*").order("rating", { ascending: false }),
+      ]);
+
+      if (restaurantsRes.data) setRestaurants(restaurantsRes.data as Restaurant[]);
+      if (mallsRes.data) setMalls(mallsRes.data as ShoppingMall[]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Filter by selected city
+  const filteredRestaurants = useMemo(() => {
+    if (selectedCity === "all") return restaurants;
+    return restaurants.filter(r => r.city === selectedCity);
+  }, [restaurants, selectedCity]);
+
+  const filteredMalls = useMemo(() => {
+    if (selectedCity === "all") return malls;
+    return malls.filter(m => m.city === selectedCity);
+  }, [malls, selectedCity]);
 
   return (
-    <div className="min-h-screen bg-background safe-bottom">
+    <div className="min-h-screen bg-background safe-bottom pb-24">
       {/* Header */}
-      <header className="px-5 pt-12 pb-6">
+      <header className="px-5 pt-12 pb-4">
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-2">
             <div className="p-2 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg">
               <Utensils className="w-5 h-5 text-white" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              Halol Taomlar
+              {t("halal.subtitle")}
             </span>
           </div>
           <h1 className="text-2xl font-display font-bold text-foreground">
-            Halol ovqatlanish
+            {t("halal.title")}
           </h1>
-          <p className="text-muted-foreground mt-1">
-            AI skaner va sertifikatlangan restoranlar
-          </p>
         </div>
       </header>
+
+      {/* Global City Filter */}
+      <section className="px-5 mb-4">
+        <GlobalCityFilter />
+      </section>
 
       {/* AI Scanner Card */}
       <section className="px-5 mb-6">
@@ -81,10 +153,7 @@ const Ibadah = () => {
           className="w-full text-left"
         >
           <div className="relative rounded-2xl overflow-hidden animate-scale-in">
-            {/* Gradient Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-emerald-600/30" />
-            
-            {/* Content */}
             <div className="relative p-5">
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
@@ -92,10 +161,10 @@ const Ibadah = () => {
                 </div>
                 <div className="flex-1">
                   <h2 className="font-display font-semibold text-foreground text-lg">
-                    AI Skaner
+                    {t("halal.aiScanner")}
                   </h2>
                   <p className="text-sm text-muted-foreground">
-                    Mahsulotni tekshirish uchun skanerlang
+                    {t("halal.scanProduct")}
                   </p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
@@ -105,55 +174,179 @@ const Ibadah = () => {
         </button>
       </section>
 
-      {/* Halal Restaurants Section */}
-      <section className="px-5 mb-6">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-display font-semibold text-foreground">
-            Halol restoranlar
-          </h2>
-          <button className="text-xs text-primary font-medium flex items-center gap-1">
-            <MapPin className="w-3 h-3" />
-            Xaritada
+      {/* Section Toggle */}
+      <section className="px-5 mb-4">
+        <div className="flex gap-2">
+          <button
+            onClick={() => setActiveSection('restaurants')}
+            className={`flex-1 py-2 px-4 rounded-xl text-sm font-medium transition-all ${
+              activeSection === 'restaurants'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted text-muted-foreground'
+            }`}
+          >
+            <Utensils className="w-4 h-4 inline-block mr-2" />
+            {t("halal.restaurants")}
+          </button>
+          <button
+            onClick={() => setActiveSection('shopping')}
+            className={`flex-1 py-2 px-4 rounded-xl text-sm font-medium transition-all ${
+              activeSection === 'shopping'
+                ? 'bg-primary text-primary-foreground'
+                : 'bg-muted text-muted-foreground'
+            }`}
+          >
+            <ShoppingBag className="w-4 h-4 inline-block mr-2" />
+            {t("halal.shopping")}
           </button>
         </div>
+      </section>
 
-        <div className="space-y-3">
-          {halalRestaurants.map((restaurant, index) => (
-            <div
-              key={restaurant.id}
-              className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="flex items-start justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <h3 className="font-semibold text-foreground">{restaurant.name}</h3>
-                    {restaurant.certified && (
-                      <Shield className="w-4 h-4 text-emerald-500" />
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground">{restaurant.address}</p>
-                  <div className="flex items-center gap-3 mt-2">
-                    <div className="flex items-center gap-1 text-amber-500">
-                      <Star className="w-3 h-3 fill-current" />
-                      <span className="text-xs font-medium">{restaurant.rating}</span>
+      {/* Restaurants Section */}
+      {activeSection === 'restaurants' && (
+        <section className="px-5 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-display font-semibold text-foreground">
+              {t("halal.restaurants")}
+            </h2>
+            <button className="text-xs text-primary font-medium flex items-center gap-1">
+              <MapPin className="w-3 h-3" />
+              {t("halal.viewOnMap")}
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center py-8">
+              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : filteredRestaurants.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              {t("business.noResults")}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {filteredRestaurants.map((restaurant, index) => (
+                <div
+                  key={restaurant.id}
+                  className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-foreground">{getField(restaurant, 'name')}</h3>
+                        {restaurant.is_halal_certified && (
+                          <Shield className="w-4 h-4 text-emerald-500" />
+                        )}
+                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {getField(restaurant, 'cuisine_type')}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}
+                      </p>
+                      {getField(restaurant, 'description') && (
+                        <p className="text-xs text-muted-foreground mt-2">
+                          {getField(restaurant, 'description')}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-3 mt-2">
+                        {restaurant.rating && (
+                          <div className="flex items-center gap-1 text-amber-500">
+                            <Star className="w-3 h-3 fill-current" />
+                            <span className="text-xs font-medium">{restaurant.rating}</span>
+                          </div>
+                        )}
+                        {restaurant.is_halal_certified && (
+                          <span className="text-xs text-emerald-500 font-medium">
+                            {t("halal.halalCertified")}
+                          </span>
+                        )}
+                      </div>
                     </div>
-                    <span className="text-xs text-muted-foreground">{restaurant.distance}</span>
+                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
                   </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          )}
+        </section>
+      )}
+
+      {/* Shopping Malls Section */}
+      {activeSection === 'shopping' && (
+        <section className="px-5 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-display font-semibold text-foreground">
+              {t("halal.shopping")}
+            </h2>
+            <button className="text-xs text-primary font-medium flex items-center gap-1">
+              <MapPin className="w-3 h-3" />
+              {t("halal.viewOnMap")}
+            </button>
+          </div>
+
+          {loading ? (
+            <div className="flex justify-center py-8">
+              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : filteredMalls.length === 0 ? (
+            <div className="text-center py-8 text-muted-foreground">
+              {t("business.noResults")}
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {filteredMalls.map((mall, index) => (
+                <div
+                  key={mall.id}
+                  className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <h3 className="font-semibold text-foreground">{getField(mall, 'name')}</h3>
+                        {mall.has_halal_food && (
+                          <Check className="w-4 h-4 text-emerald-500" />
+                        )}
+                      </div>
+                      <p className="text-xs text-muted-foreground">
+                        {getField(mall, 'address') || `${getField(mall, 'city')}, ${mall.country}`}
+                      </p>
+                      {getField(mall, 'description') && (
+                        <p className="text-xs text-muted-foreground mt-2">
+                          {getField(mall, 'description')}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-3 mt-2">
+                        {mall.rating && (
+                          <div className="flex items-center gap-1 text-amber-500">
+                            <Star className="w-3 h-3 fill-current" />
+                            <span className="text-xs font-medium">{mall.rating}</span>
+                          </div>
+                        )}
+                        {mall.has_halal_food && (
+                          <span className="text-xs text-emerald-500 font-medium">
+                            {t("halal.hasHalalFood")}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
       {/* Ingredients to Avoid */}
       <section className="px-5 pb-32">
         <div className="flex items-center gap-2 mb-4">
           <AlertTriangle className="w-5 h-5 text-amber-500" />
           <h2 className="text-lg font-display font-semibold text-foreground">
-            Saqlanish kerak bo'lgan ingredientlar
+            {t("halal.ingredientsToAvoid")}
           </h2>
         </div>
 
@@ -185,11 +378,11 @@ const Ibadah = () => {
                 </div>
               </div>
               <span className={`text-xs font-medium px-2 py-1 rounded-lg ${
-                ingredient.category === "Haram"
+                ingredient.category === "haram"
                   ? "bg-red-500/10 text-red-500"
                   : "bg-amber-500/10 text-amber-500"
               }`}>
-                {ingredient.category}
+                {ingredient.category === "haram" ? t("halal.haram") : t("halal.suspicious")}
               </span>
             </div>
           ))}
