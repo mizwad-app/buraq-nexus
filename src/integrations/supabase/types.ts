@@ -401,6 +401,7 @@ export type Database = {
           has_friday_prayer: boolean | null
           has_womens_section: boolean | null
           id: string
+          image_url: string | null
           latitude: number | null
           longitude: number | null
           name: string
@@ -430,6 +431,7 @@ export type Database = {
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
           id?: string
+          image_url?: string | null
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -459,6 +461,7 @@ export type Database = {
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
           id?: string
+          image_url?: string | null
           latitude?: number | null
           longitude?: number | null
           name?: string
@@ -657,6 +660,7 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           id: string
+          image_url: string | null
           is_halal_certified: boolean | null
           latitude: number | null
           longitude: number | null
@@ -692,6 +696,7 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           id?: string
+          image_url?: string | null
           is_halal_certified?: boolean | null
           latitude?: number | null
           longitude?: number | null
@@ -727,6 +732,7 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           id?: string
+          image_url?: string | null
           is_halal_certified?: boolean | null
           latitude?: number | null
           longitude?: number | null
