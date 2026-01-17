@@ -379,6 +379,96 @@ export type Database = {
         }
         Relationships: []
       }
+      mosques: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          country: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
+          has_friday_prayer: boolean | null
+          has_womens_section: boolean | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          has_friday_prayer?: boolean | null
+          has_womens_section?: boolean | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          has_friday_prayer?: boolean | null
+          has_womens_section?: boolean | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+        }
+        Relationships: []
+      }
       points_transactions: {
         Row: {
           amount: number
@@ -541,6 +631,114 @@ export type Database = {
         }
         Relationships: []
       }
+      restaurants: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          contact_info: string | null
+          country: string
+          created_at: string
+          cuisine_type: string
+          cuisine_type_ar: string | null
+          cuisine_type_en: string | null
+          cuisine_type_ru: string | null
+          cuisine_type_uz: string | null
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
+          id: string
+          is_halal_certified: boolean | null
+          latitude: number | null
+          longitude: number | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          rating: number | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          cuisine_type: string
+          cuisine_type_ar?: string | null
+          cuisine_type_en?: string | null
+          cuisine_type_ru?: string | null
+          cuisine_type_uz?: string | null
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          id?: string
+          is_halal_certified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          rating?: number | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          cuisine_type?: string
+          cuisine_type_ar?: string | null
+          cuisine_type_en?: string | null
+          cuisine_type_ru?: string | null
+          cuisine_type_uz?: string | null
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          id?: string
+          is_halal_certified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          rating?: number | null
+        }
+        Relationships: []
+      }
       saved_places: {
         Row: {
           address: string | null
@@ -614,6 +812,99 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      shopping_malls: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          contact_info: string | null
+          country: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
+          has_halal_food: boolean | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          rating: number | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          has_halal_food?: boolean | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          rating?: number | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          has_halal_food?: boolean | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          rating?: number | null
+        }
+        Relationships: []
       }
       user_points: {
         Row: {
