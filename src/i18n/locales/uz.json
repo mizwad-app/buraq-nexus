@@ -16,7 +16,8 @@
     "business": "Biznes",
     "cargo": "Yuk Kuzatuvi",
     "mosques": "Masjidlar",
-    "eco": "Eco Projects"
+    "eco": "Eco Projects",
+    "guide": "Sayohat Qo'llanmasi"
   },
   "home": {
     "guestPrompt": "Ball yig'ishni boshlang",
@@ -245,6 +246,46 @@
       "tashkentDesc": "Shaharsozlik yashillantiruvi",
       "samarkand": "Samarqand viloyati",
       "samarkandDesc": "Tarixiy hududlar bog'lari"
+    }
+  },
+  "guide": {
+    "title": "Sayohat Qo'llanmasi",
+    "subtitle": "Xitoy uchun muhim maslahatlar",
+    "intro": {
+      "title": "Xitoyga xush kelibsiz!",
+      "description": "Biznes safaringizga tayyorgarlik uchun video qo'llanmalarimizni tomosha qiling. To'lovlar, aloqa va xavfsizlik haqida bilib oling."
+    },
+    "videoPlaceholder": "Video tez orada",
+    "videoLabel": "Video",
+    "tipsTitle": "Asosiy Maslahatlar",
+    "simcards": {
+      "title": "SIM-kartalar va Internet",
+      "description": "Safar davomida mahalliy mobil internet bilan bog'lanib turing",
+      "tip1": "Aeroportda China Mobile yoki China Unicom SIM-kartasini sotib oling",
+      "tip2": "SIM ro'yxatdan o'tkazish uchun pasport talab qilinadi",
+      "tip3": "Qulaylik uchun eSIM variantlarini ko'rib chiqing"
+    },
+    "payments": {
+      "title": "To'lovlar: Alipay va WeChat",
+      "description": "Xitoyda to'lovlar uchun raqamli hamyonlar zarur",
+      "tip1": "Safardan oldin Alipay Tour Pass ni o'rnating",
+      "tip2": "To'lovlar uchun xalqaro kartani ulang",
+      "tip3": "Yirik shaharlarda naqd pul kamdan-kam qabul qilinadi"
+    },
+    "exchange": {
+      "title": "Pul Ayirboshlash",
+      "description": "Xavfsiz valyuta ayirboshlash amaliyoti",
+      "tip1": "Faqat rasmiy bank kassalaridan foydalaning",
+      "tip2": "Aeroport va mehmonxona kurslari odatda yuqoriroq",
+      "tip3": "Hisobotlar uchun ayirboshlash kvitansiyalarini saqlang",
+      "warning": "Ko'cha pul almashtiruvchilaridan saqlaning! Bu noqonuniy va xavfli."
+    },
+    "digital": {
+      "title": "Raqamli Vositalar",
+      "description": "Muloqot uchun VPN va tarjimon ilovalari",
+      "tip1": "Kelishdan oldin ishonchli VPN yuklab oling",
+      "tip2": "Google Translate-ni oflayn xitoycha bilan o'rnating",
+      "tip3": "Pleco lug'ati xitoycha uchun juda yaxshi"
     }
   }
 }

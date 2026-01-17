@@ -26,6 +26,7 @@ import business from "@/assets/business.jpg";
 import cargoImg from "@/assets/cargo.jpg";
 import mosque from "@/assets/mosque.jpg";
 import ecoProjects from "@/assets/eco-projects.jpg";
+import travelGuide from "@/assets/travel-guide.jpg";
 
 interface UserPoints {
   total_points: number;
@@ -74,6 +75,7 @@ const Home = () => {
     { id: "cargo", title: t("modules.cargo"), image: cargoImg, route: "/cargo" },
     { id: "mosque", title: t("modules.mosques"), image: mosque, route: "/mosques" },
     { id: "eco", title: t("modules.eco"), image: ecoProjects, route: "/eco" },
+    { id: "guide", title: t("modules.guide"), image: travelGuide, route: "/guide" },
   ];
 
   useEffect(() => {

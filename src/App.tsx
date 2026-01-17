@@ -17,6 +17,7 @@ import DeepCheckRequest from "./pages/DeepCheckRequest";
 import AdminDeepChecks from "./pages/AdminDeepChecks";
 import Mosques from "./pages/Mosques";
 import Eco from "./pages/Eco";
+import TravelGuide from "./pages/TravelGuide";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
                 <Route path="/admin/deep-checks" element={<AdminDeepChecks />} />
                 <Route path="/mosques" element={<Mosques />} />
                 <Route path="/eco" element={<Eco />} />
+                <Route path="/guide" element={<TravelGuide />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <BottomNavigation />
