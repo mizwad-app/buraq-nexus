@@ -107,7 +107,19 @@
     "ingredientsToAvoid": "Saqlanish kerak bo'lgan ingredientlar",
     "haram": "Harom",
     "suspicious": "Shubhali",
-    "halal": "Halol"
+    "halal": "Halol",
+    "filterAll": "Barchasi",
+    "filterHalalOnly": "Faqat Halol",
+    "filterDoubtful": "Shubhali",
+    "filterNotHalal": "Halol emas",
+    "status": {
+      "certified": "Halol Sertifikatlangan",
+      "certifiedDesc": "100% Halol sertifikati. Alkogol yo'q.",
+      "doubtful": "Shubhali",
+      "doubtfulDesc": "Halol go'sht mavjud, lekin alkogol sotiladi.",
+      "not_halal": "Alkogol Ogohlantirishi",
+      "not_halalDesc": "Alkogol va halol bo'lmagan ingredientlar."
+    }
   },
   "scanner": {
     "title": "Halol AI Skaner",

@@ -7,7 +7,6 @@ import {
   AlertTriangle,
   ChevronRight,
   Star,
-  Shield,
   XCircle,
   ShoppingBag,
   Check,
@@ -17,6 +16,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCity } from "@/contexts/CityContext";
 import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
+import { cn } from "@/lib/utils";
 
 interface Restaurant {
   id: string;
@@ -28,6 +29,13 @@ interface Restaurant {
   description: string | null;
   rating: number | null;
   is_halal_certified: boolean;
+  halal_status: 'certified' | 'doubtful' | 'not_halal' | null;
+  serves_alcohol: boolean | null;
+  halal_status_note: string | null;
+  halal_status_note_uz: string | null;
+  halal_status_note_ru: string | null;
+  halal_status_note_en: string | null;
+  halal_status_note_ar: string | null;
   image_url?: string | null;
   name_uz?: string | null;
   name_ru?: string | null;
@@ -84,6 +92,8 @@ const harmfulIngredients = [
   { name: "E471 (Mono and diglycerides)", nameKey: "e471", category: "suspicious", severity: "medium" },
 ];
 
+type HalalFilter = 'all' | 'certified' | 'doubtful' | 'not_halal';
+
 const Ibadah = () => {
   const { t } = useTranslation();
   const { selectedCity } = useCity();
@@ -93,6 +103,14 @@ const Ibadah = () => {
   const [malls, setMalls] = useState<ShoppingMall[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<'restaurants' | 'shopping'>('restaurants');
+  const [halalFilter, setHalalFilter] = useState<HalalFilter>('all');
+
+  const filterChips: { id: HalalFilter; labelKey: string; color: string }[] = [
+    { id: 'all', labelKey: 'halal.filterAll', color: 'bg-secondary text-secondary-foreground' },
+    { id: 'certified', labelKey: 'halal.filterHalalOnly', color: 'bg-emerald-500 text-white' },
+    { id: 'doubtful', labelKey: 'halal.filterDoubtful', color: 'bg-amber-500 text-white' },
+    { id: 'not_halal', labelKey: 'halal.filterNotHalal', color: 'bg-red-500 text-white' },
+  ];
 
   useEffect(() => {
     fetchData();
@@ -114,11 +132,34 @@ const Ibadah = () => {
     }
   };
 
-  // Filter by selected city
+  // Get tooltip text based on status and language
+  const getStatusTooltip = (restaurant: Restaurant): string => {
+    const noteField = getField(restaurant, 'halal_status_note');
+    if (noteField) return noteField;
+    
+    const status = restaurant.halal_status || 'certified';
+    return t(`halal.status.${status}Desc`);
+  };
+
+  // Filter by selected city and halal status
   const filteredRestaurants = useMemo(() => {
-    if (selectedCity === "all") return restaurants;
-    return restaurants.filter(r => r.city === selectedCity);
-  }, [restaurants, selectedCity]);
+    let filtered = restaurants;
+    
+    // City filter
+    if (selectedCity !== "all") {
+      filtered = filtered.filter(r => r.city === selectedCity);
+    }
+    
+    // Halal status filter
+    if (halalFilter !== 'all') {
+      filtered = filtered.filter(r => {
+        const status = r.halal_status || (r.is_halal_certified ? 'certified' : 'not_halal');
+        return status === halalFilter;
+      });
+    }
+    
+    return filtered;
+  }, [restaurants, selectedCity, halalFilter]);
 
   const filteredMalls = useMemo(() => {
     if (selectedCity === "all") return malls;
@@ -205,12 +246,37 @@ const Ibadah = () => {
         </div>
       </section>
 
+      {/* Halal Filter Chips - Only show for restaurants */}
+      {activeSection === 'restaurants' && (
+        <section className="px-5 mb-4">
+          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+            {filterChips.map((chip) => (
+              <button
+                key={chip.id}
+                onClick={() => setHalalFilter(chip.id)}
+                className={cn(
+                  "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all",
+                  halalFilter === chip.id
+                    ? chip.color
+                    : "bg-secondary/60 text-muted-foreground hover:bg-secondary"
+                )}
+              >
+                {t(chip.labelKey)}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Restaurants Section */}
       {activeSection === 'restaurants' && (
         <section className="px-5 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-display font-semibold text-foreground">
               {t("halal.restaurants")}
+              <span className="text-sm font-normal text-muted-foreground ml-2">
+                ({filteredRestaurants.length})
+              </span>
             </h2>
             <button className="text-xs text-primary font-medium flex items-center gap-1">
               <MapPin className="w-3 h-3" />
@@ -228,59 +294,79 @@ const Ibadah = () => {
             </div>
           ) : (
             <div className="space-y-3">
-              {filteredRestaurants.map((restaurant, index) => (
-                <div
-                  key={restaurant.id}
-                  className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  {/* Restaurant Image */}
-                  <div className="relative h-36 w-full">
-                    <img
-                      src={restaurant.image_url || RESTAURANT_FALLBACK_IMAGE}
-                      alt={getField(restaurant, 'name')}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = RESTAURANT_FALLBACK_IMAGE;
-                      }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    {restaurant.is_halal_certified && (
-                      <div className="absolute top-3 right-3 bg-emerald-500 text-white px-2 py-1 rounded-lg flex items-center gap-1">
-                        <Shield className="w-3 h-3" />
-                        <span className="text-xs font-medium">{t("halal.halal")}</span>
+              {filteredRestaurants.map((restaurant, index) => {
+                const status = (restaurant.halal_status || (restaurant.is_halal_certified ? 'certified' : 'not_halal')) as 'certified' | 'doubtful' | 'not_halal';
+                
+                return (
+                  <div
+                    key={restaurant.id}
+                    className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
+                    style={{ animationDelay: `${index * 50}ms` }}
+                  >
+                    {/* Restaurant Image */}
+                    <div className="relative h-36 w-full">
+                      <img
+                        src={restaurant.image_url || RESTAURANT_FALLBACK_IMAGE}
+                        alt={getField(restaurant, 'name')}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = RESTAURANT_FALLBACK_IMAGE;
+                        }}
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      
+                      {/* Halal Status Badge - Top Right */}
+                      <div className="absolute top-3 right-3">
+                        <HalalStatusBadge 
+                          status={status}
+                          size={32}
+                          tooltipText={getStatusTooltip(restaurant)}
+                        />
                       </div>
-                    )}
-                    <div className="absolute bottom-3 left-4 right-4">
-                      <h3 className="font-semibold text-white text-lg">{getField(restaurant, 'name')}</h3>
-                      <p className="text-sm text-white/80">{getField(restaurant, 'cuisine_type')}</p>
+                      
+                      <div className="absolute bottom-3 left-4 right-4">
+                        <h3 className="font-semibold text-white text-lg">{getField(restaurant, 'name')}</h3>
+                        <p className="text-sm text-white/80">{getField(restaurant, 'cuisine_type')}</p>
+                      </div>
                     </div>
-                  </div>
-                  
-                  <div className="p-4">
-                    <p className="text-xs text-muted-foreground">
-                      {getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}
-                    </p>
-                    {getField(restaurant, 'description') && (
-                      <p className="text-xs text-muted-foreground mt-2">
-                        {getField(restaurant, 'description')}
+                    
+                    <div className="p-4">
+                      <p className="text-xs text-muted-foreground">
+                        {getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}
                       </p>
-                    )}
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center gap-3">
-                        {restaurant.rating && (
-                          <div className="flex items-center gap-1 text-amber-500">
-                            <Star className="w-3 h-3 fill-current" />
-                            <span className="text-xs font-medium">{restaurant.rating}</span>
-                          </div>
-                        )}
+                      
+                      {/* Status Label */}
+                      <div className={cn(
+                        "inline-flex items-center gap-1.5 mt-2 px-2 py-1 rounded-md text-xs font-medium",
+                        status === 'certified' && "bg-emerald-500/10 text-emerald-600",
+                        status === 'doubtful' && "bg-amber-500/10 text-amber-600",
+                        status === 'not_halal' && "bg-red-500/10 text-red-600"
+                      )}>
+                        {t(`halal.status.${status}`)}
                       </div>
-                      <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                      
+                      {getField(restaurant, 'description') && (
+                        <p className="text-xs text-muted-foreground mt-2 line-clamp-2">
+                          {getField(restaurant, 'description')}
+                        </p>
+                      )}
+                      
+                      <div className="flex items-center justify-between mt-3">
+                        <div className="flex items-center gap-3">
+                          {restaurant.rating && (
+                            <div className="flex items-center gap-1 text-amber-500">
+                              <Star className="w-3 h-3 fill-current" />
+                              <span className="text-xs font-medium">{restaurant.rating}</span>
+                            </div>
+                          )}
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-muted-foreground" />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </section>

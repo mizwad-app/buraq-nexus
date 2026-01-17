@@ -107,7 +107,19 @@
     "ingredientsToAvoid": "Ingredients to avoid",
     "haram": "Haram",
     "suspicious": "Suspicious",
-    "halal": "Halal"
+    "halal": "Halal",
+    "filterAll": "All",
+    "filterHalalOnly": "Halal Only",
+    "filterDoubtful": "Doubtful",
+    "filterNotHalal": "Not Halal",
+    "status": {
+      "certified": "Halal Certified",
+      "certifiedDesc": "100% Halal certified. No alcohol.",
+      "doubtful": "Doubtful",
+      "doubtfulDesc": "Halal meat available, but alcohol served.",
+      "not_halal": "Alcohol Warning",
+      "not_halalDesc": "Serves alcohol and non-halal ingredients."
+    }
   },
   "scanner": {
     "title": "Halal AI Scanner",

@@ -1016,6 +1016,12 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          halal_status: string | null
+          halal_status_note: string | null
+          halal_status_note_ar: string | null
+          halal_status_note_en: string | null
+          halal_status_note_ru: string | null
+          halal_status_note_uz: string | null
           id: string
           image_url: string | null
           is_halal_certified: boolean | null
@@ -1027,6 +1033,7 @@ export type Database = {
           name_ru: string | null
           name_uz: string | null
           rating: number | null
+          serves_alcohol: boolean | null
         }
         Insert: {
           address?: string | null
@@ -1052,6 +1059,12 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          halal_status?: string | null
+          halal_status_note?: string | null
+          halal_status_note_ar?: string | null
+          halal_status_note_en?: string | null
+          halal_status_note_ru?: string | null
+          halal_status_note_uz?: string | null
           id?: string
           image_url?: string | null
           is_halal_certified?: boolean | null
@@ -1063,6 +1076,7 @@ export type Database = {
           name_ru?: string | null
           name_uz?: string | null
           rating?: number | null
+          serves_alcohol?: boolean | null
         }
         Update: {
           address?: string | null
@@ -1088,6 +1102,12 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          halal_status?: string | null
+          halal_status_note?: string | null
+          halal_status_note_ar?: string | null
+          halal_status_note_en?: string | null
+          halal_status_note_ru?: string | null
+          halal_status_note_uz?: string | null
           id?: string
           image_url?: string | null
           is_halal_certified?: boolean | null
@@ -1099,6 +1119,7 @@ export type Database = {
           name_ru?: string | null
           name_uz?: string | null
           rating?: number | null
+          serves_alcohol?: boolean | null
         }
         Relationships: []
       }
