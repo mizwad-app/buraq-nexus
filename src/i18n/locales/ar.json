@@ -85,7 +85,8 @@
     "hasHalalFood": "يوجد طعام حلال",
     "ingredientsToAvoid": "المكونات التي يجب تجنبها",
     "haram": "حرام",
-    "suspicious": "مشتبه"
+    "suspicious": "مشتبه",
+    "halal": "حلال"
   },
   "profile": {
     "title": "الملف الشخصي",

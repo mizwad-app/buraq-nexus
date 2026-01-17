@@ -85,7 +85,8 @@
     "hasHalalFood": "Has halal food",
     "ingredientsToAvoid": "Ingredients to avoid",
     "haram": "Haram",
-    "suspicious": "Suspicious"
+    "suspicious": "Suspicious",
+    "halal": "Halal"
   },
   "profile": {
     "title": "Profile",

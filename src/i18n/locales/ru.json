@@ -85,7 +85,8 @@
     "hasHalalFood": "Есть халяль еда",
     "ingredientsToAvoid": "Ингредиенты, которых следует избегать",
     "haram": "Харам",
-    "suspicious": "Подозрительно"
+    "suspicious": "Подозрительно",
+    "halal": "Халяль"
   },
   "profile": {
     "title": "Профиль",
