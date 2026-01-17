@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
-  Globe,
   FileSearch,
   ChevronRight,
   Search,
@@ -15,7 +14,10 @@ import {
   Store,
   X,
   Package,
+  Train,
+  Globe,
 } from "lucide-react";
+import { BusinessEcosystemIcon } from "@/components/icons/BusinessEcosystemIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -349,8 +351,8 @@ const Business = () => {
       <header className="px-5 pt-12 pb-4">
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl shadow-glow">
-              <Globe className="w-5 h-5 text-primary-foreground" />
+            <div className="p-2.5 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl shadow-glow">
+              <BusinessEcosystemIcon className="w-6 h-6 text-primary-foreground" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
               {t("business.subtitle")}
