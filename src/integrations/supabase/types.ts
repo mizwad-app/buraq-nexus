@@ -59,39 +59,87 @@ export type Database = {
       companies: {
         Row: {
           city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
           contact_info: string | null
           country: string
           created_at: string
           description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
           id: string
           industry: string
+          industry_ar: string | null
+          industry_en: string | null
+          industry_ru: string | null
+          industry_uz: string | null
           name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
           rating: number | null
           verified: boolean | null
           years_in_business: number | null
         }
         Insert: {
           city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           id?: string
           industry: string
+          industry_ar?: string | null
+          industry_en?: string | null
+          industry_ru?: string | null
+          industry_uz?: string | null
           name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
           rating?: number | null
           verified?: boolean | null
           years_in_business?: number | null
         }
         Update: {
           city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           id?: string
           industry?: string
+          industry_ar?: string | null
+          industry_en?: string | null
+          industry_ru?: string | null
+          industry_uz?: string | null
           name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
           rating?: number | null
           verified?: boolean | null
           years_in_business?: number | null
@@ -161,41 +209,101 @@ export type Database = {
       exhibitions: {
         Row: {
           category: string
+          category_ar: string | null
+          category_en: string | null
+          category_ru: string | null
+          category_uz: string | null
           city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
           country: string
           created_at: string
           description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
           end_date: string
           id: string
           name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
           start_date: string
           venue: string | null
+          venue_ar: string | null
+          venue_en: string | null
+          venue_ru: string | null
+          venue_uz: string | null
           website_url: string | null
         }
         Insert: {
           category: string
+          category_ar?: string | null
+          category_en?: string | null
+          category_ru?: string | null
+          category_uz?: string | null
           city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           end_date: string
           id?: string
           name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
           start_date: string
           venue?: string | null
+          venue_ar?: string | null
+          venue_en?: string | null
+          venue_ru?: string | null
+          venue_uz?: string | null
           website_url?: string | null
         }
         Update: {
           category?: string
+          category_ar?: string | null
+          category_en?: string | null
+          category_ru?: string | null
+          category_uz?: string | null
           city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           end_date?: string
           id?: string
           name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
           start_date?: string
           venue?: string | null
+          venue_ar?: string | null
+          venue_en?: string | null
+          venue_ru?: string | null
+          venue_uz?: string | null
           website_url?: string | null
         }
         Relationships: []
@@ -304,29 +412,65 @@ export type Database = {
       production_hubs: {
         Row: {
           city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
           country: string
           created_at: string
           description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
           id: string
           industry: string
+          industry_ar: string | null
+          industry_en: string | null
+          industry_ru: string | null
+          industry_uz: string | null
           specializations: string[] | null
         }
         Insert: {
           city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           id?: string
           industry: string
+          industry_ar?: string | null
+          industry_en?: string | null
+          industry_ru?: string | null
+          industry_uz?: string | null
           specializations?: string[] | null
         }
         Update: {
           city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           id?: string
           industry?: string
+          industry_ar?: string | null
+          industry_en?: string | null
+          industry_ru?: string | null
+          industry_uz?: string | null
           specializations?: string[] | null
         }
         Relationships: []
@@ -522,33 +666,81 @@ export type Database = {
       wholesale_markets: {
         Row: {
           category: string
+          category_ar: string | null
+          category_en: string | null
+          category_ru: string | null
+          category_uz: string | null
           city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
           contact_info: string | null
           country: string
           created_at: string
           description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
           id: string
           name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
         }
         Insert: {
           category: string
+          category_ar?: string | null
+          category_en?: string | null
+          category_ru?: string | null
+          category_uz?: string | null
           city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           id?: string
           name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
         }
         Update: {
           category?: string
+          category_ar?: string | null
+          category_en?: string | null
+          category_ru?: string | null
+          category_uz?: string | null
           city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
           description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
           id?: string
           name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
         }
         Relationships: []
       }
