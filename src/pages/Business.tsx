@@ -1,29 +1,133 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import {
   Briefcase,
-  TrendingUp,
-  Store,
-  BarChart3,
-  Users,
-  ShoppingBag,
-  ChevronRight,
-  ArrowUpRight,
-  ArrowDownRight,
   FileSearch,
+  ChevronRight,
+  Search,
+  MapPin,
+  Building2,
+  Calendar,
+  Star,
+  BadgeCheck,
+  Factory,
+  Store,
+  Globe,
 } from "lucide-react";
-import { ModuleCard } from "@/components/ModuleCard";
+import { supabase } from "@/integrations/supabase/client";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { cn } from "@/lib/utils";
 
-const stats = [
-  { label: "Daromad", value: "45.2M", change: "+12.5%", up: true },
-  { label: "Buyurtmalar", value: "1,234", change: "+8.2%", up: true },
-  { label: "Mijozlar", value: "856", change: "-2.1%", up: false },
-];
+interface WholesaleMarket {
+  id: string;
+  city: string;
+  country: string;
+  category: string;
+  name: string;
+  description: string | null;
+}
+
+interface ProductionHub {
+  id: string;
+  city: string;
+  country: string;
+  industry: string;
+  description: string | null;
+  specializations: string[] | null;
+}
+
+interface Exhibition {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  venue: string | null;
+  start_date: string;
+  end_date: string;
+  category: string;
+  description: string | null;
+}
+
+interface Company {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  industry: string;
+  rating: number | null;
+  verified: boolean;
+  years_in_business: number | null;
+  description: string | null;
+}
 
 const Business = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+  const [activeTab, setActiveTab] = useState("markets");
+  const [marketSearch, setMarketSearch] = useState("");
+  const [hubSearch, setHubSearch] = useState("");
+  const [companySearch, setCompanySearch] = useState("");
+  
+  const [markets, setMarkets] = useState<WholesaleMarket[]>([]);
+  const [hubs, setHubs] = useState<ProductionHub[]>([]);
+  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const [marketsRes, hubsRes, exhibitionsRes, companiesRes] = await Promise.all([
+        supabase.from("wholesale_markets").select("*"),
+        supabase.from("production_hubs").select("*"),
+        supabase.from("exhibitions").select("*").order("start_date", { ascending: true }),
+        supabase.from("companies").select("*").order("rating", { ascending: false }),
+      ]);
+
+      if (marketsRes.data) setMarkets(marketsRes.data);
+      if (hubsRes.data) setHubs(hubsRes.data);
+      if (exhibitionsRes.data) setExhibitions(exhibitionsRes.data);
+      if (companiesRes.data) setCompanies(companiesRes.data);
+    } catch (error) {
+      console.error("Error fetching business data:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const filteredMarkets = markets.filter(
+    (m) =>
+      m.category.toLowerCase().includes(marketSearch.toLowerCase()) ||
+      m.city.toLowerCase().includes(marketSearch.toLowerCase()) ||
+      m.name.toLowerCase().includes(marketSearch.toLowerCase())
+  );
+
+  const filteredHubs = hubs.filter(
+    (h) =>
+      h.industry.toLowerCase().includes(hubSearch.toLowerCase()) ||
+      h.city.toLowerCase().includes(hubSearch.toLowerCase())
+  );
+
+  const filteredCompanies = companies.filter(
+    (c) =>
+      c.name.toLowerCase().includes(companySearch.toLowerCase()) ||
+      c.industry.toLowerCase().includes(companySearch.toLowerCase())
+  );
+
+  const formatDate = (dateStr: string) => {
+    return new Date(dateStr).toLocaleDateString("uz-UZ", {
+      month: "short",
+      day: "numeric",
+    });
+  };
 
   return (
-    <div className="min-h-screen bg-background safe-bottom">
+    <div className="min-h-screen bg-background safe-bottom pb-24">
       {/* Header */}
       <header className="px-5 pt-12 pb-6">
         <div className="animate-fade-in">
@@ -32,15 +136,12 @@ const Business = () => {
               <Briefcase className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              Biznes
+              {t("business.subtitle")}
             </span>
           </div>
           <h1 className="text-2xl font-display font-bold text-foreground">
-            Biznes analytics
+            {t("business.title")}
           </h1>
-          <p className="text-muted-foreground mt-1">
-            Savdo va bozor ma'lumotlari
-          </p>
         </div>
       </header>
 
@@ -58,10 +159,10 @@ const Business = () => {
               </div>
               <div className="flex-1">
                 <h3 className="font-display font-bold text-foreground">
-                  Chuqur Tekshiruv
+                  {t("business.deepCheck")}
                 </h3>
                 <p className="text-sm text-muted-foreground">
-                  Mahsulot yoki kompaniyani to'liq tahlil qiling
+                  {t("business.deepCheckDesc")}
                 </p>
               </div>
               <ChevronRight className="w-5 h-5 text-muted-foreground" />
@@ -70,124 +171,264 @@ const Business = () => {
         </button>
       </section>
 
-      {/* Stats Overview */}
-      <section className="px-5 mb-6">
-        <div className="grid grid-cols-3 gap-3">
-          {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <p className="text-xs text-muted-foreground font-medium">
-                {stat.label}
-              </p>
-              <p className="text-lg font-display font-bold text-foreground mt-1">
-                {stat.value}
-              </p>
-              <div
-                className={`flex items-center gap-1 mt-2 text-xs font-medium ${
-                  stat.up ? "text-primary" : "text-destructive"
-                }`}
-              >
-                {stat.up ? (
-                  <ArrowUpRight className="w-3 h-3" />
-                ) : (
-                  <ArrowDownRight className="w-3 h-3" />
-                )}
-                {stat.change}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Tabs Navigation */}
+      <section className="px-5 mb-4">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="w-full grid grid-cols-4 h-12 bg-secondary/50">
+            <TabsTrigger value="markets" className="text-xs">
+              <Store className="w-4 h-4 mr-1" />
+              {t("business.marketFinder").split(" ")[0]}
+            </TabsTrigger>
+            <TabsTrigger value="hubs" className="text-xs">
+              <Factory className="w-4 h-4 mr-1" />
+              {t("business.manufacturingMap").split(" ")[0]}
+            </TabsTrigger>
+            <TabsTrigger value="companies" className="text-xs">
+              <Building2 className="w-4 h-4 mr-1" />
+              {t("business.companySearch").split(" ")[0]}
+            </TabsTrigger>
+            <TabsTrigger value="exhibitions" className="text-xs">
+              <Calendar className="w-4 h-4 mr-1" />
+              {t("business.exhibitions").split(" ")[0]}
+            </TabsTrigger>
+          </TabsList>
 
-      {/* Chart Placeholder */}
-      <section className="px-5 mb-6">
-        <div
-          className="bg-card rounded-3xl p-5 border border-border/50 animate-scale-in"
-          style={{ animationDelay: "100ms" }}
-        >
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="p-2 bg-primary/10 rounded-xl">
-                <BarChart3 className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h2 className="font-display font-semibold text-foreground">
-                  Haftalik sotuvlar
-                </h2>
-                <p className="text-xs text-muted-foreground">
-                  So'nggi 7 kun
-                </p>
-              </div>
-            </div>
-            <button className="text-primary text-sm font-medium flex items-center gap-1">
-              Batafsil
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Simple chart visualization */}
-          <div className="flex items-end justify-between h-32 gap-2 mt-4">
-            {[65, 45, 80, 55, 90, 75, 85].map((height, index) => (
-              <div
-                key={index}
-                className="flex-1 bg-gradient-to-t from-primary to-accent rounded-t-lg transition-all duration-500 animate-slide-up"
-                style={{
-                  height: `${height}%`,
-                  animationDelay: `${index * 100}ms`,
-                }}
+          {/* Market Finder */}
+          <TabsContent value="markets" className="mt-4 space-y-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder={t("business.searchCategory")}
+                value={marketSearch}
+                onChange={(e) => setMarketSearch(e.target.value)}
+                className="pl-10 bg-card border-border/50"
               />
-            ))}
-          </div>
-          <div className="flex justify-between mt-2 text-xs text-muted-foreground">
-            <span>Du</span>
-            <span>Se</span>
-            <span>Ch</span>
-            <span>Pa</span>
-            <span>Ju</span>
-            <span>Sh</span>
-            <span>Ya</span>
-          </div>
-        </div>
-      </section>
+            </div>
 
-      {/* Categories */}
-      <section className="px-5 pb-8">
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
-          Xizmatlar
-        </h2>
-        <div className="space-y-3">
-          <ModuleCard
-            icon={Store}
-            title="Bozor maydoni"
-            description="Mahsulotlarni sotish va xarid qilish"
-            iconBgClass="bg-primary/10"
-            delay={0}
-          />
-          <ModuleCard
-            icon={TrendingUp}
-            title="Bozor tahlili"
-            description="Narxlar va trendlar"
-            iconBgClass="bg-accent/10"
-            delay={100}
-          />
-          <ModuleCard
-            icon={Users}
-            title="Hamkorlar"
-            description="Biznes aloqalar tarmog'i"
-            iconBgClass="bg-secondary"
-            delay={200}
-          />
-          <ModuleCard
-            icon={ShoppingBag}
-            title="Buyurtmalar"
-            description="Faol buyurtmalarni boshqarish"
-            iconBgClass="bg-primary/10"
-            delay={300}
-          />
-        </div>
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : filteredMarkets.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                {t("business.noResults")}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredMarkets.map((market) => (
+                  <div
+                    key={market.id}
+                    className="bg-card rounded-2xl p-4 border border-border/50"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                        <Store className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-foreground">{market.name}</h3>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                          <MapPin className="w-3 h-3" />
+                          <span>{market.city}, {market.country}</span>
+                        </div>
+                        <div className="mt-2">
+                          <span className="px-2 py-0.5 rounded-full bg-accent/20 text-xs font-medium text-accent-foreground">
+                            {market.category}
+                          </span>
+                        </div>
+                        {market.description && (
+                          <p className="text-xs text-muted-foreground mt-2">
+                            {market.description}
+                          </p>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          {/* Manufacturing Hubs */}
+          <TabsContent value="hubs" className="mt-4 space-y-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder={t("business.searchCity")}
+                value={hubSearch}
+                onChange={(e) => setHubSearch(e.target.value)}
+                className="pl-10 bg-card border-border/50"
+              />
+            </div>
+
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : filteredHubs.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                {t("business.noResults")}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredHubs.map((hub) => (
+                  <div
+                    key={hub.id}
+                    className="bg-card rounded-2xl p-4 border border-border/50"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center">
+                        <Factory className="w-5 h-5 text-accent" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-semibold text-foreground">{hub.city}</h3>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                          <Globe className="w-3 h-3" />
+                          <span>{hub.country}</span>
+                        </div>
+                        <div className="mt-2">
+                          <span className="px-2 py-0.5 rounded-full bg-primary/20 text-xs font-medium text-primary">
+                            {hub.industry}
+                          </span>
+                        </div>
+                        {hub.specializations && hub.specializations.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-2">
+                            {hub.specializations.map((spec, i) => (
+                              <span
+                                key={i}
+                                className="px-2 py-0.5 rounded-full bg-secondary text-xs text-muted-foreground"
+                              >
+                                {spec}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          {/* Company Search */}
+          <TabsContent value="companies" className="mt-4 space-y-4">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder={t("business.searchCompany")}
+                value={companySearch}
+                onChange={(e) => setCompanySearch(e.target.value)}
+                className="pl-10 bg-card border-border/50"
+              />
+            </div>
+
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : filteredCompanies.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                {t("business.noResults")}
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredCompanies.map((company) => (
+                  <div
+                    key={company.id}
+                    className="bg-card rounded-2xl p-4 border border-border/50"
+                  >
+                    <div className="flex items-start gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
+                        <Building2 className="w-5 h-5 text-muted-foreground" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-semibold text-foreground">{company.name}</h3>
+                          {company.verified && (
+                            <BadgeCheck className="w-4 h-4 text-primary" />
+                          )}
+                        </div>
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                          <MapPin className="w-3 h-3" />
+                          <span>{company.city}, {company.country}</span>
+                        </div>
+                        <div className="flex items-center gap-3 mt-2">
+                          {company.rating && (
+                            <div className="flex items-center gap-1">
+                              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                              <span className="text-sm font-medium">{company.rating}</span>
+                            </div>
+                          )}
+                          {company.years_in_business && (
+                            <span className="text-xs text-muted-foreground">
+                              {company.years_in_business} {t("business.yearsInBusiness")}
+                            </span>
+                          )}
+                        </div>
+                        <div className="mt-2">
+                          <span className="px-2 py-0.5 rounded-full bg-secondary text-xs text-muted-foreground">
+                            {company.industry}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
+          {/* Exhibitions Calendar */}
+          <TabsContent value="exhibitions" className="mt-4 space-y-3">
+            {loading ? (
+              <div className="flex justify-center py-8">
+                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : exhibitions.length === 0 ? (
+              <div className="text-center py-8 text-muted-foreground">
+                {t("business.noResults")}
+              </div>
+            ) : (
+              exhibitions.map((exhibition) => (
+                <div
+                  key={exhibition.id}
+                  className="bg-card rounded-2xl p-4 border border-border/50"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="flex flex-col items-center justify-center w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20">
+                      <span className="text-lg font-bold text-primary">
+                        {new Date(exhibition.start_date).getDate()}
+                      </span>
+                      <span className="text-xs text-muted-foreground uppercase">
+                        {new Date(exhibition.start_date).toLocaleDateString("en", { month: "short" })}
+                      </span>
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground">{exhibition.name}</h3>
+                      <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+                        <MapPin className="w-3 h-3" />
+                        <span>{exhibition.city}, {exhibition.country}</span>
+                      </div>
+                      {exhibition.venue && (
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {exhibition.venue}
+                        </p>
+                      )}
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="px-2 py-0.5 rounded-full bg-accent/20 text-xs font-medium">
+                          {exhibition.category}
+                        </span>
+                        <span className="text-xs text-muted-foreground">
+                          {formatDate(exhibition.start_date)} - {formatDate(exhibition.end_date)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </TabsContent>
+        </Tabs>
       </section>
     </div>
   );

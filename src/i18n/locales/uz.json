@@ -1,0 +1,98 @@
+{
+  "app": {
+    "name": "Buraq Ekotizimi",
+    "welcome": "Xush kelibsiz",
+    "services": "Xizmatlar"
+  },
+  "nav": {
+    "home": "Bosh sahifa",
+    "cargo": "Yuk",
+    "rewards": "Mukofotlar",
+    "profile": "Profil"
+  },
+  "modules": {
+    "halal": "Halol Taomlar",
+    "travel": "Sayohat va Bog'lar",
+    "business": "Biznes Tekshiruv",
+    "cargo": "Yuk Kuzatuvi",
+    "mosques": "Masjidlar",
+    "eco": "Eco Projects"
+  },
+  "home": {
+    "guestPrompt": "Ball yig'ishni boshlang",
+    "guestPromptDesc": "Tizimga kiring va mukofotlar oling",
+    "umraProgress": "Umra Sayohati",
+    "sacredPilgrimage": "Muqaddas ziyorat",
+    "progress": "Jarayon",
+    "latestCargo": "Oxirgi yuk"
+  },
+  "business": {
+    "title": "B2B Hub",
+    "subtitle": "Biznes markazi",
+    "deepCheck": "Chuqur Tekshiruv",
+    "deepCheckDesc": "Mahsulot yoki kompaniyani to'liq tahlil qiling",
+    "marketFinder": "Bozor Topish",
+    "marketFinderDesc": "Eng yaxshi optom bozorlarni toping",
+    "manufacturingMap": "Ishlab chiqarish Xaritasi",
+    "manufacturingMapDesc": "Shahar bo'yicha ishlab chiqarish markazlari",
+    "companySearch": "Kompaniya Qidirish",
+    "companySearchDesc": "Kompaniya ishonchliligini tekshiring",
+    "exhibitions": "Ko'rgazmalar Taqvimi",
+    "exhibitionsDesc": "Kelgusi savdo yarmarkalari",
+    "searchCategory": "Kategoriya qidirish",
+    "searchCity": "Shahar qidirish",
+    "searchCompany": "Kompaniya nomi",
+    "verified": "Tasdiqlangan",
+    "yearsInBusiness": "yillik tajriba",
+    "rating": "Reyting",
+    "noResults": "Natija topilmadi",
+    "viewAll": "Barchasini ko'rish",
+    "stats": {
+      "revenue": "Daromad",
+      "orders": "Buyurtmalar",
+      "clients": "Mijozlar"
+    },
+    "services": "Xizmatlar",
+    "marketplace": "Bozor maydoni",
+    "marketplaceDesc": "Mahsulotlarni sotish va xarid qilish",
+    "marketAnalysis": "Bozor tahlili",
+    "marketAnalysisDesc": "Narxlar va trendlar",
+    "partners": "Hamkorlar",
+    "partnersDesc": "Biznes aloqalar tarmog'i",
+    "ordersTitle": "Buyurtmalar",
+    "ordersDesc": "Faol buyurtmalarni boshqarish"
+  },
+  "profile": {
+    "title": "Profil",
+    "login": "Kirish / Ro'yxatdan o'tish",
+    "loginPrompt": "Profilingizni ko'rish uchun tizimga kiring",
+    "signOut": "Chiqish",
+    "myReports": "Mening hisobotlarim",
+    "scanHistory": "Skanerlash tarixi",
+    "savedPlaces": "Saqlangan joylar",
+    "notifications": "Bildirishnomalar",
+    "settings": "Sozlamalar",
+    "language": "Til",
+    "deepCheck": "Chuqur tekshiruv",
+    "rewards": "Mukofotlar",
+    "adminPanel": "Admin Panel",
+    "points": "ball",
+    "cargos": "Yuklar",
+    "places": "Joylar",
+    "reports": "Hisobotlar"
+  },
+  "language": {
+    "title": "Tilni tanlang",
+    "uz": "O'zbekcha",
+    "en": "English",
+    "ru": "Русский",
+    "ar": "العربية"
+  },
+  "common": {
+    "search": "Qidirish",
+    "loading": "Yuklanmoqda...",
+    "more": "Batafsil",
+    "all": "Barchasi",
+    "close": "Yopish"
+  }
+}

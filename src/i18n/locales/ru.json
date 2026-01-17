@@ -1,0 +1,98 @@
+{
+  "app": {
+    "name": "Экосистема Buraq",
+    "welcome": "Добро пожаловать",
+    "services": "Услуги"
+  },
+  "nav": {
+    "home": "Главная",
+    "cargo": "Грузы",
+    "rewards": "Награды",
+    "profile": "Профиль"
+  },
+  "modules": {
+    "halal": "Халяль Еда",
+    "travel": "Путешествия и Сады",
+    "business": "Бизнес Проверка",
+    "cargo": "Отслеживание Грузов",
+    "mosques": "Мечети",
+    "eco": "Эко Проекты"
+  },
+  "home": {
+    "guestPrompt": "Начните зарабатывать баллы",
+    "guestPromptDesc": "Войдите и получайте награды",
+    "umraProgress": "Путешествие Умра",
+    "sacredPilgrimage": "Священное паломничество",
+    "progress": "Прогресс",
+    "latestCargo": "Последний груз"
+  },
+  "business": {
+    "title": "B2B Хаб",
+    "subtitle": "Бизнес центр",
+    "deepCheck": "Глубокая Проверка",
+    "deepCheckDesc": "Полный анализ продукта или компании",
+    "marketFinder": "Поиск Рынков",
+    "marketFinderDesc": "Найдите лучшие оптовые рынки",
+    "manufacturingMap": "Карта Производства",
+    "manufacturingMapDesc": "Производственные центры по городам",
+    "companySearch": "Поиск Компании",
+    "companySearchDesc": "Проверьте надежность компании",
+    "exhibitions": "Календарь Выставок",
+    "exhibitionsDesc": "Предстоящие торговые ярмарки",
+    "searchCategory": "Поиск категории",
+    "searchCity": "Поиск города",
+    "searchCompany": "Название компании",
+    "verified": "Проверено",
+    "yearsInBusiness": "лет в бизнесе",
+    "rating": "Рейтинг",
+    "noResults": "Результаты не найдены",
+    "viewAll": "Смотреть все",
+    "stats": {
+      "revenue": "Доход",
+      "orders": "Заказы",
+      "clients": "Клиенты"
+    },
+    "services": "Услуги",
+    "marketplace": "Торговая площадка",
+    "marketplaceDesc": "Покупка и продажа товаров",
+    "marketAnalysis": "Анализ рынка",
+    "marketAnalysisDesc": "Цены и тренды",
+    "partners": "Партнеры",
+    "partnersDesc": "Бизнес сеть",
+    "ordersTitle": "Заказы",
+    "ordersDesc": "Управление активными заказами"
+  },
+  "profile": {
+    "title": "Профиль",
+    "login": "Вход / Регистрация",
+    "loginPrompt": "Войдите чтобы увидеть свой профиль",
+    "signOut": "Выйти",
+    "myReports": "Мои отчеты",
+    "scanHistory": "История сканирования",
+    "savedPlaces": "Сохраненные места",
+    "notifications": "Уведомления",
+    "settings": "Настройки",
+    "language": "Язык",
+    "deepCheck": "Глубокая проверка",
+    "rewards": "Награды",
+    "adminPanel": "Панель администратора",
+    "points": "баллов",
+    "cargos": "Грузы",
+    "places": "Места",
+    "reports": "Отчеты"
+  },
+  "language": {
+    "title": "Выберите язык",
+    "uz": "O'zbekcha",
+    "en": "English",
+    "ru": "Русский",
+    "ar": "العربية"
+  },
+  "common": {
+    "search": "Поиск",
+    "loading": "Загрузка...",
+    "more": "Подробнее",
+    "all": "Все",
+    "close": "Закрыть"
+  }
+}

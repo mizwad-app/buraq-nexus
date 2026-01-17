@@ -1,0 +1,98 @@
+{
+  "app": {
+    "name": "نظام براق البيئي",
+    "welcome": "مرحبا",
+    "services": "الخدمات"
+  },
+  "nav": {
+    "home": "الرئيسية",
+    "cargo": "الشحن",
+    "rewards": "المكافآت",
+    "profile": "الملف الشخصي"
+  },
+  "modules": {
+    "halal": "الطعام الحلال",
+    "travel": "السفر والحدائق",
+    "business": "فحص الأعمال",
+    "cargo": "تتبع الشحنات",
+    "mosques": "المساجد",
+    "eco": "مشاريع بيئية"
+  },
+  "home": {
+    "guestPrompt": "ابدأ في كسب النقاط",
+    "guestPromptDesc": "سجل دخولك واحصل على المكافآت",
+    "umraProgress": "رحلة العمرة",
+    "sacredPilgrimage": "الحج المقدس",
+    "progress": "التقدم",
+    "latestCargo": "آخر شحنة"
+  },
+  "business": {
+    "title": "مركز الأعمال",
+    "subtitle": "مركز B2B",
+    "deepCheck": "الفحص العميق",
+    "deepCheckDesc": "تحليل كامل للمنتج أو الشركة",
+    "marketFinder": "الباحث عن السوق",
+    "marketFinderDesc": "ابحث عن أفضل أسواق الجملة",
+    "manufacturingMap": "خريطة التصنيع",
+    "manufacturingMapDesc": "مراكز الإنتاج حسب المدينة",
+    "companySearch": "البحث عن شركة",
+    "companySearchDesc": "تحقق من موثوقية الشركة",
+    "exhibitions": "تقويم المعارض",
+    "exhibitionsDesc": "المعارض التجارية القادمة",
+    "searchCategory": "بحث الفئة",
+    "searchCity": "بحث المدينة",
+    "searchCompany": "اسم الشركة",
+    "verified": "موثق",
+    "yearsInBusiness": "سنوات في العمل",
+    "rating": "التقييم",
+    "noResults": "لم يتم العثور على نتائج",
+    "viewAll": "عرض الكل",
+    "stats": {
+      "revenue": "الإيرادات",
+      "orders": "الطلبات",
+      "clients": "العملاء"
+    },
+    "services": "الخدمات",
+    "marketplace": "السوق",
+    "marketplaceDesc": "شراء وبيع المنتجات",
+    "marketAnalysis": "تحليل السوق",
+    "marketAnalysisDesc": "الأسعار والاتجاهات",
+    "partners": "الشركاء",
+    "partnersDesc": "شبكة الأعمال",
+    "ordersTitle": "الطلبات",
+    "ordersDesc": "إدارة الطلبات النشطة"
+  },
+  "profile": {
+    "title": "الملف الشخصي",
+    "login": "تسجيل الدخول / التسجيل",
+    "loginPrompt": "سجل دخولك لعرض ملفك الشخصي",
+    "signOut": "تسجيل الخروج",
+    "myReports": "تقاريري",
+    "scanHistory": "سجل المسح",
+    "savedPlaces": "الأماكن المحفوظة",
+    "notifications": "الإشعارات",
+    "settings": "الإعدادات",
+    "language": "اللغة",
+    "deepCheck": "الفحص العميق",
+    "rewards": "المكافآت",
+    "adminPanel": "لوحة الإدارة",
+    "points": "نقاط",
+    "cargos": "الشحنات",
+    "places": "الأماكن",
+    "reports": "التقارير"
+  },
+  "language": {
+    "title": "اختر اللغة",
+    "uz": "O'zbekcha",
+    "en": "English",
+    "ru": "Русский",
+    "ar": "العربية"
+  },
+  "common": {
+    "search": "بحث",
+    "loading": "جار التحميل...",
+    "more": "المزيد",
+    "all": "الكل",
+    "close": "إغلاق"
+  }
+}

@@ -1,0 +1,98 @@
+{
+  "app": {
+    "name": "Buraq Ecosystem",
+    "welcome": "Welcome",
+    "services": "Services"
+  },
+  "nav": {
+    "home": "Home",
+    "cargo": "Cargo",
+    "rewards": "Rewards",
+    "profile": "Profile"
+  },
+  "modules": {
+    "halal": "Halal Food",
+    "travel": "Travel & Gardens",
+    "business": "Business Check",
+    "cargo": "Cargo Tracking",
+    "mosques": "Mosques",
+    "eco": "Eco Projects"
+  },
+  "home": {
+    "guestPrompt": "Start earning points",
+    "guestPromptDesc": "Sign in and get rewards",
+    "umraProgress": "Umra Journey",
+    "sacredPilgrimage": "Sacred pilgrimage",
+    "progress": "Progress",
+    "latestCargo": "Latest cargo"
+  },
+  "business": {
+    "title": "B2B Hub",
+    "subtitle": "Business center",
+    "deepCheck": "Deep Check",
+    "deepCheckDesc": "Full analysis of product or company",
+    "marketFinder": "Market Finder",
+    "marketFinderDesc": "Find the best wholesale markets",
+    "manufacturingMap": "Manufacturing Map",
+    "manufacturingMapDesc": "Production hubs by city",
+    "companySearch": "Company Search",
+    "companySearchDesc": "Check company reliability",
+    "exhibitions": "Exhibitions Calendar",
+    "exhibitionsDesc": "Upcoming trade fairs",
+    "searchCategory": "Search category",
+    "searchCity": "Search city",
+    "searchCompany": "Company name",
+    "verified": "Verified",
+    "yearsInBusiness": "years in business",
+    "rating": "Rating",
+    "noResults": "No results found",
+    "viewAll": "View all",
+    "stats": {
+      "revenue": "Revenue",
+      "orders": "Orders",
+      "clients": "Clients"
+    },
+    "services": "Services",
+    "marketplace": "Marketplace",
+    "marketplaceDesc": "Buy and sell products",
+    "marketAnalysis": "Market Analysis",
+    "marketAnalysisDesc": "Prices and trends",
+    "partners": "Partners",
+    "partnersDesc": "Business network",
+    "ordersTitle": "Orders",
+    "ordersDesc": "Manage active orders"
+  },
+  "profile": {
+    "title": "Profile",
+    "login": "Sign In / Sign Up",
+    "loginPrompt": "Sign in to view your profile",
+    "signOut": "Sign Out",
+    "myReports": "My Reports",
+    "scanHistory": "Scan History",
+    "savedPlaces": "Saved Places",
+    "notifications": "Notifications",
+    "settings": "Settings",
+    "language": "Language",
+    "deepCheck": "Deep Check",
+    "rewards": "Rewards",
+    "adminPanel": "Admin Panel",
+    "points": "points",
+    "cargos": "Cargos",
+    "places": "Places",
+    "reports": "Reports"
+  },
+  "language": {
+    "title": "Select Language",
+    "uz": "O'zbekcha",
+    "en": "English",
+    "ru": "Русский",
+    "ar": "العربية"
+  },
+  "common": {
+    "search": "Search",
+    "loading": "Loading...",
+    "more": "More",
+    "all": "All",
+    "close": "Close"
+  }
+}

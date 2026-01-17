@@ -1,22 +1,24 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Home, Compass, Gift, User, ScanLine } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AIScannerModal } from "./AIScannerModal";
 
-const navItems = [
-  { path: "/", icon: Home, label: "Bosh" },
-  { path: "/cargo", icon: Compass, label: "Yuk" },
-];
-
-const rightNavItems = [
-  { path: "/rewards", icon: Gift, label: "Mukofot" },
-  { path: "/profile", icon: User, label: "Profil" },
-];
-
 export const BottomNavigation = () => {
   const location = useLocation();
+  const { t } = useTranslation();
   const [scannerOpen, setScannerOpen] = useState(false);
+
+  const navItems = [
+    { path: "/", icon: Home, label: t("nav.home") },
+    { path: "/cargo", icon: Compass, label: t("nav.cargo") },
+  ];
+
+  const rightNavItems = [
+    { path: "/rewards", icon: Gift, label: t("nav.rewards") },
+    { path: "/profile", icon: User, label: t("nav.profile") },
+  ];
 
   return (
     <>
