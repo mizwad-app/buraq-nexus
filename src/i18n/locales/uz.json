@@ -36,6 +36,7 @@
     "hubs": "Zavodlar",
     "companies": "Kompaniyalar",
     "fairs": "Yarmarkalar",
+    "legal": "Huquqiy Yordam",
     "selectCity": "Shahar tanlang",
     "selectCategory": "Kategoriya tanlang",
     "cities": "shaharlar",
@@ -57,7 +58,26 @@
     "yearsInBusiness": "yillik tajriba",
     "rating": "Reyting",
     "noResults": "Natija topilmadi",
-    "viewAll": "Barchasini ko'rish"
+    "viewAll": "Barchasini ko'rish",
+    "legalSection": {
+      "title": "Huquqiy Hujjatlar",
+      "subtitle": "Shartnoma namunalari va tasdiqlangan yuridik firmalar",
+      "templates": "Shartnoma Namunalari",
+      "templatesDesc": "Tayyor huquqiy hujjat namunalari",
+      "lawFirms": "Tasdiqlangan Yuridik Firmalar",
+      "lawFirmsDesc": "Xitoyda biznes uchun ishonchli huquqiy hamkorlar",
+      "download": "Yuklab olish",
+      "viewTemplate": "Namunani ko'rish",
+      "call": "Qo'ng'iroq qilish",
+      "email": "Email",
+      "specialization": "Mutaxassislik",
+      "languages": "Tillar",
+      "salesPurchase": "Oldi-sotdi shartnomasi",
+      "qualityInspection": "Sifat tekshiruvi shartnomasi",
+      "nda": "Maxfiylik shartnomasi",
+      "copyAddress": "Manzilni nusxalash",
+      "addressCopied": "Manzil nusxalandi!"
+    }
   },
   "mosques": {
     "title": "Masjidlar",
@@ -286,6 +306,21 @@
       "tip1": "Kelishdan oldin ishonchli VPN yuklab oling",
       "tip2": "Google Translate-ni oflayn xitoycha bilan o'rnating",
       "tip3": "Pleco lug'ati xitoycha uchun juda yaxshi"
+    },
+    "embassy": {
+      "title": "Favqulodda va Diplomatik Aloqalar",
+      "subtitle": "Xitoydagi O'zbekiston Elchixonasi va Konsulligi",
+      "embassy": "Elchixona",
+      "consulate": "Bosh Konsullik",
+      "hotline": "Ishonch telefoni",
+      "emergencyPhone": "Favqulodda telefon",
+      "workingHours": "Ish vaqti",
+      "openMap": "Xaritada ochish",
+      "call": "Qo'ng'iroq",
+      "copyAddress": "Xitoycha manzilni nusxalash",
+      "addressCopied": "Xitoycha manzil nusxalandi! Taksi haydovchisiga ko'rsating.",
+      "email": "Email",
+      "website": "Veb-sayt"
     }
   }
 }
