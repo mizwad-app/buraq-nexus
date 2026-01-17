@@ -36,6 +36,7 @@
     "hubs": "Factories",
     "companies": "Companies",
     "fairs": "Trade Fairs",
+    "legal": "Legal Support",
     "selectCity": "Select city",
     "selectCategory": "Select category",
     "cities": "cities",
@@ -57,7 +58,26 @@
     "yearsInBusiness": "years in business",
     "rating": "Rating",
     "noResults": "No results found",
-    "viewAll": "View all"
+    "viewAll": "View all",
+    "legalSection": {
+      "title": "Legal Documents",
+      "subtitle": "Contract templates and verified law firms",
+      "templates": "Contract Templates",
+      "templatesDesc": "Ready-to-use legal document templates",
+      "lawFirms": "Verified Law Firms",
+      "lawFirmsDesc": "Trusted legal partners for business in China",
+      "download": "Download",
+      "viewTemplate": "View Template",
+      "call": "Call",
+      "email": "Email",
+      "specialization": "Specialization",
+      "languages": "Languages",
+      "salesPurchase": "Sales & Purchase Agreement",
+      "qualityInspection": "Quality Inspection Agreement",
+      "nda": "Non-Disclosure Agreement",
+      "copyAddress": "Copy Address",
+      "addressCopied": "Address copied!"
+    }
   },
   "mosques": {
     "title": "Mosques",
@@ -286,6 +306,21 @@
       "tip1": "Download a reliable VPN before arriving",
       "tip2": "Install Google Translate with offline Chinese",
       "tip3": "Pleco dictionary is excellent for Chinese"
+    },
+    "embassy": {
+      "title": "Emergency & Diplomatic Contacts",
+      "subtitle": "Uzbekistan Embassy and Consulate in China",
+      "embassy": "Embassy",
+      "consulate": "Consulate General",
+      "hotline": "Hotline",
+      "emergencyPhone": "Emergency Phone",
+      "workingHours": "Working Hours",
+      "openMap": "Open in Maps",
+      "call": "Call",
+      "copyAddress": "Copy Chinese Address",
+      "addressCopied": "Chinese address copied! Show to taxi driver.",
+      "email": "Email",
+      "website": "Website"
     }
   }
 }

@@ -206,6 +206,111 @@ export type Database = {
         }
         Relationships: []
       }
+      embassies: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_chinese: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          country: string
+          created_at: string
+          email: string | null
+          emergency_phone: string | null
+          id: string
+          latitude: number | null
+          longitude: number | null
+          map_url: string | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          phone: string | null
+          type: string
+          website: string | null
+          working_hours: string | null
+          working_hours_ar: string | null
+          working_hours_en: string | null
+          working_hours_ru: string | null
+          working_hours_uz: string | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          email?: string | null
+          emergency_phone?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          map_url?: string | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          type?: string
+          website?: string | null
+          working_hours?: string | null
+          working_hours_ar?: string | null
+          working_hours_en?: string | null
+          working_hours_ru?: string | null
+          working_hours_uz?: string | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          email?: string | null
+          emergency_phone?: string | null
+          id?: string
+          latitude?: number | null
+          longitude?: number | null
+          map_url?: string | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          type?: string
+          website?: string | null
+          working_hours?: string | null
+          working_hours_ar?: string | null
+          working_hours_en?: string | null
+          working_hours_ru?: string | null
+          working_hours_uz?: string | null
+        }
+        Relationships: []
+      }
       exhibitions: {
         Row: {
           category: string
@@ -376,6 +481,168 @@ export type Database = {
           name?: string
           points_required?: number
           stock?: number | null
+        }
+        Relationships: []
+      }
+      law_firms: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_chinese: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          country: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
+          email: string | null
+          id: string
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          phone: string | null
+          specialization: string
+          specialization_ar: string | null
+          specialization_en: string | null
+          specialization_ru: string | null
+          specialization_uz: string | null
+          verified: boolean | null
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          email?: string | null
+          id?: string
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          specialization: string
+          specialization_ar?: string | null
+          specialization_en?: string | null
+          specialization_ru?: string | null
+          specialization_uz?: string | null
+          verified?: boolean | null
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          email?: string | null
+          id?: string
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          specialization?: string
+          specialization_ar?: string | null
+          specialization_en?: string | null
+          specialization_ru?: string | null
+          specialization_uz?: string | null
+          verified?: boolean | null
+          website?: string | null
+        }
+        Relationships: []
+      }
+      legal_templates: {
+        Row: {
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
+          file_url: string | null
+          id: string
+          languages: string[] | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          template_type: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          file_url?: string | null
+          id?: string
+          languages?: string[] | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          template_type: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          file_url?: string | null
+          id?: string
+          languages?: string[] | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          template_type?: string
         }
         Relationships: []
       }
