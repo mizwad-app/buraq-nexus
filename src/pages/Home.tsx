@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { ImageCard } from "@/components/ImageCard";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { 
   Plane, 
   Trophy, 
   Star, 
   Package, 
   ChevronRight, 
-  Clock,
   Factory,
   Warehouse,
   Ship,
@@ -44,15 +45,6 @@ interface CargoTracking {
 
 const UMRA_TARGET = 10000;
 
-const modules = [
-  { id: "halol", title: "Halol Taomlar", image: halalFood, route: "/ibadah" },
-  { id: "travel", title: "Sayohat va Bog'lar", image: travelNature, route: "/travel" },
-  { id: "business", title: "Biznes Tekshiruv", image: business, route: "/business" },
-  { id: "cargo", title: "Yuk Kuzatuvi", image: cargoImg, route: "/cargo" },
-  { id: "mosque", title: "Masjidlar", image: mosque, route: "/mosques" },
-  { id: "eco", title: "Eco Projects", image: ecoProjects, route: "/eco" },
-];
-
 const trackingSteps = [
   { id: "factory_departed", label: "Zavoddan jo'natildi", icon: Factory },
   { id: "china_warehouse", label: "Xitoy ombori", icon: Warehouse },
@@ -69,10 +61,20 @@ const getStepInfo = (status: string) => {
 
 const Home = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [userPoints, setUserPoints] = useState<UserPoints | null>(null);
   const [latestCargo, setLatestCargo] = useState<CargoTracking | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const modules = [
+    { id: "halol", title: t("modules.halal"), image: halalFood, route: "/ibadah" },
+    { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel" },
+    { id: "business", title: t("modules.business"), image: business, route: "/business" },
+    { id: "cargo", title: t("modules.cargo"), image: cargoImg, route: "/cargo" },
+    { id: "mosque", title: t("modules.mosques"), image: mosque, route: "/mosques" },
+    { id: "eco", title: t("modules.eco"), image: ecoProjects, route: "/eco" },
+  ];
 
   useEffect(() => {
     if (user) {
@@ -122,13 +124,16 @@ const Home = () => {
     <div className="min-h-screen bg-background safe-bottom">
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
-        <div className="animate-fade-in">
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            Buraq Ekotizimi
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
-            {user ? `Xush kelibsiz, ${user.user_metadata?.full_name || "Foydalanuvchi"}!` : "Premium xizmatlar platformasi"}
-          </p>
+        <div className="flex items-center justify-between animate-fade-in">
+          <div>
+            <h1 className="text-2xl font-display font-bold text-foreground">
+              {t("app.name")}
+            </h1>
+            <p className="text-sm text-muted-foreground mt-1">
+              {user ? `${t("app.welcome")}, ${user.user_metadata?.full_name || "Foydalanuvchi"}!` : "Premium xizmatlar platformasi"}
+            </p>
+          </div>
+          <LanguageSelector />
         </div>
       </header>
 
@@ -155,11 +160,11 @@ const Home = () => {
                       <div className="flex items-center gap-2">
                         <Plane className="w-4 h-4 text-amber-400" />
                         <span className="text-xs font-medium text-amber-400 uppercase tracking-wider">
-                          Umra Sayohati
+                          {t("home.umraProgress")}
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Muqaddas ziyorat
+                        {t("home.sacredPilgrimage")}
                       </p>
                     </div>
                   </div>
@@ -172,7 +177,7 @@ const Home = () => {
                 {/* Progress */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="text-muted-foreground">Jarayon</span>
+                    <span className="text-muted-foreground">{t("home.progress")}</span>
                     <span className="text-foreground">
                       {points.toLocaleString()} / {UMRA_TARGET.toLocaleString()}
                     </span>
@@ -208,7 +213,7 @@ const Home = () => {
                     <Package className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">Oxirgi yuk</p>
+                    <p className="text-xs text-muted-foreground">{t("home.latestCargo")}</p>
                     <p className="font-mono font-semibold text-foreground">
                       {latestCargo.tracking_number}
                     </p>
@@ -270,8 +275,8 @@ const Home = () => {
                   <Star className="w-5 h-5 text-primary-foreground" />
                 </div>
                 <div className="flex-1 text-left">
-                  <p className="font-medium text-foreground">Ball yig'ishni boshlang</p>
-                  <p className="text-xs text-muted-foreground">Tizimga kiring va mukofotlar oling</p>
+                  <p className="font-medium text-foreground">{t("home.guestPrompt")}</p>
+                  <p className="text-xs text-muted-foreground">{t("home.guestPromptDesc")}</p>
                 </div>
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </div>
@@ -283,7 +288,7 @@ const Home = () => {
       {/* Section Title */}
       <section className="px-5 mb-3">
         <h2 className="text-lg font-display font-semibold text-foreground">
-          Xizmatlar
+          {t("app.services")}
         </h2>
       </section>
 

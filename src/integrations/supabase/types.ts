@@ -56,6 +56,48 @@ export type Database = {
         }
         Relationships: []
       }
+      companies: {
+        Row: {
+          city: string
+          contact_info: string | null
+          country: string
+          created_at: string
+          description: string | null
+          id: string
+          industry: string
+          name: string
+          rating: number | null
+          verified: boolean | null
+          years_in_business: number | null
+        }
+        Insert: {
+          city: string
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          industry: string
+          name: string
+          rating?: number | null
+          verified?: boolean | null
+          years_in_business?: number | null
+        }
+        Update: {
+          city?: string
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          industry?: string
+          name?: string
+          rating?: number | null
+          verified?: boolean | null
+          years_in_business?: number | null
+        }
+        Relationships: []
+      }
       deep_checks: {
         Row: {
           admin_notes: string | null
@@ -113,6 +155,48 @@ export type Database = {
           status?: string
           updated_at?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      exhibitions: {
+        Row: {
+          category: string
+          city: string
+          country: string
+          created_at: string
+          description: string | null
+          end_date: string
+          id: string
+          name: string
+          start_date: string
+          venue: string | null
+          website_url: string | null
+        }
+        Insert: {
+          category: string
+          city: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          end_date: string
+          id?: string
+          name: string
+          start_date: string
+          venue?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          category?: string
+          city?: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          end_date?: string
+          id?: string
+          name?: string
+          start_date?: string
+          venue?: string | null
+          website_url?: string | null
         }
         Relationships: []
       }
@@ -214,6 +298,36 @@ export type Database = {
           reference_id?: string | null
           transaction_type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      production_hubs: {
+        Row: {
+          city: string
+          country: string
+          created_at: string
+          description: string | null
+          id: string
+          industry: string
+          specializations: string[] | null
+        }
+        Insert: {
+          city: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          industry: string
+          specializations?: string[] | null
+        }
+        Update: {
+          city?: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          industry?: string
+          specializations?: string[] | null
         }
         Relationships: []
       }
@@ -402,6 +516,39 @@ export type Database = {
           id?: string
           role?: Database["public"]["Enums"]["app_role"]
           user_id?: string
+        }
+        Relationships: []
+      }
+      wholesale_markets: {
+        Row: {
+          category: string
+          city: string
+          contact_info: string | null
+          country: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+        }
+        Insert: {
+          category: string
+          city: string
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+        }
+        Update: {
+          category?: string
+          city?: string
+          contact_info?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
         }
         Relationships: []
       }

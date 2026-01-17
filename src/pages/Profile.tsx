@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
 import { MyReports } from "@/components/MyReports";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -22,6 +24,7 @@ import { cn } from "@/lib/utils";
 
 const Profile = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { user, loading, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [showReports, setShowReports] = useState(false);
@@ -91,11 +94,11 @@ const Profile = () => {
   };
 
   const menuItems = [
-    { icon: FileText, label: "Mening hisobotlarim", count: stats.reports, action: () => setShowReports(!showReports) },
-    { icon: History, label: "Skanerlash tarixi", count: stats.scans },
-    { icon: MapPin, label: "Saqlangan joylar", count: stats.places },
-    { icon: Bell, label: "Bildirishnomalar" },
-    { icon: Settings, label: "Sozlamalar" },
+    { icon: FileText, label: t("profile.myReports"), count: stats.reports, action: () => setShowReports(!showReports) },
+    { icon: History, label: t("profile.scanHistory"), count: stats.scans },
+    { icon: MapPin, label: t("profile.savedPlaces"), count: stats.places },
+    { icon: Bell, label: t("profile.notifications") },
+    { icon: Settings, label: t("profile.settings") },
   ];
 
   if (loading) {
@@ -114,10 +117,10 @@ const Profile = () => {
             <User className="w-10 h-10 text-muted-foreground" />
           </div>
           <h1 className="text-xl font-display font-bold text-foreground mb-2">
-            Profilga kirish
+            {t("profile.title")}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Profilingizni ko'rish uchun tizimga kiring
+            {t("profile.loginPrompt")}
           </p>
         </div>
         
@@ -125,13 +128,13 @@ const Profile = () => {
           onClick={() => setShowAuthModal(true)}
           className="bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold px-8 py-6 shadow-glow"
         >
-          Kirish / Ro'yxatdan o'tish
+          {t("profile.login")}
         </Button>
 
         <AuthModal
           open={showAuthModal}
           onOpenChange={setShowAuthModal}
-          triggerReason="Profilingizni ko'rish uchun tizimga kiring"
+          triggerReason={t("profile.loginPrompt")}
         />
       </div>
     );
@@ -145,7 +148,7 @@ const Profile = () => {
       {/* Header */}
       <header className="px-5 pt-12 pb-6">
         <h1 className="text-2xl font-display font-bold text-foreground">
-          Profil
+          {t("profile.title")}
         </h1>
       </header>
 
@@ -166,7 +169,7 @@ const Profile = () => {
               </p>
               <div className="flex items-center gap-1 mt-1">
                 <Star className="w-4 h-4 text-amber-400" />
-                <span className="text-sm font-bold text-amber-400">{userPoints.toLocaleString()} ball</span>
+                <span className="text-sm font-bold text-amber-400">{userPoints.toLocaleString()} {t("profile.points")}</span>
               </div>
             </div>
           </div>
@@ -175,15 +178,15 @@ const Profile = () => {
           <div className="relative grid grid-cols-3 gap-4 mt-5 pt-5 border-t border-border/30">
             <div className="text-center">
               <p className="text-xl font-bold text-primary">{stats.scans}</p>
-              <p className="text-xs text-muted-foreground">Yuklar</p>
+              <p className="text-xs text-muted-foreground">{t("profile.cargos")}</p>
             </div>
             <div className="text-center border-x border-border/30">
               <p className="text-xl font-bold text-primary">{stats.places}</p>
-              <p className="text-xs text-muted-foreground">Joylar</p>
+              <p className="text-xs text-muted-foreground">{t("profile.places")}</p>
             </div>
             <div className="text-center">
               <p className="text-xl font-bold text-primary">{stats.reports}</p>
-              <p className="text-xs text-muted-foreground">Hisobotlar</p>
+              <p className="text-xs text-muted-foreground">{t("profile.reports")}</p>
             </div>
           </div>
         </div>
@@ -199,7 +202,7 @@ const Profile = () => {
             <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
               <Scan className="w-5 h-5 text-primary" />
             </div>
-            <span className="text-sm font-medium text-foreground">Chuqur tekshiruv</span>
+            <span className="text-sm font-medium text-foreground">{t("profile.deepCheck")}</span>
           </button>
           <button 
             onClick={() => navigate("/rewards")}
@@ -208,7 +211,7 @@ const Profile = () => {
             <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
               <Star className="w-5 h-5 text-amber-400" />
             </div>
-            <span className="text-sm font-medium text-foreground">Mukofotlar</span>
+            <span className="text-sm font-medium text-foreground">{t("profile.rewards")}</span>
           </button>
         </div>
       </section>
@@ -224,7 +227,7 @@ const Profile = () => {
               <Shield className="w-5 h-5 text-amber-400" />
             </div>
             <span className="flex-1 text-left text-sm font-medium text-foreground">
-              Admin Panel
+              {t("profile.adminPanel")}
             </span>
             <ChevronRight className="w-5 h-5 text-muted-foreground" />
           </button>
@@ -234,6 +237,9 @@ const Profile = () => {
       {/* Menu Items */}
       <section className="px-5 mb-6">
         <div className="rounded-2xl bg-card border border-border/50 overflow-hidden">
+          {/* Language Selector */}
+          <LanguageSelector variant="menu-item" />
+          
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             return (
@@ -267,7 +273,7 @@ const Profile = () => {
       {showReports && (
         <section className="px-5 mb-6">
           <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-            Mening hisobotlarim
+            {t("profile.myReports")}
           </h3>
           <MyReports />
         </section>
@@ -281,7 +287,7 @@ const Profile = () => {
           className="w-full h-12 border-destructive/30 text-destructive hover:bg-destructive/10 hover:text-destructive"
         >
           <LogOut className="w-5 h-5 mr-2" />
-          Chiqish
+          {t("profile.signOut")}
         </Button>
       </section>
     </div>
