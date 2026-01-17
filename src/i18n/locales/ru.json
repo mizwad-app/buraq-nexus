@@ -58,6 +58,35 @@
     "noResults": "Результаты не найдены",
     "viewAll": "Смотреть все"
   },
+  "mosques": {
+    "title": "Мечети",
+    "subtitle": "Время намаза и мечети",
+    "findNearby": "Найти ближайшие мечети",
+    "prayerTimes": "Время намаза",
+    "nearbyMosques": "Ближайшие мечети",
+    "viewOnMap": "На карте",
+    "directions": "Маршрут",
+    "detectLocation": "Определить местоположение",
+    "locationDetected": "Местоположение определено",
+    "locationError": "Не удалось определить местоположение",
+    "fridayPrayer": "Пятничный намаз",
+    "womensSection": "Женский зал",
+    "change": "Изменить"
+  },
+  "halal": {
+    "title": "Халяль Еда",
+    "subtitle": "AI сканер и сертифицированные рестораны",
+    "aiScanner": "AI Сканер",
+    "scanProduct": "Отсканируйте продукт для проверки",
+    "restaurants": "Халяль рестораны",
+    "shopping": "Торговые центры",
+    "viewOnMap": "На карте",
+    "halalCertified": "Халяль сертифицировано",
+    "hasHalalFood": "Есть халяль еда",
+    "ingredientsToAvoid": "Ингредиенты, которых следует избегать",
+    "haram": "Харам",
+    "suspicious": "Подозрительно"
+  },
   "profile": {
     "title": "Профиль",
     "login": "Вход / Регистрация",

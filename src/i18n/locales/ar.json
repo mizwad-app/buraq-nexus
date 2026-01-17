@@ -58,6 +58,35 @@
     "noResults": "لم يتم العثور على نتائج",
     "viewAll": "عرض الكل"
   },
+  "mosques": {
+    "title": "المساجد",
+    "subtitle": "أوقات الصلاة والمساجد",
+    "findNearby": "ابحث عن المساجد القريبة",
+    "prayerTimes": "أوقات الصلاة",
+    "nearbyMosques": "المساجد القريبة",
+    "viewOnMap": "عرض على الخريطة",
+    "directions": "الاتجاهات",
+    "detectLocation": "تحديد الموقع",
+    "locationDetected": "تم تحديد موقعك",
+    "locationError": "تعذر تحديد الموقع",
+    "fridayPrayer": "صلاة الجمعة",
+    "womensSection": "قسم النساء",
+    "change": "تغيير"
+  },
+  "halal": {
+    "title": "الطعام الحلال",
+    "subtitle": "ماسح AI والمطاعم المعتمدة",
+    "aiScanner": "ماسح AI",
+    "scanProduct": "امسح المنتج للتحقق",
+    "restaurants": "مطاعم حلال",
+    "shopping": "مراكز التسوق",
+    "viewOnMap": "على الخريطة",
+    "halalCertified": "معتمد حلال",
+    "hasHalalFood": "يوجد طعام حلال",
+    "ingredientsToAvoid": "المكونات التي يجب تجنبها",
+    "haram": "حرام",
+    "suspicious": "مشتبه"
+  },
   "profile": {
     "title": "الملف الشخصي",
     "login": "تسجيل الدخول / التسجيل",
