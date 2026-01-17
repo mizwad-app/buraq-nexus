@@ -88,6 +88,24 @@
     "suspicious": "Shubhali",
     "halal": "Halol"
   },
+  "scanner": {
+    "title": "Halol AI Skaner",
+    "camera": "Kamera",
+    "upload": "Yuklash",
+    "scan": "Skanerlash",
+    "analyzing": "Tahlil qilinmoqda...",
+    "aiAnalyzing": "AI mahsulotni tahlil qilmoqda...",
+    "scanAgain": "Yangidan skanerlash",
+    "deepCheck": "Chuqur tekshiruv",
+    "deepCheckStart": "Chuqur tekshiruv boshlanmoqda...",
+    "loginForDeepCheck": "Chuqur tekshiruv uchun tizimga kiring",
+    "resultHalal": "Halol",
+    "resultHalalDesc": "Bu mahsulot halol sertifikatiga ega",
+    "resultHaram": "Taqiqlangan",
+    "resultHaramDesc": "Bu mahsulot harom ingredientlarni o'z ichiga oladi",
+    "resultDoubtful": "Shubhali",
+    "resultDoubtfulDesc": "Bu mahsulotning halolligi tasdiqlanmagan"
+  },
   "profile": {
     "title": "Profil",
     "login": "Kirish / Ro'yxatdan o'tish",

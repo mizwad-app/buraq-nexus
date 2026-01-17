@@ -88,6 +88,24 @@
     "suspicious": "Suspicious",
     "halal": "Halal"
   },
+  "scanner": {
+    "title": "Halal AI Scanner",
+    "camera": "Camera",
+    "upload": "Upload",
+    "scan": "Scan",
+    "analyzing": "Analyzing...",
+    "aiAnalyzing": "AI is analyzing the product...",
+    "scanAgain": "Scan Again",
+    "deepCheck": "Deep Check",
+    "deepCheckStart": "Starting deep check...",
+    "loginForDeepCheck": "Sign in for Deep Check",
+    "resultHalal": "Halal",
+    "resultHalalDesc": "This product has halal certification",
+    "resultHaram": "Prohibited",
+    "resultHaramDesc": "This product contains haram ingredients",
+    "resultDoubtful": "Doubtful",
+    "resultDoubtfulDesc": "The halal status of this product is unconfirmed"
+  },
   "profile": {
     "title": "Profile",
     "login": "Sign In / Sign Up",

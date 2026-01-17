@@ -88,6 +88,24 @@
     "suspicious": "مشتبه",
     "halal": "حلال"
   },
+  "scanner": {
+    "title": "ماسح الحلال الذكي",
+    "camera": "الكاميرا",
+    "upload": "تحميل",
+    "scan": "مسح",
+    "analyzing": "جاري التحليل...",
+    "aiAnalyzing": "الذكاء الاصطناعي يحلل المنتج...",
+    "scanAgain": "مسح مرة أخرى",
+    "deepCheck": "فحص عميق",
+    "deepCheckStart": "بدء الفحص العميق...",
+    "loginForDeepCheck": "سجل دخولك للفحص العميق",
+    "resultHalal": "حلال",
+    "resultHalalDesc": "هذا المنتج حاصل على شهادة حلال",
+    "resultHaram": "محظور",
+    "resultHaramDesc": "هذا المنتج يحتوي على مكونات حرام",
+    "resultDoubtful": "مشتبه",
+    "resultDoubtfulDesc": "لم يتم تأكيد حالة حلال هذا المنتج"
+  },
   "profile": {
     "title": "الملف الشخصي",
     "login": "تسجيل الدخول / التسجيل",
