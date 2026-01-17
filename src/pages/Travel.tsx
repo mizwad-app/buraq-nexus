@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import {
   Plane,
   MapPin,
@@ -9,13 +10,27 @@ import {
 } from "lucide-react";
 import { ModuleCard } from "@/components/ModuleCard";
 
-const destinations = [
-  { name: "Samarqand", type: "Tarixiy shahar", image: "🏛️" },
-  { name: "Chimyon", type: "Tog' dam olish", image: "🏔️" },
-  { name: "Xiva", type: "Qadimiy qal'a", image: "🏰" },
-];
-
 const Travel = () => {
+  const { t } = useTranslation();
+
+  const destinations = [
+    { 
+      nameKey: "samarkand", 
+      typeKey: "samarkandType", 
+      image: "🏛️" 
+    },
+    { 
+      nameKey: "chimgan", 
+      typeKey: "chimganType", 
+      image: "🏔️" 
+    },
+    { 
+      nameKey: "khiva", 
+      typeKey: "khivaType", 
+      image: "🏰" 
+    },
+  ];
+
   return (
     <div className="min-h-screen eco-gradient-soft safe-bottom">
       {/* Header */}
@@ -26,14 +41,14 @@ const Travel = () => {
               <Plane className="w-5 h-5 text-primary-foreground" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              Sayohat
+              {t("travel.subtitle")}
             </span>
           </div>
           <h1 className="text-2xl font-display font-bold text-foreground">
-            Sayohat va dam olish
+            {t("travel.title")}
           </h1>
           <p className="text-muted-foreground mt-1">
-            Yangi joylarni kashf eting
+            {t("travel.discoverPlaces")}
           </p>
         </div>
       </header>
@@ -45,16 +60,16 @@ const Travel = () => {
         >
           <div className="relative z-10">
             <span className="inline-block px-3 py-1 bg-primary-foreground/20 rounded-full text-xs font-medium text-primary-foreground mb-3">
-              ✨ Tavsiya etilgan
+              ✨ {t("travel.recommended")}
             </span>
             <h2 className="text-xl font-display font-bold text-primary-foreground mb-1">
-              O'zbekiston bo'ylab sayohat
+              {t("travel.travelAcross")}
             </h2>
             <p className="text-sm text-primary-foreground/80 mb-4">
-              Qadimiy shaharlar va go'zal tabiat
+              {t("travel.ancientCities")}
             </p>
             <button className="flex items-center gap-2 text-sm font-semibold text-primary-foreground bg-primary-foreground/20 px-4 py-2 rounded-xl">
-              Ko'rish
+              {t("travel.view")}
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -65,21 +80,21 @@ const Travel = () => {
       {/* Popular Destinations */}
       <section className="px-5 mb-6">
         <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
-          Mashhur joylar
+          {t("travel.popularPlaces")}
         </h2>
         <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
           {destinations.map((dest, index) => (
             <div
-              key={dest.name}
+              key={dest.nameKey}
               className="flex-shrink-0 w-32 bg-card rounded-2xl p-4 shadow-card animate-fade-in"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="text-4xl mb-3">{dest.image}</div>
               <h3 className="font-semibold text-foreground text-sm">
-                {dest.name}
+                {t(`travel.destinations.${dest.nameKey}`)}
               </h3>
               <p className="text-xs text-muted-foreground mt-0.5">
-                {dest.type}
+                {t(`travel.destinations.${dest.typeKey}`)}
               </p>
             </div>
           ))}
@@ -89,34 +104,34 @@ const Travel = () => {
       {/* Categories */}
       <section className="px-5 pb-8">
         <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
-          Kategoriyalar
+          {t("travel.categories")}
         </h2>
         <div className="space-y-3">
           <ModuleCard
             icon={Compass}
-            title="Eko-turlar"
-            description="Tabiat bilan uyg'un sayohatlar"
+            title={t("travel.ecoTours")}
+            description={t("travel.ecoToursDesc")}
             iconBgClass="bg-eco-mint"
             delay={0}
           />
           <ModuleCard
             icon={Mountain}
-            title="Tog' turizmi"
-            description="Sarguzasht va dam olish"
+            title={t("travel.mountainTourism")}
+            description={t("travel.mountainTourismDesc")}
             iconBgClass="bg-eco-sage"
             delay={100}
           />
           <ModuleCard
             icon={Palmtree}
-            title="Oilaviy dam olish"
-            description="Butun oila uchun sayohatlar"
+            title={t("travel.familyVacation")}
+            description={t("travel.familyVacationDesc")}
             iconBgClass="bg-secondary"
             delay={200}
           />
           <ModuleCard
             icon={Camera}
-            title="Foto-turlar"
-            description="Eng go'zal manzaralar"
+            title={t("travel.photoTours")}
+            description={t("travel.photoToursDesc")}
             iconBgClass="bg-eco-emerald-light"
             delay={300}
           />

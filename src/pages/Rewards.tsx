@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ const giftIcons: Record<string, any> = {
 };
 
 const Rewards = () => {
+  const { t } = useTranslation();
   const { user, loading: authLoading } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [userPoints, setUserPoints] = useState<UserPoints | null>(null);
@@ -119,7 +121,7 @@ const Rewards = () => {
     }
 
     if (!userPoints || userPoints.total_points < gift.points_required) {
-      toast.error("Ballaringiz yetarli emas");
+      toast.error(t("rewards.notEnoughPoints"));
       return;
     }
 
@@ -142,7 +144,7 @@ const Rewards = () => {
         user_id: user.id,
         amount: -gift.points_required,
         transaction_type: "redeemed",
-        description: `${gift.name} uchun almashtirildi`,
+        description: t("rewards.exchangeDesc", { name: gift.name }),
       });
 
       // Update user points
@@ -153,10 +155,10 @@ const Rewards = () => {
         .eq("user_id", user.id);
 
       setUserPoints({ ...userPoints, total_points: newPoints });
-      toast.success(`${gift.name} muvaffaqiyatli almashtirildi!`);
+      toast.success(t("rewards.redeemSuccess", { name: gift.name }));
     } catch (error) {
       console.error("Error redeeming gift:", error);
-      toast.error("Xatolik yuz berdi");
+      toast.error(t("rewards.error"));
     } finally {
       setRedeeming(null);
     }
@@ -181,10 +183,10 @@ const Rewards = () => {
             <Gift className="w-10 h-10 text-amber-400" />
           </div>
           <h1 className="text-xl font-display font-bold text-foreground mb-2">
-            Mukofotlar
+            {t("rewards.title")}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Mukofotlarni ko'rish uchun tizimga kiring
+            {t("rewards.viewPrompt")}
           </p>
         </div>
         
@@ -192,13 +194,13 @@ const Rewards = () => {
           onClick={() => setShowAuthModal(true)}
           className="bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-semibold px-8 py-6"
         >
-          Kirish / Ro'yxatdan o'tish
+          {t("rewards.signInUp")}
         </Button>
 
         <AuthModal
           open={showAuthModal}
           onOpenChange={setShowAuthModal}
-          triggerReason="Mukofotlarni ko'rish uchun tizimga kiring"
+          triggerReason={t("rewards.viewPrompt")}
         />
       </div>
     );
@@ -211,10 +213,10 @@ const Rewards = () => {
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-2xl font-display font-bold text-foreground">
-              Mukofotlar
+              {t("rewards.title")}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Ballaringizni sovg'alarga almashtiring
+              {t("rewards.subtitle")}
             </p>
           </div>
           <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/30">
@@ -238,14 +240,14 @@ const Rewards = () => {
                 <div className="flex items-center gap-2 mb-2">
                   <Plane className="w-5 h-5 text-amber-400" />
                   <span className="text-xs font-medium text-amber-400 uppercase tracking-wider">
-                    Asosiy Mukofot
+                    {t("rewards.mainReward")}
                   </span>
                 </div>
                 <h2 className="text-xl font-display font-bold text-foreground">
-                  Umra Sayohati
+                  {t("rewards.umraTrip")}
                 </h2>
                 <p className="text-sm text-muted-foreground mt-1">
-                  Muqaddas ziyoratga bepul sayohat
+                  {t("rewards.umraDesc")}
                 </p>
               </div>
               <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center shadow-lg">
@@ -256,9 +258,9 @@ const Rewards = () => {
             {/* Progress */}
             <div className="space-y-2">
               <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Jarayonda</span>
+                <span className="text-muted-foreground">{t("rewards.inProgress")}</span>
                 <span className="font-semibold text-foreground">
-                  {points.toLocaleString()} / {UMRA_TARGET.toLocaleString()} ball
+                  {points.toLocaleString()} / {UMRA_TARGET.toLocaleString()} {t("rewards.pointsLabel")}
                 </span>
               </div>
               <div className="relative h-3 rounded-full bg-secondary/50 overflow-hidden">
@@ -272,7 +274,7 @@ const Rewards = () => {
                 />
               </div>
               <p className="text-xs text-muted-foreground text-center">
-                Yana {(UMRA_TARGET - points).toLocaleString()} ball kerak
+                {t("rewards.needMore", { points: (UMRA_TARGET - points).toLocaleString() })}
               </p>
             </div>
           </div>
@@ -287,10 +289,10 @@ const Rewards = () => {
       <section className="px-5 pb-8">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-display font-semibold text-foreground">
-            Sovg'alar
+            {t("rewards.gifts")}
           </h2>
           <button className="text-sm text-primary flex items-center gap-1">
-            Barchasi <ChevronRight className="w-4 h-4" />
+            {t("rewards.viewAll")} <ChevronRight className="w-4 h-4" />
           </button>
         </div>
 
@@ -352,10 +354,10 @@ const Rewards = () => {
                     ) : canRedeem ? (
                       <>
                         <Sparkles className="w-3.5 h-3.5 mr-1" />
-                        Olish
+                        {t("rewards.redeem")}
                       </>
                     ) : (
-                      "Yetarli emas"
+                      t("rewards.notEnough")
                     )}
                   </Button>
                 </div>
@@ -372,7 +374,7 @@ const Rewards = () => {
       <AuthModal
         open={showAuthModal}
         onOpenChange={setShowAuthModal}
-        triggerReason="Mukofotlarni ko'rish uchun tizimga kiring"
+        triggerReason={t("rewards.viewPrompt")}
       />
     </div>
   );
