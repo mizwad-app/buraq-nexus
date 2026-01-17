@@ -472,6 +472,96 @@ export type Database = {
         }
         Relationships: []
       }
+      parks: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          country: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
+          id: string
+          image_url: string | null
+          latitude: number | null
+          longitude: number | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          park_type: string | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          id?: string
+          image_url?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          park_type?: string | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          id?: string
+          image_url?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          park_type?: string | null
+        }
+        Relationships: []
+      }
       points_transactions: {
         Row: {
           amount: number
