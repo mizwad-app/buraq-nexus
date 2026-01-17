@@ -28,6 +28,7 @@ interface Restaurant {
   description: string | null;
   rating: number | null;
   is_halal_certified: boolean;
+  image_url?: string | null;
   name_uz?: string | null;
   name_ru?: string | null;
   name_en?: string | null;
@@ -46,6 +47,8 @@ interface Restaurant {
   cuisine_type_ar?: string | null;
   [key: string]: unknown;
 }
+
+const RESTAURANT_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80";
 
 interface ShoppingMall {
   id: string;
@@ -228,43 +231,53 @@ const Ibadah = () => {
               {filteredRestaurants.map((restaurant, index) => (
                 <div
                   key={restaurant.id}
-                  className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
+                  className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-foreground">{getField(restaurant, 'name')}</h3>
-                        {restaurant.is_halal_certified && (
-                          <Shield className="w-4 h-4 text-emerald-500" />
-                        )}
+                  {/* Restaurant Image */}
+                  <div className="relative h-36 w-full">
+                    <img
+                      src={restaurant.image_url || RESTAURANT_FALLBACK_IMAGE}
+                      alt={getField(restaurant, 'name')}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = RESTAURANT_FALLBACK_IMAGE;
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    {restaurant.is_halal_certified && (
+                      <div className="absolute top-3 right-3 bg-emerald-500 text-white px-2 py-1 rounded-lg flex items-center gap-1">
+                        <Shield className="w-3 h-3" />
+                        <span className="text-xs font-medium">{t("halal.halal")}</span>
                       </div>
-                      <p className="text-sm text-muted-foreground">
-                        {getField(restaurant, 'cuisine_type')}
+                    )}
+                    <div className="absolute bottom-3 left-4 right-4">
+                      <h3 className="font-semibold text-white text-lg">{getField(restaurant, 'name')}</h3>
+                      <p className="text-sm text-white/80">{getField(restaurant, 'cuisine_type')}</p>
+                    </div>
+                  </div>
+                  
+                  <div className="p-4">
+                    <p className="text-xs text-muted-foreground">
+                      {getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}
+                    </p>
+                    {getField(restaurant, 'description') && (
+                      <p className="text-xs text-muted-foreground mt-2">
+                        {getField(restaurant, 'description')}
                       </p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}
-                      </p>
-                      {getField(restaurant, 'description') && (
-                        <p className="text-xs text-muted-foreground mt-2">
-                          {getField(restaurant, 'description')}
-                        </p>
-                      )}
-                      <div className="flex items-center gap-3 mt-2">
+                    )}
+                    <div className="flex items-center justify-between mt-3">
+                      <div className="flex items-center gap-3">
                         {restaurant.rating && (
                           <div className="flex items-center gap-1 text-amber-500">
                             <Star className="w-3 h-3 fill-current" />
                             <span className="text-xs font-medium">{restaurant.rating}</span>
                           </div>
                         )}
-                        {restaurant.is_halal_certified && (
-                          <span className="text-xs text-emerald-500 font-medium">
-                            {t("halal.halalCertified")}
-                          </span>
-                        )}
                       </div>
+                      <ChevronRight className="w-5 h-5 text-muted-foreground" />
                     </div>
-                    <ChevronRight className="w-5 h-5 text-muted-foreground" />
                   </div>
                 </div>
               ))}

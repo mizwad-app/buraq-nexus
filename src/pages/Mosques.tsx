@@ -27,6 +27,7 @@ interface Mosque {
   has_womens_section: boolean;
   latitude: number | null;
   longitude: number | null;
+  image_url?: string | null;
   name_uz?: string | null;
   name_ru?: string | null;
   name_en?: string | null;
@@ -45,6 +46,8 @@ interface Mosque {
   address_ar?: string | null;
   [key: string]: unknown;
 }
+
+const MOSQUE_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
 
 const prayerTimes = [
   { name: "Fajr", nameKey: "fajr", time: "05:42", active: false },
@@ -283,51 +286,65 @@ const Mosques = () => {
             {filteredMosques.map((mosque, index) => (
               <div
                 key={mosque.id}
-                className="bg-card rounded-2xl p-4 border border-border/50 animate-fade-in"
+                className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-foreground">{getField(mosque, 'name')}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
+                {/* Mosque Image */}
+                <div className="relative h-40 w-full">
+                  <img
+                    src={mosque.image_url || MOSQUE_FALLBACK_IMAGE}
+                    alt={getField(mosque, 'name')}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = MOSQUE_FALLBACK_IMAGE;
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                  <div className="absolute bottom-3 left-4 right-4">
+                    <h3 className="font-semibold text-white text-lg">{getField(mosque, 'name')}</h3>
+                    <p className="text-sm text-white/80">
                       {getField(mosque, 'address') || `${getField(mosque, 'city')}, ${mosque.country}`}
                     </p>
-                    {getField(mosque, 'description') && (
-                      <p className="text-xs text-muted-foreground mt-2">
-                        {getField(mosque, 'description')}
-                      </p>
-                    )}
-                    <div className="flex items-center gap-3 mt-2">
-                      {mosque.has_friday_prayer && (
-                        <div className="flex items-center gap-1 text-emerald-500">
-                          <Check className="w-3 h-3" />
-                          <span className="text-xs font-medium">{t("mosques.fridayPrayer")}</span>
-                        </div>
-                      )}
-                      {mosque.has_womens_section && (
-                        <div className="flex items-center gap-1 text-primary">
-                          <Users className="w-3 h-3" />
-                          <span className="text-xs font-medium">{t("mosques.womensSection")}</span>
-                        </div>
-                      )}
-                    </div>
                   </div>
                 </div>
+                
+                <div className="p-4">
+                  {getField(mosque, 'description') && (
+                    <p className="text-xs text-muted-foreground mb-2">
+                      {getField(mosque, 'description')}
+                    </p>
+                  )}
+                  <div className="flex items-center gap-3 mb-3">
+                    {mosque.has_friday_prayer && (
+                      <div className="flex items-center gap-1 text-emerald-500">
+                        <Check className="w-3 h-3" />
+                        <span className="text-xs font-medium">{t("mosques.fridayPrayer")}</span>
+                      </div>
+                    )}
+                    {mosque.has_womens_section && (
+                      <div className="flex items-center gap-1 text-primary">
+                        <Users className="w-3 h-3" />
+                        <span className="text-xs font-medium">{t("mosques.womensSection")}</span>
+                      </div>
+                    )}
+                  </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => openDirections(mosque)}
-                    className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium"
-                  >
-                    <Navigation className="w-4 h-4" />
-                    {t("mosques.directions")}
-                  </button>
-                  <button
-                    onClick={() => openMosqueInMaps(mosque)}
-                    className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors"
-                  >
-                    <MapPin className="w-5 h-5 text-muted-foreground" />
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => openDirections(mosque)}
+                      className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium"
+                    >
+                      <Navigation className="w-4 h-4" />
+                      {t("mosques.directions")}
+                    </button>
+                    <button
+                      onClick={() => openMosqueInMaps(mosque)}
+                      className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors"
+                    >
+                      <MapPin className="w-5 h-5 text-muted-foreground" />
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}

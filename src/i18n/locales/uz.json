@@ -85,7 +85,8 @@
     "hasHalalFood": "Halol taom mavjud",
     "ingredientsToAvoid": "Saqlanish kerak bo'lgan ingredientlar",
     "haram": "Harom",
-    "suspicious": "Shubhali"
+    "suspicious": "Shubhali",
+    "halal": "Halol"
   },
   "profile": {
     "title": "Profil",
