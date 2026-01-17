@@ -107,7 +107,19 @@
     "ingredientsToAvoid": "Ингредиенты, которых следует избегать",
     "haram": "Харам",
     "suspicious": "Подозрительно",
-    "halal": "Халяль"
+    "halal": "Халяль",
+    "filterAll": "Все",
+    "filterHalalOnly": "Только халяль",
+    "filterDoubtful": "Сомнительные",
+    "filterNotHalal": "Не халяль",
+    "status": {
+      "certified": "Халяль сертифицировано",
+      "certifiedDesc": "100% Халяль сертификат. Без алкоголя.",
+      "doubtful": "Сомнительно",
+      "doubtfulDesc": "Халяльное мясо есть, но подают алкоголь.",
+      "not_halal": "Предупреждение об алкоголе",
+      "not_halalDesc": "Алкоголь и нехаляльные ингредиенты."
+    }
   },
   "scanner": {
     "title": "Халяль AI Сканер",

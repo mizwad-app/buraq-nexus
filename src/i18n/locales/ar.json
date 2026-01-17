@@ -107,7 +107,19 @@
     "ingredientsToAvoid": "المكونات التي يجب تجنبها",
     "haram": "حرام",
     "suspicious": "مشتبه",
-    "halal": "حلال"
+    "halal": "حلال",
+    "filterAll": "الكل",
+    "filterHalalOnly": "حلال فقط",
+    "filterDoubtful": "مشتبه",
+    "filterNotHalal": "غير حلال",
+    "status": {
+      "certified": "معتمد حلال",
+      "certifiedDesc": "شهادة حلال 100%. لا يوجد كحول.",
+      "doubtful": "مشتبه",
+      "doubtfulDesc": "لحم حلال متوفر لكن يقدم الكحول.",
+      "not_halal": "تحذير الكحول",
+      "not_halalDesc": "يقدم الكحول ومكونات غير حلال."
+    }
   },
   "scanner": {
     "title": "ماسح الحلال الذكي",
