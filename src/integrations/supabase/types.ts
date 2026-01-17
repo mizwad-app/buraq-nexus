@@ -931,6 +931,7 @@ export type Database = {
           description_uz: string | null
           has_halal_food: boolean | null
           id: string
+          image_url: string | null
           latitude: number | null
           longitude: number | null
           name: string
@@ -961,6 +962,7 @@ export type Database = {
           description_uz?: string | null
           has_halal_food?: boolean | null
           id?: string
+          image_url?: string | null
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -991,6 +993,7 @@ export type Database = {
           description_uz?: string | null
           has_halal_food?: boolean | null
           id?: string
+          image_url?: string | null
           latitude?: number | null
           longitude?: number | null
           name?: string
