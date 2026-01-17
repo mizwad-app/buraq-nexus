@@ -205,6 +205,13 @@
     "familyVacationDesc": "Butun oila uchun sayohatlar",
     "photoTours": "Foto-turlar",
     "photoToursDesc": "Eng go'zal manzaralar",
+    "selectCity": "Shahar tanlang",
+    "allCities": "Barcha shaharlar",
+    "parks": "Bog'lar va tabiat",
+    "shoppingMalls": "Savdo markazlari",
+    "nearestMetro": "Eng yaqin metro",
+    "viewDetails": "Batafsil ko'rish",
+    "hasHalalFood": "Halol taom mavjud",
     "destinations": {
       "samarkand": "Samarqand",
       "samarkandType": "Tarixiy shahar",

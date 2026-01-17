@@ -205,6 +205,13 @@
     "familyVacationDesc": "رحلات لجميع أفراد العائلة",
     "photoTours": "جولات تصوير",
     "photoToursDesc": "أجمل المناظر الطبيعية",
+    "selectCity": "اختر المدينة",
+    "allCities": "جميع المدن",
+    "parks": "الحدائق والطبيعة",
+    "shoppingMalls": "مراكز التسوق",
+    "nearestMetro": "أقرب مترو",
+    "viewDetails": "عرض التفاصيل",
+    "hasHalalFood": "يوجد طعام حلال",
     "destinations": {
       "samarkand": "سمرقند",
       "samarkandType": "مدينة تاريخية",

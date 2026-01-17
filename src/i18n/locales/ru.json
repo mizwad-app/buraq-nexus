@@ -205,6 +205,13 @@
     "familyVacationDesc": "Поездки для всей семьи",
     "photoTours": "Фото-туры",
     "photoToursDesc": "Самые красивые пейзажи",
+    "selectCity": "Выберите город",
+    "allCities": "Все города",
+    "parks": "Парки и природа",
+    "shoppingMalls": "Торговые центры",
+    "nearestMetro": "Ближайшее метро",
+    "viewDetails": "Подробнее",
+    "hasHalalFood": "Есть халяль еда",
     "destinations": {
       "samarkand": "Самарканд",
       "samarkandType": "Исторический город",

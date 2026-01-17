@@ -205,6 +205,13 @@
     "familyVacationDesc": "Trips for the whole family",
     "photoTours": "Photo tours",
     "photoToursDesc": "Most beautiful landscapes",
+    "selectCity": "Select city",
+    "allCities": "All cities",
+    "parks": "Parks & Nature",
+    "shoppingMalls": "Shopping Malls",
+    "nearestMetro": "Nearest Metro",
+    "viewDetails": "View Details",
+    "hasHalalFood": "Has halal food",
     "destinations": {
       "samarkand": "Samarkand",
       "samarkandType": "Historic city",
