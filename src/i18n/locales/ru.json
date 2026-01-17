@@ -88,6 +88,24 @@
     "suspicious": "Подозрительно",
     "halal": "Халяль"
   },
+  "scanner": {
+    "title": "Халяль AI Сканер",
+    "camera": "Камера",
+    "upload": "Загрузить",
+    "scan": "Сканировать",
+    "analyzing": "Анализируем...",
+    "aiAnalyzing": "AI анализирует продукт...",
+    "scanAgain": "Сканировать снова",
+    "deepCheck": "Глубокая проверка",
+    "deepCheckStart": "Запускаем глубокую проверку...",
+    "loginForDeepCheck": "Войдите для глубокой проверки",
+    "resultHalal": "Халяль",
+    "resultHalalDesc": "Этот продукт имеет халяль сертификат",
+    "resultHaram": "Запрещено",
+    "resultHaramDesc": "Этот продукт содержит харам ингредиенты",
+    "resultDoubtful": "Сомнительно",
+    "resultDoubtfulDesc": "Халяль статус этого продукта не подтвержден"
+  },
   "profile": {
     "title": "Профиль",
     "login": "Вход / Регистрация",

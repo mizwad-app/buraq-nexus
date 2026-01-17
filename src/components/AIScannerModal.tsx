@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Camera, Upload, ScanLine, X, Check, AlertTriangle, Loader2, FileSearch } from "lucide-react";
@@ -13,43 +14,45 @@ interface AIScannerModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const resultConfig = {
-  halol: {
-    icon: Check,
-    title: "Halol",
-    subtitle: "Bu mahsulot halol sertifikatiga ega",
-    bgClass: "bg-gradient-to-br from-emerald-500/20 to-green-600/20",
-    borderClass: "border-emerald-500/50",
-    iconBgClass: "bg-emerald-500",
-    textClass: "text-emerald-400",
-  },
-  haram: {
-    icon: X,
-    title: "Taqiqlangan",
-    subtitle: "Bu mahsulot harom ingredientlarni o'z ichiga oladi",
-    bgClass: "bg-gradient-to-br from-red-500/20 to-rose-600/20",
-    borderClass: "border-red-500/50",
-    iconBgClass: "bg-red-500",
-    textClass: "text-red-400",
-  },
-  shubhali: {
-    icon: AlertTriangle,
-    title: "Shubhali",
-    subtitle: "Bu mahsulotning halolligi tasdiqlanmagan",
-    bgClass: "bg-gradient-to-br from-amber-500/20 to-yellow-600/20",
-    borderClass: "border-amber-500/50",
-    iconBgClass: "bg-amber-500",
-    textClass: "text-amber-400",
-  },
-};
-
 export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<ScanResult>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Localized result config
+  const resultConfig = {
+    halol: {
+      icon: Check,
+      title: t("scanner.resultHalal"),
+      subtitle: t("scanner.resultHalalDesc"),
+      bgClass: "bg-gradient-to-br from-emerald-500/20 to-green-600/20",
+      borderClass: "border-emerald-500/50",
+      iconBgClass: "bg-emerald-500",
+      textClass: "text-emerald-400",
+    },
+    haram: {
+      icon: X,
+      title: t("scanner.resultHaram"),
+      subtitle: t("scanner.resultHaramDesc"),
+      bgClass: "bg-gradient-to-br from-red-500/20 to-rose-600/20",
+      borderClass: "border-red-500/50",
+      iconBgClass: "bg-red-500",
+      textClass: "text-red-400",
+    },
+    shubhali: {
+      icon: AlertTriangle,
+      title: t("scanner.resultDoubtful"),
+      subtitle: t("scanner.resultDoubtfulDesc"),
+      bgClass: "bg-gradient-to-br from-amber-500/20 to-yellow-600/20",
+      borderClass: "border-amber-500/50",
+      iconBgClass: "bg-amber-500",
+      textClass: "text-amber-400",
+    },
+  };
 
   const handleImageUpload = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -112,7 +115,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
             <div className="p-2 rounded-xl gradient-glow">
               <ScanLine className="w-5 h-5 text-primary-foreground" />
             </div>
-            AI Skaner
+            {t("scanner.title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -150,7 +153,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
                 <div className="p-4 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                   <Camera className="w-7 h-7 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-foreground">Kamera</span>
+                <span className="text-sm font-medium text-foreground">{t("scanner.camera")}</span>
               </button>
 
               <button
@@ -160,7 +163,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
                 <div className="p-4 rounded-2xl bg-primary/10 group-hover:bg-primary/20 transition-colors">
                   <Upload className="w-7 h-7 text-primary" />
                 </div>
-                <span className="text-sm font-medium text-foreground">Yuklash</span>
+                <span className="text-sm font-medium text-foreground">{t("scanner.upload")}</span>
               </button>
             </div>
           )}
@@ -175,12 +178,12 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
               {isScanning ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Tahlil qilinmoqda...
+                  {t("scanner.analyzing")}
                 </>
               ) : (
                 <>
                   <ScanLine className="w-5 h-5 mr-2" />
-                  Skanerlash
+                  {t("scanner.scan")}
                 </>
               )}
             </Button>
@@ -195,7 +198,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
                 <div className="absolute inset-4 rounded-full border-2 border-primary/40 border-b-transparent animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1.5s' }} />
               </div>
               <p className="text-sm text-muted-foreground animate-pulse">
-                AI mahsulotni tahlil qilmoqda...
+                {t("scanner.aiAnalyzing")}
               </p>
             </div>
           )}
@@ -242,7 +245,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
                   variant="outline"
                   className="flex-1 border-border/50 hover:bg-secondary/50"
                 >
-                  Yangidan skanerlash
+                  {t("scanner.scanAgain")}
                 </Button>
                 <Button
                   onClick={() => {
@@ -250,13 +253,13 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
                       setShowAuthModal(true);
                     } else {
                       // Would trigger deep check in production
-                      alert("Chuqur tekshiruv boshlanmoqda...");
+                      alert(t("scanner.deepCheckStart"));
                     }
                   }}
                   className="flex-1 bg-gradient-to-r from-primary to-accent text-primary-foreground"
                 >
                   <FileSearch className="w-4 h-4 mr-2" />
-                  Chuqur tekshiruv
+                  {t("scanner.deepCheck")}
                 </Button>
               </div>
             </div>
@@ -267,7 +270,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
         <AuthModal
           open={showAuthModal}
           onOpenChange={setShowAuthModal}
-          triggerReason="Chuqur tekshiruv uchun tizimga kiring"
+          triggerReason={t("scanner.loginForDeepCheck")}
         />
       </DialogContent>
     </Dialog>
