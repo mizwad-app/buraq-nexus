@@ -16,7 +16,8 @@
     "business": "Business",
     "cargo": "Cargo Tracking",
     "mosques": "Mosques",
-    "eco": "Eco Projects"
+    "eco": "Eco Projects",
+    "guide": "Travel Guide"
   },
   "home": {
     "guestPrompt": "Start earning points",
@@ -245,6 +246,46 @@
       "tashkentDesc": "Urban greening",
       "samarkand": "Samarkand region",
       "samarkandDesc": "Historical area gardens"
+    }
+  },
+  "guide": {
+    "title": "Travel Guide",
+    "subtitle": "Essential tips for China",
+    "intro": {
+      "title": "Welcome to China!",
+      "description": "Watch our video guides to prepare for your business trip. Learn about payments, communication, and staying safe."
+    },
+    "videoPlaceholder": "Video coming soon",
+    "videoLabel": "Video",
+    "tipsTitle": "Key Tips",
+    "simcards": {
+      "title": "SIM Cards & Internet",
+      "description": "Stay connected during your trip with local mobile data",
+      "tip1": "Buy a China Mobile or China Unicom SIM at the airport",
+      "tip2": "Passport required for SIM registration",
+      "tip3": "Consider eSIM options for convenience"
+    },
+    "payments": {
+      "title": "Payments: Alipay & WeChat",
+      "description": "Digital wallets are essential for transactions in China",
+      "tip1": "Set up Alipay Tour Pass before your trip",
+      "tip2": "Link an international card for payments",
+      "tip3": "Cash is rarely accepted in major cities"
+    },
+    "exchange": {
+      "title": "Money Exchange",
+      "description": "Safe currency exchange practices",
+      "tip1": "Use official bank exchange counters only",
+      "tip2": "Airport and hotel rates are usually higher",
+      "tip3": "Keep exchange receipts for records",
+      "warning": "Avoid street money changers! This is illegal and risky."
+    },
+    "digital": {
+      "title": "Digital Tools",
+      "description": "VPN and translation apps for smooth communication",
+      "tip1": "Download a reliable VPN before arriving",
+      "tip2": "Install Google Translate with offline Chinese",
+      "tip3": "Pleco dictionary is excellent for Chinese"
     }
   }
 }
