@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -17,11 +18,21 @@ interface EcoStats {
   treesPlanted: number;
 }
 
-const ecoProjects = [
+type ProjectId = "fergana" | "karakalpakstan" | "tashkent" | "samarkand";
+
+interface EcoProject {
+  id: number;
+  projectKey: ProjectId;
+  trees: number;
+  target: number;
+  image: string;
+  status: "active" | "upcoming";
+}
+
+const ecoProjects: EcoProject[] = [
   {
     id: 1,
-    title: "Farg'ona vodiysi",
-    description: "Mevali daraxtlar ekish loyihasi",
+    projectKey: "fergana",
     trees: 5420,
     target: 10000,
     image: "🌳",
@@ -29,8 +40,7 @@ const ecoProjects = [
   },
   {
     id: 2,
-    title: "Qoraqalpog'iston",
-    description: "Orol dengizi atrofi qayta tiklash",
+    projectKey: "karakalpakstan",
     trees: 12300,
     target: 25000,
     image: "🌲",
@@ -38,8 +48,7 @@ const ecoProjects = [
   },
   {
     id: 3,
-    title: "Toshkent viloyati",
-    description: "Shaharsozlik yashillantiruvi",
+    projectKey: "tashkent",
     trees: 8900,
     target: 15000,
     image: "🌴",
@@ -47,8 +56,7 @@ const ecoProjects = [
   },
   {
     id: 4,
-    title: "Samarqand viloyati",
-    description: "Tarixiy hududlar bog'lari",
+    projectKey: "samarkand",
     trees: 3200,
     target: 8000,
     image: "🌿",
@@ -59,6 +67,7 @@ const ecoProjects = [
 const TREES_PER_M3 = 2; // 2 trees planted per cubic meter of cargo
 
 const Eco = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const [ecoStats, setEcoStats] = useState<EcoStats>({ totalVolume: 0, treesPlanted: 0 });
   const [loading, setLoading] = useState(true);
@@ -100,14 +109,14 @@ const Eco = () => {
               <Leaf className="w-5 h-5 text-white" />
             </div>
             <span className="text-sm font-medium text-muted-foreground">
-              Eko Loyihalar
+              {t("eco.subtitle")}
             </span>
           </div>
           <h1 className="text-2xl font-display font-bold text-foreground">
-            Ekologik hissangiz
+            {t("eco.title")}
           </h1>
           <p className="text-muted-foreground mt-1">
-            Yuk tashish orqali daraxt ekamiz
+            {t("eco.desc")}
           </p>
         </div>
       </header>
@@ -127,12 +136,12 @@ const Eco = () => {
                   <TreePine className="w-7 h-7 text-white" />
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Siz ekilgan daraxtlar</p>
+                  <p className="text-sm text-muted-foreground">{t("eco.treesPlanted")}</p>
                   <div className="flex items-baseline gap-1">
                     <span className="text-3xl font-bold text-emerald-400">
                       {loading ? "..." : ecoStats.treesPlanted}
                     </span>
-                    <span className="text-lg text-emerald-400/70">ta</span>
+                    <span className="text-lg text-emerald-400/70">{t("eco.treesCount")}</span>
                   </div>
                 </div>
               </div>
@@ -143,7 +152,7 @@ const Eco = () => {
               <div className="bg-black/20 backdrop-blur-sm rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1">
                   <Package className="w-4 h-4 text-emerald-400" />
-                  <span className="text-xs text-muted-foreground">Jami hajm</span>
+                  <span className="text-xs text-muted-foreground">{t("eco.totalVolume")}</span>
                 </div>
                 <p className="text-lg font-semibold text-foreground">
                   {loading ? "..." : `${ecoStats.totalVolume.toFixed(1)} m³`}
@@ -152,7 +161,7 @@ const Eco = () => {
               <div className="bg-black/20 backdrop-blur-sm rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1">
                   <Globe2 className="w-4 h-4 text-emerald-400" />
-                  <span className="text-xs text-muted-foreground">CO₂ kamaytirish</span>
+                  <span className="text-xs text-muted-foreground">{t("eco.co2Reduction")}</span>
                 </div>
                 <p className="text-lg font-semibold text-foreground">
                   {loading ? "..." : `${(ecoStats.treesPlanted * 21).toLocaleString()} kg`}
@@ -174,9 +183,9 @@ const Eco = () => {
               <Sprout className="w-5 h-5 text-emerald-500" />
             </div>
             <div className="flex-1">
-              <p className="text-sm font-medium text-foreground">Qanday ishlaydi?</p>
+              <p className="text-sm font-medium text-foreground">{t("eco.howItWorks")}</p>
               <p className="text-xs text-muted-foreground">
-                Har 1 m³ yuk uchun 2 ta daraxt ekiladi
+                {t("eco.formula")}
               </p>
             </div>
           </div>
@@ -187,10 +196,10 @@ const Eco = () => {
       <section className="px-5 pb-32">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-display font-semibold text-foreground">
-            Joriy loyihalar
+            {t("eco.currentProjects")}
           </h2>
           <span className="text-xs text-muted-foreground">
-            {ecoProjects.length} ta loyiha
+            {t("eco.projectsCount", { count: ecoProjects.length })}
           </span>
         </div>
 
@@ -213,14 +222,18 @@ const Eco = () => {
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <h3 className="font-semibold text-foreground">{project.title}</h3>
+                      <h3 className="font-semibold text-foreground">
+                        {t(`eco.projects.${project.projectKey}`)}
+                      </h3>
                       {project.status === "upcoming" && (
                         <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-500 font-medium">
-                          Tez kunda
+                          {t("eco.comingSoon")}
                         </span>
                       )}
                     </div>
-                    <p className="text-sm text-muted-foreground">{project.description}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {t(`eco.projects.${project.projectKey}Desc`)}
+                    </p>
                   </div>
                   <ChevronRight className="w-5 h-5 text-muted-foreground" />
                 </div>
@@ -230,11 +243,11 @@ const Eco = () => {
                   <div className="flex items-center justify-between text-xs">
                     <div className="flex items-center gap-1 text-emerald-500">
                       <TreePine className="w-3 h-3" />
-                      <span>{project.trees.toLocaleString()} ta ekildi</span>
+                      <span>{project.trees.toLocaleString()} {t("eco.planted")}</span>
                     </div>
                     <div className="flex items-center gap-1 text-muted-foreground">
                       <Target className="w-3 h-3" />
-                      <span>Maqsad: {project.target.toLocaleString()}</span>
+                      <span>{t("eco.target")}: {project.target.toLocaleString()}</span>
                     </div>
                   </div>
                   <div className="relative h-2 rounded-full bg-muted overflow-hidden">

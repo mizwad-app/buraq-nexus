@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { useRequireAuth } from "@/hooks/useRequireAuth";
 import { AuthModal } from "@/components/AuthModal";
@@ -35,21 +36,33 @@ interface CargoTracking {
   created_at: string;
 }
 
-const trackingSteps = [
-  { id: "factory_departed", label: "Zavoddan jo'natildi", icon: Factory },
-  { id: "china_warehouse", label: "Xitoy ombori", icon: Warehouse },
-  { id: "in_transit", label: "Yo'lda", icon: Ship },
-  { id: "customs", label: "Bojxona", icon: Shield },
-  { id: "tashkent_warehouse", label: "Toshkent ombori", icon: Warehouse },
-  { id: "delivered", label: "Yetkazildi", icon: CheckCircle2 },
+type TrackingStepId = "factory_departed" | "china_warehouse" | "in_transit" | "customs" | "tashkent_warehouse" | "delivered";
+
+const trackingStepIds: TrackingStepId[] = [
+  "factory_departed",
+  "china_warehouse", 
+  "in_transit",
+  "customs",
+  "tashkent_warehouse",
+  "delivered"
 ];
 
+const stepIcons: Record<TrackingStepId, any> = {
+  factory_departed: Factory,
+  china_warehouse: Warehouse,
+  in_transit: Ship,
+  customs: Shield,
+  tashkent_warehouse: Warehouse,
+  delivered: CheckCircle2,
+};
+
 const getStepIndex = (status: string) => {
-  const index = trackingSteps.findIndex(s => s.id === status);
+  const index = trackingStepIds.findIndex(s => s === status);
   return index === -1 ? 0 : index;
 };
 
 const Cargo = () => {
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { requireAuth, showAuthModal, setShowAuthModal, authTriggerReason } = useRequireAuth();
   const [trackingNumber, setTrackingNumber] = useState("");
@@ -86,7 +99,7 @@ const Cargo = () => {
 
   const handleTrack = () => {
     if (!trackingNumber.trim()) {
-      toast.error("Kuzatuv raqamini kiriting");
+      toast.error(t("cargo.enterTrackingError"));
       return;
     }
 
@@ -107,7 +120,7 @@ const Cargo = () => {
 
   const handleSaveTracking = () => {
     if (!trackingNumber.trim()) {
-      toast.error("Kuzatuv raqamini kiriting");
+      toast.error(t("cargo.enterTrackingError"));
       return;
     }
 
@@ -139,7 +152,7 @@ const Cargo = () => {
             user_id: user!.id,
             amount: pointsEarned,
             transaction_type: "earned",
-            description: `Yuk kuzatuvi: ${trackingNumber}`,
+            description: t("cargo.trackingDesc", { number: trackingNumber }),
             reference_id: cargoData.id,
           });
 
@@ -160,22 +173,26 @@ const Cargo = () => {
               .eq("user_id", user!.id);
           }
 
-          toast.success(`Saqlandi! +${pointsEarned} ball qo'shildi`);
+          toast.success(t("cargo.savedSuccess", { points: pointsEarned }));
           setTrackingNumber("");
           setSelectedTracking(cargoData);
           fetchTrackings();
         } catch (error) {
           console.error("Error saving tracking:", error);
-          toast.error("Xatolik yuz berdi");
+          toast.error(t("cargo.error"));
         } finally {
           setSaving(false);
         }
       },
-      "Kuzatuv raqamini saqlash uchun tizimga kiring"
+      t("cargo.savePrompt")
     );
   };
 
   const currentStepIndex = selectedTracking ? getStepIndex(selectedTracking.status) : -1;
+
+  const getStatusLabel = (stepId: TrackingStepId) => {
+    return t(`cargo.status.${stepId}`);
+  };
 
   return (
     <div className="min-h-screen bg-background safe-bottom">
@@ -187,10 +204,10 @@ const Cargo = () => {
           </div>
           <div>
             <h1 className="text-2xl font-display font-bold text-foreground">
-              Yuk Kuzatuvi
+              {t("cargo.title")}
             </h1>
             <p className="text-sm text-muted-foreground">
-              Buyurtmalaringizni kuzatib boring
+              {t("cargo.subtitle")}
             </p>
           </div>
         </div>
@@ -203,7 +220,7 @@ const Cargo = () => {
           <Input
             value={trackingNumber}
             onChange={(e) => setTrackingNumber(e.target.value)}
-            placeholder="Kuzatuv raqamini kiriting"
+            placeholder={t("cargo.enterTracking")}
             className="pl-12 pr-4 h-14 bg-card border-border/50 text-base rounded-xl"
           />
         </div>
@@ -214,7 +231,7 @@ const Cargo = () => {
             className="flex-1 h-12 bg-secondary hover:bg-secondary/80 text-foreground"
           >
             <Search className="w-4 h-4 mr-2" />
-            Kuzatish
+            {t("cargo.track")}
           </Button>
           <Button
             onClick={handleSaveTracking}
@@ -226,7 +243,7 @@ const Cargo = () => {
             ) : (
               <>
                 <Plus className="w-4 h-4 mr-2" />
-                Saqlash
+                {t("cargo.save")}
               </>
             )}
           </Button>
@@ -265,21 +282,21 @@ const Cargo = () => {
               <div className="flex items-center gap-2 mb-6 p-3 rounded-xl bg-secondary/30">
                 <Box className="w-5 h-5 text-primary" />
                 <span className="text-sm text-foreground">
-                  Hajmi: <span className="font-bold">{selectedTracking.volume_m3.toFixed(2)} m³</span>
+                  {t("cargo.volume")}: <span className="font-bold">{selectedTracking.volume_m3.toFixed(2)} m³</span>
                 </span>
               </div>
             )}
 
             {/* Timeline */}
             <div className="relative">
-              {trackingSteps.map((step, index) => {
-                const StepIcon = step.icon;
+              {trackingStepIds.map((stepId, index) => {
+                const StepIcon = stepIcons[stepId];
                 const isCompleted = index <= currentStepIndex;
                 const isCurrent = index === currentStepIndex;
-                const isLast = index === trackingSteps.length - 1;
+                const isLast = index === trackingStepIds.length - 1;
 
                 return (
-                  <div key={step.id} className="flex gap-4">
+                  <div key={stepId} className="flex gap-4">
                     {/* Line and Dot */}
                     <div className="flex flex-col items-center">
                       <div
@@ -315,12 +332,12 @@ const Cargo = () => {
                           isCompleted ? "text-foreground" : "text-muted-foreground"
                         )}
                       >
-                        {step.label}
+                        {getStatusLabel(stepId)}
                       </p>
                       {isCurrent && (
                         <p className="text-xs text-primary mt-1 flex items-center gap-1">
                           <Clock className="w-3 h-3" />
-                          Hozirda shu yerda
+                          {t("cargo.currentlyHere")}
                         </p>
                       )}
                     </div>
@@ -336,11 +353,11 @@ const Cargo = () => {
       <section className="px-5">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-display font-semibold text-foreground">
-            Saqlangan kuzatuvlar
+            {t("cargo.savedTrackings")}
           </h2>
           {!user && (
             <span className="text-xs text-muted-foreground">
-              Kirish talab qilinadi
+              {t("cargo.loginRequired")}
             </span>
           )}
         </div>
@@ -354,8 +371,8 @@ const Cargo = () => {
             <div className="space-y-3 pb-4">
               {trackings.map((tracking) => {
                 const stepIndex = getStepIndex(tracking.status);
-                const step = trackingSteps[stepIndex];
-                const StepIcon = step?.icon || Package;
+                const stepId = trackingStepIds[stepIndex] || "factory_departed";
+                const StepIcon = stepIcons[stepId] || Package;
 
                 return (
                   <button
@@ -393,7 +410,7 @@ const Cargo = () => {
                     <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/10 w-fit">
                       <StepIcon className="w-4 h-4 text-primary" />
                       <span className="text-xs font-medium text-primary">
-                        {step?.label || "Noma'lum"}
+                        {getStatusLabel(stepId)}
                       </span>
                     </div>
                   </button>
@@ -404,7 +421,7 @@ const Cargo = () => {
             <div className="text-center py-8">
               <Package className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
               <p className="text-sm text-muted-foreground">
-                Hali saqlangan kuzatuvlar yo'q
+                {t("cargo.noSavedTrackings")}
               </p>
             </div>
           )
@@ -414,14 +431,14 @@ const Cargo = () => {
               <Package className="w-8 h-8 text-muted-foreground" />
             </div>
             <p className="text-sm text-muted-foreground mb-4">
-              Saqlangan kuzatuvlarni ko'rish uchun tizimga kiring
+              {t("cargo.viewSavedPrompt")}
             </p>
             <Button
               onClick={() => setShowAuthModal(true)}
               variant="outline"
               className="border-primary/30 text-primary hover:bg-primary/10"
             >
-              Kirish
+              {t("cargo.login")}
             </Button>
           </div>
         )}
