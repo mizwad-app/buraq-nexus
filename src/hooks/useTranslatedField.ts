@@ -2,6 +2,11 @@ import { useTranslation } from 'react-i18next';
 
 type LanguageCode = 'uz' | 'en' | 'ru' | 'ar';
 
+// Generic interface for translatable items
+interface TranslatableItem {
+  [key: string]: unknown;
+}
+
 /**
  * Hook to get translated field value from an object with language-specific fields
  * Falls back to the base field if translation is not available
@@ -9,13 +14,13 @@ type LanguageCode = 'uz' | 'en' | 'ru' | 'ar';
 export const useTranslatedField = () => {
   const { i18n } = useTranslation();
   
-  const getField = <T extends Record<string, unknown>>(
+  const getField = <T extends TranslatableItem>(
     item: T,
     fieldName: string
   ): string => {
     const lang = i18n.language as LanguageCode;
-    const translatedKey = `${fieldName}_${lang}` as keyof T;
-    const baseKey = fieldName as keyof T;
+    const translatedKey = `${fieldName}_${lang}`;
+    const englishKey = `${fieldName}_en`;
     
     // Try to get translated value first
     const translatedValue = item[translatedKey];
@@ -24,14 +29,13 @@ export const useTranslatedField = () => {
     }
     
     // Fall back to English translation
-    const englishKey = `${fieldName}_en` as keyof T;
     const englishValue = item[englishKey];
     if (englishValue && typeof englishValue === 'string') {
       return englishValue;
     }
     
     // Fall back to base field
-    const baseValue = item[baseKey];
+    const baseValue = item[fieldName];
     if (baseValue && typeof baseValue === 'string') {
       return baseValue;
     }
