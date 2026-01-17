@@ -3,18 +3,15 @@ import { useTranslation } from "react-i18next";
 import {
   Plane,
   MapPin,
+  TreePine,
+  ShoppingBag,
+  Star,
+  Check,
   Compass,
   Mountain,
   Palmtree,
   Camera,
-  ChevronRight,
-  TreePine,
-  ShoppingBag,
-  Star,
-  Train,
-  Check,
 } from "lucide-react";
-import { ModuleCard } from "@/components/ModuleCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import {
@@ -24,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 
 interface Park {
@@ -84,31 +81,21 @@ interface ShoppingMall {
   [key: string]: unknown;
 }
 
+type CategoryFilter = "all" | "parks" | "malls";
+
 const Travel = () => {
   const { t } = useTranslation();
   const { getField, currentLanguage } = useTranslatedField();
   const [selectedCity, setSelectedCity] = useState<string>("all");
-  const [activeTab, setActiveTab] = useState("parks");
+  const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [parks, setParks] = useState<Park[]>([]);
   const [malls, setMalls] = useState<ShoppingMall[]>([]);
   const [loading, setLoading] = useState(true);
 
-  const destinations = [
-    { 
-      nameKey: "samarkand", 
-      typeKey: "samarkandType", 
-      image: "🏛️" 
-    },
-    { 
-      nameKey: "chimgan", 
-      typeKey: "chimganType", 
-      image: "🏔️" 
-    },
-    { 
-      nameKey: "khiva", 
-      typeKey: "khivaType", 
-      image: "🏰" 
-    },
+  const categoryChips = [
+    { id: "all" as const, label: t("travel.allCategories"), icon: Compass },
+    { id: "parks" as const, label: t("travel.parks"), icon: TreePine },
+    { id: "malls" as const, label: t("travel.shoppingMalls"), icon: ShoppingBag },
   ];
 
   useEffect(() => {
@@ -131,12 +118,10 @@ const Travel = () => {
     }
   };
 
-  // Get translated city name
   const getTranslatedCity = (item: { city: string; city_uz?: string | null; city_ru?: string | null; city_en?: string | null; city_ar?: string | null }) => {
     return getField(item, 'city');
   };
 
-  // Get unique cities from parks and malls
   const allCities = useMemo(() => {
     const citiesMap = new Map<string, { base: string; translated: string }>();
     const addCity = (item: { city: string; city_uz?: string | null; city_ru?: string | null; city_en?: string | null; city_ar?: string | null }) => {
@@ -149,27 +134,38 @@ const Travel = () => {
     return Array.from(citiesMap.values()).sort((a, b) => a.translated.localeCompare(b.translated));
   }, [parks, malls, currentLanguage]);
 
-  // Filter parks by city
-  const filteredParks = useMemo(() => {
-    return parks.filter((p) => selectedCity === "all" || p.city === selectedCity);
-  }, [parks, selectedCity]);
+  // Unified filtered results
+  const unifiedResults = useMemo(() => {
+    type ResultItem = { type: "park"; data: Park } | { type: "mall"; data: ShoppingMall };
+    const results: ResultItem[] = [];
 
-  // Filter malls by city
-  const filteredMalls = useMemo(() => {
-    return malls.filter((m) => selectedCity === "all" || m.city === selectedCity);
-  }, [malls, selectedCity]);
+    // Filter parks
+    if (categoryFilter === "all" || categoryFilter === "parks") {
+      parks
+        .filter((p) => selectedCity === "all" || p.city === selectedCity)
+        .forEach((park) => results.push({ type: "park", data: park }));
+    }
 
-  // Get selected city's translated name
+    // Filter malls
+    if (categoryFilter === "all" || categoryFilter === "malls") {
+      malls
+        .filter((m) => selectedCity === "all" || m.city === selectedCity)
+        .forEach((mall) => results.push({ type: "mall", data: mall }));
+    }
+
+    return results;
+  }, [parks, malls, selectedCity, categoryFilter]);
+
   const selectedCityTranslated = useMemo(() => {
-    if (selectedCity === "all") return "";
+    if (selectedCity === "all") return t("travel.allLocations");
     const cityData = allCities.find(c => c.base === selectedCity);
     return cityData?.translated || selectedCity;
-  }, [selectedCity, allCities]);
+  }, [selectedCity, allCities, t]);
 
   return (
     <div className="min-h-screen eco-gradient-soft safe-bottom pb-24">
       {/* Header */}
-      <header className="px-5 pt-12 pb-6">
+      <header className="px-5 pt-12 pb-4">
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-2">
             <div className="p-2 eco-gradient rounded-xl shadow-eco">
@@ -188,8 +184,8 @@ const Travel = () => {
         </div>
       </header>
 
-      {/* City Filter */}
-      <section className="px-5 mb-4">
+      {/* City Filter - Primary */}
+      <section className="px-5 mb-3">
         <Select value={selectedCity} onValueChange={setSelectedCity}>
           <SelectTrigger className="w-full bg-card border-border/50">
             <MapPin className="w-4 h-4 mr-2 text-muted-foreground" />
@@ -204,234 +200,161 @@ const Travel = () => {
         </Select>
       </section>
 
-      {/* Featured Destination */}
-      <section className="px-5 mb-6">
-        <div
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-eco-forest to-eco-emerald-dark p-6 min-h-[180px] animate-scale-in"
-        >
-          <div className="relative z-10">
-            <span className="inline-block px-3 py-1 bg-primary-foreground/20 rounded-full text-xs font-medium text-primary-foreground mb-3">
-              ✨ {t("travel.recommended")}
-            </span>
-            <h2 className="text-xl font-display font-bold text-primary-foreground mb-1">
-              {selectedCity !== "all" ? selectedCityTranslated : t("travel.travelAcross")}
-            </h2>
-            <p className="text-sm text-primary-foreground/80 mb-4">
-              {t("travel.ancientCities")}
-            </p>
-            <button className="flex items-center gap-2 text-sm font-semibold text-primary-foreground bg-primary-foreground/20 px-4 py-2 rounded-xl">
-              {t("travel.view")}
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="absolute right-4 bottom-4 text-6xl opacity-30">🌍</div>
+      {/* Category Filter Chips */}
+      <section className="px-5 mb-4">
+        <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {categoryChips.map((chip) => {
+            const Icon = chip.icon;
+            const isActive = categoryFilter === chip.id;
+            return (
+              <button
+                key={chip.id}
+                onClick={() => setCategoryFilter(chip.id)}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all",
+                  isActive
+                    ? "bg-primary text-primary-foreground shadow-sm"
+                    : "bg-secondary/60 text-muted-foreground hover:bg-secondary"
+                )}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                {chip.label}
+              </button>
+            );
+          })}
         </div>
       </section>
 
-      {/* Parks & Malls Tabs */}
-      <section className="px-5 mb-6">
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-2 bg-secondary/50">
-            <TabsTrigger value="parks" className="flex items-center gap-2">
-              <TreePine className="w-4 h-4" />
-              {t("travel.parks")}
-            </TabsTrigger>
-            <TabsTrigger value="malls" className="flex items-center gap-2">
-              <ShoppingBag className="w-4 h-4" />
-              {t("travel.shoppingMalls")}
-            </TabsTrigger>
-          </TabsList>
+      {/* Results Count */}
+      <section className="px-5 mb-3">
+        <p className="text-sm text-muted-foreground">
+          {unifiedResults.length} {t("travel.placesFound")} {selectedCity !== "all" && `• ${selectedCityTranslated}`}
+        </p>
+      </section>
 
-          {/* Parks Tab */}
-          <TabsContent value="parks" className="mt-4">
-            {loading ? (
-              <div className="flex justify-center py-8">
-                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-              </div>
-            ) : filteredParks.length > 0 ? (
-              <div className="space-y-3">
-                {filteredParks.map((park, index) => (
+      {/* Unified Results Feed */}
+      <section className="px-5 pb-8">
+        {loading ? (
+          <div className="flex justify-center py-12">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : unifiedResults.length > 0 ? (
+          <div className="space-y-3">
+            {unifiedResults.map((item, index) => {
+              if (item.type === "park") {
+                const park = item.data;
+                return (
                   <div
-                    key={park.id}
+                    key={`park-${park.id}`}
                     className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    style={{ animationDelay: `${index * 40}ms` }}
                   >
-                    {park.image_url && (
-                      <div className="h-32 overflow-hidden">
+                    <div className="h-36 overflow-hidden bg-muted">
+                      {park.image_url ? (
                         <img 
                           src={park.image_url} 
                           alt={getField(park, 'name')}
                           className="w-full h-full object-cover"
                         />
-                      </div>
-                    )}
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <TreePine className="w-12 h-12 text-muted-foreground/30" />
+                        </div>
+                      )}
+                    </div>
                     <div className="p-4">
                       <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h3 className="font-semibold text-foreground">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-foreground truncate">
                             {getField(park, 'name')}
                           </h3>
                           <p className="text-sm text-muted-foreground flex items-center gap-1">
-                            <MapPin className="w-3.5 h-3.5" />
+                            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                             {getTranslatedCity(park)}
                           </p>
                         </div>
-                        {park.park_type && (
-                          <span className="text-xs px-2 py-1 rounded-full bg-eco-mint/20 text-eco-forest">
-                            {park.park_type.replace('_', ' ')}
-                          </span>
-                        )}
+                        <Badge variant="secondary" className="ml-2 flex-shrink-0 bg-eco-mint/20 text-eco-forest border-0">
+                          <TreePine className="w-3 h-3 mr-1" />
+                          {park.park_type?.replace('_', ' ') || t("travel.park")}
+                        </Badge>
                       </div>
                       {park.description && (
-                        <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
+                        <p className="text-sm text-muted-foreground line-clamp-2">
                           {getField(park, 'description')}
-                        </p>
-                      )}
-                      {park.address && (
-                        <p className="text-xs text-muted-foreground/70 flex items-center gap-1">
-                          <Train className="w-3 h-3" />
-                          {getField(park, 'address')}
                         </p>
                       )}
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                <TreePine className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                <p>{t("business.noResults")}</p>
-              </div>
-            )}
-          </TabsContent>
-
-          {/* Shopping Malls Tab */}
-          <TabsContent value="malls" className="mt-4">
-            {loading ? (
-              <div className="flex justify-center py-8">
-                <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-              </div>
-            ) : filteredMalls.length > 0 ? (
-              <div className="space-y-3">
-                {filteredMalls.map((mall, index) => (
+                );
+              } else {
+                const mall = item.data;
+                return (
                   <div
-                    key={mall.id}
+                    key={`mall-${mall.id}`}
                     className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    style={{ animationDelay: `${index * 40}ms` }}
                   >
-                    {mall.image_url && (
-                      <div className="h-32 overflow-hidden">
+                    <div className="h-36 overflow-hidden bg-muted">
+                      {mall.image_url ? (
                         <img 
                           src={mall.image_url} 
                           alt={getField(mall, 'name')}
                           className="w-full h-full object-cover"
                         />
-                      </div>
-                    )}
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center">
+                          <ShoppingBag className="w-12 h-12 text-muted-foreground/30" />
+                        </div>
+                      )}
+                    </div>
                     <div className="p-4">
                       <div className="flex items-start justify-between mb-2">
-                        <div>
-                          <h3 className="font-semibold text-foreground">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-foreground truncate">
                             {getField(mall, 'name')}
                           </h3>
                           <p className="text-sm text-muted-foreground flex items-center gap-1">
-                            <MapPin className="w-3.5 h-3.5" />
+                            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                             {getTranslatedCity(mall)}
                           </p>
                         </div>
-                        {mall.rating && (
-                          <div className="flex items-center gap-1 text-amber-400">
-                            <Star className="w-4 h-4 fill-current" />
-                            <span className="text-sm font-medium">{mall.rating}</span>
-                          </div>
-                        )}
+                        <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+                          {mall.rating && (
+                            <div className="flex items-center gap-1 text-amber-500">
+                              <Star className="w-4 h-4 fill-current" />
+                              <span className="text-sm font-medium">{mall.rating}</span>
+                            </div>
+                          )}
+                          <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">
+                            <ShoppingBag className="w-3 h-3 mr-1" />
+                            {t("travel.mall")}
+                          </Badge>
+                        </div>
                       </div>
                       {mall.description && (
                         <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
                           {getField(mall, 'description')}
                         </p>
                       )}
-                      <div className="flex items-center gap-2">
-                        {mall.has_halal_food && (
-                          <span className="flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-500">
-                            <Check className="w-3 h-3" />
-                            {t("travel.hasHalalFood")}
-                          </span>
-                        )}
-                      </div>
+                      {mall.has_halal_food && (
+                        <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-600">
+                          <Check className="w-3 h-3" />
+                          {t("travel.hasHalalFood")}
+                        </span>
+                      )}
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                <ShoppingBag className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                <p>{t("business.noResults")}</p>
-              </div>
-            )}
-          </TabsContent>
-        </Tabs>
-      </section>
-
-      {/* Popular Destinations */}
-      <section className="px-5 mb-6">
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
-          {t("travel.popularPlaces")}
-        </h2>
-        <div className="flex gap-3 overflow-x-auto pb-2 -mx-5 px-5 scrollbar-hide">
-          {destinations.map((dest, index) => (
-            <div
-              key={dest.nameKey}
-              className="flex-shrink-0 w-32 bg-card rounded-2xl p-4 shadow-card animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
-              <div className="text-4xl mb-3">{dest.image}</div>
-              <h3 className="font-semibold text-foreground text-sm">
-                {t(`travel.destinations.${dest.nameKey}`)}
-              </h3>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                {t(`travel.destinations.${dest.typeKey}`)}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Categories */}
-      <section className="px-5 pb-8">
-        <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-4">
-          {t("travel.categories")}
-        </h2>
-        <div className="space-y-3">
-          <ModuleCard
-            icon={Compass}
-            title={t("travel.ecoTours")}
-            description={t("travel.ecoToursDesc")}
-            iconBgClass="bg-eco-mint"
-            delay={0}
-          />
-          <ModuleCard
-            icon={Mountain}
-            title={t("travel.mountainTourism")}
-            description={t("travel.mountainTourismDesc")}
-            iconBgClass="bg-eco-sage"
-            delay={100}
-          />
-          <ModuleCard
-            icon={Palmtree}
-            title={t("travel.familyVacation")}
-            description={t("travel.familyVacationDesc")}
-            iconBgClass="bg-secondary"
-            delay={200}
-          />
-          <ModuleCard
-            icon={Camera}
-            title={t("travel.photoTours")}
-            description={t("travel.photoToursDesc")}
-            iconBgClass="bg-eco-emerald-light"
-            delay={300}
-          />
-        </div>
+                );
+              }
+            })}
+          </div>
+        ) : (
+          <div className="text-center py-12 text-muted-foreground">
+            <MapPin className="w-12 h-12 mx-auto mb-3 opacity-40" />
+            <p className="font-medium">{t("business.noResults")}</p>
+            <p className="text-sm mt-1">{t("travel.tryDifferentFilters")}</p>
+          </div>
+        )}
       </section>
     </div>
   );
