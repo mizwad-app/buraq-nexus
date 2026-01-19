@@ -79,6 +79,17 @@
       "addressCopied": "Address copied!"
     }
   },
+  "productSearch": {
+    "title": "Search by Product",
+    "subtitle": "Find markets and factories by product type",
+    "wholesale": "Wholesale Market",
+    "wholesaleDesc": "Buy products in bulk from markets",
+    "factory": "Factory",
+    "factoryDesc": "Source directly from manufacturers",
+    "marketsAvailable": "markets available",
+    "hubsAvailable": "production hubs",
+    "noResults": "No results found for this category"
+  },
   "mosques": {
     "title": "Mosques",
     "subtitle": "Prayer times and mosques",

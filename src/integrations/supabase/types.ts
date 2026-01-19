@@ -484,6 +484,42 @@ export type Database = {
         }
         Relationships: []
       }
+      hub_product_categories: {
+        Row: {
+          category_id: string
+          created_at: string
+          hub_id: string
+          id: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          hub_id: string
+          id?: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          hub_id?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hub_product_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "product_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "hub_product_categories_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "production_hubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       law_firms: {
         Row: {
           address: string | null
@@ -645,6 +681,42 @@ export type Database = {
           template_type?: string
         }
         Relationships: []
+      }
+      market_product_categories: {
+        Row: {
+          category_id: string
+          created_at: string
+          id: string
+          market_id: string
+        }
+        Insert: {
+          category_id: string
+          created_at?: string
+          id?: string
+          market_id: string
+        }
+        Update: {
+          category_id?: string
+          created_at?: string
+          id?: string
+          market_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "market_product_categories_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "product_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "market_product_categories_market_id_fkey"
+            columns: ["market_id"]
+            isOneToOne: false
+            referencedRelation: "wholesale_markets"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       mosques: {
         Row: {
@@ -856,6 +928,42 @@ export type Database = {
           reference_id?: string | null
           transaction_type?: string
           user_id?: string
+        }
+        Relationships: []
+      }
+      product_categories: {
+        Row: {
+          created_at: string
+          icon: string | null
+          id: string
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          slug: string
+        }
+        Insert: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          slug: string
+        }
+        Update: {
+          created_at?: string
+          icon?: string | null
+          id?: string
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          slug?: string
         }
         Relationships: []
       }

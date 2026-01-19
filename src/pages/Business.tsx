@@ -38,6 +38,7 @@ import {
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useCity } from "@/contexts/CityContext";
 import { GlobalCityFilter } from "@/components/GlobalCityFilter";
+import { ProductSearch } from "@/components/ProductSearch";
 import { toast } from "sonner";
 
 interface WholesaleMarket {
@@ -508,6 +509,11 @@ const Business = () => {
           </div>
         </section>
       )}
+
+      {/* Product Search - Search by Product First */}
+      <section className="px-5 mb-4">
+        <ProductSearch />
+      </section>
 
       {/* Deep Check Banner */}
       <section className="px-5 mb-4">
