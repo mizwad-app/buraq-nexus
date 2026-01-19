@@ -76,8 +76,19 @@
       "qualityInspection": "Quality Inspection Agreement",
       "nda": "Non-Disclosure Agreement",
       "copyAddress": "Copy Address",
-      "addressCopied": "Address copied!"
-    }
+    "addressCopied": "Address copied!"
+  },
+  "marketCard": {
+    "taxiFare": "Taxi",
+    "metro": "Metro",
+    "hours": "Hours",
+    "distance": "Distance",
+    "addressForTaxi": "Address for Taxi",
+    "wholesale": "Wholesale",
+    "retail": "Retail",
+    "copyAddress": "Copy Address",
+    "moreMarketsSoon": "More markets coming soon"
+  }
   },
   "productSearch": {
     "title": "Search by Product",

@@ -77,6 +77,17 @@
       "nda": "اتفاقية عدم الإفشاء",
       "copyAddress": "نسخ العنوان",
       "addressCopied": "تم نسخ العنوان!"
+    },
+    "marketCard": {
+      "taxiFare": "تاكسي",
+      "metro": "مترو",
+      "hours": "ساعات العمل",
+      "distance": "المسافة",
+      "addressForTaxi": "العنوان للتاكسي",
+      "wholesale": "جملة",
+      "retail": "تجزئة",
+      "copyAddress": "نسخ العنوان",
+      "moreMarketsSoon": "المزيد من الأسواق قريباً"
     }
   },
   "productSearch": {
