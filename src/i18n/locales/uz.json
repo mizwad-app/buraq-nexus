@@ -92,7 +92,18 @@
     "noResults": "Bu kategoriya uchun natija topilmadi",
     "noCategories": "Kategoriyalar topilmadi",
     "comingSoon": "Tez kunda",
-    "comingSoonDesc": "Bu kategoriya uchun yangi yetkazib beruvchilar qo'shilmoqda. Tez orada tekshiring!"
+    "comingSoonDesc": "Bu kategoriya uchun yangi yetkazib beruvchilar qo'shilmoqda. Tez orada tekshiring!",
+    "categories": "kategoriya",
+    "groups": {
+      "electronics": "Elektronika va Texnologiya",
+      "industrial": "Sanoat va Mashinasozlik",
+      "fashion": "Kiyim-kechak va Moda",
+      "home": "Uy va Qurilish",
+      "automotive": "Avtomobil va Energetika",
+      "health": "Sog'liq va Go'zallik",
+      "misc": "Boshqalar",
+      "other": "Boshqalar"
+    }
   },
   "mosques": {
     "title": "Masjidlar",
