@@ -40,6 +40,7 @@ import { useCity } from "@/contexts/CityContext";
 import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { ProductSearch } from "@/components/ProductSearch";
 import { SupportChat, AskAgentButton } from "@/components/SupportChat";
+import { MarketDetailSheet } from "@/components/MarketDetailSheet";
 import { toast } from "sonner";
 
 interface WholesaleMarket {
@@ -204,6 +205,8 @@ const Business = () => {
   const { selectedCity, setSelectedCity } = useCity();
   const [activeTab, setActiveTab] = useState("markets");
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
+  const [selectedMarket, setSelectedMarket] = useState<WholesaleMarket | null>(null);
+  const [marketDetailOpen, setMarketDetailOpen] = useState(false);
   
   // Category filter
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
@@ -617,7 +620,8 @@ const Business = () => {
                 {filteredMarkets.map((market) => (
                   <div
                     key={market.id}
-                    className="bg-card rounded-2xl p-4 border border-border/50 hover:border-primary/30 transition-all"
+                    onClick={() => { setSelectedMarket(market); setMarketDetailOpen(true); }}
+                    className="bg-card rounded-2xl p-4 border border-border/50 hover:border-primary/30 transition-all cursor-pointer"
                   >
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -1021,6 +1025,13 @@ const Business = () => {
 
       {/* Support Chat FAB */}
       <SupportChat />
+
+      {/* Market Detail Sheet */}
+      <MarketDetailSheet
+        open={marketDetailOpen}
+        onOpenChange={setMarketDetailOpen}
+        market={selectedMarket}
+      />
     </div>
   );
 };
