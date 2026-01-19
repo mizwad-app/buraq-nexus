@@ -40,10 +40,13 @@ import {
   Pencil,
   Wheat,
   Utensils,
+  UtensilsCrossed,
   Gift,
   Search,
   Clock,
   X,
+  Monitor,
+  Armchair,
   LucideIcon
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -132,10 +135,12 @@ const iconMap: Record<string, LucideIcon> = {
   shirt: Shirt,
   cpu: Cpu,
   sofa: Sofa,
+  armchair: Armchair,
   gamepad: Gamepad2,
   footprints: Footprints,
   watch: Watch,
   lightbulb: Lightbulb,
+  monitor: Monitor,
   gauge: Gauge,
   zap: Zap,
   settings: Settings,
@@ -159,6 +164,7 @@ const iconMap: Record<string, LucideIcon> = {
   pencil: Pencil,
   wheat: Wheat,
   utensils: Utensils,
+  "utensils-crossed": UtensilsCrossed,
   package: Package,
   gift: Gift,
 };
@@ -167,11 +173,11 @@ const iconMap: Record<string, LucideIcon> = {
 const categoryGroups: Record<string, { icon: LucideIcon; slugs: string[] }> = {
   "electronics": {
     icon: Cpu,
-    slugs: ["consumer_electronics", "electronic_components", "lights_lighting", "testing_instruments", "power_transmission"]
+    slugs: ["consumer_electronics", "electronic_components", "lights_lighting", "computer_accessories", "mobile_accessories", "testing_instruments", "power_transmission"]
   },
   "industrial": {
     icon: Settings,
-    slugs: ["industrial_machinery", "construction_building_machinery", "commercial_equipment", "tools_hardware", "fabrication_services"]
+    slugs: ["industrial_machinery", "construction_building_machinery", "commercial_equipment", "tools_hardware", "fabrication_services", "hotel_restaurant_supplies"]
   },
   "fashion": {
     icon: Shirt,
