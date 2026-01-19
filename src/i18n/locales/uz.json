@@ -76,8 +76,19 @@
       "qualityInspection": "Sifat tekshiruvi shartnomasi",
       "nda": "Maxfiylik shartnomasi",
       "copyAddress": "Manzilni nusxalash",
-      "addressCopied": "Manzil nusxalandi!"
-    }
+    "addressCopied": "Manzil nusxalandi!"
+  },
+  "marketCard": {
+    "taxiFare": "Taksi",
+    "metro": "Metro",
+    "hours": "Ish vaqti",
+    "distance": "Masofa",
+    "addressForTaxi": "Taksi uchun manzil",
+    "wholesale": "Optom",
+    "retail": "Chakana",
+    "copyAddress": "Manzilni nusxalash",
+    "moreMarketsSoon": "Boshqa bozorlar tez orada qo'shiladi"
+  }
   },
   "productSearch": {
     "title": "Mahsulot bo'yicha qidirish",

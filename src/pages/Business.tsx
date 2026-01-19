@@ -23,6 +23,7 @@ import {
   Download,
   Copy,
   Check,
+  Info,
 } from "lucide-react";
 import { BusinessEcosystemIcon } from "@/components/icons/BusinessEcosystemIcon";
 import { supabase } from "@/integrations/supabase/client";
@@ -41,6 +42,7 @@ import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { ProductSearch } from "@/components/ProductSearch";
 import { SupportChat, AskAgentButton } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
+import { MarketCard } from "@/components/MarketCard";
 import { toast } from "sonner";
 
 interface WholesaleMarket {
@@ -612,77 +614,67 @@ const Business = () => {
                 <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
               </div>
             ) : filteredMarkets.length === 0 ? (
-              <div className="text-center py-8 text-muted-foreground">
-                {t("business.noResults")}
-              </div>
+              selectedCategory !== "all" ? (
+                // Show "Coming Soon" for empty categories
+                <div className="text-center py-8">
+                  <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-muted/50 flex items-center justify-center">
+                    <Info className="w-6 h-6 text-muted-foreground" />
+                  </div>
+                  <p className="text-muted-foreground">{t("business.marketCard.moreMarketsSoon")}</p>
+                  <p className="text-xs text-muted-foreground/70 mt-1">Guangzhou & Shenzhen</p>
+                </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  {t("business.noResults")}
+                </div>
+              )
             ) : (
-              <div className="space-y-3">
-                {filteredMarkets.map((market) => (
-                  <div
-                    key={market.id}
-                    onClick={() => { setSelectedMarket(market); setMarketDetailOpen(true); }}
-                    className="bg-card rounded-2xl p-4 border border-border/50 hover:border-primary/30 transition-all cursor-pointer"
-                  >
-                    <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                        <Store className="w-5 h-5 text-primary" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        {/* Chinese name for taxi */}
-                        {market.name && (
-                          <p className="text-xs text-muted-foreground font-mono">{market.name}</p>
-                        )}
-                        <h3 className="font-semibold text-foreground">{getField(market, 'name')}</h3>
-                        <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                          <MapPin className="w-3 h-3 flex-shrink-0" />
-                          <span className="truncate">{getTranslatedCity(market)}, {market.country}</span>
-                        </div>
-                        
-                        {/* Address in Chinese */}
-                        {(market as any).address_chinese && (
-                          <div className="mt-2 p-2 bg-muted/30 rounded-lg">
-                            <p className="text-xs text-muted-foreground mb-1">📍 Address (for taxi):</p>
-                            <p className="text-xs font-mono text-foreground">{(market as any).address_chinese}</p>
-                          </div>
-                        )}
-                        
-                        {/* Travel Tips */}
-                        {(market as any).travel_tips && (
-                          <div className="mt-2 flex items-start gap-1.5">
-                            <Train className="w-3 h-3 text-accent mt-0.5 flex-shrink-0" />
-                            <p className="text-xs text-muted-foreground">{getField(market as any, 'travel_tips')}</p>
-                          </div>
-                        )}
-                        
-                        <div className="mt-2 flex items-center gap-2 flex-wrap">
-                          <span className="px-2 py-0.5 rounded-full bg-accent/20 text-xs font-medium text-accent-foreground">
-                            {getField(market, 'category')}
+              <div className="space-y-4">
+                {/* Group markets by city and render with headers */}
+                {(() => {
+                  const marketsByCity = filteredMarkets.reduce((acc, market) => {
+                    const city = market.city;
+                    if (!acc[city]) acc[city] = [];
+                    acc[city].push(market);
+                    return acc;
+                  }, {} as Record<string, typeof filteredMarkets>);
+                  
+                  const cityOrder = ['Zhongshan', 'Guangzhou', 'Shenzhen', 'Foshan', 'Yiwu', 'Hangzhou'];
+                  const sortedCities = Object.keys(marketsByCity).sort((a, b) => {
+                    const aIndex = cityOrder.indexOf(a);
+                    const bIndex = cityOrder.indexOf(b);
+                    if (aIndex === -1 && bIndex === -1) return a.localeCompare(b);
+                    if (aIndex === -1) return 1;
+                    if (bIndex === -1) return -1;
+                    return aIndex - bIndex;
+                  });
+                  
+                  // Only show headers if multiple cities and no specific city filter
+                  const showHeaders = sortedCities.length > 1 && selectedCity === "all";
+                  
+                  return sortedCities.map(city => (
+                    <div key={city}>
+                      {showHeaders && (
+                        <div className="flex items-center gap-2 mb-3 mt-2">
+                          <div className="h-px bg-border flex-1" />
+                          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wider px-2 py-1 bg-muted/50 rounded-full">
+                            📍 {getTranslatedCity(marketsByCity[city][0])}
                           </span>
-                          {(market as any).market_type && (
-                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
-                              (market as any).market_type === 'wholesale' 
-                                ? 'bg-primary/20 text-primary' 
-                                : 'bg-amber-500/20 text-amber-400'
-                            }`}>
-                              {(market as any).market_type === 'wholesale' ? 'Wholesale' : 'Retail/Premium'}
-                            </span>
-                          )}
+                          <div className="h-px bg-border flex-1" />
                         </div>
-                        
-                        {(getField(market, 'description')) && (
-                          <p className="text-xs text-muted-foreground mt-2">
-                            {getField(market, 'description')}
-                          </p>
-                        )}
-                        
-                        {/* Ask Agent Button */}
-                        <div className="mt-3">
-                          <AskAgentButton marketName={`${market.name} (${getField(market, 'name')})`} />
-                        </div>
+                      )}
+                      <div className="space-y-3">
+                        {marketsByCity[city].map((market) => (
+                          <MarketCard
+                            key={market.id}
+                            market={market as any}
+                            onClick={() => { setSelectedMarket(market); setMarketDetailOpen(true); }}
+                          />
+                        ))}
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ));
+                })()}
               </div>
             )}
           </TabsContent>

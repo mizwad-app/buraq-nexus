@@ -76,8 +76,19 @@
       "qualityInspection": "Соглашение о проверке качества",
       "nda": "Соглашение о неразглашении",
       "copyAddress": "Копировать адрес",
-      "addressCopied": "Адрес скопирован!"
-    }
+    "addressCopied": "Адрес скопирован!"
+  },
+  "marketCard": {
+    "taxiFare": "Такси",
+    "metro": "Метро",
+    "hours": "Часы работы",
+    "distance": "Расстояние",
+    "addressForTaxi": "Адрес для такси",
+    "wholesale": "Оптом",
+    "retail": "Розница",
+    "copyAddress": "Копировать адрес",
+    "moreMarketsSoon": "Другие рынки скоро появятся"
+  }
   },
   "productSearch": {
     "title": "Поиск по продукту",

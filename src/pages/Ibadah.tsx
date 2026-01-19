@@ -305,8 +305,8 @@ const Ibadah = () => {
                     className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
-                    {/* Restaurant Image */}
-                    <div className="relative h-36 w-full">
+                    {/* Restaurant Image with Halal Badge Overlay */}
+                    <div className="relative h-40 w-full">
                       <img
                         src={restaurant.image_url || RESTAURANT_FALLBACK_IMAGE}
                         alt={getField(restaurant, 'name')}
@@ -316,20 +316,40 @@ const Ibadah = () => {
                           target.src = RESTAURANT_FALLBACK_IMAGE;
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
                       
-                      {/* Halal Status Badge - Top Right */}
-                      <div className="absolute top-3 right-3">
-                        <HalalStatusBadge 
-                          status={status}
-                          size={32}
-                          tooltipText={getStatusTooltip(restaurant)}
-                        />
+                      {/* Halal Status Badge - Top Right with Enhanced Visual */}
+                      <div className="absolute top-3 right-3 z-10">
+                        <div className={cn(
+                          "rounded-xl p-1 shadow-lg backdrop-blur-sm",
+                          status === 'certified' && "bg-emerald-500/90",
+                          status === 'doubtful' && "bg-amber-500/90",
+                          status === 'not_halal' && "bg-red-500/90"
+                        )}>
+                          <HalalStatusBadge 
+                            status={status}
+                            size={28}
+                            tooltipText={getStatusTooltip(restaurant)}
+                            showTooltip={false}
+                          />
+                        </div>
+                      </div>
+                      
+                      {/* Status Label on Image - Bottom Left */}
+                      <div className="absolute bottom-12 left-3 z-10">
+                        <span className={cn(
+                          "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg",
+                          status === 'certified' && "bg-emerald-500 text-white",
+                          status === 'doubtful' && "bg-amber-500 text-white",
+                          status === 'not_halal' && "bg-red-500 text-white"
+                        )}>
+                          {t(`halal.status.${status}`)}
+                        </span>
                       </div>
                       
                       <div className="absolute bottom-3 left-4 right-4">
-                        <h3 className="font-semibold text-white text-lg">{getField(restaurant, 'name')}</h3>
-                        <p className="text-sm text-white/80">{getField(restaurant, 'cuisine_type')}</p>
+                        <h3 className="font-semibold text-white text-lg drop-shadow-lg">{getField(restaurant, 'name')}</h3>
+                        <p className="text-sm text-white/90">{getField(restaurant, 'cuisine_type')}</p>
                       </div>
                     </div>
                     
@@ -338,15 +358,6 @@ const Ibadah = () => {
                         {getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}
                       </p>
                       
-                      {/* Status Label */}
-                      <div className={cn(
-                        "inline-flex items-center gap-1.5 mt-2 px-2 py-1 rounded-md text-xs font-medium",
-                        status === 'certified' && "bg-emerald-500/10 text-emerald-600",
-                        status === 'doubtful' && "bg-amber-500/10 text-amber-600",
-                        status === 'not_halal' && "bg-red-500/10 text-red-600"
-                      )}>
-                        {t(`halal.status.${status}`)}
-                      </div>
                       
                       {getField(restaurant, 'description') && (
                         <p className="text-xs text-muted-foreground mt-2 line-clamp-2">
