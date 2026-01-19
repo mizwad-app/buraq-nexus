@@ -92,7 +92,18 @@
     "noResults": "No results found for this category",
     "noCategories": "No categories found",
     "comingSoon": "Coming Soon",
-    "comingSoonDesc": "We're working on adding more suppliers for this category. Check back soon!"
+    "comingSoonDesc": "We're working on adding more suppliers for this category. Check back soon!",
+    "categories": "categories",
+    "groups": {
+      "electronics": "Electronics & Tech",
+      "industrial": "Industrial & Machinery",
+      "fashion": "Apparel & Fashion",
+      "home": "Home & Construction",
+      "automotive": "Automotive & Energy",
+      "health": "Health & Beauty",
+      "misc": "Miscellaneous",
+      "other": "Other"
+    }
   },
   "mosques": {
     "title": "Mosques",
