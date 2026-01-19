@@ -969,6 +969,12 @@ export type Database = {
       }
       production_hubs: {
         Row: {
+          address: string | null
+          address_ar: string | null
+          address_chinese: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
           city: string
           city_ar: string | null
           city_en: string | null
@@ -987,9 +993,22 @@ export type Database = {
           industry_en: string | null
           industry_ru: string | null
           industry_uz: string | null
+          latitude: number | null
+          longitude: number | null
           specializations: string[] | null
+          travel_tips: string | null
+          travel_tips_ar: string | null
+          travel_tips_en: string | null
+          travel_tips_ru: string | null
+          travel_tips_uz: string | null
         }
         Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
@@ -1008,9 +1027,22 @@ export type Database = {
           industry_en?: string | null
           industry_ru?: string | null
           industry_uz?: string | null
+          latitude?: number | null
+          longitude?: number | null
           specializations?: string[] | null
+          travel_tips?: string | null
+          travel_tips_ar?: string | null
+          travel_tips_en?: string | null
+          travel_tips_ru?: string | null
+          travel_tips_uz?: string | null
         }
         Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
@@ -1029,7 +1061,14 @@ export type Database = {
           industry_en?: string | null
           industry_ru?: string | null
           industry_uz?: string | null
+          latitude?: number | null
+          longitude?: number | null
           specializations?: string[] | null
+          travel_tips?: string | null
+          travel_tips_ar?: string | null
+          travel_tips_en?: string | null
+          travel_tips_ru?: string | null
+          travel_tips_uz?: string | null
         }
         Relationships: []
       }
@@ -1451,6 +1490,12 @@ export type Database = {
       }
       wholesale_markets: {
         Row: {
+          address: string | null
+          address_ar: string | null
+          address_chinese: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
           category: string
           category_ar: string | null
           category_en: string | null
@@ -1470,13 +1515,28 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           id: string
+          latitude: number | null
+          longitude: number | null
+          market_type: string | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          travel_tips: string | null
+          travel_tips_ar: string | null
+          travel_tips_en: string | null
+          travel_tips_ru: string | null
+          travel_tips_uz: string | null
+          working_hours: string | null
         }
         Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
           category: string
           category_ar?: string | null
           category_en?: string | null
@@ -1496,13 +1556,28 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           id?: string
+          latitude?: number | null
+          longitude?: number | null
+          market_type?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          travel_tips?: string | null
+          travel_tips_ar?: string | null
+          travel_tips_en?: string | null
+          travel_tips_ru?: string | null
+          travel_tips_uz?: string | null
+          working_hours?: string | null
         }
         Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
           category?: string
           category_ar?: string | null
           category_en?: string | null
@@ -1522,11 +1597,20 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           id?: string
+          latitude?: number | null
+          longitude?: number | null
+          market_type?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          travel_tips?: string | null
+          travel_tips_ar?: string | null
+          travel_tips_en?: string | null
+          travel_tips_ru?: string | null
+          travel_tips_uz?: string | null
+          working_hours?: string | null
         }
         Relationships: []
       }

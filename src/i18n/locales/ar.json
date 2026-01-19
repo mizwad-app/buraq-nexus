@@ -360,5 +360,15 @@
     "copyFailed": "فشل نسخ العنوان",
     "appNotInstalled": "قد لا يكون التطبيق مثبتًا",
     "openWeb": "فتح نسخة الويب"
+  },
+  "support": {
+    "title": "الدعم المباشر",
+    "subtitle": "اختر تطبيق المراسلة المفضل لديك",
+    "whatsappDesc": "رد سريع، استفسارات تجارية",
+    "telegramDesc": "رسائل سريعة، مشاركة الملفات",
+    "defaultMessage": "مرحباً! أحتاج مساعدة في Buraq Ecosystem.",
+    "askAgent": "اسأل الوكيل",
+    "marketInquiry": "مرحباً! أود الاستفسار عن {{market}}. هل يمكنكم المساعدة؟",
+    "inquiryAbout": "استفسار عن"
   }
 }

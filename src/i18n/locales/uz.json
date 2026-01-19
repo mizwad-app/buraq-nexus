@@ -360,5 +360,15 @@
     "copyFailed": "Manzilni nusxalab bo'lmadi",
     "appNotInstalled": "Ilova o'rnatilmagan bo'lishi mumkin",
     "openWeb": "Veb versiyasini ochish"
+  },
+  "support": {
+    "title": "Jonli Yordam",
+    "subtitle": "O'zingizga qulay messenjer tanlang",
+    "whatsappDesc": "Tez javob, biznes so'rovlar",
+    "telegramDesc": "Tez xabar, fayl almashish",
+    "defaultMessage": "Salom! Menga Buraq Ecosystem bo'yicha yordam kerak.",
+    "askAgent": "Agentga savol",
+    "marketInquiry": "Salom! Men {{market}} haqida so'ramoqchi edim. Yordam bera olasizmi?",
+    "inquiryAbout": "So'rov"
   }
 }

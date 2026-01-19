@@ -360,5 +360,15 @@
     "copyFailed": "Failed to copy address",
     "appNotInstalled": "App may not be installed",
     "openWeb": "Open Web Version"
+  },
+  "support": {
+    "title": "Live Support",
+    "subtitle": "Choose your preferred messaging app",
+    "whatsappDesc": "Quick response, business inquiries",
+    "telegramDesc": "Fast messaging, file sharing",
+    "defaultMessage": "Hello! I need help with Buraq Ecosystem.",
+    "askAgent": "Ask Agent",
+    "marketInquiry": "Hello! I'd like to ask about {{market}}. Can you help me?",
+    "inquiryAbout": "Inquiry about"
   }
 }
