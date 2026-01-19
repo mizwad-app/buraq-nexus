@@ -82,13 +82,17 @@
   "productSearch": {
     "title": "البحث حسب المنتج",
     "subtitle": "ابحث عن الأسواق والمصانع حسب نوع المنتج",
+    "searchPlaceholder": "البحث في الفئات...",
     "wholesale": "سوق الجملة",
-    "wholesaleDesc": "اشتر المنتجات بالجملة من الأسواق",
+    "wholesaleDesc": "أسواق كبيرة للمشتريات بالجملة",
     "factory": "مصنع",
-    "factoryDesc": "اشتر مباشرة من المصنعين",
-    "marketsAvailable": "أسواق متاحة",
-    "hubsAvailable": "مراكز إنتاج",
-    "noResults": "لم يتم العثور على نتائج لهذه الفئة"
+    "factoryDesc": "مراكز التصنيع",
+    "marketsAvailable": "سوق متاح",
+    "hubsAvailable": "مصنع متاح",
+    "noResults": "لا توجد نتائج لهذه الفئة",
+    "noCategories": "لم يتم العثور على فئات",
+    "comingSoon": "قريباً",
+    "comingSoonDesc": "نحن نعمل على إضافة المزيد من الموردين لهذه الفئة. تحقق قريباً!"
   },
   "mosques": {
     "title": "المساجد",
