@@ -15,11 +15,39 @@ import {
   Factory,
   MapPin,
   ArrowLeft,
-  Package
+  Package,
+  Lightbulb,
+  Gauge,
+  Zap,
+  Settings,
+  HardHat,
+  Briefcase,
+  Wrench,
+  Dumbbell,
+  Gem,
+  Home,
+  Tv,
+  Car,
+  Cog,
+  Truck,
+  Sun,
+  Plug,
+  Sparkles,
+  HeartPulse,
+  Shield,
+  PawPrint,
+  Pencil,
+  Wheat,
+  Utensils,
+  Gift,
+  Search,
+  Clock,
+  LucideIcon
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
+import { Input } from "@/components/ui/input";
 
 interface ProductCategory {
   id: string;
@@ -84,7 +112,7 @@ interface HubWithCategory {
 type SearchType = "wholesale" | "factory";
 type Step = "product" | "type" | "city" | "results";
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+const iconMap: Record<string, LucideIcon> = {
   smartphone: Smartphone,
   building: Building,
   layers: Layers,
@@ -94,6 +122,32 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   gamepad: Gamepad2,
   footprints: Footprints,
   watch: Watch,
+  lightbulb: Lightbulb,
+  gauge: Gauge,
+  zap: Zap,
+  settings: Settings,
+  "hard-hat": HardHat,
+  briefcase: Briefcase,
+  wrench: Wrench,
+  factory: Factory,
+  dumbbell: Dumbbell,
+  gem: Gem,
+  home: Home,
+  tv: Tv,
+  car: Car,
+  cog: Cog,
+  truck: Truck,
+  sun: Sun,
+  plug: Plug,
+  sparkles: Sparkles,
+  "heart-pulse": HeartPulse,
+  shield: Shield,
+  "paw-print": PawPrint,
+  pencil: Pencil,
+  wheat: Wheat,
+  utensils: Utensils,
+  package: Package,
+  gift: Gift,
 };
 
 interface ProductSearchProps {
@@ -111,6 +165,7 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
   const [markets, setMarkets] = useState<MarketWithCategory[]>([]);
   const [hubs, setHubs] = useState<HubWithCategory[]>([]);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     fetchCategories();
@@ -131,6 +186,17 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
       setLoading(false);
     }
   };
+
+  const filteredCategories = useMemo(() => {
+    if (!searchQuery.trim()) return categories;
+    
+    const query = searchQuery.toLowerCase();
+    return categories.filter(cat => {
+      const name = getField(cat, 'name').toLowerCase();
+      const slug = cat.slug.toLowerCase().replace(/_/g, ' ');
+      return name.includes(query) || slug.includes(query);
+    });
+  }, [categories, searchQuery, currentLanguage]);
 
   const fetchMarketsForCategory = async (categoryId: string) => {
     try {
@@ -207,6 +273,7 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
     setSelectedType(null);
     setMarkets([]);
     setHubs([]);
+    setSearchQuery("");
   };
 
   // Group markets/hubs by city
@@ -256,7 +323,7 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
     return Array.from(cityMap.values());
   }, [hubs, currentLanguage]);
 
-  const getIconComponent = (iconName: string | null) => {
+  const getIconComponent = (iconName: string | null): LucideIcon => {
     if (!iconName) return Package;
     return iconMap[iconName] || Package;
   };
@@ -291,6 +358,21 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
     );
   };
 
+  // Coming Soon State
+  const renderComingSoon = () => (
+    <div className="text-center py-12">
+      <div className="w-16 h-16 rounded-full bg-muted/50 flex items-center justify-center mx-auto mb-4">
+        <Clock className="w-8 h-8 text-muted-foreground" />
+      </div>
+      <h4 className="font-semibold text-foreground mb-2">
+        {t("productSearch.comingSoon")}
+      </h4>
+      <p className="text-sm text-muted-foreground max-w-xs mx-auto">
+        {t("productSearch.comingSoonDesc")}
+      </p>
+    </div>
+  );
+
   return (
     <div className="bg-gradient-to-br from-primary/5 to-accent/5 rounded-2xl border border-primary/20 p-4">
       {/* Header */}
@@ -318,33 +400,50 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
 
       {/* Step 1: Product Selection */}
       {step === "product" && (
-        <div className="grid grid-cols-2 gap-2">
-          {loading ? (
-            <div className="col-span-2 text-center py-8 text-muted-foreground">
-              {t("common.loading")}
-            </div>
-          ) : (
-            categories.map((category) => {
-              const IconComponent = getIconComponent(category.icon);
-              return (
-                <button
-                  key={category.id}
-                  onClick={() => handleCategorySelect(category)}
-                  className={cn(
-                    "flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50",
-                    "hover:border-primary/50 hover:bg-primary/5 transition-all text-left"
-                  )}
-                >
-                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <IconComponent className="w-5 h-5 text-primary" />
-                  </div>
-                  <span className="text-sm font-medium text-foreground line-clamp-2">
-                    {getField(category, 'name')}
-                  </span>
-                </button>
-              );
-            })
-          )}
+        <div className="space-y-4">
+          {/* Search Bar */}
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder={t("productSearch.searchPlaceholder")}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 bg-card border-border/50"
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 max-h-[400px] overflow-y-auto">
+            {loading ? (
+              <div className="col-span-2 text-center py-8 text-muted-foreground">
+                {t("common.loading")}
+              </div>
+            ) : filteredCategories.length > 0 ? (
+              filteredCategories.map((category) => {
+                const IconComponent = getIconComponent(category.icon);
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => handleCategorySelect(category)}
+                    className={cn(
+                      "flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50",
+                      "hover:border-primary/50 hover:bg-primary/5 transition-all text-left"
+                    )}
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <IconComponent className="w-5 h-5 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground line-clamp-2">
+                      {getField(category, 'name')}
+                    </span>
+                  </button>
+                );
+              })
+            ) : (
+              <div className="col-span-2 text-center py-8 text-muted-foreground">
+                {t("productSearch.noCategories")}
+              </div>
+            )}
+          </div>
         </div>
       )}
 
@@ -426,9 +525,7 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
                 </div>
               ))
             ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                {t("productSearch.noResults")}
-              </div>
+              renderComingSoon()
             )
           ) : (
             citiesWithHubs.length > 0 ? (
@@ -466,9 +563,7 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
                 </div>
               ))
             ) : (
-              <div className="text-center py-8 text-muted-foreground">
-                {t("productSearch.noResults")}
-              </div>
+              renderComingSoon()
             )
           )}
         </div>

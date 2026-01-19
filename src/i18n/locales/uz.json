@@ -81,14 +81,18 @@
   },
   "productSearch": {
     "title": "Mahsulot bo'yicha qidirish",
-    "subtitle": "Bozor va zavodlarni mahsulot turi bo'yicha toping",
+    "subtitle": "Mahsulot turi bo'yicha bozor va zavodlarni toping",
+    "searchPlaceholder": "Kategoriyalarni qidirish...",
     "wholesale": "Optom Bozor",
-    "wholesaleDesc": "Bozorlardan ulgurji sotib oling",
+    "wholesaleDesc": "Katta hajmli xaridlar uchun bozorlar",
     "factory": "Zavod",
-    "factoryDesc": "Bevosita ishlab chiqaruvchilardan xarid qiling",
-    "marketsAvailable": "ta bozor mavjud",
-    "hubsAvailable": "ta ishlab chiqarish markazi",
-    "noResults": "Bu kategoriya uchun natija topilmadi"
+    "factoryDesc": "To'g'ridan-to'g'ri ishlab chiqaruvchilar",
+    "marketsAvailable": "bozor mavjud",
+    "hubsAvailable": "zavod mavjud",
+    "noResults": "Bu kategoriya uchun natija topilmadi",
+    "noCategories": "Kategoriyalar topilmadi",
+    "comingSoon": "Tez kunda",
+    "comingSoonDesc": "Bu kategoriya uchun yangi yetkazib beruvchilar qo'shilmoqda. Tez orada tekshiring!"
   },
   "mosques": {
     "title": "Masjidlar",
