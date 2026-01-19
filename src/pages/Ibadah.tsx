@@ -10,6 +10,7 @@ import {
   XCircle,
   ShoppingBag,
   Check,
+  Navigation,
 } from "lucide-react";
 import { AIScannerModal } from "@/components/AIScannerModal";
 import { supabase } from "@/integrations/supabase/client";
@@ -18,6 +19,7 @@ import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
 import { cn } from "@/lib/utils";
+import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 
 interface Restaurant {
   id: string;
