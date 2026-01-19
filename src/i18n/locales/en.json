@@ -335,5 +335,19 @@
       "email": "Email",
       "website": "Website"
     }
+  },
+  "mapNav": {
+    "selectApp": "Choose navigation app",
+    "googleDesc": "Universal navigation",
+    "yandexDesc": "Popular for CIS users",
+    "baiduDesc": "Most accurate for China",
+    "appleDesc": "For iOS devices",
+    "gaodeDesc": "Standard in China",
+    "copyAddressChinese": "Copy Address in Chinese",
+    "forTaxi": "Show to taxi driver if apps fail",
+    "addressCopied": "Address copied! Show to taxi driver.",
+    "copyFailed": "Failed to copy address",
+    "appNotInstalled": "App may not be installed",
+    "openWeb": "Open Web Version"
   }
 }

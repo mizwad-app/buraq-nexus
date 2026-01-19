@@ -8,9 +8,7 @@ import {
   Star,
   Check,
   Compass,
-  Mountain,
-  Palmtree,
-  Camera,
+  Navigation,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
@@ -23,6 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
+import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 
 interface Park {
   id: string;
@@ -33,6 +32,8 @@ interface Park {
   description: string | null;
   park_type: string | null;
   image_url: string | null;
+  latitude?: number | null;
+  longitude?: number | null;
   name_uz?: string | null;
   name_ru?: string | null;
   name_en?: string | null;
@@ -62,6 +63,8 @@ interface ShoppingMall {
   image_url: string | null;
   has_halal_food: boolean | null;
   rating: number | null;
+  latitude?: number | null;
+  longitude?: number | null;
   name_uz?: string | null;
   name_ru?: string | null;
   name_en?: string | null;
@@ -82,6 +85,7 @@ interface ShoppingMall {
 }
 
 type CategoryFilter = "all" | "parks" | "malls";
+type SelectedItem = { type: "park"; data: Park } | { type: "mall"; data: ShoppingMall };
 
 const Travel = () => {
   const { t } = useTranslation();
@@ -91,6 +95,10 @@ const Travel = () => {
   const [parks, setParks] = useState<Park[]>([]);
   const [malls, setMalls] = useState<ShoppingMall[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Map navigation sheet state
+  const [mapSheetOpen, setMapSheetOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
 
   const categoryChips = [
     { id: "all" as const, label: t("travel.allCategories"), icon: Compass },
@@ -161,6 +169,14 @@ const Travel = () => {
     const cityData = allCities.find(c => c.base === selectedCity);
     return cityData?.translated || selectedCity;
   }, [selectedCity, allCities, t]);
+
+  const handleOpenMapNavigation = (item: SelectedItem) => {
+    const data = item.data;
+    if (data.latitude && data.longitude) {
+      setSelectedItem(item);
+      setMapSheetOpen(true);
+    }
+  };
 
   return (
     <div className="min-h-screen eco-gradient-soft safe-bottom pb-24">
@@ -243,6 +259,7 @@ const Travel = () => {
             {unifiedResults.map((item, index) => {
               if (item.type === "park") {
                 const park = item.data;
+                const hasLocation = park.latitude && park.longitude;
                 return (
                   <div
                     key={`park-${park.id}`}
@@ -279,15 +296,25 @@ const Travel = () => {
                         </Badge>
                       </div>
                       {park.description && (
-                        <p className="text-sm text-muted-foreground line-clamp-2">
+                        <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
                           {getField(park, 'description')}
                         </p>
+                      )}
+                      {hasLocation && (
+                        <button
+                          onClick={() => handleOpenMapNavigation(item)}
+                          className="flex items-center gap-2 px-3 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
+                        >
+                          <Navigation className="w-4 h-4" />
+                          {t("mosques.directions")}
+                        </button>
                       )}
                     </div>
                   </div>
                 );
               } else {
                 const mall = item.data;
+                const hasLocation = mall.latitude && mall.longitude;
                 return (
                   <div
                     key={`mall-${mall.id}`}
@@ -336,12 +363,23 @@ const Travel = () => {
                           {getField(mall, 'description')}
                         </p>
                       )}
-                      {mall.has_halal_food && (
-                        <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-600">
-                          <Check className="w-3 h-3" />
-                          {t("travel.hasHalalFood")}
-                        </span>
-                      )}
+                      <div className="flex items-center justify-between">
+                        {mall.has_halal_food && (
+                          <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-600">
+                            <Check className="w-3 h-3" />
+                            {t("travel.hasHalalFood")}
+                          </span>
+                        )}
+                        {hasLocation && (
+                          <button
+                            onClick={() => handleOpenMapNavigation(item)}
+                            className="flex items-center gap-2 px-3 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors ml-auto"
+                          >
+                            <Navigation className="w-4 h-4" />
+                            {t("mosques.directions")}
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 );
@@ -356,6 +394,19 @@ const Travel = () => {
           </div>
         )}
       </section>
+
+      {/* Map Navigation Sheet */}
+      {selectedItem && selectedItem.data.latitude && selectedItem.data.longitude && (
+        <MapNavigationSheet
+          open={mapSheetOpen}
+          onOpenChange={setMapSheetOpen}
+          latitude={selectedItem.data.latitude}
+          longitude={selectedItem.data.longitude}
+          name={getField(selectedItem.data, 'name')}
+          address={getField(selectedItem.data, 'address')}
+          addressChinese={selectedItem.data.address}
+        />
+      )}
     </div>
   );
 };

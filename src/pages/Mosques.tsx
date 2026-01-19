@@ -5,8 +5,6 @@ import {
   Clock, 
   MapPin, 
   Navigation,
-  Phone,
-  Star,
   Check,
   Users
 } from "lucide-react";
@@ -15,6 +13,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCity } from "@/contexts/CityContext";
 import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 
 interface Mosque {
   id: string;
@@ -66,6 +65,10 @@ const Mosques = () => {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
+  
+  // Map navigation sheet state
+  const [mapSheetOpen, setMapSheetOpen] = useState(false);
+  const [selectedMosque, setSelectedMosque] = useState<Mosque | null>(null);
 
   useEffect(() => {
     fetchMosques();
@@ -126,23 +129,10 @@ const Mosques = () => {
     );
   };
 
-  const openMosqueInMaps = (mosque: Mosque) => {
+  const handleOpenMapNavigation = (mosque: Mosque) => {
     if (mosque.latitude && mosque.longitude) {
-      const url = `https://www.google.com/maps/search/?api=1&query=${mosque.latitude},${mosque.longitude}`;
-      window.open(url, '_blank');
-    }
-  };
-
-  const openDirections = (mosque: Mosque) => {
-    if (mosque.latitude && mosque.longitude) {
-      const origin = userLocation 
-        ? `${userLocation.lat},${userLocation.lng}`
-        : "";
-      const destination = `${mosque.latitude},${mosque.longitude}`;
-      const url = userLocation
-        ? `https://www.google.com/maps/dir/${origin}/${destination}`
-        : `https://www.google.com/maps/search/?api=1&query=${destination}`;
-      window.open(url, '_blank');
+      setSelectedMosque(mosque);
+      setMapSheetOpen(true);
     }
   };
 
@@ -259,18 +249,6 @@ const Mosques = () => {
           <h2 className="text-lg font-display font-semibold text-foreground">
             {t("mosques.nearbyMosques")}
           </h2>
-          <button 
-            onClick={() => {
-              const url = userLocation 
-                ? `https://www.google.com/maps/search/mosques/@${userLocation.lat},${userLocation.lng},14z`
-                : `https://www.google.com/maps/search/mosques`;
-              window.open(url, '_blank');
-            }}
-            className="text-xs text-primary font-medium flex items-center gap-1"
-          >
-            <MapPin className="w-3 h-3" />
-            {t("mosques.viewOnMap")}
-          </button>
         </div>
 
         {loading ? (
@@ -332,15 +310,17 @@ const Mosques = () => {
 
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => openDirections(mosque)}
-                      className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium"
+                      onClick={() => handleOpenMapNavigation(mosque)}
+                      disabled={!mosque.latitude || !mosque.longitude}
+                      className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium disabled:opacity-50"
                     >
                       <Navigation className="w-4 h-4" />
                       {t("mosques.directions")}
                     </button>
                     <button
-                      onClick={() => openMosqueInMaps(mosque)}
-                      className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors"
+                      onClick={() => handleOpenMapNavigation(mosque)}
+                      disabled={!mosque.latitude || !mosque.longitude}
+                      className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors disabled:opacity-50"
                     >
                       <MapPin className="w-5 h-5 text-muted-foreground" />
                     </button>
@@ -351,6 +331,19 @@ const Mosques = () => {
           </div>
         )}
       </section>
+
+      {/* Map Navigation Sheet */}
+      {selectedMosque && selectedMosque.latitude && selectedMosque.longitude && (
+        <MapNavigationSheet
+          open={mapSheetOpen}
+          onOpenChange={setMapSheetOpen}
+          latitude={selectedMosque.latitude}
+          longitude={selectedMosque.longitude}
+          name={getField(selectedMosque, 'name')}
+          address={getField(selectedMosque, 'address')}
+          addressChinese={selectedMosque.address}
+        />
+      )}
     </div>
   );
 };

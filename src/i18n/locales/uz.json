@@ -335,5 +335,19 @@
       "email": "Email",
       "website": "Veb-sayt"
     }
+  },
+  "mapNav": {
+    "selectApp": "Navigatsiya ilovasini tanlang",
+    "googleDesc": "Universal navigatsiya",
+    "yandexDesc": "MDH foydalanuvchilari uchun mashhur",
+    "baiduDesc": "Xitoy uchun eng aniq",
+    "appleDesc": "iOS qurilmalari uchun",
+    "gaodeDesc": "Xitoydagi standart",
+    "copyAddressChinese": "Xitoycha manzilni nusxalash",
+    "forTaxi": "Ilovalar ishlamasa taksi haydovchisiga ko'rsating",
+    "addressCopied": "Manzil nusxalandi! Taksi haydovchisiga ko'rsating.",
+    "copyFailed": "Manzilni nusxalab bo'lmadi",
+    "appNotInstalled": "Ilova o'rnatilmagan bo'lishi mumkin",
+    "openWeb": "Veb versiyasini ochish"
   }
 }
