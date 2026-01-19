@@ -39,6 +39,7 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useCity } from "@/contexts/CityContext";
 import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { ProductSearch } from "@/components/ProductSearch";
+import { SupportChat, AskAgentButton } from "@/components/SupportChat";
 import { toast } from "sonner";
 
 interface WholesaleMarket {
@@ -619,25 +620,61 @@ const Business = () => {
                     className="bg-card rounded-2xl p-4 border border-border/50 hover:border-primary/30 transition-all"
                   >
                     <div className="flex items-start gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                         <Store className="w-5 h-5 text-primary" />
                       </div>
-                      <div className="flex-1">
+                      <div className="flex-1 min-w-0">
+                        {/* Chinese name for taxi */}
+                        {market.name && (
+                          <p className="text-xs text-muted-foreground font-mono">{market.name}</p>
+                        )}
                         <h3 className="font-semibold text-foreground">{getField(market, 'name')}</h3>
                         <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
-                          <MapPin className="w-3 h-3" />
-                          <span>{getTranslatedCity(market)}, {market.country}</span>
+                          <MapPin className="w-3 h-3 flex-shrink-0" />
+                          <span className="truncate">{getTranslatedCity(market)}, {market.country}</span>
                         </div>
-                        <div className="mt-2">
+                        
+                        {/* Address in Chinese */}
+                        {(market as any).address_chinese && (
+                          <div className="mt-2 p-2 bg-muted/30 rounded-lg">
+                            <p className="text-xs text-muted-foreground mb-1">📍 Address (for taxi):</p>
+                            <p className="text-xs font-mono text-foreground">{(market as any).address_chinese}</p>
+                          </div>
+                        )}
+                        
+                        {/* Travel Tips */}
+                        {(market as any).travel_tips && (
+                          <div className="mt-2 flex items-start gap-1.5">
+                            <Train className="w-3 h-3 text-accent mt-0.5 flex-shrink-0" />
+                            <p className="text-xs text-muted-foreground">{getField(market as any, 'travel_tips')}</p>
+                          </div>
+                        )}
+                        
+                        <div className="mt-2 flex items-center gap-2 flex-wrap">
                           <span className="px-2 py-0.5 rounded-full bg-accent/20 text-xs font-medium text-accent-foreground">
                             {getField(market, 'category')}
                           </span>
+                          {(market as any).market_type && (
+                            <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                              (market as any).market_type === 'wholesale' 
+                                ? 'bg-primary/20 text-primary' 
+                                : 'bg-amber-500/20 text-amber-400'
+                            }`}>
+                              {(market as any).market_type === 'wholesale' ? 'Wholesale' : 'Retail/Premium'}
+                            </span>
+                          )}
                         </div>
+                        
                         {(getField(market, 'description')) && (
                           <p className="text-xs text-muted-foreground mt-2">
                             {getField(market, 'description')}
                           </p>
                         )}
+                        
+                        {/* Ask Agent Button */}
+                        <div className="mt-3">
+                          <AskAgentButton marketName={`${market.name} (${getField(market, 'name')})`} />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -981,6 +1018,9 @@ const Business = () => {
           </TabsContent>
         </Tabs>
       </section>
+
+      {/* Support Chat FAB */}
+      <SupportChat />
     </div>
   );
 };

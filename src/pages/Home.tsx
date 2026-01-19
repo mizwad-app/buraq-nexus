@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { SupportChat } from "@/components/SupportChat";
 import { 
   Plane, 
   Trophy, 
@@ -309,6 +310,9 @@ const Home = () => {
           ))}
         </div>
       </section>
+
+      {/* Support Chat FAB */}
+      <SupportChat />
     </div>
   );
 };
