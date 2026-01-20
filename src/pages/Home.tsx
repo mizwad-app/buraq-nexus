@@ -20,7 +20,8 @@ import {
   MapPin,
   ClipboardCheck,
   Languages,
-  Wrench
+  Wrench,
+  Lock
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -349,6 +350,17 @@ const Home = () => {
           ))}
         </div>
       </section>
+
+      {/* Admin Entry - Footer */}
+      <footer className="px-5 pb-24 flex justify-center">
+        <button
+          onClick={() => navigate("/admin/login")}
+          className="flex items-center gap-2 text-xs text-muted-foreground/50 hover:text-muted-foreground transition-colors"
+        >
+          <Lock className="w-3 h-3" />
+          <span>Admin</span>
+        </button>
+      </footer>
 
       {/* Support Chat FAB */}
       <SupportChat />

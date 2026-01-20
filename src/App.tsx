@@ -23,6 +23,10 @@ import TravelChecklist from "./pages/TravelChecklist";
 import Translators from "./pages/Translators";
 import Services from "./pages/Services";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/AdminLogin";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminServiceRequests from "./pages/AdminServiceRequests";
 
 const queryClient = new QueryClient();
 
@@ -34,28 +38,43 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen w-full max-w-lg mx-auto relative bg-background">
-              <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/travel" element={<Travel />} />
-                <Route path="/ibadah" element={<Ibadah />} />
-                <Route path="/business" element={<Business />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/cargo" element={<Cargo />} />
-                <Route path="/rewards" element={<Rewards />} />
-                <Route path="/deep-check" element={<DeepCheckRequest />} />
-                <Route path="/admin/deep-checks" element={<AdminDeepChecks />} />
-                <Route path="/admin/locations" element={<AdminLocations />} />
-                <Route path="/mosques" element={<Mosques />} />
-                <Route path="/eco" element={<Eco />} />
-                <Route path="/guide" element={<TravelGuide />} />
-                <Route path="/checklist" element={<TravelChecklist />} />
-                <Route path="/translators" element={<Translators />} />
-                <Route path="/services" element={<Services />} />
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-              <BottomNavigation />
-            </div>
+            <Routes>
+              {/* Admin Routes - Full screen without bottom nav */}
+              <Route path="/admin/login" element={<AdminLogin />} />
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="locations" element={<AdminLocations />} />
+                <Route path="deep-checks" element={<AdminDeepChecks />} />
+                <Route path="service-requests" element={<AdminServiceRequests />} />
+              </Route>
+
+              {/* Main App Routes - With bottom navigation */}
+              <Route
+                path="/*"
+                element={
+                  <div className="min-h-screen w-full max-w-lg mx-auto relative bg-background">
+                    <Routes>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/travel" element={<Travel />} />
+                      <Route path="/ibadah" element={<Ibadah />} />
+                      <Route path="/business" element={<Business />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/cargo" element={<Cargo />} />
+                      <Route path="/rewards" element={<Rewards />} />
+                      <Route path="/deep-check" element={<DeepCheckRequest />} />
+                      <Route path="/mosques" element={<Mosques />} />
+                      <Route path="/eco" element={<Eco />} />
+                      <Route path="/guide" element={<TravelGuide />} />
+                      <Route path="/checklist" element={<TravelChecklist />} />
+                      <Route path="/translators" element={<Translators />} />
+                      <Route path="/services" element={<Services />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <BottomNavigation />
+                  </div>
+                }
+              />
+            </Routes>
           </BrowserRouter>
         </TooltipProvider>
       </CityProvider>

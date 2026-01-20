@@ -248,28 +248,10 @@ const AdminLocations = () => {
     }
   };
 
-  if (loading && !isAdmin) {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (!isAdmin) {
-    return (
-      <div className="min-h-screen bg-background safe-bottom flex flex-col items-center justify-center px-6">
-        <div className="text-center">
-          <div className="w-20 h-20 rounded-full bg-destructive/10 mx-auto flex items-center justify-center mb-4">
-            <Shield className="w-10 h-10 text-destructive" />
-          </div>
-          <h1 className="text-xl font-display font-bold text-foreground mb-2">
-            Access Denied
-          </h1>
-          <p className="text-sm text-muted-foreground">
-            This page is for administrators only
-          </p>
-        </div>
       </div>
     );
   }
@@ -277,80 +259,70 @@ const AdminLocations = () => {
   const filteredItems = getFilteredItems();
 
   return (
-    <div className="min-h-screen bg-background safe-bottom pb-24">
+    <div className="p-6">
       {/* Header */}
-      <header className="px-5 pt-12 pb-6">
-        <div className="flex items-center gap-3 mb-4">
-          <button
-            onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center"
-          >
-            <ArrowLeft className="w-5 h-5 text-foreground" />
-          </button>
-          <div>
-            <h1 className="text-2xl font-display font-bold text-foreground">
-              Location Manager
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              Edit locations and business data
-            </p>
-          </div>
-        </div>
+      <div className="mb-6">
+        <h1 className="text-3xl font-display font-bold text-foreground">
+          Joylashuvlar
+        </h1>
+        <p className="text-muted-foreground mt-1">
+          Bozorlar, restoranlar va tarjimonlarni boshqarish
+        </p>
+      </div>
 
-        {/* Entity Type Selector */}
-        <div className="flex gap-2 mb-4">
-          <button
-            onClick={() => setEntityType("markets")}
-            className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl transition-all",
-              entityType === "markets"
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-muted-foreground"
-            )}
-          >
-            <Store className="w-4 h-4" />
-            <span className="text-sm font-medium">Markets</span>
-          </button>
-          <button
-            onClick={() => setEntityType("restaurants")}
-            className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl transition-all",
-              entityType === "restaurants"
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-muted-foreground"
-            )}
-          >
-            <Utensils className="w-4 h-4" />
-            <span className="text-sm font-medium">Restaurants</span>
-          </button>
-          <button
-            onClick={() => setEntityType("translators")}
-            className={cn(
-              "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl transition-all",
-              entityType === "translators"
-                ? "bg-primary text-primary-foreground"
-                : "bg-secondary text-muted-foreground"
-            )}
-          >
-            <Users className="w-4 h-4" />
-            <span className="text-sm font-medium">Translators</span>
-          </button>
-        </div>
+      {/* Entity Type Selector */}
+      <div className="flex gap-2 mb-4">
+        <button
+          onClick={() => setEntityType("markets")}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl transition-all",
+            entityType === "markets"
+              ? "bg-primary text-primary-foreground"
+              : "bg-secondary text-muted-foreground"
+          )}
+        >
+          <Store className="w-4 h-4" />
+          <span className="text-sm font-medium">Markets</span>
+        </button>
+        <button
+          onClick={() => setEntityType("restaurants")}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl transition-all",
+            entityType === "restaurants"
+              ? "bg-primary text-primary-foreground"
+              : "bg-secondary text-muted-foreground"
+          )}
+        >
+          <Utensils className="w-4 h-4" />
+          <span className="text-sm font-medium">Restaurants</span>
+        </button>
+        <button
+          onClick={() => setEntityType("translators")}
+          className={cn(
+            "flex-1 flex items-center justify-center gap-2 py-3 rounded-xl transition-all",
+            entityType === "translators"
+              ? "bg-primary text-primary-foreground"
+              : "bg-secondary text-muted-foreground"
+          )}
+        >
+          <Users className="w-4 h-4" />
+          <span className="text-sm font-medium">Translators</span>
+        </button>
+      </div>
 
-        {/* Search */}
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search by name or city..."
-            className="pl-10"
-          />
-        </div>
-      </header>
+      {/* Search */}
+      <div className="relative mb-6">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Input
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          placeholder="Search by name or city..."
+          className="pl-10"
+        />
+      </div>
 
       {/* Items List */}
-      <section className="px-5 space-y-3">
+      <div className="space-y-3">
         {loading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="w-8 h-8 animate-spin text-primary" />
@@ -588,7 +560,7 @@ const AdminLocations = () => {
             );
           })
         )}
-      </section>
+      </div>
 
       {/* Location Picker Modal */}
       <AdminLocationPicker
