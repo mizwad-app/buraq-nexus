@@ -25,7 +25,14 @@
     "umraProgress": "Путешествие Умра",
     "sacredPilgrimage": "Священное паломничество",
     "progress": "Прогресс",
-    "latestCargo": "Последний груз"
+    "latestCargo": "Последний груз",
+    "quickAccess": "Быстрый доступ",
+    "travelChecklist": "Чек-лист путешествия",
+    "travelChecklistDesc": "Подготовка к поездке",
+    "translators": "Переводчики",
+    "translatorsDesc": "Проверенные переводчики",
+    "services": "Услуги",
+    "servicesDesc": "Инспекция и бронирование"
   },
   "business": {
     "title": "B2B Хаб",
@@ -76,19 +83,19 @@
       "qualityInspection": "Соглашение о проверке качества",
       "nda": "Соглашение о неразглашении",
       "copyAddress": "Копировать адрес",
-    "addressCopied": "Адрес скопирован!"
-  },
-  "marketCard": {
-    "taxiFare": "Такси",
-    "metro": "Метро",
-    "hours": "Часы работы",
-    "distance": "Расстояние",
-    "addressForTaxi": "Адрес для такси",
-    "wholesale": "Оптом",
-    "retail": "Розница",
-    "copyAddress": "Копировать адрес",
-    "moreMarketsSoon": "Другие рынки скоро появятся"
-  }
+      "addressCopied": "Адрес скопирован!"
+    },
+    "marketCard": {
+      "taxiFare": "Такси",
+      "metro": "Метро",
+      "hours": "Часы работы",
+      "distance": "Расстояние",
+      "addressForTaxi": "Адрес для такси",
+      "wholesale": "Оптом",
+      "retail": "Розница",
+      "copyAddress": "Копировать адрес",
+      "moreMarketsSoon": "Другие рынки скоро появятся"
+    }
   },
   "productSearch": {
     "title": "Поиск по продукту",
@@ -158,6 +165,20 @@
       "not_halalDesc": "Алкоголь и нехаляльные ингредиенты."
     }
   },
+  "restaurant": {
+    "overallRating": "Общий рейтинг",
+    "detailedRatings": "Подробные рейтинги",
+    "service": "Сервис",
+    "taste": "Вкус",
+    "cleanliness": "Чистота",
+    "facilities": "Удобства",
+    "prayerRoom": "Молельная комната",
+    "currencyExchange": "Обмен валют",
+    "nearby": "Рядом",
+    "nearestMetro": "Ближайшее метро",
+    "about": "О ресторане",
+    "openInMaps": "Открыть на карте"
+  },
   "scanner": {
     "title": "Халяль AI Сканер",
     "camera": "Камера",
@@ -207,7 +228,14 @@
     "loading": "Загрузка...",
     "more": "Подробнее",
     "all": "Все",
-    "close": "Закрыть"
+    "close": "Закрыть",
+    "available": "Доступно",
+    "notAvailable": "Недоступно",
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "submit": "Отправить",
+    "delete": "Удалить",
+    "edit": "Редактировать"
   },
   "cargo": {
     "title": "Отслеживание грузов",
@@ -373,13 +401,64 @@
     "openWeb": "Открыть веб-версию"
   },
   "support": {
-    "title": "Онлайн поддержка",
-    "subtitle": "Выберите удобный мессенджер",
-    "whatsappDesc": "Быстрый ответ, бизнес запросы",
+    "title": "Живая Поддержка",
+    "subtitle": "Выберите предпочитаемый мессенджер",
+    "whatsappDesc": "Быстрый ответ, бизнес-запросы",
     "telegramDesc": "Быстрые сообщения, обмен файлами",
     "defaultMessage": "Здравствуйте! Мне нужна помощь с Buraq Ecosystem.",
     "askAgent": "Спросить агента",
     "marketInquiry": "Здравствуйте! Я хотел бы узнать о {{market}}. Можете помочь?",
     "inquiryAbout": "Запрос о"
+  },
+  "checklist": {
+    "title": "Чек-лист путешествия",
+    "subtitle": "Подготовка к поездке",
+    "progress": "{{checked}} из {{total}} пунктов",
+    "addItem": "Добавить пункт",
+    "addItemPlaceholder": "Введите название...",
+    "defaultItems": {
+      "passport": "Паспорт",
+      "visa": "Виза",
+      "cantonBadge": "Бейдж Canton Fair",
+      "neckPillow": "Подушка для шеи",
+      "prayerMat": "Молитвенный коврик",
+      "pen": "Ручка (для деклараций)",
+      "eyeMask": "Маска для сна",
+      "toothbrush": "Зубная щетка и паста",
+      "perfume": "Парфюм",
+      "hairbrush": "Расческа",
+      "charger": "Зарядка для телефона",
+      "powerBank": "Power Bank",
+      "adapter": "Адаптер питания (китайская вилка)"
+    }
+  },
+  "translator": {
+    "title": "Переводчики",
+    "subtitle": "Найдите проверенных переводчиков",
+    "hskLevel": "Уровень HSK",
+    "experience": "Опыт",
+    "rating": "Рейтинг",
+    "reviews": "отзывов",
+    "pricePerDay": "в день",
+    "available": "Доступен",
+    "busy": "Занят",
+    "verified": "Проверен Buraq",
+    "specializations": "Специализации",
+    "contact": "Связаться",
+    "noTranslators": "Переводчики не найдены",
+    "filterCity": "Фильтр по городу"
+  },
+  "services": {
+    "title": "Услуги",
+    "subtitle": "Инспекция и бронирование",
+    "cargoInspection": "Инспекция груза",
+    "cargoInspectionDesc": "Контроль качества на заводе",
+    "ticketBooking": "Бронирование билетов",
+    "ticketBookingDesc": "Авиа и ж/д билеты",
+    "vpnSetup": "Настройка VPN",
+    "vpnSetupDesc": "Доступ в интернет в Китае",
+    "requestService": "Заказать услугу",
+    "contactUs": "Свяжитесь с нами для заказа",
+    "serviceRequested": "Запрос на услугу отправлен!"
   }
 }

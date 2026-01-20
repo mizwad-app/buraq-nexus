@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { TFunction } from "i18next";
 import { 
   Smartphone, 
   Building, 
@@ -47,9 +48,14 @@ import {
   X,
   Monitor,
   Armchair,
-  LucideIcon
+  LucideIcon,
+  Train,
+  Navigation,
+  Copy,
+  Check
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
@@ -199,6 +205,174 @@ const categoryGroups: Record<string, { icon: LucideIcon; slugs: string[] }> = {
     icon: Package,
     slugs: ["pet_supplies", "school_office_supplies", "parents_kids_toys", "agriculture", "food_beverage", "packaging_printing", "gifts_crafts"]
   }
+};
+
+// Parse travel tips to extract structured info
+const parseTravelInfo = (tips: string | null | undefined) => {
+  if (!tips) return { taxi: null, metro: null, distance: null };
+  
+  const taxiMatch = tips.match(/(\d{2,3}[-–]\d{2,3}\s*(?:RMB|¥|yuan))/i) || 
+                    tips.match(/taxi[:\s]*(\d{2,3}[-–]\d{2,3})/i);
+  const metroMatch = tips.match(/(?:Line\s*)?(\d+)[,\s]*(\w+(?:\s+\w+)*\s*(?:Station|站))/i) ||
+                     tips.match(/Metro[:\s]*([^,;]+)/i);
+  const distanceMatch = tips.match(/(\d+(?:\.\d+)?\s*(?:km|kilometers?))/i);
+  
+  return {
+    taxi: taxiMatch ? taxiMatch[1] || taxiMatch[0] : null,
+    metro: metroMatch ? (metroMatch[1] && metroMatch[2] ? `L${metroMatch[1]}, ${metroMatch[2]}` : metroMatch[1]) : null,
+    distance: distanceMatch ? distanceMatch[1] : null
+  };
+};
+
+// Rich market card for search results
+interface SearchMarketCardProps {
+  market: {
+    id: string;
+    name: string;
+    city: string;
+    category: string;
+    description: string | null;
+    address?: string | null;
+    address_chinese?: string | null;
+    travel_tips?: string | null;
+    working_hours?: string | null;
+    market_type?: string | null;
+    [key: string]: unknown;
+  };
+  getField: (obj: Record<string, unknown>, field: string) => string;
+  t: TFunction;
+}
+
+const SearchMarketCard = ({ market, getField, t }: SearchMarketCardProps) => {
+  const [copied, setCopied] = useState(false);
+  
+  const translatedName = getField(market, 'name');
+  const translatedTips = getField(market, 'travel_tips');
+  const translatedCategory = getField(market, 'category');
+  
+  const chineseAddress = market.address_chinese || market.address;
+  const travelInfo = parseTravelInfo(translatedTips);
+  
+  const copyAddress = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (chineseAddress) {
+      navigator.clipboard.writeText(chineseAddress);
+      setCopied(true);
+      toast.success(t("business.legalSection.addressCopied"));
+      setTimeout(() => setCopied(false), 2000);
+    }
+  };
+
+  return (
+    <div className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 hover:shadow-lg transition-all">
+      {/* Header with name and type */}
+      <div className="p-4 pb-2">
+        <div className="flex items-start gap-3">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
+            <Store className="w-5 h-5 text-primary" />
+          </div>
+          <div className="flex-1 min-w-0">
+            {/* Chinese name for taxi */}
+            <p className="text-xs text-muted-foreground font-mono truncate">{market.name}</p>
+            {/* Translated name */}
+            <h3 className="font-semibold text-foreground leading-tight">{translatedName}</h3>
+            
+            {/* Tags */}
+            <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+              <span className="px-2 py-0.5 rounded-full bg-accent/20 text-[10px] font-medium text-accent-foreground">
+                {translatedCategory}
+              </span>
+              {market.market_type && (
+                <span className={cn(
+                  "px-2 py-0.5 rounded-full text-[10px] font-medium",
+                  market.market_type === 'wholesale' 
+                    ? 'bg-primary/20 text-primary' 
+                    : 'bg-accent/20 text-accent-foreground'
+                )}>
+                  {market.market_type === 'wholesale' ? t("business.marketCard.wholesale") : t("business.marketCard.retail")}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Chinese Address with Copy */}
+      {chineseAddress && (
+        <div className="mx-4 mb-2 p-2.5 bg-muted/40 rounded-lg border border-border/30">
+          <div className="flex items-center justify-between gap-2">
+            <div className="flex-1 min-w-0">
+              <p className="text-[10px] text-muted-foreground mb-0.5">{t("business.marketCard.addressForTaxi")}</p>
+              <p className="text-xs font-mono text-foreground truncate">{chineseAddress}</p>
+            </div>
+            <button 
+              onClick={copyAddress}
+              className="p-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors flex-shrink-0"
+            >
+              {copied ? (
+                <Check className="w-3.5 h-3.5 text-emerald-500" />
+              ) : (
+                <Copy className="w-3.5 h-3.5 text-primary" />
+              )}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Icon Grid - Travel Info */}
+      <div className="px-4 pb-3">
+        <div className="grid grid-cols-4 gap-1.5">
+          {/* Taxi Fare */}
+          <div className={cn(
+            "flex flex-col items-center p-2 rounded-lg",
+            travelInfo.taxi ? "bg-accent/20" : "bg-muted/30"
+          )}>
+            <Car className={cn("w-4 h-4 mb-0.5", travelInfo.taxi ? "text-accent-foreground" : "text-muted-foreground/50")} />
+            <span className="text-[9px] text-muted-foreground">{t("business.marketCard.taxiFare")}</span>
+            <span className={cn("text-[10px] font-semibold truncate max-w-full", travelInfo.taxi ? "text-accent-foreground" : "text-muted-foreground")}>
+              {travelInfo.taxi || "—"}
+            </span>
+          </div>
+
+          {/* Metro */}
+          <div className={cn(
+            "flex flex-col items-center p-2 rounded-lg",
+            travelInfo.metro ? "bg-primary/10" : "bg-muted/30"
+          )}>
+            <Train className={cn("w-4 h-4 mb-0.5", travelInfo.metro ? "text-primary" : "text-muted-foreground/50")} />
+            <span className="text-[9px] text-muted-foreground">{t("business.marketCard.metro")}</span>
+            <span className={cn("text-[10px] font-semibold truncate max-w-full", travelInfo.metro ? "text-primary" : "text-muted-foreground")}>
+              {travelInfo.metro || "—"}
+            </span>
+          </div>
+
+          {/* Hours */}
+          <div className={cn(
+            "flex flex-col items-center p-2 rounded-lg",
+            market.working_hours ? "bg-secondary" : "bg-muted/30"
+          )}>
+            <Clock className={cn("w-4 h-4 mb-0.5", market.working_hours ? "text-secondary-foreground" : "text-muted-foreground/50")} />
+            <span className="text-[9px] text-muted-foreground">{t("business.marketCard.hours")}</span>
+            <span className={cn("text-[10px] font-semibold truncate max-w-full", market.working_hours ? "text-secondary-foreground" : "text-muted-foreground")}>
+              {market.working_hours || "—"}
+            </span>
+          </div>
+
+          {/* Distance */}
+          <div className={cn(
+            "flex flex-col items-center p-2 rounded-lg",
+            travelInfo.distance ? "bg-muted" : "bg-muted/30"
+          )}>
+            <Navigation className={cn("w-4 h-4 mb-0.5", travelInfo.distance ? "text-foreground" : "text-muted-foreground/50")} />
+            <span className="text-[9px] text-muted-foreground">{t("business.marketCard.distance")}</span>
+            <span className={cn("text-[10px] font-semibold truncate max-w-full", travelInfo.distance ? "text-foreground" : "text-muted-foreground")}>
+              {travelInfo.distance || "—"}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 interface ProductSearchProps {
@@ -714,8 +888,9 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
                   ) : selectedType === "wholesale" ? (
                     citiesWithMarkets.length > 0 ? (
                       citiesWithMarkets.map((cityData) => (
-                        <div key={cityData.city} className="bg-card rounded-xl border border-border/50 overflow-hidden">
-                          <div className="flex items-center gap-3 p-3 border-b border-border/30">
+                        <div key={cityData.city} className="space-y-3">
+                          {/* City Header */}
+                          <div className="flex items-center gap-3 p-3 bg-muted/30 rounded-xl sticky top-0 backdrop-blur-sm z-10">
                             <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center">
                               <MapPin className="w-4 h-4 text-primary" />
                             </div>
@@ -726,18 +901,15 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
                               </div>
                             </div>
                           </div>
-                          <div className="divide-y divide-border/30">
+                          {/* Market Cards - Rich display */}
+                          <div className="space-y-3 pl-2">
                             {cityData.items.map((item) => (
-                              <div key={item.market_id} className="p-3 hover:bg-muted/30 transition-colors">
-                                <div className="font-medium text-sm text-foreground">
-                                  {getField(item.market, 'name')}
-                                </div>
-                                {item.market.description && (
-                                  <div className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                                    {getField(item.market, 'description')}
-                                  </div>
-                                )}
-                              </div>
+                              <SearchMarketCard 
+                                key={item.market_id} 
+                                market={item.market} 
+                                getField={getField}
+                                t={t}
+                              />
                             ))}
                           </div>
                         </div>
@@ -748,9 +920,10 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
                   ) : (
                     citiesWithHubs.length > 0 ? (
                       citiesWithHubs.map((cityData) => (
-                        <div key={cityData.city} className="bg-card rounded-xl border border-border/50 overflow-hidden">
-                          <div className="flex items-center gap-3 p-3 border-b border-border/30">
-                            <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center">
+                        <div key={cityData.city} className="space-y-3">
+                          {/* City Header */}
+                          <div className="flex items-center gap-3 p-3 bg-amber-500/10 rounded-xl sticky top-0 backdrop-blur-sm z-10">
+                            <div className="w-9 h-9 rounded-lg bg-amber-500/20 flex items-center justify-center">
                               <MapPin className="w-4 h-4 text-amber-500" />
                             </div>
                             <div className="flex-1">
@@ -760,16 +933,22 @@ export const ProductSearch = ({ onClose }: ProductSearchProps) => {
                               </div>
                             </div>
                           </div>
-                          <div className="divide-y divide-border/30">
+                          {/* Hub Cards */}
+                          <div className="space-y-3 pl-2">
                             {cityData.items.map((item) => (
-                              <div key={item.hub_id} className="p-3 hover:bg-muted/30 transition-colors">
+                              <div key={item.hub_id} className="bg-card rounded-xl border border-border/50 p-3 hover:border-primary/30 transition-all">
                                 <div className="font-medium text-sm text-foreground">
                                   {getField(item.hub, 'industry')} - {getField(item.hub, 'city')}
                                 </div>
+                                {item.hub.description && (
+                                  <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                                    {getField(item.hub, 'description')}
+                                  </p>
+                                )}
                                 {item.hub.specializations && item.hub.specializations.length > 0 && (
-                                  <div className="flex flex-wrap gap-1 mt-1.5">
+                                  <div className="flex flex-wrap gap-1 mt-2">
                                     {item.hub.specializations.slice(0, 3).map((spec, idx) => (
-                                      <span key={idx} className="px-2 py-0.5 bg-muted text-xs rounded-full">
+                                      <span key={idx} className="px-2 py-0.5 bg-amber-500/10 text-amber-600 text-xs rounded-full">
                                         {spec}
                                       </span>
                                     ))}

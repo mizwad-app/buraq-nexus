@@ -25,7 +25,14 @@
     "umraProgress": "رحلة العمرة",
     "sacredPilgrimage": "الحج المقدس",
     "progress": "التقدم",
-    "latestCargo": "آخر شحنة"
+    "latestCargo": "آخر شحنة",
+    "quickAccess": "الوصول السريع",
+    "travelChecklist": "قائمة السفر",
+    "travelChecklistDesc": "التحضير للسفر",
+    "translators": "المترجمون",
+    "translatorsDesc": "مترجمون موثقون",
+    "services": "الخدمات",
+    "servicesDesc": "التفتيش والحجز"
   },
   "business": {
     "title": "مركز الأعمال",
@@ -158,6 +165,20 @@
       "not_halalDesc": "يقدم الكحول ومكونات غير حلال."
     }
   },
+  "restaurant": {
+    "overallRating": "التقييم العام",
+    "detailedRatings": "التقييمات التفصيلية",
+    "service": "الخدمة",
+    "taste": "الطعم",
+    "cleanliness": "النظافة",
+    "facilities": "المرافق",
+    "prayerRoom": "غرفة الصلاة",
+    "currencyExchange": "صرف العملات",
+    "nearby": "قريب",
+    "nearestMetro": "أقرب مترو",
+    "about": "حول",
+    "openInMaps": "افتح في الخرائط"
+  },
   "scanner": {
     "title": "ماسح الحلال الذكي",
     "camera": "الكاميرا",
@@ -207,7 +228,14 @@
     "loading": "جار التحميل...",
     "more": "المزيد",
     "all": "الكل",
-    "close": "إغلاق"
+    "close": "إغلاق",
+    "available": "متاح",
+    "notAvailable": "غير متاح",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "submit": "إرسال",
+    "delete": "حذف",
+    "edit": "تعديل"
   },
   "cargo": {
     "title": "تتبع الشحنات",
@@ -381,5 +409,56 @@
     "askAgent": "اسأل الوكيل",
     "marketInquiry": "مرحباً! أود الاستفسار عن {{market}}. هل يمكنكم المساعدة؟",
     "inquiryAbout": "استفسار عن"
+  },
+  "checklist": {
+    "title": "قائمة السفر",
+    "subtitle": "التحضير للسفر",
+    "progress": "{{checked}} من {{total}} عنصر",
+    "addItem": "إضافة عنصر",
+    "addItemPlaceholder": "أدخل اسم العنصر...",
+    "defaultItems": {
+      "passport": "جواز السفر",
+      "visa": "التأشيرة",
+      "cantonBadge": "بطاقة معرض كانتون",
+      "neckPillow": "وسادة الرقبة",
+      "prayerMat": "سجادة الصلاة",
+      "pen": "قلم (للإقرارات)",
+      "eyeMask": "قناع العين",
+      "toothbrush": "فرشاة ومعجون الأسنان",
+      "perfume": "العطر",
+      "hairbrush": "فرشاة الشعر",
+      "charger": "شاحن الهاتف",
+      "powerBank": "بطارية محمولة",
+      "adapter": "محول الكهرباء (قابس صيني)"
+    }
+  },
+  "translator": {
+    "title": "المترجمون",
+    "subtitle": "ابحث عن مترجمين موثقين",
+    "hskLevel": "مستوى HSK",
+    "experience": "الخبرة",
+    "rating": "التقييم",
+    "reviews": "مراجعات",
+    "pricePerDay": "في اليوم",
+    "available": "متاح",
+    "busy": "مشغول",
+    "verified": "موثق من Buraq",
+    "specializations": "التخصصات",
+    "contact": "اتصال",
+    "noTranslators": "لم يتم العثور على مترجمين",
+    "filterCity": "تصفية حسب المدينة"
+  },
+  "services": {
+    "title": "الخدمات",
+    "subtitle": "التفتيش والحجز",
+    "cargoInspection": "تفتيش الشحنات",
+    "cargoInspectionDesc": "مراقبة الجودة في المصنع",
+    "ticketBooking": "حجز التذاكر",
+    "ticketBookingDesc": "تذاكر الطيران والقطار",
+    "vpnSetup": "إعداد VPN",
+    "vpnSetupDesc": "الوصول للإنترنت في الصين",
+    "requestService": "طلب الخدمة",
+    "contactUs": "تواصل معنا لطلب الخدمة",
+    "serviceRequested": "تم إرسال طلب الخدمة!"
   }
 }
