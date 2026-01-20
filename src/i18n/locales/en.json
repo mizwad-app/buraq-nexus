@@ -460,5 +460,25 @@
     "requestService": "Request Service",
     "contactUs": "Contact us to request this service",
     "serviceRequested": "Service request submitted!"
+  },
+  "admin": {
+    "locationPicker": "Location Picker",
+    "locationPickerDesc": "Search for a location or adjust the pin manually for precise positioning.",
+    "searchLocation": "Search Location",
+    "searchPlaceholder": "Enter address or place name...",
+    "mapPreview": "Map Preview",
+    "fineTune": "Fine-tune Position",
+    "nudgeHint": "Each click moves ~11 meters",
+    "latitude": "Latitude",
+    "longitude": "Longitude",
+    "copyCoordinates": "Copy Coordinates",
+    "coordinatesCopied": "Coordinates copied!",
+    "confirmLocation": "Confirm Location",
+    "locationFound": "Location found!",
+    "locationNotFound": "Location not found. Try a different search term.",
+    "searchError": "Error searching for location",
+    "locationSaved": "Location saved!",
+    "useArrowsToAdjust": "Use arrow buttons below to fine-tune position",
+    "copied": "Copied!"
   }
 }
