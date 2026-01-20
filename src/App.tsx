@@ -18,6 +18,9 @@ import AdminDeepChecks from "./pages/AdminDeepChecks";
 import Mosques from "./pages/Mosques";
 import Eco from "./pages/Eco";
 import TravelGuide from "./pages/TravelGuide";
+import TravelChecklist from "./pages/TravelChecklist";
+import Translators from "./pages/Translators";
+import Services from "./pages/Services";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +47,9 @@ const App = () => (
                 <Route path="/mosques" element={<Mosques />} />
                 <Route path="/eco" element={<Eco />} />
                 <Route path="/guide" element={<TravelGuide />} />
+                <Route path="/checklist" element={<TravelChecklist />} />
+                <Route path="/translators" element={<Translators />} />
+                <Route path="/services" element={<Services />} />
                 <Route path="*" element={<NotFound />} />
               </Routes>
               <BottomNavigation />
