@@ -1169,6 +1169,8 @@ export type Database = {
           halal_status_note_en: string | null
           halal_status_note_ru: string | null
           halal_status_note_uz: string | null
+          has_currency_exchange_nearby: boolean | null
+          has_prayer_room: boolean | null
           id: string
           image_url: string | null
           is_halal_certified: boolean | null
@@ -1179,7 +1181,15 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          nearest_metro: string | null
+          nearest_metro_ar: string | null
+          nearest_metro_en: string | null
+          nearest_metro_ru: string | null
+          nearest_metro_uz: string | null
           rating: number | null
+          rating_cleanliness: number | null
+          rating_service: number | null
+          rating_taste: number | null
           serves_alcohol: boolean | null
         }
         Insert: {
@@ -1212,6 +1222,8 @@ export type Database = {
           halal_status_note_en?: string | null
           halal_status_note_ru?: string | null
           halal_status_note_uz?: string | null
+          has_currency_exchange_nearby?: boolean | null
+          has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
           is_halal_certified?: boolean | null
@@ -1222,7 +1234,15 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          nearest_metro?: string | null
+          nearest_metro_ar?: string | null
+          nearest_metro_en?: string | null
+          nearest_metro_ru?: string | null
+          nearest_metro_uz?: string | null
           rating?: number | null
+          rating_cleanliness?: number | null
+          rating_service?: number | null
+          rating_taste?: number | null
           serves_alcohol?: boolean | null
         }
         Update: {
@@ -1255,6 +1275,8 @@ export type Database = {
           halal_status_note_en?: string | null
           halal_status_note_ru?: string | null
           halal_status_note_uz?: string | null
+          has_currency_exchange_nearby?: boolean | null
+          has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
           is_halal_certified?: boolean | null
@@ -1265,7 +1287,15 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          nearest_metro?: string | null
+          nearest_metro_ar?: string | null
+          nearest_metro_en?: string | null
+          nearest_metro_ru?: string | null
+          nearest_metro_uz?: string | null
           rating?: number | null
+          rating_cleanliness?: number | null
+          rating_service?: number | null
+          rating_taste?: number | null
           serves_alcohol?: boolean | null
         }
         Relationships: []
@@ -1343,6 +1373,45 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      service_requests: {
+        Row: {
+          admin_notes: string | null
+          contact_method: string | null
+          created_at: string
+          description: string | null
+          id: string
+          service_type: string
+          status: string | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          contact_method?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          service_type: string
+          status?: string | null
+          title: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          contact_method?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          service_type?: string
+          status?: string | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
       }
       shopping_malls: {
         Row: {
@@ -1437,6 +1506,167 @@ export type Database = {
           name_ru?: string | null
           name_uz?: string | null
           rating?: number | null
+        }
+        Relationships: []
+      }
+      translator_reviews: {
+        Row: {
+          comment: string | null
+          created_at: string
+          id: string
+          rating: number | null
+          translator_id: string
+          user_id: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number | null
+          translator_id: string
+          user_id: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          id?: string
+          rating?: number | null
+          translator_id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "translator_reviews_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      translators: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          bio_ar: string | null
+          bio_en: string | null
+          bio_ru: string | null
+          bio_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          created_at: string
+          email: string | null
+          hsk_level: number | null
+          id: string
+          is_available: boolean | null
+          is_verified: boolean | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          phone: string | null
+          price_per_day: number | null
+          rating: number | null
+          specializations: string[] | null
+          total_reviews: number | null
+          updated_at: string
+          user_id: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          bio_ar?: string | null
+          bio_en?: string | null
+          bio_ru?: string | null
+          bio_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          created_at?: string
+          email?: string | null
+          hsk_level?: number | null
+          id?: string
+          is_available?: boolean | null
+          is_verified?: boolean | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          price_per_day?: number | null
+          rating?: number | null
+          specializations?: string[] | null
+          total_reviews?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          bio_ar?: string | null
+          bio_en?: string | null
+          bio_ru?: string | null
+          bio_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          created_at?: string
+          email?: string | null
+          hsk_level?: number | null
+          id?: string
+          is_available?: boolean | null
+          is_verified?: boolean | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          price_per_day?: number | null
+          rating?: number | null
+          specializations?: string[] | null
+          total_reviews?: number | null
+          updated_at?: string
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      travel_checklist_items: {
+        Row: {
+          created_at: string
+          id: string
+          is_checked: boolean | null
+          is_default: boolean | null
+          item_name: string
+          sort_order: number | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_checked?: boolean | null
+          is_default?: boolean | null
+          item_name: string
+          sort_order?: number | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_checked?: boolean | null
+          is_default?: boolean | null
+          item_name?: string
+          sort_order?: number | null
+          user_id?: string
         }
         Relationships: []
       }
