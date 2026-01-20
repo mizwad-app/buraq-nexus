@@ -25,7 +25,14 @@
     "umraProgress": "Umra Journey",
     "sacredPilgrimage": "Sacred pilgrimage",
     "progress": "Progress",
-    "latestCargo": "Latest cargo"
+    "latestCargo": "Latest cargo",
+    "quickAccess": "Quick Access",
+    "travelChecklist": "Travel Checklist",
+    "travelChecklistDesc": "Pre-travel preparation",
+    "translators": "Translators",
+    "translatorsDesc": "Find verified translators",
+    "services": "Services",
+    "servicesDesc": "Inspection & booking"
   },
   "business": {
     "title": "B2B Hub",
@@ -76,19 +83,19 @@
       "qualityInspection": "Quality Inspection Agreement",
       "nda": "Non-Disclosure Agreement",
       "copyAddress": "Copy Address",
-    "addressCopied": "Address copied!"
-  },
-  "marketCard": {
-    "taxiFare": "Taxi",
-    "metro": "Metro",
-    "hours": "Hours",
-    "distance": "Distance",
-    "addressForTaxi": "Address for Taxi",
-    "wholesale": "Wholesale",
-    "retail": "Retail",
-    "copyAddress": "Copy Address",
-    "moreMarketsSoon": "More markets coming soon"
-  }
+      "addressCopied": "Address copied!"
+    },
+    "marketCard": {
+      "taxiFare": "Taxi",
+      "metro": "Metro",
+      "hours": "Hours",
+      "distance": "Distance",
+      "addressForTaxi": "Address for Taxi",
+      "wholesale": "Wholesale",
+      "retail": "Retail",
+      "copyAddress": "Copy Address",
+      "moreMarketsSoon": "More markets coming soon"
+    }
   },
   "productSearch": {
     "title": "Search by Product",
@@ -158,6 +165,20 @@
       "not_halalDesc": "Serves alcohol and non-halal ingredients."
     }
   },
+  "restaurant": {
+    "overallRating": "Overall Rating",
+    "detailedRatings": "Detailed Ratings",
+    "service": "Service",
+    "taste": "Taste",
+    "cleanliness": "Cleanliness",
+    "facilities": "Facilities",
+    "prayerRoom": "Prayer Room",
+    "currencyExchange": "Currency Exchange",
+    "nearby": "Nearby",
+    "nearestMetro": "Nearest Metro",
+    "about": "About",
+    "openInMaps": "Open in Maps"
+  },
   "scanner": {
     "title": "Halal AI Scanner",
     "camera": "Camera",
@@ -207,7 +228,14 @@
     "loading": "Loading...",
     "more": "More",
     "all": "All",
-    "close": "Close"
+    "close": "Close",
+    "available": "Available",
+    "notAvailable": "Not available",
+    "save": "Save",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "delete": "Delete",
+    "edit": "Edit"
   },
   "cargo": {
     "title": "Cargo Tracking",
@@ -381,5 +409,56 @@
     "askAgent": "Ask Agent",
     "marketInquiry": "Hello! I'd like to ask about {{market}}. Can you help me?",
     "inquiryAbout": "Inquiry about"
+  },
+  "checklist": {
+    "title": "Travel Checklist",
+    "subtitle": "Pre-travel preparation",
+    "progress": "{{checked}} of {{total}} items",
+    "addItem": "Add item",
+    "addItemPlaceholder": "Enter item name...",
+    "defaultItems": {
+      "passport": "Passport",
+      "visa": "Visa",
+      "cantonBadge": "Canton Fair Badge",
+      "neckPillow": "Neck Pillow",
+      "prayerMat": "Prayer Mat (Joynamoz)",
+      "pen": "Pen (for declarations)",
+      "eyeMask": "Eye Mask",
+      "toothbrush": "Toothbrush & Toothpaste",
+      "perfume": "Perfume",
+      "hairbrush": "Hairbrush",
+      "charger": "Phone Charger",
+      "powerBank": "Power Bank",
+      "adapter": "Power Adapter (China plug)"
+    }
+  },
+  "translator": {
+    "title": "Translators",
+    "subtitle": "Find verified translators",
+    "hskLevel": "HSK Level",
+    "experience": "Experience",
+    "rating": "Rating",
+    "reviews": "reviews",
+    "pricePerDay": "per day",
+    "available": "Available",
+    "busy": "Busy",
+    "verified": "Verified by Buraq",
+    "specializations": "Specializations",
+    "contact": "Contact",
+    "noTranslators": "No translators found",
+    "filterCity": "Filter by city"
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "Inspection & booking services",
+    "cargoInspection": "Cargo Inspection",
+    "cargoInspectionDesc": "Quality control at factory",
+    "ticketBooking": "Ticket Booking",
+    "ticketBookingDesc": "Flight & train tickets",
+    "vpnSetup": "VPN Setup",
+    "vpnSetupDesc": "Internet access in China",
+    "requestService": "Request Service",
+    "contactUs": "Contact us to request this service",
+    "serviceRequested": "Service request submitted!"
   }
 }

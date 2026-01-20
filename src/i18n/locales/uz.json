@@ -25,7 +25,14 @@
     "umraProgress": "Umra Sayohati",
     "sacredPilgrimage": "Muqaddas ziyorat",
     "progress": "Jarayon",
-    "latestCargo": "Oxirgi yuk"
+    "latestCargo": "Oxirgi yuk",
+    "quickAccess": "Tezkor Kirish",
+    "travelChecklist": "Sayohat Ro'yxati",
+    "travelChecklistDesc": "Sayohatga tayyorgarlik",
+    "translators": "Tarjimonlar",
+    "translatorsDesc": "Tasdiqlangan tarjimonlar",
+    "services": "Xizmatlar",
+    "servicesDesc": "Tekshiruv va bron qilish"
   },
   "business": {
     "title": "B2B Hub",
@@ -76,19 +83,19 @@
       "qualityInspection": "Sifat tekshiruvi shartnomasi",
       "nda": "Maxfiylik shartnomasi",
       "copyAddress": "Manzilni nusxalash",
-    "addressCopied": "Manzil nusxalandi!"
-  },
-  "marketCard": {
-    "taxiFare": "Taksi",
-    "metro": "Metro",
-    "hours": "Ish vaqti",
-    "distance": "Masofa",
-    "addressForTaxi": "Taksi uchun manzil",
-    "wholesale": "Optom",
-    "retail": "Chakana",
-    "copyAddress": "Manzilni nusxalash",
-    "moreMarketsSoon": "Boshqa bozorlar tez orada qo'shiladi"
-  }
+      "addressCopied": "Manzil nusxalandi!"
+    },
+    "marketCard": {
+      "taxiFare": "Taksi",
+      "metro": "Metro",
+      "hours": "Ish vaqti",
+      "distance": "Masofa",
+      "addressForTaxi": "Taksi uchun manzil",
+      "wholesale": "Optom",
+      "retail": "Chakana",
+      "copyAddress": "Manzilni nusxalash",
+      "moreMarketsSoon": "Boshqa bozorlar tez orada qo'shiladi"
+    }
   },
   "productSearch": {
     "title": "Mahsulot bo'yicha qidirish",
@@ -158,6 +165,20 @@
       "not_halalDesc": "Alkogol va halol bo'lmagan ingredientlar."
     }
   },
+  "restaurant": {
+    "overallRating": "Umumiy Reyting",
+    "detailedRatings": "Batafsil Reytinglar",
+    "service": "Xizmat",
+    "taste": "Ta'm",
+    "cleanliness": "Tozalik",
+    "facilities": "Qulayliklar",
+    "prayerRoom": "Namozxona",
+    "currencyExchange": "Valyuta almashtirish",
+    "nearby": "Yaqinida",
+    "nearestMetro": "Eng yaqin metro",
+    "about": "Haqida",
+    "openInMaps": "Xaritada ochish"
+  },
   "scanner": {
     "title": "Halol AI Skaner",
     "camera": "Kamera",
@@ -207,7 +228,14 @@
     "loading": "Yuklanmoqda...",
     "more": "Batafsil",
     "all": "Barchasi",
-    "close": "Yopish"
+    "close": "Yopish",
+    "available": "Mavjud",
+    "notAvailable": "Mavjud emas",
+    "save": "Saqlash",
+    "cancel": "Bekor qilish",
+    "submit": "Yuborish",
+    "delete": "O'chirish",
+    "edit": "Tahrirlash"
   },
   "cargo": {
     "title": "Yuk Kuzatuvi",
@@ -381,5 +409,56 @@
     "askAgent": "Agentga savol",
     "marketInquiry": "Salom! Men {{market}} haqida so'ramoqchi edim. Yordam bera olasizmi?",
     "inquiryAbout": "So'rov"
+  },
+  "checklist": {
+    "title": "Sayohat Ro'yxati",
+    "subtitle": "Sayohatga tayyorgarlik",
+    "progress": "{{checked}} / {{total}} element",
+    "addItem": "Element qo'shish",
+    "addItemPlaceholder": "Element nomini kiriting...",
+    "defaultItems": {
+      "passport": "Pasport",
+      "visa": "Viza",
+      "cantonBadge": "Canton Fair Badge",
+      "neckPillow": "Bo'yin yostig'i",
+      "prayerMat": "Joynamoz",
+      "pen": "Ruchka (deklaratsiya uchun)",
+      "eyeMask": "Ko'z niqobi",
+      "toothbrush": "Tish cho'tkasi va pasta",
+      "perfume": "Atir",
+      "hairbrush": "Soch tarash",
+      "charger": "Telefon zaryadlagich",
+      "powerBank": "Power Bank",
+      "adapter": "Elektr adapteri (Xitoy vilkasi)"
+    }
+  },
+  "translator": {
+    "title": "Tarjimonlar",
+    "subtitle": "Tasdiqlangan tarjimonlarni toping",
+    "hskLevel": "HSK Darajasi",
+    "experience": "Tajriba",
+    "rating": "Reyting",
+    "reviews": "sharhlar",
+    "pricePerDay": "kuniga",
+    "available": "Mavjud",
+    "busy": "Band",
+    "verified": "Buraq tomonidan tasdiqlangan",
+    "specializations": "Mutaxassisliklar",
+    "contact": "Aloqa",
+    "noTranslators": "Tarjimonlar topilmadi",
+    "filterCity": "Shahar bo'yicha filtrlash"
+  },
+  "services": {
+    "title": "Xizmatlar",
+    "subtitle": "Tekshiruv va bron qilish xizmatlari",
+    "cargoInspection": "Yuk Tekshiruvi",
+    "cargoInspectionDesc": "Zavodda sifat nazorati",
+    "ticketBooking": "Chipta Bronlash",
+    "ticketBookingDesc": "Samolyot va poyezd chiptalari",
+    "vpnSetup": "VPN O'rnatish",
+    "vpnSetupDesc": "Xitoyda internet kirish",
+    "requestService": "Xizmat so'rash",
+    "contactUs": "Ushbu xizmatni so'rash uchun biz bilan bog'laning",
+    "serviceRequested": "Xizmat so'rovi yuborildi!"
   }
 }

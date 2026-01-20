@@ -17,7 +17,10 @@ import {
   Ship,
   Shield,
   CheckCircle2,
-  MapPin
+  MapPin,
+  ClipboardCheck,
+  Languages,
+  Wrench
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -287,6 +290,42 @@ const Home = () => {
           </button>
         </section>
       )}
+
+      {/* Quick Access Section */}
+      <section className="px-5 mb-4">
+        <h2 className="text-lg font-display font-semibold text-foreground mb-3">
+          {t("home.quickAccess")}
+        </h2>
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            onClick={() => navigate("/checklist")}
+            className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+          >
+            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <ClipboardCheck className="w-5 h-5 text-primary" />
+            </div>
+            <span className="text-xs font-medium text-foreground text-center">{t("home.travelChecklist")}</span>
+          </button>
+          <button
+            onClick={() => navigate("/translators")}
+            className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+          >
+            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
+              <Languages className="w-5 h-5 text-accent-foreground" />
+            </div>
+            <span className="text-xs font-medium text-foreground text-center">{t("home.translators")}</span>
+          </button>
+          <button
+            onClick={() => navigate("/services")}
+            className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+          >
+            <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
+              <Wrench className="w-5 h-5 text-secondary-foreground" />
+            </div>
+            <span className="text-xs font-medium text-foreground text-center">{t("home.services")}</span>
+          </button>
+        </div>
+      </section>
 
       {/* Section Title */}
       <section className="px-5 mb-3">

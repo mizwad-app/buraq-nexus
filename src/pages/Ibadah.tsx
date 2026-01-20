@@ -20,6 +20,7 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
 import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
+import { RestaurantDetailSheet } from "@/components/RestaurantDetailSheet";
 
 interface Restaurant {
   id: string;
@@ -106,6 +107,8 @@ const Ibadah = () => {
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<'restaurants' | 'shopping'>('restaurants');
   const [halalFilter, setHalalFilter] = useState<HalalFilter>('all');
+  const [selectedRestaurant, setSelectedRestaurant] = useState<Restaurant | null>(null);
+  const [restaurantDetailOpen, setRestaurantDetailOpen] = useState(false);
 
   const filterChips: { id: HalalFilter; labelKey: string; color: string }[] = [
     { id: 'all', labelKey: 'halal.filterAll', color: 'bg-secondary text-secondary-foreground' },
@@ -302,7 +305,11 @@ const Ibadah = () => {
                 return (
                   <div
                     key={restaurant.id}
-                    className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
+                    onClick={() => {
+                      setSelectedRestaurant(restaurant);
+                      setRestaurantDetailOpen(true);
+                    }}
+                    className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in cursor-pointer hover:border-primary/30 hover:shadow-lg transition-all"
                     style={{ animationDelay: `${index * 50}ms` }}
                   >
                     {/* Restaurant Image with Halal Badge Overlay */}
@@ -503,6 +510,13 @@ const Ibadah = () => {
 
       {/* AI Scanner Modal */}
       <AIScannerModal open={scannerOpen} onOpenChange={setScannerOpen} />
+
+      {/* Restaurant Detail Sheet */}
+      <RestaurantDetailSheet
+        open={restaurantDetailOpen}
+        onOpenChange={setRestaurantDetailOpen}
+        restaurant={selectedRestaurant}
+      />
     </div>
   );
 };
