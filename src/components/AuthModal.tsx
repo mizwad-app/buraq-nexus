@@ -16,6 +16,21 @@ interface AuthModalProps {
 
 type AuthStep = "info" | "verify";
 
+// Generate a cryptographically secure random password
+const generateSecurePassword = (): string => {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+  const array = new Uint8Array(32);
+  crypto.getRandomValues(array);
+  return Array.from(array, (byte) => chars[byte % chars.length]).join('');
+};
+
+// Generate a secure OTP code
+const generateOTPCode = (): string => {
+  const array = new Uint8Array(4);
+  crypto.getRandomValues(array);
+  return Array.from(array, (byte) => (byte % 10).toString()).join('');
+};
+
 export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps) => {
   const [step, setStep] = useState<AuthStep>("info");
   const [fullName, setFullName] = useState("");
@@ -23,6 +38,8 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
   const [verificationCode, setVerificationCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [generatedEmail, setGeneratedEmail] = useState("");
+  const [expectedOTP, setExpectedOTP] = useState("");
+  const [securePassword, setSecurePassword] = useState("");
 
   const handleSendCode = async () => {
     if (!fullName.trim() || !phoneNumber.trim()) {
@@ -39,15 +56,20 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
 
     setLoading(true);
     
-    // Since we're using mock SMS, we'll use email auth behind the scenes
-    // with a generated email based on phone number
+    // Generate secure credentials
     const email = `${cleanPhone}@buraq-user.app`;
+    const password = generateSecurePassword();
+    const otpCode = generateOTPCode();
+    
     setGeneratedEmail(email);
+    setSecurePassword(password);
+    setExpectedOTP(otpCode);
 
     try {
-      const { error } = await supabase.auth.signUp({
+      // First, try to sign up the user
+      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
         email,
-        password: cleanPhone + "_secure_password_2024",
+        password,
         options: {
           data: {
             full_name: fullName.trim(),
@@ -57,31 +79,23 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
         },
       });
 
-      if (error) {
-        // If user already exists, try to sign in
-        if (error.message.includes("already registered")) {
-          const { error: signInError } = await supabase.auth.signInWithPassword({
-            email,
-            password: cleanPhone + "_secure_password_2024",
-          });
-
-          if (signInError) {
-            toast.error("Xatolik yuz berdi. Qaytadan urinib ko'ring.");
-            setLoading(false);
-            return;
-          }
-
-          toast.success("Xush kelibsiz!");
-          onOpenChange(false);
-          resetForm();
+      if (signUpError) {
+        // If user already exists, we need to handle differently
+        if (signUpError.message.includes("already registered")) {
+          // For existing users, use magic link / OTP-style login
+          // Store the OTP temporarily for verification
+          toast.info(`Demo: Kodingiz - ${otpCode}`);
+          setStep("verify");
+          setLoading(false);
           return;
         }
-        throw error;
+        throw signUpError;
       }
 
-      // For mock: move to verification step
+      // For new users, show the OTP for demo purposes
+      // In production, this would be sent via SMS
+      toast.info(`Demo: Kodingiz - ${otpCode}`);
       setStep("verify");
-      toast.success("Tasdiqlash kodi yuborildi!");
     } catch (error: any) {
       toast.error(error.message || "Xatolik yuz berdi");
     } finally {
@@ -95,14 +109,30 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
       return;
     }
 
+    // Verify the OTP code matches
+    if (verificationCode !== expectedOTP) {
+      toast.error("Kod noto'g'ri. Qaytadan urinib ko'ring.");
+      return;
+    }
+
     setLoading(true);
 
-    // Mock verification - accept any 4-digit code
-    // In production, this would verify an actual SMS code
     try {
-      // For demo, any 4 digits work - user is already signed up
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      
+      // Attempt to sign in with the secure password we generated
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: generatedEmail,
+        password: securePassword,
+      });
+
+      if (signInError) {
+        // If sign in fails, the user might exist with different password
+        // In production, this would trigger a password reset flow
+        toast.error("Xatolik yuz berdi. Qaytadan urinib ko'ring.");
+        setStep("info");
+        setLoading(false);
+        return;
+      }
+
       toast.success("Muvaffaqiyatli tasdiqlandi!");
       onOpenChange(false);
       resetForm();
@@ -119,6 +149,8 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
     setPhoneNumber("");
     setVerificationCode("");
     setGeneratedEmail("");
+    setExpectedOTP("");
+    setSecurePassword("");
   };
 
   const handleClose = (open: boolean) => {

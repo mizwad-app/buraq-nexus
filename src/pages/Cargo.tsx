@@ -147,30 +147,20 @@ const Cargo = () => {
 
           if (cargoError) throw cargoError;
 
-          // Add points transaction
-          await supabase.from("points_transactions").insert({
-            user_id: user!.id,
-            amount: pointsEarned,
-            transaction_type: "earned",
-            description: t("cargo.trackingDesc", { number: trackingNumber }),
-            reference_id: cargoData.id,
-          });
+          // Use atomic RPC function to add points
+          const { data: rpcResult, error: rpcError } = await supabase.rpc(
+            "add_cargo_points",
+            {
+              p_tracking_id: cargoData.id,
+              p_points: pointsEarned,
+            }
+          );
 
-          // Update user points
-          const { data: currentPoints } = await supabase
-            .from("user_points")
-            .select("total_points, lifetime_points")
-            .eq("user_id", user!.id)
-            .single();
-
-          if (currentPoints) {
-            await supabase
-              .from("user_points")
-              .update({
-                total_points: currentPoints.total_points + pointsEarned,
-                lifetime_points: currentPoints.lifetime_points + pointsEarned,
-              })
-              .eq("user_id", user!.id);
+          if (rpcError) {
+            console.error("Error adding points:", rpcError);
+            // Don't throw - cargo was saved, just points failed
+          } else if (rpcResult && typeof rpcResult === 'object' && 'success' in rpcResult && !rpcResult.success) {
+            console.error("Points addition failed:", (rpcResult as { error?: string }).error);
           }
 
           toast.success(t("cargo.savedSuccess", { points: pointsEarned }));

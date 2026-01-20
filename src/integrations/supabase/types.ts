@@ -1542,6 +1542,13 @@ export type Database = {
             referencedRelation: "translators"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "translator_reviews_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       translators: {
@@ -1846,9 +1853,102 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      translators_public: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          bio_ar: string | null
+          bio_en: string | null
+          bio_ru: string | null
+          bio_uz: string | null
+          city: string | null
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          created_at: string | null
+          hsk_level: number | null
+          id: string | null
+          is_available: boolean | null
+          is_verified: boolean | null
+          name: string | null
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          price_per_day: number | null
+          rating: number | null
+          specializations: string[] | null
+          total_reviews: number | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          bio_ar?: string | null
+          bio_en?: string | null
+          bio_ru?: string | null
+          bio_uz?: string | null
+          city?: string | null
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          created_at?: string | null
+          hsk_level?: number | null
+          id?: string | null
+          is_available?: boolean | null
+          is_verified?: boolean | null
+          name?: string | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          price_per_day?: number | null
+          rating?: number | null
+          specializations?: string[] | null
+          total_reviews?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          bio_ar?: string | null
+          bio_en?: string | null
+          bio_ru?: string | null
+          bio_uz?: string | null
+          city?: string | null
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          created_at?: string | null
+          hsk_level?: number | null
+          id?: string | null
+          is_available?: boolean | null
+          is_verified?: boolean | null
+          name?: string | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          price_per_day?: number | null
+          rating?: number | null
+          specializations?: string[] | null
+          total_reviews?: number | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      add_cargo_points: {
+        Args: { p_points: number; p_tracking_id: string }
+        Returns: Json
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -1856,6 +1956,11 @@ export type Database = {
         }
         Returns: boolean
       }
+      redeem_deep_check_points: {
+        Args: { p_deep_check_id: string; p_points: number }
+        Returns: Json
+      }
+      redeem_gift: { Args: { p_gift_id: string }; Returns: Json }
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
