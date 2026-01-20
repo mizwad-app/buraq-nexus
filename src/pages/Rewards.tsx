@@ -128,34 +128,24 @@ const Rewards = () => {
     setRedeeming(gift.id);
 
     try {
-      // Create redemption record
-      const { error: redemptionError } = await supabase
-        .from("gift_redemptions")
-        .insert({
-          user_id: user.id,
-          gift_id: gift.id,
-          points_spent: gift.points_required,
-        });
+      // Use atomic RPC function to redeem gift
+      const { data: rpcResult, error: rpcError } = await supabase.rpc(
+        "redeem_gift",
+        { p_gift_id: gift.id }
+      );
 
-      if (redemptionError) throw redemptionError;
+      if (rpcError) throw rpcError;
+      
+      const result = rpcResult as { success?: boolean; error?: string; gift_name?: string } | null;
+      if (!result?.success) {
+        toast.error(result?.error || t("rewards.error"));
+        return;
+      }
 
-      // Create points transaction
-      await supabase.from("points_transactions").insert({
-        user_id: user.id,
-        amount: -gift.points_required,
-        transaction_type: "redeemed",
-        description: t("rewards.exchangeDesc", { name: gift.name }),
-      });
-
-      // Update user points
+      // Update local state with new points
       const newPoints = userPoints.total_points - gift.points_required;
-      await supabase
-        .from("user_points")
-        .update({ total_points: newPoints })
-        .eq("user_id", user.id);
-
       setUserPoints({ ...userPoints, total_points: newPoints });
-      toast.success(t("rewards.redeemSuccess", { name: gift.name }));
+      toast.success(t("rewards.redeemSuccess", { name: result.gift_name }));
     } catch (error) {
       console.error("Error redeeming gift:", error);
       toast.error(t("rewards.error"));

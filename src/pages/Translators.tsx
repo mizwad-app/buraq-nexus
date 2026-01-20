@@ -89,8 +89,10 @@ const Translators = () => {
 
   const fetchTranslators = async () => {
     try {
+      // Use the public view that excludes sensitive contact info (email/phone)
+      // Authenticated users will see phone for WhatsApp contact
       const { data, error } = await supabase
-        .from("translators")
+        .from("translators_public")
         .select("*")
         .order("is_verified", { ascending: false })
         .order("rating", { ascending: false });

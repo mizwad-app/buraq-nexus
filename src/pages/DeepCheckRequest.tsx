@@ -126,19 +126,32 @@ const DeepCheckRequest = () => {
 
       if (insertError) throw insertError;
 
-      // Deduct points if paid with points
+      // Deduct points if paid with points using atomic RPC function
       if (paymentType === "points") {
-        await supabase
-          .from("user_points")
-          .update({ total_points: userPoints - DEEP_CHECK_POINTS })
-          .eq("user_id", user.id);
+        // Get the deep check ID from the insert
+        const { data: deepCheckData } = await supabase
+          .from("deep_checks")
+          .select("id")
+          .eq("user_id", user.id)
+          .eq("product_name", productName.trim())
+          .order("created_at", { ascending: false })
+          .limit(1)
+          .single();
 
-        await supabase.from("points_transactions").insert({
-          user_id: user.id,
-          amount: -DEEP_CHECK_POINTS,
-          transaction_type: "redeemed",
-          description: `Chuqur tekshiruv: ${productName}`,
-        });
+        if (deepCheckData) {
+          const { data: rpcResult, error: rpcError } = await supabase.rpc(
+            "redeem_deep_check_points",
+            {
+              p_deep_check_id: deepCheckData.id,
+              p_points: DEEP_CHECK_POINTS,
+            }
+          );
+
+          const result = rpcResult as { success?: boolean; error?: string } | null;
+          if (rpcError || (result && !result.success)) {
+            throw new Error(result?.error || rpcError?.message || "Points deduction failed");
+          }
+        }
       }
 
       toast.success("So'rov muvaffaqiyatli yuborildi!");
