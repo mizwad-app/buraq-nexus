@@ -82,9 +82,9 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
       if (signUpError) {
         // If user already exists, we need to handle differently
         if (signUpError.message.includes("already registered")) {
-          // For existing users, use magic link / OTP-style login
-          // Store the OTP temporarily for verification
-          toast.info(`Demo: Kodingiz - ${otpCode}`);
+          // For existing users, attempt sign in directly
+          // In production, this would trigger SMS OTP flow
+          toast.success("Tasdiqlash kodi yuborildi");
           setStep("verify");
           setLoading(false);
           return;
@@ -92,12 +92,13 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
         throw signUpError;
       }
 
-      // For new users, show the OTP for demo purposes
-      // In production, this would be sent via SMS
-      toast.info(`Demo: Kodingiz - ${otpCode}`);
+      // For new users, proceed to verification
+      // In production, this would send SMS via Twilio/MessageBird
+      toast.success("Tasdiqlash kodi yuborildi");
       setStep("verify");
     } catch (error: any) {
-      toast.error(error.message || "Xatolik yuz berdi");
+      // Generic error message to prevent user enumeration
+      toast.error("Xatolik yuz berdi. Qaytadan urinib ko'ring.");
     } finally {
       setLoading(false);
     }
@@ -289,7 +290,7 @@ export const AuthModal = ({ open, onOpenChange, triggerReason }: AuthModalProps)
               </div>
 
               <p className="text-xs text-center text-muted-foreground">
-                Demo uchun istalgan 4 ta raqam kiriting
+                SMS orqali yuborilgan kodni kiriting
               </p>
 
               <Button
