@@ -15,6 +15,7 @@ import Cargo from "./pages/Cargo";
 import Rewards from "./pages/Rewards";
 import DeepCheckRequest from "./pages/DeepCheckRequest";
 import AdminDeepChecks from "./pages/AdminDeepChecks";
+import AdminLocations from "./pages/AdminLocations";
 import Mosques from "./pages/Mosques";
 import Eco from "./pages/Eco";
 import TravelGuide from "./pages/TravelGuide";
@@ -44,6 +45,7 @@ const App = () => (
                 <Route path="/rewards" element={<Rewards />} />
                 <Route path="/deep-check" element={<DeepCheckRequest />} />
                 <Route path="/admin/deep-checks" element={<AdminDeepChecks />} />
+                <Route path="/admin/locations" element={<AdminLocations />} />
                 <Route path="/mosques" element={<Mosques />} />
                 <Route path="/eco" element={<Eco />} />
                 <Route path="/guide" element={<TravelGuide />} />

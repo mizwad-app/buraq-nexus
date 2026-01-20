@@ -60,8 +60,11 @@ export const MapNavigationSheet = ({
       icon: "🌍",
       color: "bg-blue-500/10 text-blue-600",
       description: t("mapNav.googleDesc"),
-      getUrl: (lat, lng, placeName) => 
-        `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`,
+      getUrl: (lat, lng, placeName) => {
+        // Google Maps deep link with fallback
+        const encoded = encodeURIComponent(placeName);
+        return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}&query_place_id=${encoded}`;
+      },
     },
     {
       id: "yandex",
@@ -69,8 +72,11 @@ export const MapNavigationSheet = ({
       icon: "🗺️",
       color: "bg-red-500/10 text-red-600",
       description: t("mapNav.yandexDesc"),
-      getUrl: (lat, lng, placeName) => 
-        `yandexmaps://maps.yandex.ru/?pt=${lng},${lat}&z=17&l=map`,
+      getUrl: (lat, lng, placeName) => {
+        // Yandex Maps deep link - try app first, fallback to web
+        const encoded = encodeURIComponent(placeName);
+        return `yandexmaps://maps.yandex.ru/?pt=${lng},${lat}&z=17&l=map&text=${encoded}`;
+      },
     },
     {
       id: "baidu",
@@ -79,9 +85,10 @@ export const MapNavigationSheet = ({
       color: "bg-blue-600/10 text-blue-700",
       description: t("mapNav.baiduDesc"),
       getUrl: (lat, lng, placeName) => {
-        // Baidu uses BD-09 coordinates
+        // Baidu uses BD-09 coordinates - converted for accuracy
         const encoded = encodeURIComponent(placeName);
-        return `baidumap://map/marker?location=${bd09.lat},${bd09.lng}&title=${encoded}&content=${encoded}&src=lovable`;
+        // Deep link format: baidumap://map/marker for app, with web fallback
+        return `baidumap://map/marker?location=${bd09.lat},${bd09.lng}&title=${encoded}&content=${encoded}&src=lovable&coord_type=bd09ll`;
       },
     },
     {
@@ -90,8 +97,11 @@ export const MapNavigationSheet = ({
       icon: "🍎",
       color: "bg-gray-500/10 text-gray-700",
       description: t("mapNav.appleDesc"),
-      getUrl: (lat, lng, placeName) => 
-        `http://maps.apple.com/?ll=${lat},${lng}&q=${encodeURIComponent(placeName)}`,
+      getUrl: (lat, lng, placeName) => {
+        // Apple Maps universal link
+        const encoded = encodeURIComponent(placeName);
+        return `http://maps.apple.com/?ll=${lat},${lng}&q=${encoded}&z=17`;
+      },
     },
     {
       id: "gaode",
@@ -100,8 +110,9 @@ export const MapNavigationSheet = ({
       color: "bg-emerald-500/10 text-emerald-600",
       description: t("mapNav.gaodeDesc"),
       getUrl: (lat, lng, placeName) => {
-        // Gaode uses GCJ-02 coordinates
+        // Gaode/Amap uses GCJ-02 coordinates - converted for accuracy
         const encoded = encodeURIComponent(placeName);
+        // Deep link with dev=0 means coordinates are already GCJ-02
         return `androidamap://viewMap?sourceApplication=lovable&poiname=${encoded}&lat=${gcj02.lat}&lon=${gcj02.lng}&dev=0`;
       },
     },
@@ -109,35 +120,63 @@ export const MapNavigationSheet = ({
 
   const handleOpenMap = (provider: MapProvider) => {
     const url = provider.getUrl(latitude, longitude, name);
+    const encodedName = encodeURIComponent(name);
     
-    // For app-specific URL schemes, try to open directly
+    // Define web fallback URLs with proper coordinate conversions
+    const webFallbacks: Record<string, string> = {
+      google: `https://www.google.com/maps/search/?api=1&query=${latitude},${longitude}`,
+      yandex: `https://yandex.com/maps/?pt=${longitude},${latitude}&z=17&l=map&text=${encodedName}`,
+      baidu: `https://map.baidu.com/?latlng=${bd09.lat},${bd09.lng}&title=${encodedName}&content=${encodedName}&autoOpen=true`,
+      apple: `https://maps.apple.com/?ll=${latitude},${longitude}&q=${encodedName}&z=17`,
+      gaode: `https://uri.amap.com/marker?position=${gcj02.lng},${gcj02.lat}&name=${encodedName}&coordinate=gaode`,
+    };
+    
+    // For HTTP URLs, open directly
     if (url.startsWith('http')) {
       window.open(url, '_blank');
-    } else {
-      // For app URL schemes, try to open and fallback to web version
-      const link = document.createElement('a');
-      link.href = url;
-      link.click();
+      onOpenChange(false);
+      return;
+    }
+    
+    // For app-specific URL schemes, try deep link with fallback
+    const link = document.createElement('a');
+    link.href = url;
+    
+    // Create a hidden iframe to attempt deep link
+    const iframe = document.createElement('iframe');
+    iframe.style.display = 'none';
+    iframe.src = url;
+    document.body.appendChild(iframe);
+    
+    // Set timeout for fallback
+    const timeout = setTimeout(() => {
+      document.body.removeChild(iframe);
       
-      // Show a toast with fallback for unsupported apps
-      setTimeout(() => {
-        toast.info(t("mapNav.appNotInstalled"), {
-          action: {
-            label: t("mapNav.openWeb"),
-            onClick: () => {
-              // Fallback to web versions
-              if (provider.id === 'yandex') {
-                window.open(`https://yandex.com/maps/?pt=${longitude},${latitude}&z=17&l=map`, '_blank');
-              } else if (provider.id === 'baidu') {
-                window.open(`https://map.baidu.com/marker?location=${bd09.lng},${bd09.lat}&title=${encodeURIComponent(name)}&content=location`, '_blank');
-              } else if (provider.id === 'gaode') {
-                window.open(`https://uri.amap.com/marker?position=${gcj02.lng},${gcj02.lat}&name=${encodeURIComponent(name)}`, '_blank');
-              }
+      // Show toast with web fallback option
+      toast.info(t("mapNav.appNotInstalled"), {
+        duration: 5000,
+        action: {
+          label: t("mapNav.openWeb"),
+          onClick: () => {
+            const fallbackUrl = webFallbacks[provider.id];
+            if (fallbackUrl) {
+              window.open(fallbackUrl, '_blank');
             }
           }
-        });
-      }, 1000);
-    }
+        }
+      });
+    }, 1500);
+    
+    // If app opens, the page will blur - we can detect this
+    const handleBlur = () => {
+      clearTimeout(timeout);
+      document.body.removeChild(iframe);
+      window.removeEventListener('blur', handleBlur);
+    };
+    window.addEventListener('blur', handleBlur);
+    
+    // Also try direct navigation for mobile
+    window.location.href = url;
     
     onOpenChange(false);
   };
