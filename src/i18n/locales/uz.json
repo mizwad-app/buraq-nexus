@@ -12,6 +12,7 @@
   },
   "modules": {
     "halal": "Halol Taomlar",
+    "halalGuide": "Halol Qo'llanma",
     "travel": "Sayohat va Bog'lar",
     "business": "Biznes",
     "cargo": "Yuk Kuzatuvi",
@@ -26,13 +27,16 @@
     "sacredPilgrimage": "Muqaddas ziyorat",
     "progress": "Jarayon",
     "latestCargo": "Oxirgi yuk",
+    "activeCargo": "Faol yuk",
     "quickAccess": "Tezkor Kirish",
     "travelChecklist": "Sayohat Ro'yxati",
     "travelChecklistDesc": "Sayohatga tayyorgarlik",
     "translators": "Tarjimonlar",
     "translatorsDesc": "Tasdiqlangan tarjimonlar",
     "services": "Xizmatlar",
-    "servicesDesc": "Tekshiruv va bron qilish"
+    "servicesDesc": "Tekshiruv va bron qilish",
+    "ecoImpact": "Ekologik ta'sir",
+    "umraMessage": "Yana {{points}} kub yuk topshirsangiz, Umra yo'llanmasini qo'lga kiritasiz!"
   },
   "business": {
     "title": "B2B Hub",
@@ -382,9 +386,24 @@
       "call": "Qo'ng'iroq",
       "copyAddress": "Xitoycha manzilni nusxalash",
       "addressCopied": "Xitoycha manzil nusxalandi! Taksi haydovchisiga ko'rsating.",
-      "email": "Email",
-      "website": "Veb-sayt"
-    }
+    "email": "Email",
+    "website": "Veb-sayt",
+    "beijing": "Pekindagi Elchixona",
+    "guangzhou": "Guangzhou Konsulligi",
+    "shanghai": "Shanghai Konsulligi"
+  },
+  "faq": {
+    "title": "Ko'p beriladigan savollar",
+    "subtitle": "Sayohat haqida umumiy maslahatlar",
+    "q1": "Xitoyga vizasiz sayohat qilish mumkinmi?",
+    "a1": "O'zbekiston fuqarolari uchun viza talab qilinadi. Tranzit vizasiz 144 soatgacha ba'zi shaharlarda qolish mumkin.",
+    "q2": "Eng yaxshi sayohat vaqti qachon?",
+    "a2": "Aprel-may va sentyabr-oktyabr oylari eng qulay ob-havo. Xitoy yangi yili (yanvar-fevral) da narxlar yuqori.",
+    "q3": "Naqd pul olib borish kerakmi?",
+    "a3": "Alipay va WeChat Pay asosiy to'lov usullari. Kichik miqdorda naqd pul (500-1000 yuan) olib boring.",
+    "q4": "Internet muammosi bo'ladimi?",
+    "a4": "Google, WhatsApp, Telegram ishlamaydi. VPN oldindan yuklab oling yoki mahalliy ilovalardan foydalaning."
+  }
   },
   "mapNav": {
     "selectApp": "Navigatsiya ilovasini tanlang",
@@ -451,14 +470,34 @@
   "services": {
     "title": "Xizmatlar",
     "subtitle": "Tekshiruv va bron qilish xizmatlari",
-    "cargoInspection": "Yuk Tekshiruvi",
-    "cargoInspectionDesc": "Zavodda sifat nazorati",
-    "ticketBooking": "Chipta Bronlash",
-    "ticketBookingDesc": "Samolyot va poyezd chiptalari",
-    "vpnSetup": "VPN O'rnatish",
-    "vpnSetupDesc": "Xitoyda internet kirish",
+    "description": "Biznes safaringiz uchun zarur xizmatlar",
+    "cargoInspection": {
+      "title": "Yuk tekshiruvi",
+      "desc": "Zavodda sifat nazorati"
+    },
+    "flightBooking": {
+      "title": "Aviachiptalar",
+      "desc": "Samolyot chiptalari bronlash"
+    },
+    "trainBooking": {
+      "title": "Poyezd chiptalari",
+      "desc": "Tezyurar poyezd chiptalari"
+    },
+    "vpnSetup": {
+      "title": "VPN Xizmati",
+      "desc": "Xitoyda internet kirish"
+    },
+    "concierge": {
+      "title": "Konsyerj xizmati",
+      "desc": "Shaxsiy yordamchi xizmati"
+    },
     "requestService": "Xizmat so'rash",
     "contactUs": "Ushbu xizmatni so'rash uchun biz bilan bog'laning",
-    "serviceRequested": "Xizmat so'rovi yuborildi!"
+    "requestSent": "Xizmat so'rovi yuborildi!",
+    "additionalDetails": "Qo'shimcha ma'lumotlar",
+    "detailsPlaceholder": "So'rovingiz haqida batafsil yozing...",
+    "contactVia": "Qaysi orqali bog'lanmoqchisiz?",
+    "instantResponse": "Tezkor javob",
+    "defaultMessage": "Menga yordam kerak"
   }
 }

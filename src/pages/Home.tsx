@@ -20,16 +20,15 @@ import {
   MapPin,
   ClipboardCheck,
   Languages,
-  Wrench,
-  Lock
+  Briefcase,
+  Lock,
+  TreePine
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 import halalFood from "@/assets/halol-food.jpg";
 import travelNature from "@/assets/travel-nature.jpg";
 import business from "@/assets/business.jpg";
-import cargoImg from "@/assets/cargo.jpg";
-import mosque from "@/assets/mosque.jpg";
 import ecoProjects from "@/assets/eco-projects.jpg";
 import travelGuide from "@/assets/travel-guide.jpg";
 
@@ -47,9 +46,11 @@ interface CargoTracking {
   origin: string;
   destination: string;
   created_at: string;
+  estimated_delivery?: string;
 }
 
 const UMRA_TARGET = 10000;
+const DEMO_PHONE = "+998900006611";
 
 const trackingSteps = [
   { id: "factory_departed", label: "Zavoddan jo'natildi", icon: Factory },
@@ -65,6 +66,18 @@ const getStepInfo = (status: string) => {
   return { step: trackingSteps[index] || trackingSteps[0], index: index === -1 ? 0 : index };
 };
 
+// Demo data for special user
+const DEMO_CARGO: CargoTracking = {
+  id: "demo-brq2026001",
+  tracking_number: "BRQ2026001",
+  status: "in_transit",
+  volume_m3: 7.8,
+  points_earned: 780,
+  origin: "Fuzhou, China",
+  destination: "Tashkent, Uzbekistan",
+  created_at: new Date().toISOString(),
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -72,13 +85,15 @@ const Home = () => {
   const [userPoints, setUserPoints] = useState<UserPoints | null>(null);
   const [latestCargo, setLatestCargo] = useState<CargoTracking | null>(null);
   const [loading, setLoading] = useState(true);
+  const [treesPlanted, setTreesPlanted] = useState(0);
+
+  // Check if user is demo user
+  const isDemoUser = user?.phone === DEMO_PHONE;
 
   const modules = [
-    { id: "halol", title: t("modules.halal"), image: halalFood, route: "/ibadah" },
+    { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah" },
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel" },
     { id: "business", title: t("modules.business"), image: business, route: "/business" },
-    { id: "cargo", title: t("modules.cargo"), image: cargoImg, route: "/cargo" },
-    { id: "mosque", title: t("modules.mosques"), image: mosque, route: "/mosques" },
     { id: "eco", title: t("modules.eco"), image: ecoProjects, route: "/eco" },
     { id: "guide", title: t("modules.guide"), image: travelGuide, route: "/guide" },
   ];
@@ -93,6 +108,15 @@ const Home = () => {
 
   const fetchUserData = async () => {
     try {
+      // Check if demo user - use demo data
+      if (isDemoUser) {
+        setUserPoints({ total_points: 7500, lifetime_points: 7500 });
+        setLatestCargo(DEMO_CARGO);
+        setTreesPlanted(12);
+        setLoading(false);
+        return;
+      }
+
       // Fetch user points
       const { data: pointsData } = await supabase
         .from("user_points")
@@ -115,6 +139,9 @@ const Home = () => {
 
       if (cargoData) {
         setLatestCargo(cargoData);
+        // Calculate trees planted based on cargo volume
+        const totalVolume = cargoData.volume_m3 || 0;
+        setTreesPlanted(Math.floor(totalVolume * 2));
       }
     } catch (error) {
       console.error("Error fetching user data:", error);
@@ -126,6 +153,7 @@ const Home = () => {
   const points = userPoints?.total_points || 0;
   const umraProgress = Math.min((points / UMRA_TARGET) * 100, 100);
   const cargoStepInfo = latestCargo ? getStepInfo(latestCargo.status) : null;
+  const pointsNeeded = UMRA_TARGET - points;
 
   return (
     <div className="min-h-screen bg-background safe-bottom">
@@ -195,12 +223,40 @@ const Home = () => {
                       style={{ width: `${umraProgress}%` }}
                     />
                   </div>
+                  {isDemoUser && pointsNeeded > 0 && (
+                    <p className="text-xs text-amber-400/80 mt-2">
+                      ✨ {t("home.umraMessage", { points: pointsNeeded.toLocaleString() })}
+                    </p>
+                  )}
                 </div>
               </div>
 
               {/* Decorative */}
               <div className="absolute -bottom-2 -right-2 w-16 h-16 bg-amber-500/10 rounded-full blur-xl" />
               <ChevronRight className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            </div>
+          </button>
+        </section>
+      )}
+
+      {/* Eco Impact Widget - for demo user */}
+      {user && isDemoUser && treesPlanted > 0 && (
+        <section className="px-5 mb-4">
+          <button 
+            onClick={() => navigate("/eco")}
+            className="w-full text-left"
+          >
+            <div className="relative rounded-2xl bg-gradient-to-br from-emerald-600/20 via-green-600/10 to-transparent border border-emerald-500/20 p-4">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center">
+                  <TreePine className="w-5 h-5 text-white" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-emerald-400">{t("home.ecoImpact")}</p>
+                  <p className="text-lg font-bold text-foreground">{treesPlanted} {t("eco.treesCount")}</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-muted-foreground" />
+              </div>
             </div>
           </button>
         </section>
@@ -220,7 +276,7 @@ const Home = () => {
                     <Package className="w-5 h-5 text-primary-foreground" />
                   </div>
                   <div>
-                    <p className="text-xs text-muted-foreground">{t("home.latestCargo")}</p>
+                    <p className="text-xs text-muted-foreground">{t("home.activeCargo")}</p>
                     <p className="font-mono font-semibold text-foreground">
                       {latestCargo.tracking_number}
                     </p>
@@ -259,11 +315,24 @@ const Home = () => {
                 </div>
               </div>
 
-              {/* Location */}
+              {/* Location and volume info */}
               <div className="flex items-center gap-1.5 mt-2 text-xs text-muted-foreground">
                 <MapPin className="w-3 h-3" />
                 <span>{latestCargo.origin} → {latestCargo.destination}</span>
               </div>
+              
+              {/* Demo cargo details */}
+              {isDemoUser && latestCargo.volume_m3 && (
+                <div className="mt-3 p-2 rounded-lg bg-primary/5 border border-primary/10">
+                  <p className="text-xs text-foreground">
+                    📦 {latestCargo.volume_m3} m³, 2200kg yukingiz kelmoqda. 
+                    <span className="text-muted-foreground"> Toshkentdan 1500km uzoqlikda.</span>
+                  </p>
+                  <p className="text-xs text-primary mt-1">
+                    ⏱ Taxminan 4 kunda Toshkentda bo'ladi
+                  </p>
+                </div>
+              )}
             </div>
           </button>
         </section>
@@ -321,7 +390,7 @@ const Home = () => {
             className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
           >
             <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
-              <Wrench className="w-5 h-5 text-secondary-foreground" />
+              <Briefcase className="w-5 h-5 text-secondary-foreground" />
             </div>
             <span className="text-xs font-medium text-foreground text-center">{t("home.services")}</span>
           </button>

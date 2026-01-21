@@ -12,6 +12,7 @@
   },
   "modules": {
     "halal": "الطعام الحلال",
+    "halalGuide": "دليل الحلال",
     "travel": "السفر والحدائق",
     "business": "الأعمال",
     "cargo": "تتبع الشحنات",
@@ -26,13 +27,16 @@
     "sacredPilgrimage": "الحج المقدس",
     "progress": "التقدم",
     "latestCargo": "آخر شحنة",
+    "activeCargo": "الشحنة النشطة",
     "quickAccess": "الوصول السريع",
     "travelChecklist": "قائمة السفر",
     "travelChecklistDesc": "التحضير للسفر",
     "translators": "المترجمون",
     "translatorsDesc": "مترجمون موثقون",
     "services": "الخدمات",
-    "servicesDesc": "التفتيش والحجز"
+    "servicesDesc": "التفتيش والحجز",
+    "ecoImpact": "الأثر البيئي",
+    "umraMessage": "أرسل {{points}} متر مكعب إضافي واحصل على رحلة العمرة!"
   },
   "business": {
     "title": "مركز الأعمال",
@@ -450,15 +454,35 @@
   },
   "services": {
     "title": "الخدمات",
-    "subtitle": "التفتيش والحجز",
-    "cargoInspection": "تفتيش الشحنات",
-    "cargoInspectionDesc": "مراقبة الجودة في المصنع",
-    "ticketBooking": "حجز التذاكر",
-    "ticketBookingDesc": "تذاكر الطيران والقطار",
-    "vpnSetup": "إعداد VPN",
-    "vpnSetupDesc": "الوصول للإنترنت في الصين",
+    "subtitle": "خدمات الأعمال",
+    "description": "خدمات أساسية لرحلة عملك",
+    "cargoInspection": {
+      "title": "تفتيش الشحنات",
+      "desc": "مراقبة الجودة في المصنع"
+    },
+    "flightBooking": {
+      "title": "تذاكر الطيران",
+      "desc": "حجز رحلات الطيران"
+    },
+    "trainBooking": {
+      "title": "تذاكر القطار",
+      "desc": "القطارات فائقة السرعة"
+    },
+    "vpnSetup": {
+      "title": "خدمة VPN",
+      "desc": "الوصول للإنترنت في الصين"
+    },
+    "concierge": {
+      "title": "خدمة الكونسيرج",
+      "desc": "مساعد شخصي"
+    },
     "requestService": "طلب الخدمة",
     "contactUs": "تواصل معنا لطلب الخدمة",
-    "serviceRequested": "تم إرسال طلب الخدمة!"
+    "requestSent": "تم إرسال طلب الخدمة!",
+    "additionalDetails": "تفاصيل إضافية",
+    "detailsPlaceholder": "صف طلبك بالتفصيل...",
+    "contactVia": "كيف تريد أن نتواصل معك؟",
+    "instantResponse": "استجابة فورية",
+    "defaultMessage": "أحتاج مساعدة"
   }
 }

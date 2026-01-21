@@ -12,6 +12,7 @@
   },
   "modules": {
     "halal": "Halal Food",
+    "halalGuide": "Halal Guide",
     "travel": "Travel & Gardens",
     "business": "Business",
     "cargo": "Cargo Tracking",
@@ -26,13 +27,16 @@
     "sacredPilgrimage": "Sacred pilgrimage",
     "progress": "Progress",
     "latestCargo": "Latest cargo",
+    "activeCargo": "Active cargo",
     "quickAccess": "Quick Access",
     "travelChecklist": "Travel Checklist",
     "travelChecklistDesc": "Pre-travel preparation",
     "translators": "Translators",
     "translatorsDesc": "Find verified translators",
     "services": "Services",
-    "servicesDesc": "Inspection & booking"
+    "servicesDesc": "Inspection & booking",
+    "ecoImpact": "Eco Impact",
+    "umraMessage": "Ship {{points}} more cubic meters to earn your Umra trip!"
   },
   "business": {
     "title": "B2B Hub",
@@ -382,9 +386,24 @@
       "call": "Call",
       "copyAddress": "Copy Chinese Address",
       "addressCopied": "Chinese address copied! Show to taxi driver.",
-      "email": "Email",
-      "website": "Website"
-    }
+    "email": "Email",
+    "website": "Website",
+    "beijing": "Beijing Embassy",
+    "guangzhou": "Guangzhou Consulate",
+    "shanghai": "Shanghai Consulate"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "General travel tips",
+    "q1": "Can I travel to China without a visa?",
+    "a1": "Uzbekistan citizens need a visa. Transit visa-free stays up to 144 hours are available in some cities.",
+    "q2": "What's the best time to visit?",
+    "a2": "April-May and September-October have the best weather. Prices are high during Chinese New Year (Jan-Feb).",
+    "q3": "Should I bring cash?",
+    "a3": "Alipay and WeChat Pay are the main payment methods. Bring a small amount of cash (500-1000 yuan).",
+    "q4": "Will I have internet issues?",
+    "a4": "Google, WhatsApp, Telegram don't work. Download a VPN beforehand or use local apps."
+  }
   },
   "mapNav": {
     "selectApp": "Choose navigation app",
@@ -450,16 +469,36 @@
   },
   "services": {
     "title": "Services",
-    "subtitle": "Inspection & booking services",
-    "cargoInspection": "Cargo Inspection",
-    "cargoInspectionDesc": "Quality control at factory",
-    "ticketBooking": "Ticket Booking",
-    "ticketBookingDesc": "Flight & train tickets",
-    "vpnSetup": "VPN Setup",
-    "vpnSetupDesc": "Internet access in China",
+    "subtitle": "Business services",
+    "description": "Essential services for your business trip",
+    "cargoInspection": {
+      "title": "Cargo Inspection",
+      "desc": "Quality control at factory"
+    },
+    "flightBooking": {
+      "title": "Flight Tickets",
+      "desc": "Book air travel"
+    },
+    "trainBooking": {
+      "title": "Train Tickets",
+      "desc": "High-speed train booking"
+    },
+    "vpnSetup": {
+      "title": "VPN Service",
+      "desc": "Internet access in China"
+    },
+    "concierge": {
+      "title": "Concierge Service",
+      "desc": "Personal assistant service"
+    },
     "requestService": "Request Service",
     "contactUs": "Contact us to request this service",
-    "serviceRequested": "Service request submitted!"
+    "requestSent": "Service request submitted!",
+    "additionalDetails": "Additional Details",
+    "detailsPlaceholder": "Describe your request in detail...",
+    "contactVia": "How would you like to be contacted?",
+    "instantResponse": "Instant response",
+    "defaultMessage": "I need assistance"
   },
   "admin": {
     "locationPicker": "Location Picker",
