@@ -110,10 +110,7 @@ export const LoyaltyRoadmap = ({ currentVolume, className }: LoyaltyRoadmapProps
       {nextMilestone && volumeToNext > 0 && (
         <div className="p-3 rounded-xl bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/20">
           <p className="text-sm text-foreground">
-            ✨ {t("loyalty.nextGoalMessage", { 
-              volume: volumeToNext, 
-              reward: t(nextMilestone.titleKey) 
-            })}
+            ✨ Yana <span className="font-bold">{volumeToNext}</span> kub yuk topshirsangiz, {t(nextMilestone.titleKey).toLowerCase()} yutasiz!
           </p>
         </div>
       )}
@@ -170,32 +167,39 @@ export const LoyaltyRoadmap = ({ currentVolume, className }: LoyaltyRoadmapProps
                     {t(milestone.descKey)}
                   </p>
 
-                  {/* Individual progress */}
-                  {!isCompleted && (
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="text-muted-foreground">{t("loyalty.progress")}</span>
-                        <span className="text-foreground">{currentVolume}/{milestone.volume}</span>
-                      </div>
-                      <div className="h-1.5 rounded-full bg-secondary/50 overflow-hidden">
-                        <div 
-                          className={cn(
-                            "h-full rounded-full transition-all duration-500",
-                            milestone.color.replace("text-", "bg-")
-                          )}
-                          style={{ width: `${progress}%` }}
-                        />
-                      </div>
-                    </div>
-                  )}
+      {/* Individual progress */}
+                      {!isCompleted && (
+                        <div className="space-y-1">
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-muted-foreground">{t("loyalty.progress")}</span>
+                            <span className="text-foreground">
+                              <span className="font-bold">{currentVolume}</span>/<span className="font-bold">{milestone.volume}</span>
+                            </span>
+                          </div>
+                          <div className="h-1.5 rounded-full bg-secondary/50 overflow-hidden">
+                            <div 
+                              className={cn(
+                                "h-full rounded-full transition-all duration-500",
+                                milestone.color.replace("text-", "bg-")
+                              )}
+                              style={{ width: `${progress}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
 
-                  {/* Completed badge */}
-                  {isCompleted && (
-                    <div className="flex items-center gap-1 text-xs text-emerald-400">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span className="font-medium">{t("loyalty.claimed")}</span>
-                    </div>
-                  )}
+                      {/* Completed badge */}
+                      {isCompleted && (
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1 text-xs text-emerald-400">
+                            <CheckCircle2 className="w-3.5 h-3.5" />
+                            <span className="font-medium">{t("loyalty.claimed")}</span>
+                          </div>
+                          <span className="text-xs text-emerald-400 font-bold">
+                            {milestone.volume}/{milestone.volume}
+                          </span>
+                        </div>
+                      )}
                 </div>
 
                 {/* Lock icon for unreached */}
