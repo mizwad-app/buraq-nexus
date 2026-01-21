@@ -13,12 +13,23 @@ import {
   Users,
   ScrollText,
   Star,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
 import { MapNavigationSheet } from "./MapNavigationSheet";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
-import { cn } from "@/lib/utils";
 import { Card, CardContent } from "@/components/ui/card";
+
+// Import mosque images
+import huaisheng1 from "@/assets/mosques/huaisheng-1.jpg";
+import huaisheng2 from "@/assets/mosques/huaisheng-2.jpg";
+import huaisheng3 from "@/assets/mosques/huaisheng-3.jpg";
+import abiVaqqos1 from "@/assets/mosques/abi-vaqqos-1.jpg";
+import abiVaqqos2 from "@/assets/mosques/abi-vaqqos-2.jpg";
+import xiaodongying1 from "@/assets/mosques/xiaodongying-1.jpg";
+import xiaodongying2 from "@/assets/mosques/xiaodongying-2.jpg";
+import xiaodongying3 from "@/assets/mosques/xiaodongying-3.jpg";
 
 interface MosqueDetailSheetProps {
   open: boolean;
@@ -57,6 +68,14 @@ interface MosqueDetailSheetProps {
 
 const MOSQUE_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
 
+// Mosque image galleries
+const MOSQUE_GALLERIES: Record<string, string[]> = {
+  "huaisheng": [huaisheng1, huaisheng2, huaisheng3],
+  "abi_vaqqos": [abiVaqqos1, abiVaqqos2],
+  "xiaodongying": [xiaodongying1, xiaodongying2, xiaodongying3],
+  "haopan": [] // Placeholder - will use fallback
+};
+
 // Historical content for specific mosques
 const MOSQUE_HISTORY: Record<string, {
   origin?: string;
@@ -92,6 +111,14 @@ const MOSQUE_HISTORY: Record<string, {
       "Harbiy-islomiy tarix",
       "An'anaviy xitoy-islom uslubi"
     ]
+  },
+  "haopan": {
+    history: "Guangzhoudagi tarixiy masjidlardan biri bo'lib, mahalliy musulmonlar jamiyatiga xizmat qiladi.",
+    features: [
+      "Mahalliy musulmonlar markazi",
+      "Juma namozi o'qiladi",
+      "Ayollar bo'limi mavjud"
+    ]
   }
 };
 
@@ -101,7 +128,84 @@ const getMosqueHistoryKey = (mosqueName: string): string | null => {
   if (lowerName.includes("huaisheng") || lowerName.includes("怀圣")) return "huaisheng";
   if (lowerName.includes("vaqqos") || lowerName.includes("先贤") || lowerName.includes("xianxian")) return "abi_vaqqos";
   if (lowerName.includes("xiaodongying") || lowerName.includes("小东营")) return "xiaodongying";
+  if (lowerName.includes("haopan") || lowerName.includes("濠畔")) return "haopan";
   return null;
+};
+
+// Image Gallery Carousel Component
+const ImageGallery = ({ images, mosqueName }: { images: string[]; mosqueName: string }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
+
+  if (images.length === 0) {
+    return (
+      <div className="relative h-56 w-full rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
+        <div className="text-center p-4">
+          <Moon className="w-16 h-16 text-emerald-500/50 mx-auto mb-2" />
+          <p className="text-sm text-muted-foreground">Rasm tez orada qo'shiladi</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative h-56 w-full rounded-2xl overflow-hidden">
+      {/* Main Image */}
+      <img
+        src={images[currentIndex]}
+        alt={`${mosqueName} - ${currentIndex + 1}`}
+        className="w-full h-full object-cover transition-all duration-300"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+
+      {/* Navigation Arrows */}
+      {images.length > 1 && (
+        <>
+          <button
+            onClick={handlePrev}
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </>
+      )}
+
+      {/* Dot Indicators */}
+      {images.length > 1 && (
+        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+          {images.map((_, idx) => (
+            <button
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                idx === currentIndex
+                  ? "bg-white w-4"
+                  : "bg-white/50 hover:bg-white/70"
+              }`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Image Counter */}
+      <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-xs font-medium">
+        {currentIndex + 1} / {images.length}
+      </div>
+    </div>
+  );
 };
 
 export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSheetProps) => {
@@ -119,6 +223,7 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
   // Get historical content if available
   const historyKey = getMosqueHistoryKey(mosque.name);
   const historyData = historyKey ? MOSQUE_HISTORY[historyKey] : null;
+  const galleryImages = historyKey ? MOSQUE_GALLERIES[historyKey] || [] : [];
 
   return (
     <>
@@ -139,32 +244,29 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
           </SheetHeader>
 
           <div className="overflow-y-auto h-full pb-20 px-5 pt-4 space-y-4">
-            {/* Mosque Image */}
-            <div className="relative h-48 w-full rounded-2xl overflow-hidden">
-              <img
-                src={mosque.image_url || MOSQUE_FALLBACK_IMAGE}
-                alt={translatedName}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = MOSQUE_FALLBACK_IMAGE;
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2">
-                {mosque.has_friday_prayer && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/90 text-white text-xs font-medium">
-                    <Check className="w-3 h-3" />
-                    {t("mosques.fridayPrayer")}
-                  </span>
-                )}
-                {mosque.has_womens_section && (
-                  <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/90 text-white text-xs font-medium">
-                    <Users className="w-3 h-3" />
-                    {t("mosques.womensSection")}
-                  </span>
-                )}
-              </div>
+            {/* Image Gallery Carousel */}
+            <ImageGallery images={galleryImages} mosqueName={translatedName} />
+
+            {/* Feature Badges */}
+            <div className="flex flex-wrap gap-2">
+              {mosque.has_friday_prayer && (
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 text-xs font-medium border border-emerald-500/20">
+                  <Check className="w-3 h-3" />
+                  {t("mosques.fridayPrayer")}
+                </span>
+              )}
+              {mosque.has_womens_section && (
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
+                  <Users className="w-3 h-3" />
+                  {t("mosques.womensSection")}
+                </span>
+              )}
+              {historyKey && (
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-600 text-xs font-medium border border-amber-500/20">
+                  <Star className="w-3 h-3" />
+                  Tarixiy masjid
+                </span>
+              )}
             </div>
 
             {/* Location */}
