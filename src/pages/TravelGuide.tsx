@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -15,13 +16,12 @@ import {
   Phone,
   MapPin,
   Copy,
-  ExternalLink,
   HelpCircle,
-  ChevronDown
 } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Accordion,
   AccordionContent,
@@ -88,6 +88,7 @@ const FAQ_ITEMS = [
 const TravelGuide = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<string>("diplomatic");
 
   const guideItems: GuideItem[] = [
     {
@@ -163,193 +164,209 @@ const TravelGuide = () => {
         </div>
       </header>
 
-      {/* Embassy Section - Priority */}
+      {/* Tabbed Interface */}
       <section className="px-5 py-4">
-        <Card className="bg-gradient-to-br from-red-500/10 via-red-500/5 to-transparent border-red-500/20">
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center">
-                <Building2 className="w-6 h-6 text-red-500" />
-              </div>
-              <div>
-                <CardTitle className="text-lg">{t("guide.embassy.title")}</CardTitle>
-                <CardDescription>{t("guide.embassy.subtitle")}</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {EMBASSIES.map((embassy) => (
-              <div 
-                key={embassy.id}
-                className="p-4 rounded-xl bg-card border border-border/50"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <Badge 
-                      variant="secondary" 
-                      className={cn(
-                        "mb-2",
-                        embassy.type === "embassy" ? "bg-red-500/10 text-red-500" : "bg-blue-500/10 text-blue-500"
-                      )}
-                    >
-                      {embassy.type === "embassy" ? t("guide.embassy.embassy") : t("guide.embassy.consulate")}
-                    </Badge>
-                    <h4 className="font-semibold text-foreground">{embassy.city}</h4>
-                  </div>
-                </div>
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+          <TabsList className="grid w-full grid-cols-2 mb-4">
+            <TabsTrigger value="diplomatic" className="flex items-center gap-2">
+              <Building2 className="w-4 h-4" />
+              {t("guide.tabs.diplomatic")}
+            </TabsTrigger>
+            <TabsTrigger value="video" className="flex items-center gap-2">
+              <Video className="w-4 h-4" />
+              {t("guide.tabs.video")}
+            </TabsTrigger>
+          </TabsList>
 
-                {/* Phone */}
-                <div className="flex items-center gap-2 mb-3">
-                  <Phone className="w-4 h-4 text-muted-foreground" />
-                  <button
-                    onClick={() => handleCall(embassy.phone)}
-                    className="text-primary hover:underline font-mono text-sm"
-                  >
-                    {embassy.phone}
-                  </button>
-                </div>
-
-                {/* Chinese Address */}
-                <div className="flex items-start gap-2 mb-3">
-                  <MapPin className="w-4 h-4 text-muted-foreground mt-0.5" />
-                  <span className="text-sm text-muted-foreground font-chinese">
-                    {embassy.addressChinese}
-                  </span>
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleCall(embassy.phone)}
-                    className="flex-1"
-                  >
-                    <Phone className="w-4 h-4 mr-2" />
-                    {t("guide.embassy.call")}
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    onClick={() => handleCopyAddress(embassy.addressChinese)}
-                    className="flex-1"
-                  >
-                    <Copy className="w-4 h-4 mr-2" />
-                    {t("guide.embassy.copyAddress")}
-                  </Button>
-                </div>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-      </section>
-
-      {/* Guide Items */}
-      <section className="px-5 space-y-4">
-        {guideItems.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <Card 
-              key={item.id} 
-              className="overflow-hidden animate-fade-in"
-              style={{ animationDelay: `${index * 100}ms` }}
-            >
+          {/* Diplomatic Tab Content */}
+          <TabsContent value="diplomatic" className="space-y-4">
+            {/* Embassy Section */}
+            <Card className="bg-gradient-to-br from-red-500/10 via-red-500/5 to-transparent border-red-500/20">
               <CardHeader className="pb-3">
-                <div className="flex items-start gap-3">
-                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", item.bgColor)}>
-                    <Icon className={cn("w-6 h-6", item.color)} />
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center">
+                    <Building2 className="w-6 h-6 text-red-500" />
                   </div>
-                  <div className="flex-1">
-                    <CardTitle className="text-lg">{t(item.titleKey)}</CardTitle>
-                    <CardDescription className="mt-1">
-                      {t(item.descriptionKey)}
-                    </CardDescription>
+                  <div>
+                    <CardTitle className="text-lg">{t("guide.embassy.title")}</CardTitle>
+                    <CardDescription>{t("guide.embassy.subtitle")}</CardDescription>
                   </div>
                 </div>
               </CardHeader>
-
-              <CardContent className="pt-0 space-y-4">
-                {/* Video Placeholder */}
-                {item.videoPlaceholder && (
-                  <div className="relative aspect-video rounded-xl bg-muted/50 border border-border/50 overflow-hidden group cursor-pointer hover:border-primary/30 transition-all">
-                    <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                      <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
-                        <Play className="w-6 h-6 text-primary ml-1" />
+              <CardContent className="space-y-4">
+                {EMBASSIES.map((embassy) => (
+                  <div 
+                    key={embassy.id}
+                    className="p-4 rounded-xl bg-card border border-border/50"
+                  >
+                    <div className="flex items-start justify-between mb-3">
+                      <div>
+                        <Badge 
+                          variant="secondary" 
+                          className={cn(
+                            "mb-2",
+                            embassy.type === "embassy" ? "bg-red-500/10 text-red-500" : "bg-blue-500/10 text-blue-500"
+                          )}
+                        >
+                          {embassy.type === "embassy" ? t("guide.embassy.embassy") : t("guide.embassy.consulate")}
+                        </Badge>
+                        <h4 className="font-semibold text-foreground">{t(embassy.nameKey)}</h4>
                       </div>
-                      <span className="text-sm text-muted-foreground">{t("guide.videoPlaceholder")}</span>
                     </div>
-                    <div className="absolute top-3 right-3">
-                      <Badge variant="secondary" className="text-xs">
-                        <Video className="w-3 h-3 mr-1" />
-                        {t("guide.videoLabel")}
-                      </Badge>
-                    </div>
-                  </div>
-                )}
 
-                {/* Tips */}
-                <div className="space-y-2">
-                  <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4 text-green-500" />
-                    {t("guide.tipsTitle")}
-                  </h4>
-                  <ul className="space-y-2">
-                    {item.tips.map((tipKey, tipIndex) => (
-                      <li 
-                        key={tipIndex}
-                        className="flex items-start gap-2 text-sm text-muted-foreground"
+                    {/* Phone */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <Phone className="w-4 h-4 text-muted-foreground" />
+                      <button
+                        onClick={() => handleCall(embassy.phone)}
+                        className="text-primary hover:underline font-mono text-sm"
                       >
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                        {t(tipKey)}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                        {embassy.phone}
+                      </button>
+                    </div>
 
-                {/* Warning Note for Exchange */}
-                {item.id === "exchange" && (
-                  <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                    <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-amber-600 dark:text-amber-400">
-                      {t("guide.exchange.warning")}
-                    </p>
+                    {/* Chinese Address */}
+                    <div className="flex items-start gap-2 mb-3">
+                      <MapPin className="w-4 h-4 text-muted-foreground mt-0.5" />
+                      <span className="text-sm text-muted-foreground font-chinese">
+                        {embassy.addressChinese}
+                      </span>
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => handleCall(embassy.phone)}
+                        className="flex-1"
+                      >
+                        <Phone className="w-4 h-4 mr-2" />
+                        {t("guide.embassy.call")}
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => handleCopyAddress(embassy.addressChinese)}
+                        className="flex-1"
+                      >
+                        <Copy className="w-4 h-4 mr-2" />
+                        {t("guide.embassy.copyAddress")}
+                      </Button>
+                    </div>
                   </div>
-                )}
+                ))}
               </CardContent>
             </Card>
-          );
-        })}
-      </section>
+          </TabsContent>
 
-      {/* FAQ Section */}
-      <section className="px-5 py-4">
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
-                <HelpCircle className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <CardTitle className="text-lg">{t("guide.faq.title")}</CardTitle>
-                <CardDescription>{t("guide.faq.subtitle")}</CardDescription>
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent>
-            <Accordion type="single" collapsible className="w-full">
-              {FAQ_ITEMS.map((faq, index) => (
-                <AccordionItem key={index} value={`faq-${index}`}>
-                  <AccordionTrigger className="text-left text-sm">
-                    {t(faq.question)}
-                  </AccordionTrigger>
-                  <AccordionContent className="text-muted-foreground text-sm">
-                    {t(faq.answer)}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </CardContent>
-        </Card>
+          {/* Video Tips Tab Content */}
+          <TabsContent value="video" className="space-y-4">
+            {/* Guide Items */}
+            {guideItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <Card 
+                  key={item.id} 
+                  className="overflow-hidden animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  <CardHeader className="pb-3">
+                    <div className="flex items-start gap-3">
+                      <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center", item.bgColor)}>
+                        <Icon className={cn("w-6 h-6", item.color)} />
+                      </div>
+                      <div className="flex-1">
+                        <CardTitle className="text-lg">{t(item.titleKey)}</CardTitle>
+                        <CardDescription className="mt-1">
+                          {t(item.descriptionKey)}
+                        </CardDescription>
+                      </div>
+                    </div>
+                  </CardHeader>
+
+                  <CardContent className="pt-0 space-y-4">
+                    {/* Video Placeholder */}
+                    {item.videoPlaceholder && (
+                      <div className="relative aspect-video rounded-xl bg-muted/50 border border-border/50 overflow-hidden group cursor-pointer hover:border-primary/30 transition-all">
+                        <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
+                          <div className="w-14 h-14 rounded-full bg-primary/20 flex items-center justify-center group-hover:bg-primary/30 transition-colors">
+                            <Play className="w-6 h-6 text-primary ml-1" />
+                          </div>
+                          <span className="text-sm text-muted-foreground">{t("guide.videoPlaceholder")}</span>
+                        </div>
+                        <div className="absolute top-3 right-3">
+                          <Badge variant="secondary" className="text-xs">
+                            <Video className="w-3 h-3 mr-1" />
+                            {t("guide.videoLabel")}
+                          </Badge>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Tips */}
+                    <div className="space-y-2">
+                      <h4 className="text-sm font-medium text-foreground flex items-center gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-green-500" />
+                        {t("guide.tipsTitle")}
+                      </h4>
+                      <ul className="space-y-2">
+                        {item.tips.map((tipKey, tipIndex) => (
+                          <li 
+                            key={tipIndex}
+                            className="flex items-start gap-2 text-sm text-muted-foreground"
+                          >
+                            <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
+                            {t(tipKey)}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Warning Note for Exchange */}
+                    {item.id === "exchange" && (
+                      <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
+                        <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                        <p className="text-xs text-amber-600 dark:text-amber-400">
+                          {t("guide.exchange.warning")}
+                        </p>
+                      </div>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })}
+
+            {/* FAQ Section */}
+            <Card>
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
+                    <HelpCircle className="w-6 h-6 text-primary" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">{t("guide.faq.title")}</CardTitle>
+                    <CardDescription>{t("guide.faq.subtitle")}</CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <Accordion type="single" collapsible className="w-full">
+                  {FAQ_ITEMS.map((faq, index) => (
+                    <AccordionItem key={index} value={`faq-${index}`}>
+                      <AccordionTrigger className="text-left text-sm">
+                        {t(faq.question)}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-muted-foreground text-sm">
+                        {t(faq.answer)}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </section>
 
       {/* Bottom Spacing */}

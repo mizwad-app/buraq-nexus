@@ -13,7 +13,7 @@
   "modules": {
     "halal": "Halal Food",
     "halalGuide": "Halal Companion",
-    "travel": "Travel & Markets",
+    "travel": "Travel & Shopping",
     "business": "Business",
     "cargo": "Cargo Tracking",
     "mosques": "Mosques",
@@ -342,6 +342,10 @@
   "guide": {
     "title": "Travel Guide",
     "subtitle": "Essential tips for China",
+    "tabs": {
+      "diplomatic": "Diplomatic",
+      "video": "Video Tips"
+    },
     "intro": {
       "title": "Welcome to China!",
       "description": "Watch our video guides to prepare for your business trip. Learn about payments, communication, and staying safe."
@@ -390,24 +394,31 @@
       "call": "Call",
       "copyAddress": "Copy Chinese Address",
       "addressCopied": "Chinese address copied! Show to taxi driver.",
-    "email": "Email",
-    "website": "Website",
-    "beijing": "Beijing Embassy",
-    "guangzhou": "Guangzhou Consulate",
-    "shanghai": "Shanghai Consulate"
+      "email": "Email",
+      "website": "Website",
+      "beijing": "Beijing Embassy",
+      "guangzhou": "Guangzhou Consulate",
+      "shanghai": "Shanghai Consulate"
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "General travel tips",
+      "q1": "Can I travel to China without a visa?",
+      "a1": "Uzbekistan citizens need a visa. Transit visa-free stays up to 144 hours are available in some cities.",
+      "q2": "What's the best time to visit?",
+      "a2": "April-May and September-October have the best weather. Prices are high during Chinese New Year (Jan-Feb).",
+      "q3": "Should I bring cash?",
+      "a3": "Alipay and WeChat Pay are the main payment methods. Bring a small amount of cash (500-1000 yuan).",
+      "q4": "Will I have internet issues?",
+      "a4": "Google, WhatsApp, Telegram don't work. Download a VPN beforehand or use local apps."
+    }
   },
-  "faq": {
-    "title": "Frequently Asked Questions",
-    "subtitle": "General travel tips",
-    "q1": "Can I travel to China without a visa?",
-    "a1": "Uzbekistan citizens need a visa. Transit visa-free stays up to 144 hours are available in some cities.",
-    "q2": "What's the best time to visit?",
-    "a2": "April-May and September-October have the best weather. Prices are high during Chinese New Year (Jan-Feb).",
-    "q3": "Should I bring cash?",
-    "a3": "Alipay and WeChat Pay are the main payment methods. Bring a small amount of cash (500-1000 yuan).",
-    "q4": "Will I have internet issues?",
-    "a4": "Google, WhatsApp, Telegram don't work. Download a VPN beforehand or use local apps."
-  }
+  "mosque": {
+    "about": "About the Mosque",
+    "nameOrigin": "Origin of the Name",
+    "history": "History",
+    "features": "Special Features",
+    "poemSubtitle": "Historical tribute to Prophet Muhammad (PBUH)"
   },
   "mapNav": {
     "selectApp": "Choose navigation app",

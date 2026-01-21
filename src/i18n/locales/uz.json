@@ -13,7 +13,7 @@
   "modules": {
     "halal": "Halol Taomlar",
     "halalGuide": "Halol Yo'ldosh",
-    "travel": "Sayohat va Bozorlar",
+    "travel": "Sayohat va Shopping",
     "business": "Biznes",
     "cargo": "Yuk Kuzatuvi",
     "mosques": "Masjidlar",
@@ -342,6 +342,10 @@
   "guide": {
     "title": "Sayohat Qo'llanmasi",
     "subtitle": "Xitoy uchun muhim maslahatlar",
+    "tabs": {
+      "diplomatic": "Diplomatik",
+      "video": "Video Maslahatlar"
+    },
     "intro": {
       "title": "Xitoyga xush kelibsiz!",
       "description": "Biznes safaringizga tayyorgarlik uchun video qo'llanmalarimizni tomosha qiling. To'lovlar, aloqa va xavfsizlik haqida bilib oling."
@@ -390,24 +394,31 @@
       "call": "Qo'ng'iroq",
       "copyAddress": "Xitoycha manzilni nusxalash",
       "addressCopied": "Xitoycha manzil nusxalandi! Taksi haydovchisiga ko'rsating.",
-    "email": "Email",
-    "website": "Veb-sayt",
-    "beijing": "Pekindagi Elchixona",
-    "guangzhou": "Guangzhou Konsulligi",
-    "shanghai": "Shanghai Konsulligi"
+      "email": "Email",
+      "website": "Veb-sayt",
+      "beijing": "Pekindagi Elchixona",
+      "guangzhou": "Guangzhou Konsulligi",
+      "shanghai": "Shanghai Konsulligi"
+    },
+    "faq": {
+      "title": "Ko'p beriladigan savollar",
+      "subtitle": "Sayohat haqida umumiy maslahatlar",
+      "q1": "Xitoyga vizasiz sayohat qilish mumkinmi?",
+      "a1": "O'zbekiston fuqarolari uchun viza talab qilinadi. Tranzit vizasiz 144 soatgacha ba'zi shaharlarda qolish mumkin.",
+      "q2": "Eng yaxshi sayohat vaqti qachon?",
+      "a2": "Aprel-may va sentyabr-oktyabr oylari eng qulay ob-havo. Xitoy yangi yili (yanvar-fevral) da narxlar yuqori.",
+      "q3": "Naqd pul olib borish kerakmi?",
+      "a3": "Alipay va WeChat Pay asosiy to'lov usullari. Kichik miqdorda naqd pul (500-1000 yuan) olib boring.",
+      "q4": "Internet muammosi bo'ladimi?",
+      "a4": "Google, WhatsApp, Telegram ishlamaydi. VPN oldindan yuklab oling yoki mahalliy ilovalardan foydalaning."
+    }
   },
-  "faq": {
-    "title": "Ko'p beriladigan savollar",
-    "subtitle": "Sayohat haqida umumiy maslahatlar",
-    "q1": "Xitoyga vizasiz sayohat qilish mumkinmi?",
-    "a1": "O'zbekiston fuqarolari uchun viza talab qilinadi. Tranzit vizasiz 144 soatgacha ba'zi shaharlarda qolish mumkin.",
-    "q2": "Eng yaxshi sayohat vaqti qachon?",
-    "a2": "Aprel-may va sentyabr-oktyabr oylari eng qulay ob-havo. Xitoy yangi yili (yanvar-fevral) da narxlar yuqori.",
-    "q3": "Naqd pul olib borish kerakmi?",
-    "a3": "Alipay va WeChat Pay asosiy to'lov usullari. Kichik miqdorda naqd pul (500-1000 yuan) olib boring.",
-    "q4": "Internet muammosi bo'ladimi?",
-    "a4": "Google, WhatsApp, Telegram ishlamaydi. VPN oldindan yuklab oling yoki mahalliy ilovalardan foydalaning."
-  }
+  "mosque": {
+    "about": "Masjid haqida",
+    "nameOrigin": "Nomning kelib chiqishi",
+    "history": "Tarixi",
+    "features": "O'ziga xos xususiyatlari",
+    "poemSubtitle": "Payg'ambarimizga bag'ishlangan tarixiy madhiya"
   },
   "mapNav": {
     "selectApp": "Navigatsiya ilovasini tanlang",

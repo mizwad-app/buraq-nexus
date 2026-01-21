@@ -8,13 +8,13 @@ import {
   ChevronRight,
   Star,
   XCircle,
-  ShoppingBag,
   Check,
   Navigation,
   Moon,
   Clock,
   Users,
   Store,
+  ScrollText,
 } from "lucide-react";
 import { AIScannerModal } from "@/components/AIScannerModal";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,6 +25,7 @@ import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
 import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { RestaurantDetailSheet } from "@/components/RestaurantDetailSheet";
+import { MosqueDetailSheet } from "@/components/MosqueDetailSheet";
 
 interface Restaurant {
   id: string;
@@ -136,6 +137,7 @@ const Ibadah = () => {
   // Mosque navigation state
   const [mapSheetOpen, setMapSheetOpen] = useState(false);
   const [selectedMosque, setSelectedMosque] = useState<Mosque | null>(null);
+  const [mosqueDetailOpen, setMosqueDetailOpen] = useState(false);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
@@ -230,6 +232,11 @@ const Ibadah = () => {
       setSelectedMosque(mosque);
       setMapSheetOpen(true);
     }
+  };
+
+  const handleOpenMosqueDetail = (mosque: Mosque) => {
+    setSelectedMosque(mosque);
+    setMosqueDetailOpen(true);
   };
 
   // Get translated city name for header
@@ -569,7 +576,8 @@ const Ibadah = () => {
               {filteredMosques.map((mosque, index) => (
                 <div
                   key={mosque.id}
-                  className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
+                  onClick={() => handleOpenMosqueDetail(mosque)}
+                  className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in cursor-pointer hover:border-primary/30 hover:shadow-lg transition-all"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
                   <div className="relative h-40 w-full">
@@ -583,6 +591,17 @@ const Ibadah = () => {
                       }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    
+                    {/* Historical badge for special mosques */}
+                    {(mosque.name.toLowerCase().includes("huaisheng") || mosque.name.includes("怀圣")) && (
+                      <div className="absolute top-3 right-3">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-500/90 text-white text-xs font-medium">
+                          <ScrollText className="w-3 h-3" />
+                          {t("mosque.history")}
+                        </span>
+                      </div>
+                    )}
+                    
                     <div className="absolute bottom-3 left-4 right-4">
                       <h3 className="font-semibold text-white text-lg">{getField(mosque, 'name')}</h3>
                       <p className="text-sm text-white/80">
@@ -593,7 +612,7 @@ const Ibadah = () => {
                   
                   <div className="p-4">
                     {getField(mosque, 'description') && (
-                      <p className="text-xs text-muted-foreground mb-2">
+                      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
                         {getField(mosque, 'description')}
                       </p>
                     )}
@@ -614,7 +633,10 @@ const Ibadah = () => {
 
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => handleOpenMapNavigation(mosque)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenMapNavigation(mosque);
+                        }}
                         disabled={!mosque.latitude || !mosque.longitude}
                         className="flex-1 flex items-center justify-center gap-2 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-medium disabled:opacity-50"
                       >
@@ -622,11 +644,13 @@ const Ibadah = () => {
                         {t("mosques.directions")}
                       </button>
                       <button
-                        onClick={() => handleOpenMapNavigation(mosque)}
-                        disabled={!mosque.latitude || !mosque.longitude}
-                        className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors disabled:opacity-50"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenMosqueDetail(mosque);
+                        }}
+                        className="p-2 rounded-xl bg-muted hover:bg-muted/80 transition-colors"
                       >
-                        <MapPin className="w-5 h-5 text-muted-foreground" />
+                        <ScrollText className="w-5 h-5 text-muted-foreground" />
                       </button>
                     </div>
                   </div>
@@ -719,6 +743,15 @@ const Ibadah = () => {
           open={restaurantDetailOpen}
           onOpenChange={setRestaurantDetailOpen}
           restaurant={selectedRestaurant}
+        />
+      )}
+
+      {/* Mosque Detail Sheet */}
+      {selectedMosque && (
+        <MosqueDetailSheet
+          open={mosqueDetailOpen}
+          onOpenChange={setMosqueDetailOpen}
+          mosque={selectedMosque}
         />
       )}
 
