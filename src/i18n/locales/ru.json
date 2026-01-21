@@ -1,4 +1,23 @@
 {
+  "loyalty": {
+    "roadmapTitle": "Путь к наградам",
+    "currentVolume": "Текущий объём",
+    "backpackTitle": "Рюкзак Бурак",
+    "backpackDesc": "Премиум рюкзак в подарок за 100 кубов груза",
+    "ticketTitle": "Бесплатный билет в Китай",
+    "ticketDesc": "Билет туда-обратно в подарок за 800 кубов груза",
+    "umraTitle": "Паломничество Умра",
+    "umraDesc": "Главный приз за 1200 кубов груза - священная Умра!",
+    "progress": "Прогресс",
+    "claimed": "Получено ✓",
+    "nextGoalMessage": "Отправьте ещё {volume} кубов, чтобы выиграть {reward}!",
+    "goldStatus": "Золотой статус",
+    "silverStatus": "Серебряный статус",
+    "standardStatus": "Стандартный участник",
+    "membershipStatus": "Статус членства",
+    "annualVolume": "Годовой объём",
+    "nextTierMessage": "Ещё {volume} кубов до статуса {tier}"
+  },
   "app": {
     "name": "Экосистема Buraq",
     "welcome": "Добро пожаловать",

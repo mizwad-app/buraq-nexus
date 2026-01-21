@@ -1,4 +1,23 @@
 {
+  "loyalty": {
+    "roadmapTitle": "Rewards Roadmap",
+    "currentVolume": "Current volume",
+    "backpackTitle": "Buraq Backpack",
+    "backpackDesc": "Premium backpack as a gift for 100 cubic cargo",
+    "ticketTitle": "Free Flight to China",
+    "ticketDesc": "Round-trip ticket as a gift for 800 cubic cargo",
+    "umraTitle": "Umra Pilgrimage",
+    "umraDesc": "Grand prize for 1200 cubic cargo - Holy Umra trip!",
+    "progress": "Progress",
+    "claimed": "Claimed ✓",
+    "nextGoalMessage": "Ship {volume} more cubic to win {reward}!",
+    "goldStatus": "Gold Status",
+    "silverStatus": "Silver Status",
+    "standardStatus": "Standard Member",
+    "membershipStatus": "Membership Status",
+    "annualVolume": "Annual volume",
+    "nextTierMessage": "Ship {volume} more cubic to reach {tier}"
+  },
   "app": {
     "name": "Buraq Ecosystem",
     "welcome": "Welcome",
