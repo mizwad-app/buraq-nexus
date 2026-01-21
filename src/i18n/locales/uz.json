@@ -12,12 +12,12 @@
   },
   "modules": {
     "halal": "Halol Taomlar",
-    "halalGuide": "Halol Qo'llanma",
-    "travel": "Sayohat va Bog'lar",
+    "halalGuide": "Halol Yo'ldosh",
+    "travel": "Sayohat va Bozorlar",
     "business": "Biznes",
     "cargo": "Yuk Kuzatuvi",
     "mosques": "Masjidlar",
-    "eco": "Eco Projects",
+    "eco": "Eko Loyihalar",
     "guide": "Sayohat Qo'llanmasi"
   },
   "home": {
@@ -143,12 +143,16 @@
     "change": "O'zgartirish"
   },
   "halal": {
-    "title": "Halol Taomlar",
-    "subtitle": "AI skaner va sertifikatlangan restoranlar",
+    "title": "Halol Yo'ldosh",
+    "subtitle": "Restoranlar, masjidlar va halol do'konlar",
     "aiScanner": "AI Skaner",
     "scanProduct": "Mahsulotni tekshirish uchun skanerlang",
     "restaurants": "Halol restoranlar",
-    "shopping": "Savdo markazlari",
+    "restaurantsTab": "Restoranlar",
+    "mosquesTab": "Masjidlar",
+    "shopsTab": "Do'konlar",
+    "halalShops": "Halol Do'konlar",
+    "shopsComingSoon": "Tasdiqlangan halol oziq-ovqat do'konlari va bozorlarni qo'shmoqdamiz. Tez orada tekshiring!",
     "viewOnMap": "Xaritada",
     "halalCertified": "Halol sertifikatlangan",
     "hasHalalFood": "Halol taom mavjud",
