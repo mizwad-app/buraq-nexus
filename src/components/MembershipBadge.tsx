@@ -118,10 +118,7 @@ export const MembershipBadge = ({ annualVolume, variant = "small", className }: 
       {nextTierInfo && (
         <div className="relative mt-4 pt-3 border-t border-border/30">
           <p className="text-xs text-muted-foreground">
-            {t("loyalty.nextTierMessage", { 
-              volume: nextTierInfo.needed, 
-              tier: t(nextTierInfo.tierKey) 
-            })}
+            Yana <span className="font-bold text-foreground">{nextTierInfo.needed}</span> kub bo'lsa, {t(nextTierInfo.tierKey)} darajasiga o'tasiz
           </p>
           <div className="mt-2 h-1.5 rounded-full bg-secondary/50 overflow-hidden">
             <div 
