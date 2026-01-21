@@ -86,38 +86,41 @@ const MOSQUE_HISTORY: Record<string, {
 }> = {
   "huaisheng": {
     origin: "\"Huai\" — sog'inish/xotirlash, \"Sheng\" — muqaddas/payg'ambar demakdir. Ya'ni, \"Payg'ambarimiz Muhammad (s.a.v)ni sog'inib qurilgan masjid\".",
-    history: "Bu masjid Xitoydagi eng qadimiy bino bo'lib, milodiy 627-yilda Arabistondan kelgan ilk musulmon elchilar tomonidan qurilgan.",
+    history: "Bu masjid Xitoydagi eng qadimiy bino bo'lib, milodiy 627-yilda Arabistondan kelgan ilk musulmon da'vatchilar tomonidan qurilgan. Xitoyga kelgan dastlabki musulmon da'vatchilarini yodga oladi.",
     features: [
       "36 metrlik Nur minorasi qadimda kemalarga mayoq vazifasini bajargan",
       "Xitoyning eng qadimiy masjidi",
       "Sahoba Sa'd ibn Abu Vaqqos (r.a.) tomonidan ta'sis etilgan"
     ],
-    poem: "Koinot yaralganda, Uning ismi samoviy kitobda yozilgan edi. Buyuk din targ'ibotchisi G'arbda (Arabistonda) dunyoga keldi. U osmon kitobini (Qur'onni) qabul qildi, o'ttiz pora bo'lib, butun insoniyatni hidoyatga boshladi. U barcha bandalarning rahnamosi, muqaddas zotlarning peshvosidir. Osmon saltanatiga ko'mak berib, xalqni o'z himoyasiga oldi. Besh vaqt namoz orqali tinchlik va omonlik so'raldi. Uning qalbi Allohda edi, fikri-zikri muhtojlarga yordam berishda. Qiyinchilikdan qutqaruvchi, zulmatdan nurga chiquvchidir. Ruhlarni poklovchi va gunohlardan xalos etuvchidir. Uning rahmati butun dunyoni qopladi, uning yo'li azaldan to abadgacha eng yuksakdir. Hamma unga taslim bo'ldi, uning dinining nomi — Islomdir. Muhammad (s.a.v) — eng oliyjanob Payg'ambardir!",
+    poem: "Koinot yaralganda, Uning ismi samoviy kitobda yozilgan edi. Buyuk din da'vatchisi G'arbda (Arabistonda) dunyoga keldi. U osmon kitobini (Qur'onni) qabul qildi, o'ttiz pora bo'lib, butun insoniyatni hidoyatga boshladi. U barcha bandalarning rahnamosi, muqaddas zotlarning peshvosidir. Osmon saltanatiga ko'mak berib, xalqni o'z himoyasiga oldi. Besh vaqt namoz orqali tinchlik va omonlik so'raldi. Uning qalbi Allohda edi, fikri-zikri muhtojlarga yordam berishda. Qiyinchilikdan qutqaruvchi, zulmatdan nurga chiquvchidir. Ruhlarni poklovchi va gunohlardan xalos etuvchidir. Uning rahmati butun dunyoni qopladi, uning yo'li azaldan to abadgacha eng yuksakdir. Hamma unga taslim bo'ldi, uning dinining nomi — Islomdir. Muhammad (s.a.v) — eng oliyjanob Payg'ambardir!",
     poemTitle: "Yuz so'zli madhiya — Imperator Xongvu (1368)"
   },
   "abi_vaqqos": {
     origin: "Sahoba Sa'd ibn Abu Vaqqos (r.a.) sharafiga nomlangan. \"Xianxian\" — \"Donishmandlar va azizlar masjidi\" demakdir.",
-    history: "Hududda juda qadimiy musulmonlar qabristoni va Guangzhou Islom Assotsiatsiyasi joylashgan.",
+    history: "Bu joy sahoba Sa'd ibn Abu Vaqqos (r.a.)ning muborak qabri joylashgan tabarruk hudud hisoblanadi. Hududda juda qadimiy musulmonlar qabristoni va Guangzhou Islom Assotsiatsiyasi joylashgan. Xitoyga Islom dinini olib kelgan dastlabki da'vatchilardan biri sifatida u katta hurmatga sazovordir.",
     features: [
-      "Sahoba Sa'd ibn Abu Vaqqos (r.a.) qabri",
+      "Sahoba Sa'd ibn Abu Vaqqos (r.a.) muborak qabri",
       "Guangzhou Islom Assotsiatsiyasi markazi",
-      "Eng qadimiy musulmon qabristoni"
+      "Eng qadimiy musulmon qabristoni",
+      "Islom markazi va ta'lim muassasasi"
     ]
   },
   "xiaodongying": {
-    history: "Ming sulolasi (1368–1644) davrida musulmon askarlar tomonidan qurilgan.",
+    history: "Ming sulolasi (1368–1644) davrida musulmon askarlar tomonidan qurilgan. Bu masjid harbiy-islomiy tarixning noyob yodgorligi bo'lib, o'sha davrdagi musulmon jangchilarning imon va jasurligini aks ettiradi.",
     features: [
       "Ming sulolasi me'morchiligi",
-      "Harbiy-islomiy tarix",
-      "An'anaviy xitoy-islom uslubi"
+      "Harbiy-islomiy tarix yodgorligi",
+      "An'anaviy xitoy-islom uslubi",
+      "Mahalliy musulmonlar markazi"
     ]
   },
   "haopan": {
-    history: "Guangzhoudagi tarixiy masjidlardan biri bo'lib, mahalliy musulmonlar jamiyatiga xizmat qiladi.",
+    history: "Guangzhoudagi tarixiy masjidlardan biri bo'lib, mahalliy musulmonlar jamiyatiga xizmat qiladi. Bu masjid shahardagi musulmonlar uchun muhim ibodat va jamiyat markazi hisoblanadi.",
     features: [
       "Mahalliy musulmonlar markazi",
       "Juma namozi o'qiladi",
-      "Ayollar bo'limi mavjud"
+      "Ayollar bo'limi mavjud",
+      "Islomiy ta'lim dasturlari"
     ]
   }
 };
@@ -280,84 +283,78 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
               </p>
             </div>
 
-            {/* Description */}
-            {translatedDescription && (
-              <div className="bg-card rounded-2xl p-4 border border-border/50">
-                <h3 className="font-semibold text-foreground mb-2">{t("mosque.about")}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">{translatedDescription}</p>
-              </div>
-            )}
-
-            {/* Historical Content */}
-            {historyData && (
-              <>
-                {/* Name Origin */}
-                {historyData.origin && (
-                  <Card className="bg-gradient-to-br from-amber-500/10 to-orange-500/10 border-amber-500/20">
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-foreground flex items-center gap-2 mb-2">
-                        <ScrollText className="w-4 h-4 text-amber-500" />
-                        {t("mosque.nameOrigin")}
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{historyData.origin}</p>
-                    </CardContent>
-                  </Card>
+            {/* Consolidated Mosque Information Card */}
+            <Card className="bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-green-500/5 border-emerald-500/20 overflow-hidden">
+              <CardContent className="p-5 space-y-5">
+                {/* About Section */}
+                {translatedDescription && (
+                  <div>
+                    <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
+                      <Moon className="w-4 h-4 text-emerald-500" />
+                      {t("mosque.about")}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{translatedDescription}</p>
+                  </div>
                 )}
 
-                {/* History */}
-                {historyData.history && (
-                  <Card className="bg-gradient-to-br from-blue-500/10 to-indigo-500/10 border-blue-500/20">
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-foreground flex items-center gap-2 mb-2">
-                        <Star className="w-4 h-4 text-blue-500" />
-                        {t("mosque.history")}
-                      </h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{historyData.history}</p>
-                    </CardContent>
-                  </Card>
+                {/* Name Origin Section */}
+                {historyData?.origin && (
+                  <div className="pt-4 border-t border-border/30">
+                    <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
+                      <ScrollText className="w-4 h-4 text-amber-500" />
+                      {t("mosque.nameOrigin")}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{historyData.origin}</p>
+                  </div>
                 )}
 
-                {/* Features */}
-                {historyData.features && historyData.features.length > 0 && (
-                  <Card className="bg-card border-border/50">
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-foreground mb-3">{t("mosque.features")}</h3>
-                      <ul className="space-y-2">
-                        {historyData.features.map((feature, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </Card>
+                {/* History Section */}
+                {historyData?.history && (
+                  <div className="pt-4 border-t border-border/30">
+                    <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
+                      <Star className="w-4 h-4 text-blue-500" />
+                      {t("mosque.history")}
+                    </h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{historyData.history}</p>
+                  </div>
+                )}
+
+                {/* Features Section */}
+                {historyData?.features && historyData.features.length > 0 && (
+                  <div className="pt-4 border-t border-border/30">
+                    <h3 className="font-bold text-foreground mb-3 text-base">{t("mosque.features")}</h3>
+                    <ul className="space-y-2">
+                      {historyData.features.map((feature, index) => (
+                        <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
 
                 {/* The Hundred-word Eulogy Poem */}
-                {historyData.poem && (
-                  <Card className="bg-gradient-to-br from-emerald-500/10 via-teal-500/10 to-green-500/10 border-emerald-500/20 overflow-hidden">
-                    <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImEiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDQ1KSI+PHBhdGggZD0iTTAgMjBoNDBNMjAgMHY0MCIgc3Ryb2tlPSJyZ2JhKDE2LDE4NSwxMjksMC4wNSkiIHN0cm9rZS13aWR0aD0iMSIgZmlsbD0ibm9uZSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNhKSIvPjwvc3ZnPg==')] opacity-50" />
-                    <CardContent className="p-5 relative">
-                      <div className="flex items-center gap-2 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                          <Moon className="w-5 h-5 text-emerald-500" />
-                        </div>
-                        <div>
-                          <h3 className="font-bold text-foreground text-lg">{historyData.poemTitle}</h3>
-                          <p className="text-xs text-muted-foreground">{t("mosque.poemSubtitle")}</p>
-                        </div>
+                {historyData?.poem && (
+                  <div className="pt-4 border-t border-border/30">
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
+                        <Moon className="w-4 h-4 text-emerald-500" />
                       </div>
-                      <div className="bg-background/50 backdrop-blur-sm rounded-xl p-4 border border-emerald-500/10">
-                        <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap italic">
-                          "{historyData.poem}"
-                        </p>
+                      <div>
+                        <h3 className="font-bold text-foreground text-base">{historyData.poemTitle}</h3>
+                        <p className="text-xs text-muted-foreground">{t("mosque.poemSubtitle")}</p>
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                    <div className="bg-background/50 backdrop-blur-sm rounded-xl p-4 border border-emerald-500/10">
+                      <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap italic">
+                        "{historyData.poem}"
+                      </p>
+                    </div>
+                  </div>
                 )}
-              </>
-            )}
+              </CardContent>
+            </Card>
 
             {/* Navigate Button */}
             {mosque.latitude && mosque.longitude && (
