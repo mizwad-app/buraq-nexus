@@ -1,4 +1,23 @@
 {
+  "loyalty": {
+    "roadmapTitle": "خارطة المكافآت",
+    "currentVolume": "الحجم الحالي",
+    "backpackTitle": "حقيبة براق",
+    "backpackDesc": "حقيبة ظهر فاخرة هدية لـ 100 متر مكعب",
+    "ticketTitle": "تذكرة طيران مجانية للصين",
+    "ticketDesc": "تذكرة ذهاب وعودة هدية لـ 800 متر مكعب",
+    "umraTitle": "رحلة العمرة",
+    "umraDesc": "الجائزة الكبرى لـ 1200 متر مكعب - رحلة العمرة المقدسة!",
+    "progress": "التقدم",
+    "claimed": "تم الحصول ✓",
+    "nextGoalMessage": "أرسل {volume} متر مكعب إضافي لتفوز بـ {reward}!",
+    "goldStatus": "العضوية الذهبية",
+    "silverStatus": "العضوية الفضية",
+    "standardStatus": "عضو عادي",
+    "membershipStatus": "حالة العضوية",
+    "annualVolume": "الحجم السنوي",
+    "nextTierMessage": "أرسل {volume} متر مكعب إضافي للوصول إلى {tier}"
+  },
   "app": {
     "name": "نظام براق البيئي",
     "welcome": "مرحبا",

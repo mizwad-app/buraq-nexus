@@ -1,4 +1,23 @@
 {
+  "loyalty": {
+    "roadmapTitle": "Mukofotlar yo'li",
+    "currentVolume": "Joriy hajm",
+    "backpackTitle": "Buraq Ryugzak",
+    "backpackDesc": "100 kub yukning sovg'asi sifatida premium ryugzak",
+    "ticketTitle": "Xitoyga bepul aviachipta",
+    "ticketDesc": "800 kub yukning sovg'asi sifatida ikki tomonlama chipta",
+    "umraTitle": "Umra yo'llanmasi",
+    "umraDesc": "1200 kub yukning bosh mukofoti - Umra ziyorati!",
+    "progress": "Progress",
+    "claimed": "Olingan ✓",
+    "nextGoalMessage": "Yana {volume} kub yuk topshirsangiz, {reward} yutasiz!",
+    "goldStatus": "Gold Status",
+    "silverStatus": "Silver Status",
+    "standardStatus": "Standart a'zo",
+    "membershipStatus": "A'zolik darajasi",
+    "annualVolume": "Yillik hajm",
+    "nextTierMessage": "Yana {volume} kub bo'lsa, {tier} darajasiga o'tasiz"
+  },
   "app": {
     "name": "Buraq Ekotizimi",
     "welcome": "Xush kelibsiz",

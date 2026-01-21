@@ -5,6 +5,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
 import { MyReports } from "@/components/MyReports";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { MembershipBadge } from "@/components/MembershipBadge";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { 
@@ -22,6 +23,10 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+// Demo user constants
+const DEMO_PHONE = "+998900006611";
+const DEMO_ANNUAL_VOLUME = 750;
+
 const Profile = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -31,6 +36,10 @@ const Profile = () => {
   const [userPoints, setUserPoints] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
   const [stats, setStats] = useState({ scans: 0, places: 0, reports: 0 });
+  const [annualVolume, setAnnualVolume] = useState(0);
+
+  // Check if demo user
+  const isDemoUser = user?.phone === DEMO_PHONE;
 
   useEffect(() => {
     if (!loading && !user) {
@@ -45,6 +54,14 @@ const Profile = () => {
   }, [user]);
 
   const fetchUserData = async () => {
+    // Demo user gets hardcoded values
+    if (isDemoUser) {
+      setUserPoints(7500);
+      setAnnualVolume(DEMO_ANNUAL_VOLUME);
+      setStats({ scans: 3, places: 5, reports: 2 });
+      return;
+    }
+
     // Fetch points
     const { data: pointsData } = await supabase
       .from("user_points")
@@ -81,6 +98,17 @@ const Profile = () => {
       .from("saved_places")
       .select("*", { count: "exact", head: true })
       .eq("user_id", user?.id);
+
+    // Calculate annual volume
+    const { data: cargoData } = await supabase
+      .from("cargo_trackings")
+      .select("volume_m3")
+      .eq("user_id", user?.id);
+
+    if (cargoData) {
+      const totalVolume = cargoData.reduce((sum, cargo) => sum + (cargo.volume_m3 || 0), 0);
+      setAnnualVolume(Math.round(totalVolume));
+    }
 
     setStats({
       scans: cargoCount || 0,
@@ -153,7 +181,7 @@ const Profile = () => {
       </header>
 
       {/* User Card */}
-      <section className="px-5 mb-6">
+      <section className="px-5 mb-4">
         <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-accent/10 p-5">
           <div className="absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full blur-3xl" />
           <div className="relative flex items-center gap-4">
@@ -168,8 +196,8 @@ const Profile = () => {
                 {userPhone}
               </p>
               <div className="flex items-center gap-1 mt-1">
-                <Star className="w-4 h-4 text-amber-400" />
-                <span className="text-sm font-bold text-amber-400">{userPoints.toLocaleString()} {t("profile.points")}</span>
+                <Star className="w-4 h-4 text-primary" />
+                <span className="text-sm font-bold text-primary">{userPoints.toLocaleString()} {t("profile.points")}</span>
               </div>
             </div>
           </div>
@@ -190,6 +218,11 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* Membership Status */}
+      <section className="px-5 mb-4">
+        <MembershipBadge annualVolume={annualVolume} variant="small" className="w-full justify-center" />
       </section>
 
       {/* Quick Actions */}

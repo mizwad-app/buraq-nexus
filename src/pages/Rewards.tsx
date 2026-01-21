@@ -3,13 +3,13 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
+import { LoyaltyRoadmap } from "@/components/LoyaltyRoadmap";
+import { MembershipBadge } from "@/components/MembershipBadge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { 
   Gift, 
   Star, 
-  Plane, 
   Battery, 
   Smartphone, 
   Headphones,
@@ -17,8 +17,8 @@ import {
   Briefcase,
   ChevronRight,
   Sparkles,
-  Trophy,
-  Zap
+  Zap,
+  TreePine
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -35,7 +35,10 @@ interface GiftItem {
   category: string;
 }
 
-const UMRA_TARGET = 10000;
+// Demo user constants
+const DEMO_PHONE = "+998900006611";
+const DEMO_ANNUAL_VOLUME = 750;
+const DEMO_TREES_PLANTED = 12;
 
 const giftIcons: Record<string, any> = {
   "Power Bank": Battery,
@@ -54,6 +57,11 @@ const Rewards = () => {
   const [gifts, setGifts] = useState<GiftItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [redeeming, setRedeeming] = useState<string | null>(null);
+  const [annualVolume, setAnnualVolume] = useState(0);
+  const [treesPlanted, setTreesPlanted] = useState(0);
+
+  // Check if demo user
+  const isDemoUser = user?.phone === DEMO_PHONE;
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -64,7 +72,7 @@ const Rewards = () => {
   useEffect(() => {
     fetchGifts();
     if (user) {
-      fetchUserPoints();
+      fetchUserData();
     }
   }, [user]);
 
@@ -85,8 +93,17 @@ const Rewards = () => {
     }
   };
 
-  const fetchUserPoints = async () => {
+  const fetchUserData = async () => {
     try {
+      // Demo user gets hardcoded values
+      if (isDemoUser) {
+        setUserPoints({ total_points: 7500, lifetime_points: 7500 });
+        setAnnualVolume(DEMO_ANNUAL_VOLUME);
+        setTreesPlanted(DEMO_TREES_PLANTED);
+        return;
+      }
+
+      // Fetch user points
       const { data, error } = await supabase
         .from("user_points")
         .select("total_points, lifetime_points")
@@ -109,8 +126,20 @@ const Rewards = () => {
           setUserPoints(newData);
         }
       }
+
+      // Calculate annual volume from cargo trackings
+      const { data: cargoData } = await supabase
+        .from("cargo_trackings")
+        .select("volume_m3")
+        .eq("user_id", user?.id);
+
+      if (cargoData) {
+        const totalVolume = cargoData.reduce((sum, cargo) => sum + (cargo.volume_m3 || 0), 0);
+        setAnnualVolume(Math.round(totalVolume));
+        setTreesPlanted(Math.floor(totalVolume * 2));
+      }
     } catch (error) {
-      console.error("Error fetching user points:", error);
+      console.error("Error fetching user data:", error);
     }
   };
 
@@ -155,7 +184,6 @@ const Rewards = () => {
   };
 
   const points = userPoints?.total_points || 0;
-  const umraProgress = Math.min((points / UMRA_TARGET) * 100, 100);
 
   if (authLoading) {
     return (
@@ -169,8 +197,8 @@ const Rewards = () => {
     return (
       <div className="min-h-screen bg-background safe-bottom flex flex-col items-center justify-center px-6">
         <div className="text-center mb-8">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-br from-amber-500/20 to-yellow-600/20 mx-auto flex items-center justify-center mb-4">
-            <Gift className="w-10 h-10 text-amber-400" />
+          <div className="w-20 h-20 rounded-full bg-primary/20 mx-auto flex items-center justify-center mb-4">
+            <Gift className="w-10 h-10 text-primary" />
           </div>
           <h1 className="text-xl font-display font-bold text-foreground mb-2">
             {t("rewards.title")}
@@ -182,7 +210,7 @@ const Rewards = () => {
         
         <Button
           onClick={() => setShowAuthModal(true)}
-          className="bg-gradient-to-r from-amber-500 to-yellow-500 text-black font-semibold px-8 py-6"
+          className="bg-gradient-to-r from-primary to-accent text-primary-foreground font-semibold px-8 py-6"
         >
           {t("rewards.signInUp")}
         </Button>
@@ -197,7 +225,7 @@ const Rewards = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background safe-bottom">
+    <div className="min-h-screen bg-background safe-bottom pb-24">
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
         <div className="flex items-center justify-between">
@@ -209,70 +237,36 @@ const Rewards = () => {
               {t("rewards.subtitle")}
             </p>
           </div>
-          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/30">
-            <Star className="w-5 h-5 text-amber-400" />
-            <span className="font-bold text-amber-400">{points.toLocaleString()}</span>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-primary/20 border border-primary/30">
+            <Star className="w-5 h-5 text-primary" />
+            <span className="font-bold text-primary">{points.toLocaleString()}</span>
           </div>
         </div>
       </header>
 
-      {/* Umra Trip Card */}
-      <section className="px-5 mb-6">
-        <div className="relative rounded-2xl overflow-hidden">
-          {/* Gradient Background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-amber-600/30 via-yellow-600/20 to-emerald-600/30" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-400/10 via-transparent to-transparent" />
-          
-          {/* Content */}
-          <div className="relative p-5">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <div className="flex items-center gap-2 mb-2">
-                  <Plane className="w-5 h-5 text-amber-400" />
-                  <span className="text-xs font-medium text-amber-400 uppercase tracking-wider">
-                    {t("rewards.mainReward")}
-                  </span>
-                </div>
-                <h2 className="text-xl font-display font-bold text-foreground">
-                  {t("rewards.umraTrip")}
-                </h2>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {t("rewards.umraDesc")}
-                </p>
-              </div>
-              <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500 to-yellow-500 flex items-center justify-center shadow-lg">
-                <Trophy className="w-7 h-7 text-black" />
-              </div>
-            </div>
+      {/* Membership Badge */}
+      <section className="px-5 mb-5">
+        <MembershipBadge annualVolume={annualVolume} variant="large" />
+      </section>
 
-            {/* Progress */}
-            <div className="space-y-2">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">{t("rewards.inProgress")}</span>
-                <span className="font-semibold text-foreground">
-                  {points.toLocaleString()} / {UMRA_TARGET.toLocaleString()} {t("rewards.pointsLabel")}
-                </span>
-              </div>
-              <div className="relative h-3 rounded-full bg-secondary/50 overflow-hidden">
-                <div 
-                  className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-amber-500 to-yellow-400 transition-all duration-500"
-                  style={{ width: `${umraProgress}%` }}
-                />
-                <div 
-                  className="absolute inset-y-0 left-0 rounded-full bg-gradient-to-r from-amber-400/50 to-yellow-300/50 blur-sm transition-all duration-500"
-                  style={{ width: `${umraProgress}%` }}
-                />
-              </div>
-              <p className="text-xs text-muted-foreground text-center">
-                {t("rewards.needMore", { points: (UMRA_TARGET - points).toLocaleString() })}
-              </p>
+      {/* Eco Impact Widget */}
+      {treesPlanted > 0 && (
+        <section className="px-5 mb-5">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20">
+            <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center">
+              <TreePine className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-xs text-emerald-400">{t("home.ecoImpact")}</p>
+              <p className="text-sm font-bold text-foreground">{treesPlanted} {t("eco.treesCount")}</p>
             </div>
           </div>
+        </section>
+      )}
 
-          {/* Decorative elements */}
-          <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-amber-500/10 rounded-full blur-2xl" />
-          <div className="absolute -top-4 -left-4 w-16 h-16 bg-emerald-500/10 rounded-full blur-2xl" />
-        </div>
+      {/* Loyalty Roadmap */}
+      <section className="px-5 mb-6">
+        <LoyaltyRoadmap currentVolume={annualVolume} />
       </section>
 
       {/* Redeemable Gifts */}
@@ -322,8 +316,8 @@ const Rewards = () => {
                   </p>
 
                   <div className="flex items-center gap-1 mb-3">
-                    <Star className="w-4 h-4 text-amber-400" />
-                    <span className="font-bold text-amber-400">
+                    <Star className="w-4 h-4 text-primary" />
+                    <span className="font-bold text-primary">
                       {gift.points_required.toLocaleString()}
                     </span>
                   </div>
