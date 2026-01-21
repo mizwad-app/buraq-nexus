@@ -12,6 +12,7 @@
   },
   "modules": {
     "halal": "Халяль Еда",
+    "halalGuide": "Халяль Гид",
     "travel": "Путешествия и Сады",
     "business": "Бизнес",
     "cargo": "Отслеживание Грузов",
@@ -26,13 +27,16 @@
     "sacredPilgrimage": "Священное паломничество",
     "progress": "Прогресс",
     "latestCargo": "Последний груз",
+    "activeCargo": "Активный груз",
     "quickAccess": "Быстрый доступ",
     "travelChecklist": "Чек-лист путешествия",
     "travelChecklistDesc": "Подготовка к поездке",
     "translators": "Переводчики",
     "translatorsDesc": "Проверенные переводчики",
     "services": "Услуги",
-    "servicesDesc": "Инспекция и бронирование"
+    "servicesDesc": "Инспекция и бронирование",
+    "ecoImpact": "Экологический вклад",
+    "umraMessage": "Отправьте еще {{points}} кубов груза и получите поездку на Умру!"
   },
   "business": {
     "title": "B2B Хаб",
@@ -450,15 +454,35 @@
   },
   "services": {
     "title": "Услуги",
-    "subtitle": "Инспекция и бронирование",
-    "cargoInspection": "Инспекция груза",
-    "cargoInspectionDesc": "Контроль качества на заводе",
-    "ticketBooking": "Бронирование билетов",
-    "ticketBookingDesc": "Авиа и ж/д билеты",
-    "vpnSetup": "Настройка VPN",
-    "vpnSetupDesc": "Доступ в интернет в Китае",
+    "subtitle": "Бизнес услуги",
+    "description": "Необходимые услуги для вашей деловой поездки",
+    "cargoInspection": {
+      "title": "Инспекция груза",
+      "desc": "Контроль качества на заводе"
+    },
+    "flightBooking": {
+      "title": "Авиабилеты",
+      "desc": "Бронирование авиабилетов"
+    },
+    "trainBooking": {
+      "title": "Ж/Д билеты",
+      "desc": "Скоростные поезда"
+    },
+    "vpnSetup": {
+      "title": "VPN Сервис",
+      "desc": "Доступ в интернет в Китае"
+    },
+    "concierge": {
+      "title": "Консьерж сервис",
+      "desc": "Персональный ассистент"
+    },
     "requestService": "Заказать услугу",
     "contactUs": "Свяжитесь с нами для заказа",
-    "serviceRequested": "Запрос на услугу отправлен!"
+    "requestSent": "Запрос на услугу отправлен!",
+    "additionalDetails": "Дополнительная информация",
+    "detailsPlaceholder": "Опишите ваш запрос подробнее...",
+    "contactVia": "Как с вами связаться?",
+    "instantResponse": "Быстрый ответ",
+    "defaultMessage": "Мне нужна помощь"
   }
 }
