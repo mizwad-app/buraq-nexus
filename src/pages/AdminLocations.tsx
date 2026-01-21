@@ -3,11 +3,9 @@ import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import {
-  Shield,
   MapPin,
   Store,
   Utensils,
@@ -16,13 +14,13 @@ import {
   ChevronDown,
   Save,
   Search,
-  ArrowLeft,
   Check,
   X,
   Users,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AdminLocationPicker } from "@/components/AdminLocationPicker";
+import { BulkImportMarkets } from "@/components/BulkImportMarkets";
 import { useNavigate } from "react-router-dom";
 import {
   Select,
@@ -261,13 +259,18 @@ const AdminLocations = () => {
   return (
     <div className="p-6">
       {/* Header */}
-      <div className="mb-6">
-        <h1 className="text-3xl font-display font-bold text-foreground">
-          Joylashuvlar
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Bozorlar, restoranlar va tarjimonlarni boshqarish
-        </p>
+      <div className="mb-6 flex items-start justify-between">
+        <div>
+          <h1 className="text-3xl font-display font-bold text-foreground">
+            Joylashuvlar
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Bozorlar, restoranlar va tarjimonlarni boshqarish
+          </p>
+        </div>
+        {entityType === "markets" && (
+          <BulkImportMarkets onImportComplete={fetchData} />
+        )}
       </div>
 
       {/* Entity Type Selector */}
