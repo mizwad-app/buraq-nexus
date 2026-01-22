@@ -49,12 +49,16 @@ export const ChatSheet = ({
   const [loading, setLoading] = useState(false);
   const [sending, setSending] = useState(false);
 
-  // Fetch messages
+  // Fetch messages and subscribe to realtime
   useEffect(() => {
-    if (open && conversationId) {
-      fetchMessages();
-      subscribeToMessages();
-    }
+    if (!open || !conversationId) return;
+    
+    fetchMessages();
+    const unsubscribe = subscribeToMessages();
+    
+    return () => {
+      if (unsubscribe) unsubscribe();
+    };
   }, [open, conversationId]);
 
   // Auto-scroll to bottom
