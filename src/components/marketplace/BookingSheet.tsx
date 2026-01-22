@@ -83,13 +83,30 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
         .from('user_wallets')
         .select('balance')
         .eq('user_id', user.id)
-        .single();
-      
-      if (error && error.code !== 'PGRST116') {
+        .maybeSingle();
+
+      if (error) {
         console.error('Error fetching wallet:', error);
+        setWalletBalance(0);
+        return;
       }
-      
-      setWalletBalance(data?.balance || 0);
+
+      // If wallet doesn't exist yet, create it with 0 balance.
+      if (!data) {
+        const { error: insertError } = await supabase
+          .from('user_wallets')
+          .insert({ user_id: user.id, balance: 0, held_balance: 0 })
+          .select('balance')
+          .maybeSingle();
+
+        if (insertError) {
+          console.error('Error creating wallet:', insertError);
+          setWalletBalance(0);
+          return;
+        }
+      }
+
+      setWalletBalance(Number(data?.balance ?? 0));
     } catch (err) {
       console.error('Wallet fetch error:', err);
       setWalletBalance(0);
@@ -232,17 +249,47 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
 
     setLoading(true);
     try {
-      // 1. Deduct from wallet and hold in escrow
-      const { error: walletError } = await supabase
+      // 1. Re-fetch wallet row (create if missing), then deduct & hold in escrow
+      const { data: walletRow, error: walletGetError } = await supabase
+        .from('user_wallets')
+        .select('balance, held_balance')
+        .eq('user_id', user.id)
+        .maybeSingle();
+
+      if (walletGetError) throw walletGetError;
+
+      const currentBalance = Number(walletRow?.balance ?? 0);
+      const currentHeld = Number(walletRow?.held_balance ?? 0);
+
+      if (!walletRow) {
+        const { error: createWalletError } = await supabase
+          .from('user_wallets')
+          .insert({ user_id: user.id, balance: currentBalance, held_balance: currentHeld })
+          .select('id')
+          .maybeSingle();
+
+        if (createWalletError) throw createWalletError;
+      }
+
+      if (currentBalance < totalAmount) {
+        setInsufficientBalance(true);
+        setStep('payment');
+        toast({ title: "Balans yetarli emas", variant: "destructive" });
+        return;
+      }
+
+      const { error: walletUpdateError } = await supabase
         .from('user_wallets')
         .update({
-          balance: walletBalance - totalAmount,
-          held_balance: totalAmount,
-          updated_at: new Date().toISOString()
+          balance: currentBalance - totalAmount,
+          held_balance: currentHeld + totalAmount,
+          updated_at: new Date().toISOString(),
         })
         .eq('user_id', user.id);
 
-      if (walletError) throw walletError;
+      if (walletUpdateError) throw walletUpdateError;
+
+      setWalletBalance(currentBalance - totalAmount);
 
       // 2. Create booking records for each selected date
       const bookingPromises = selectedDates.map(date => 
@@ -286,7 +333,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
         .select('id')
         .eq('client_id', user.id)
         .eq('translator_id', translator.id)
-        .single();
+        .maybeSingle();
       
       if (existingConv) {
         conversationId = existingConv.id;
