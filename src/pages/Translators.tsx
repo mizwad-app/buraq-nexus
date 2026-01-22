@@ -370,15 +370,37 @@ const Translators = () => {
                 </div>
               </SheetHeader>
 
-              {/* Stats */}
-              <div className="grid grid-cols-3 gap-3 mb-4">
-                <div className="bg-muted/50 rounded-xl p-3 text-center">
-                  <div className="flex items-center justify-center gap-1 text-amber-500 mb-1">
-                    <Star className="w-4 h-4 fill-current" />
-                    <span className="font-bold">{selectedTranslator.rating.toFixed(1)}</span>
-                  </div>
-                  <p className="text-[10px] text-muted-foreground">{t("translators.rating")}</p>
+              {/* Detailed Rating Matrix (replaces single rating stat) */}
+              <div className="mb-4">
+                <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
+                  {([
+                    { label: "Ishonchlilik", value: selectedTranslator.rating },
+                    { label: "Muzokara san'ati", value: selectedTranslator.rating },
+                    { label: "Vaqtga rioya qilish", value: selectedTranslator.rating },
+                    { label: "Bilim darajasi", value: selectedTranslator.rating },
+                  ] as const).map((row) => (
+                    <div key={row.label} className="flex items-center justify-between">
+                      <span className="text-sm text-foreground/80">{row.label}</span>
+                      <div className="flex items-center gap-1">
+                        {[1, 2, 3, 4, 5].map((star) => (
+                          <Star
+                            key={star}
+                            className={cn(
+                              "w-4 h-4 transition-colors",
+                              star <= Math.round(Number(row.value) || 0)
+                                ? "fill-primary text-primary"
+                                : "text-muted-foreground/30"
+                            )}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </div>
+              </div>
+
+              {/* Stats */}
+              <div className="grid grid-cols-2 gap-3 mb-4">
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
                   <div className="font-bold text-foreground mb-1">{selectedTranslator.total_reviews}</div>
                   <p className="text-[10px] text-muted-foreground">{t("translators.reviews")}</p>
