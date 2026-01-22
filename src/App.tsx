@@ -21,6 +21,7 @@ import Eco from "./pages/Eco";
 import TravelGuide from "./pages/TravelGuide";
 import TravelChecklist from "./pages/TravelChecklist";
 import Translators from "./pages/Translators";
+import TranslatorMarketplace from "./pages/TranslatorMarketplace";
 import Services from "./pages/Services";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
@@ -67,6 +68,7 @@ const App = () => (
                       <Route path="/guide" element={<TravelGuide />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
                       <Route path="/translators" element={<Translators />} />
+                      <Route path="/marketplace" element={<TranslatorMarketplace />} />
                       <Route path="/services" element={<Services />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
