@@ -349,21 +349,24 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               </div>
             </div>
 
-            {/* Detailed Rating Matrix */}
+            {/* Detailed Rating Matrix - 4 Categories */}
             <div className="px-5 mb-4">
-              <h4 className="text-sm font-semibold text-foreground mb-3">Batafsil reyting</h4>
-              <div className="space-y-3 bg-muted/30 rounded-xl p-4">
+              <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Star className="w-4 h-4 text-primary" />
+                Batafsil reyting
+              </h4>
+              <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
                 {/* Ishonchlilik (Reliability) */}
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Ishonchlilik</span>
+                  <span className="text-sm text-foreground/80">Ishonchlilik</span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star 
                         key={star} 
                         className={cn(
-                          "w-4 h-4",
+                          "w-4 h-4 transition-colors",
                           star <= Math.round(Number(translator.avg_reliability) || translator.rating || 0) 
-                            ? "fill-amber-500 text-amber-500" 
+                            ? "fill-primary text-primary" 
                             : "text-muted-foreground/30"
                         )} 
                       />
@@ -371,17 +374,17 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                   </div>
                 </div>
                 
-                {/* Muzokara san'ati (Work Expertise) */}
+                {/* Muzokara san'ati (Negotiation Skills) */}
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Muzokara san'ati</span>
+                  <span className="text-sm text-foreground/80">Muzokara san'ati</span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star 
                         key={star} 
                         className={cn(
-                          "w-4 h-4",
+                          "w-4 h-4 transition-colors",
                           star <= Math.round(Number(translator.avg_expertise) || translator.rating || 0) 
-                            ? "fill-amber-500 text-amber-500" 
+                            ? "fill-primary text-primary" 
                             : "text-muted-foreground/30"
                         )} 
                       />
@@ -389,17 +392,35 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                   </div>
                 </div>
                 
-                {/* Punktualnost (Punctuality) */}
+                {/* Vaqtga rioya qilish (Punctuality) */}
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-muted-foreground">Vaqtga rioya qilish</span>
+                  <span className="text-sm text-foreground/80">Vaqtga rioya qilish</span>
                   <div className="flex items-center gap-1">
                     {[1, 2, 3, 4, 5].map((star) => (
                       <Star 
                         key={star} 
                         className={cn(
-                          "w-4 h-4",
+                          "w-4 h-4 transition-colors",
                           star <= Math.round(Number(translator.avg_punctuality) || translator.rating || 0) 
-                            ? "fill-amber-500 text-amber-500" 
+                            ? "fill-primary text-primary" 
+                            : "text-muted-foreground/30"
+                        )} 
+                      />
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Bilim darajasi (Expertise/Language Proficiency) */}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-foreground/80">Bilim darajasi</span>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        className={cn(
+                          "w-4 h-4 transition-colors",
+                          star <= Math.round(Number(translator.avg_language_proficiency) || translator.rating || 0) 
+                            ? "fill-primary text-primary" 
                             : "text-muted-foreground/30"
                         )} 
                       />
