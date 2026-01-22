@@ -143,10 +143,16 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                   <div className="flex-1 min-w-0">
                     <SheetTitle className="text-xl mb-1">{getField(translator, 'name')}</SheetTitle>
                     
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
                       <MapPin className="w-4 h-4" />
                       <span>{getField(translator, 'city')}</span>
                     </div>
+                    
+                    {translator.age && (
+                      <div className="text-sm text-muted-foreground mb-2">
+                        <span className="font-medium">Yosh:</span> {String(translator.age)}
+                      </div>
+                    )}
                     
                     {translator.is_verified && (
                       <Badge className="bg-primary/20 text-primary border-primary/30 gap-1">
@@ -232,6 +238,66 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
                   <div className="font-bold text-foreground mb-1">{translator.years_experience || 0}</div>
                   <p className="text-[10px] text-muted-foreground">Yil tajriba</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Detailed Rating Matrix */}
+            <div className="px-5 mb-4">
+              <h4 className="text-sm font-semibold text-foreground mb-3">Batafsil reyting</h4>
+              <div className="space-y-3 bg-muted/30 rounded-xl p-4">
+                {/* Ishonchlilik (Reliability) */}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Ishonchlilik</span>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        className={cn(
+                          "w-4 h-4",
+                          star <= Math.round(Number(translator.avg_reliability) || translator.rating || 0) 
+                            ? "fill-amber-500 text-amber-500" 
+                            : "text-muted-foreground/30"
+                        )} 
+                      />
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Muzokara san'ati (Work Expertise) */}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Muzokara san'ati</span>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        className={cn(
+                          "w-4 h-4",
+                          star <= Math.round(Number(translator.avg_expertise) || translator.rating || 0) 
+                            ? "fill-amber-500 text-amber-500" 
+                            : "text-muted-foreground/30"
+                        )} 
+                      />
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Punktualnost (Punctuality) */}
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted-foreground">Vaqtga rioya qilish</span>
+                  <div className="flex items-center gap-1">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <Star 
+                        key={star} 
+                        className={cn(
+                          "w-4 h-4",
+                          star <= Math.round(Number(translator.avg_punctuality) || translator.rating || 0) 
+                            ? "fill-amber-500 text-amber-500" 
+                            : "text-muted-foreground/30"
+                        )} 
+                      />
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>

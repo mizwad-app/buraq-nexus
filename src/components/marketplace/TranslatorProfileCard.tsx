@@ -102,14 +102,20 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
               {renderHSKBadges()}
             </div>
             
-            {/* Location */}
+            {/* Location & Age */}
             <div className="flex items-center gap-1.5 text-sm text-muted-foreground mb-2">
               <MapPin className="w-3.5 h-3.5" />
               <span>{getField(translator, 'city')}</span>
+              {translator.age && (
+                <>
+                  <span className="text-muted-foreground/50">•</span>
+                  <span>{String(translator.age)} yosh</span>
+                </>
+              )}
               {translator.years_experience && translator.years_experience > 0 && (
                 <>
                   <span className="text-muted-foreground/50">•</span>
-                  <span>{translator.years_experience} yil tajriba</span>
+                  <span>{translator.years_experience} yil</span>
                 </>
               )}
             </div>

@@ -54,6 +54,8 @@ interface Translator {
   avatar_url: string | null;
   rating: number;
   total_reviews: number;
+  age?: number | null;
+  years_experience?: number | null;
   phone?: string | null;
   [key: string]: unknown;
 }
@@ -215,6 +217,12 @@ const Translators = () => {
                     <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
                       <MapPin className="w-3 h-3" />
                       <span>{getField(translator, 'city')}</span>
+                      {translator.age && (
+                        <>
+                          <span className="text-muted-foreground/50">•</span>
+                          <span>{translator.age} yosh</span>
+                        </>
+                      )}
                     </div>
 
                     {/* Specializations */}
@@ -287,6 +295,12 @@ const Translators = () => {
                     <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
                       <MapPin className="w-4 h-4" />
                       <span>{getField(selectedTranslator, 'city')}</span>
+                      {selectedTranslator.age && (
+                        <>
+                          <span className="text-muted-foreground/50">•</span>
+                          <span>{selectedTranslator.age} yosh</span>
+                        </>
+                      )}
                     </div>
                     {selectedTranslator.is_verified && (
                       <div className="flex items-center gap-1 mt-1 text-xs text-primary">

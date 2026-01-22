@@ -68,6 +68,7 @@ export interface MarketplaceTranslator {
   hsk_level: number | null;
   self_declared_hsk?: number | null;
   buraq_verified_hsk?: number | null;
+  buraq_verified_at?: string | null;
   specializations: string[] | null;
   bio?: string | null;
   bio_uz?: string | null;
@@ -86,10 +87,16 @@ export interface MarketplaceTranslator {
   total_bookings?: number;
   completed_bookings?: number;
   years_experience?: number;
+  age?: number | null;
   gender?: string | null;
   telegram_username?: string | null;
   whatsapp_number?: string | null;
   user_id?: string | null;
+  // Rating breakdown averages (computed from reviews)
+  avg_reliability?: number | null;
+  avg_expertise?: number | null;
+  avg_punctuality?: number | null;
+  avg_language?: number | null;
   [key: string]: unknown;
 }
 
