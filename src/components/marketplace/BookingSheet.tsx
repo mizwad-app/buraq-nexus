@@ -1,8 +1,8 @@
-import { useState, useEffect } from "react";
-import { Calendar as CalendarIcon, Clock, MapPin, CreditCard, Shield, CheckCircle2, AlertCircle, Wallet } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { Calendar as CalendarIcon, Clock, MapPin, CreditCard, Shield, CheckCircle2, AlertCircle, Wallet, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
-import { format, addDays } from "date-fns";
+import { format, addDays, isSameDay, isAfter, isBefore, startOfDay } from "date-fns";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
@@ -24,11 +24,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
@@ -55,9 +50,16 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
   const [step, setStep] = useState<BookingStep>('datetime');
   const [loading, setLoading] = useState(false);
   const [bookingComplete, setBookingComplete] = useState(false);
+  
+  // Wallet state
+  const [walletBalance, setWalletBalance] = useState<number>(0);
+  const [insufficientBalance, setInsufficientBalance] = useState(false);
+  
+  // Booked dates state
+  const [bookedDates, setBookedDates] = useState<Date[]>([]);
 
-  // Form state
-  const [selectedDate, setSelectedDate] = useState<Date>();
+  // Form state - Multi-day selection
+  const [selectedDates, setSelectedDates] = useState<Date[]>([]);
   const [startTime, setStartTime] = useState("09:00");
   const [endTime, setEndTime] = useState("18:00");
   const [serviceType, setServiceType] = useState<'hourly' | 'daily'>('daily');
@@ -65,18 +67,70 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
   const [location, setLocation] = useState("");
   const [description, setDescription] = useState("");
 
+  // Fetch wallet balance and booked dates
+  useEffect(() => {
+    if (open && user && translator) {
+      fetchWalletBalance();
+      fetchBookedDates();
+    }
+  }, [open, user, translator]);
+
+  const fetchWalletBalance = async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('user_wallets')
+        .select('balance')
+        .eq('user_id', user.id)
+        .single();
+      
+      if (error && error.code !== 'PGRST116') {
+        console.error('Error fetching wallet:', error);
+      }
+      
+      setWalletBalance(data?.balance || 0);
+    } catch (err) {
+      console.error('Wallet fetch error:', err);
+      setWalletBalance(0);
+    }
+  };
+
+  const fetchBookedDates = async () => {
+    if (!translator) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('translator_bookings')
+        .select('booking_date')
+        .eq('translator_id', translator.id)
+        .in('status', ['pending', 'confirmed', 'in_progress']);
+      
+      if (error) {
+        console.error('Error fetching booked dates:', error);
+        return;
+      }
+      
+      const dates = (data || []).map(d => new Date(d.booking_date));
+      setBookedDates(dates);
+    } catch (err) {
+      console.error('Booked dates fetch error:', err);
+    }
+  };
+
   // Reset form when sheet opens
   useEffect(() => {
     if (open) {
       setStep('datetime');
       setBookingComplete(false);
-      setSelectedDate(undefined);
+      setSelectedDates([]);
       setStartTime("09:00");
       setEndTime("18:00");
       setServiceType('daily');
       setSpecialization("");
       setLocation("");
       setDescription("");
+      setInsufficientBalance(false);
     }
   }, [open]);
 
@@ -86,13 +140,14 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
   const hourlyPrice = translator.hourly_rate || Math.round(dailyPrice / 8);
 
   const calculateTotal = () => {
+    const numDays = selectedDates.length || 1;
     if (serviceType === 'daily') {
-      return dailyPrice;
+      return dailyPrice * numDays;
     } else {
       const start = parseInt(startTime.split(':')[0]);
       const end = parseInt(endTime.split(':')[0]);
       const hours = Math.max(1, end - start);
-      return hours * hourlyPrice;
+      return hours * hourlyPrice * numDays;
     }
   };
 
@@ -102,10 +157,34 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
     return Math.max(1, end - start);
   };
 
+  // Check if a date is already booked
+  const isDateBooked = (date: Date) => {
+    return bookedDates.some(bookedDate => isSameDay(bookedDate, date));
+  };
+
+  // Check if a date is disabled (past or booked)
+  const isDateDisabled = (date: Date) => {
+    const today = startOfDay(new Date());
+    return isBefore(date, today) || isDateBooked(date);
+  };
+
+  // Handle date selection (toggle)
+  const handleDateSelect = (date: Date | undefined) => {
+    if (!date) return;
+    
+    const isAlreadySelected = selectedDates.some(d => isSameDay(d, date));
+    
+    if (isAlreadySelected) {
+      setSelectedDates(selectedDates.filter(d => !isSameDay(d, date)));
+    } else {
+      setSelectedDates([...selectedDates, date].sort((a, b) => a.getTime() - b.getTime()));
+    }
+  };
+
   const handleNext = () => {
     if (step === 'datetime') {
-      if (!selectedDate) {
-        toast({ title: "Sana tanlang", variant: "destructive" });
+      if (selectedDates.length === 0) {
+        toast({ title: "Kamida bir kun tanlang", variant: "destructive" });
         return;
       }
       setStep('details');
@@ -116,6 +195,12 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       }
       setStep('payment');
     } else if (step === 'payment') {
+      // Check wallet balance
+      const total = calculateTotal();
+      if (walletBalance < total) {
+        setInsufficientBalance(true);
+        return;
+      }
       setStep('confirm');
     }
   };
@@ -124,6 +209,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
     if (step === 'details') setStep('datetime');
     else if (step === 'payment') setStep('details');
     else if (step === 'confirm') setStep('payment');
+    setInsufficientBalance(false);
   };
 
   const handleConfirmBooking = async () => {
@@ -132,42 +218,113 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       return;
     }
 
-    if (!selectedDate) return;
+    if (selectedDates.length === 0) return;
+
+    const totalAmount = calculateTotal();
+    
+    // Check balance one more time
+    if (walletBalance < totalAmount) {
+      toast({ title: "Balans yetarli emas", variant: "destructive" });
+      setStep('payment');
+      setInsufficientBalance(true);
+      return;
+    }
 
     setLoading(true);
     try {
-      const { data, error } = await supabase
-        .from('translator_bookings')
-        .insert({
-          translator_id: translator.id,
-          client_id: user.id,
-          booking_date: format(selectedDate, 'yyyy-MM-dd'),
-          start_time: startTime,
-          end_time: endTime,
-          service_type: serviceType,
-          specialization: specialization || null,
-          location: location,
-          description: description || null,
-          agreed_rate: serviceType === 'daily' ? dailyPrice : hourlyPrice,
-          total_hours: serviceType === 'hourly' ? calculateHours() : null,
-          total_amount: calculateTotal(),
-          status: 'pending'
+      // 1. Deduct from wallet and hold in escrow
+      const { error: walletError } = await supabase
+        .from('user_wallets')
+        .update({
+          balance: walletBalance - totalAmount,
+          held_balance: totalAmount,
+          updated_at: new Date().toISOString()
         })
-        .select()
+        .eq('user_id', user.id);
+
+      if (walletError) throw walletError;
+
+      // 2. Create booking records for each selected date
+      const bookingPromises = selectedDates.map(date => 
+        supabase
+          .from('translator_bookings')
+          .insert({
+            translator_id: translator.id,
+            client_id: user.id,
+            booking_date: format(date, 'yyyy-MM-dd'),
+            start_time: startTime,
+            end_time: endTime,
+            service_type: serviceType,
+            specialization: specialization || null,
+            location: location,
+            description: description || null,
+            agreed_rate: serviceType === 'daily' ? dailyPrice : hourlyPrice,
+            total_hours: serviceType === 'hourly' ? calculateHours() : null,
+            total_amount: serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice),
+            status: 'confirmed',
+            confirmed_at: new Date().toISOString()
+          })
+          .select()
+          .single()
+      );
+
+      const results = await Promise.all(bookingPromises);
+      const errors = results.filter(r => r.error);
+      if (errors.length > 0) {
+        throw errors[0].error;
+      }
+
+      // 3. Send automated message to translator in chat
+      const dateList = selectedDates.map(d => format(d, 'dd.MM.yyyy')).join(', ');
+      const chatMessage = `📅 Mijoz ${dateList} kunlari uchun sizni band qildi va to'lovni amalga oshirdi. Jami: ¥${totalAmount}`;
+      
+      // Find or create conversation
+      let conversationId: string | null = null;
+      
+      const { data: existingConv } = await supabase
+        .from('chat_conversations')
+        .select('id')
+        .eq('client_id', user.id)
+        .eq('translator_id', translator.id)
         .single();
-
-      if (error) throw error;
-
-      // Create reminder records (mock - would need edge function for actual notifications)
-      const reminderTypes = ['3_days', '1_day', '1_hour'];
-      const reminderDates = [
-        addDays(selectedDate, -3),
-        addDays(selectedDate, -1),
-        selectedDate
-      ];
+      
+      if (existingConv) {
+        conversationId = existingConv.id;
+      } else {
+        const { data: newConv } = await supabase
+          .from('chat_conversations')
+          .insert({
+            client_id: user.id,
+            translator_id: translator.id,
+          })
+          .select()
+          .single();
+        
+        if (newConv) {
+          conversationId = newConv.id;
+        }
+      }
+      
+      // Send system message
+      if (conversationId) {
+        await supabase
+          .from('chat_messages')
+          .insert({
+            conversation_id: conversationId,
+            sender_id: user.id,
+            content: chatMessage,
+            message_type: 'system'
+          });
+        
+        // Update conversation's last_message_at
+        await supabase
+          .from('chat_conversations')
+          .update({ last_message_at: new Date().toISOString() })
+          .eq('id', conversationId);
+      }
 
       setBookingComplete(true);
-      toast({ title: "Buyurtma yuborildi!", description: "Tarjimon tez orada tasdiqlaydi." });
+      toast({ title: "Bron tasdiqlandi!", description: `To'lov: ¥${totalAmount} escrow hisobga o'tkazildi.` });
     } catch (error: any) {
       console.error("Booking error:", error);
       toast({ title: "Xatolik yuz berdi", description: error.message, variant: "destructive" });
@@ -183,10 +340,20 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
           <div className="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mb-4">
             <CheckCircle2 className="w-10 h-10 text-emerald-500" />
           </div>
-          <h3 className="text-xl font-bold text-foreground mb-2">Buyurtma yuborildi!</h3>
+          <h3 className="text-xl font-bold text-foreground mb-2">Bron tasdiqlandi!</h3>
           <p className="text-muted-foreground mb-6">
-            {getField(translator, 'name')} sizning buyurtmangizni ko'rib chiqadi va tez orada tasdiqlaydi.
+            {getField(translator, 'name')} ga xabar yuborildi. To'lov escrow hisobda saqlanmoqda.
           </p>
+          <div className="bg-muted/50 rounded-xl p-4 w-full mb-6">
+            <div className="flex justify-between mb-2">
+              <span className="text-muted-foreground">Tanlangan kunlar</span>
+              <span className="font-medium">{selectedDates.length} kun</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-muted-foreground">Jami to'lov</span>
+              <span className="font-bold text-primary">¥{calculateTotal()}</span>
+            </div>
+          </div>
           <div className="w-full space-y-3">
             <Button className="w-full" onClick={() => onOpenChange(false)}>
               Yopish
@@ -231,65 +398,103 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
             </div>
 
-            {/* Date Selection */}
+            {/* Multi-Day Calendar Selection */}
             <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">Sana</label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className={cn(
-                      "w-full justify-start text-left font-normal",
-                      !selectedDate && "text-muted-foreground"
-                    )}
-                  >
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {selectedDate ? format(selectedDate, "PPP") : "Sana tanlang"}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0" align="start">
-                  <Calendar
-                    mode="single"
-                    selected={selectedDate}
-                    onSelect={setSelectedDate}
-                    disabled={(date) => date < new Date()}
-                    initialFocus
-                  />
-                </PopoverContent>
-              </Popover>
+              <label className="text-sm font-medium text-foreground mb-2 block">
+                Kunlarni tanlang <span className="text-muted-foreground">({selectedDates.length} tanlangan)</span>
+              </label>
+              <div className="bg-muted/30 rounded-xl p-3 border border-border/50">
+                <Calendar
+                  mode="multiple"
+                  selected={selectedDates}
+                  onSelect={(dates) => setSelectedDates(dates || [])}
+                  disabled={isDateDisabled}
+                  modifiers={{
+                    booked: bookedDates
+                  }}
+                  modifiersStyles={{
+                    booked: {
+                      backgroundColor: 'hsl(var(--destructive) / 0.2)',
+                      color: 'hsl(var(--destructive))',
+                      textDecoration: 'line-through'
+                    }
+                  }}
+                  className="w-full"
+                />
+              </div>
+              
+              {/* Legend */}
+              <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 rounded bg-primary" />
+                  <span>Tanlangan</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <div className="w-3 h-3 rounded bg-destructive/30" />
+                  <span>Band</span>
+                </div>
+              </div>
             </div>
 
-            {/* Time Selection */}
-            <div className="grid grid-cols-2 gap-3">
-              <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">Boshlanish</label>
-                <Select value={startTime} onValueChange={setStartTime}>
-                  <SelectTrigger>
-                    <Clock className="w-4 h-4 mr-2" />
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TIME_SLOTS.map(time => (
-                      <SelectItem key={time} value={time}>{time}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+            {/* Selected Dates Summary */}
+            {selectedDates.length > 0 && (
+              <div className="bg-primary/5 rounded-xl p-4 border border-primary/20">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-medium">Tanlangan kunlar:</span>
+                  <span className="text-lg font-bold text-primary">{selectedDates.length} kun</span>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {selectedDates.slice(0, 5).map((date, idx) => (
+                    <span key={idx} className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs font-medium">
+                      {format(date, 'dd.MM')}
+                    </span>
+                  ))}
+                  {selectedDates.length > 5 && (
+                    <span className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-xs">
+                      +{selectedDates.length - 5} kun
+                    </span>
+                  )}
+                </div>
+                <div className="mt-3 pt-3 border-t border-primary/20 flex justify-between items-center">
+                  <span className="text-muted-foreground">Jami summa:</span>
+                  <span className="text-xl font-bold text-primary">¥{calculateTotal()}</span>
+                </div>
               </div>
-              <div>
-                <label className="text-sm font-medium text-foreground mb-2 block">Tugash</label>
-                <Select value={endTime} onValueChange={setEndTime}>
-                  <SelectTrigger>
-                    <Clock className="w-4 h-4 mr-2" />
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {TIME_SLOTS.filter(t => t > startTime).map(time => (
-                      <SelectItem key={time} value={time}>{time}</SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+            )}
+
+            {/* Time Selection (for hourly) */}
+            {serviceType === 'hourly' && (
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Boshlanish</label>
+                  <Select value={startTime} onValueChange={setStartTime}>
+                    <SelectTrigger>
+                      <Clock className="w-4 h-4 mr-2" />
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TIME_SLOTS.map(time => (
+                        <SelectItem key={time} value={time}>{time}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-foreground mb-2 block">Tugash</label>
+                  <Select value={endTime} onValueChange={setEndTime}>
+                    <SelectTrigger>
+                      <Clock className="w-4 h-4 mr-2" />
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {TIME_SLOTS.filter(t => t > startTime).map(time => (
+                        <SelectItem key={time} value={time}>{time}</SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         );
 
@@ -340,6 +545,9 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
         );
 
       case 'payment':
+        const total = calculateTotal();
+        const hasEnoughBalance = walletBalance >= total;
+        
         return (
           <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
             {/* Escrow Info */}
@@ -357,36 +565,86 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
             </div>
 
-            {/* Mock Payment Options */}
-            <div className="space-y-3">
-              <label className="text-sm font-medium text-foreground mb-2 block">To'lov usuli</label>
-              
-              <button className="w-full p-4 rounded-xl border-2 border-primary bg-primary/5 flex items-center gap-3">
-                <Wallet className="w-6 h-6 text-primary" />
-                <div className="text-left flex-1">
-                  <p className="font-semibold">Buraq Wallet</p>
-                  <p className="text-xs text-muted-foreground">Balans: ¥0.00</p>
-                </div>
+            {/* Pricing Summary */}
+            <div className="bg-muted/50 rounded-xl p-4 space-y-2">
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">Kunlar soni</span>
+                <span className="font-medium">{selectedDates.length} kun</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">
+                  {serviceType === 'daily' ? 'Kunlik narx' : `Soatlik narx (${calculateHours()} soat)`}
+                </span>
+                <span className="font-medium">
+                  ¥{serviceType === 'daily' ? dailyPrice : hourlyPrice * calculateHours()}
+                </span>
+              </div>
+              <div className="h-px bg-border my-2" />
+              <div className="flex justify-between text-lg font-bold">
+                <span>Jami to'lov</span>
+                <span className="text-primary">¥{total}</span>
+              </div>
+            </div>
+
+            {/* Wallet Balance */}
+            <div className={cn(
+              "p-4 rounded-xl border-2 flex items-center gap-3 transition-colors",
+              hasEnoughBalance 
+                ? "border-primary bg-primary/5" 
+                : "border-destructive bg-destructive/5"
+            )}>
+              <Wallet className={cn("w-6 h-6", hasEnoughBalance ? "text-primary" : "text-destructive")} />
+              <div className="flex-1">
+                <p className="font-semibold">Buraq Wallet</p>
+                <p className={cn(
+                  "text-sm",
+                  hasEnoughBalance ? "text-muted-foreground" : "text-destructive"
+                )}>
+                  Balans: ¥{walletBalance.toLocaleString()}
+                </p>
+              </div>
+              {hasEnoughBalance && (
                 <div className="w-5 h-5 rounded-full border-2 border-primary flex items-center justify-center">
                   <div className="w-2.5 h-2.5 rounded-full bg-primary" />
                 </div>
-              </button>
+              )}
+            </div>
 
-              <button disabled className="w-full p-4 rounded-xl border border-border flex items-center gap-3 opacity-50">
-                <CreditCard className="w-6 h-6 text-muted-foreground" />
-                <div className="text-left flex-1">
-                  <p className="font-semibold text-muted-foreground">Karta bilan to'lash</p>
-                  <p className="text-xs text-muted-foreground">Tez orada...</p>
+            {/* Insufficient Balance Warning */}
+            {insufficientBalance && (
+              <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+                  <div>
+                    <p className="font-semibold text-destructive mb-1">Balans yetarli emas</p>
+                    <p className="text-sm text-muted-foreground mb-3">
+                      Iltimos, avval hamyoningizni to'ldiring. Kerakli summa: ¥{(total - walletBalance).toLocaleString()}
+                    </p>
+                    <Button 
+                      size="sm" 
+                      variant="outline"
+                      className="gap-2 border-primary text-primary"
+                      onClick={() => {
+                        // TODO: Navigate to top-up page
+                        toast({ title: "Hamyonni to'ldirish", description: "Bu funksiya tez orada qo'shiladi" });
+                      }}
+                    >
+                      <Plus className="w-4 h-4" />
+                      Hamyonni to'ldirish
+                    </Button>
+                  </div>
                 </div>
-              </button>
-            </div>
+              </div>
+            )}
 
-            <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-3 flex items-start gap-2">
-              <AlertCircle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
-              <p className="text-xs text-amber-700 dark:text-amber-300">
-                Hozircha to'lov simulyatsiya qilingan. Tez orada real to'lov qo'shiladi.
-              </p>
-            </div>
+            {/* Payment methods coming soon */}
+            <button disabled className="w-full p-4 rounded-xl border border-border flex items-center gap-3 opacity-50">
+              <CreditCard className="w-6 h-6 text-muted-foreground" />
+              <div className="text-left flex-1">
+                <p className="font-semibold text-muted-foreground">Karta bilan to'lash</p>
+                <p className="text-xs text-muted-foreground">Tez orada...</p>
+              </div>
+            </button>
           </div>
         );
 
@@ -411,8 +669,18 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
             {/* Booking Details */}
             <div className="space-y-3">
               <div className="flex justify-between py-2 border-b border-border/50">
-                <span className="text-muted-foreground">Sana</span>
-                <span className="font-medium">{selectedDate ? format(selectedDate, "PPP") : ""}</span>
+                <span className="text-muted-foreground">Tanlangan kunlar</span>
+                <span className="font-medium">{selectedDates.length} kun</span>
+              </div>
+              <div className="py-2 border-b border-border/50">
+                <span className="text-muted-foreground block mb-2">Sanalar:</span>
+                <div className="flex flex-wrap gap-2">
+                  {selectedDates.map((date, idx) => (
+                    <span key={idx} className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs font-medium">
+                      {format(date, 'dd.MM.yyyy')}
+                    </span>
+                  ))}
+                </div>
               </div>
               <div className="flex justify-between py-2 border-b border-border/50">
                 <span className="text-muted-foreground">Vaqt</span>
@@ -424,12 +692,20 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
               <div className="flex justify-between py-2 border-b border-border/50">
                 <span className="text-muted-foreground">Manzil</span>
-                <span className="font-medium">{location}</span>
+                <span className="font-medium text-right max-w-[60%]">{location}</span>
               </div>
               <div className="flex justify-between py-3 bg-primary/5 rounded-xl px-3">
                 <span className="font-semibold">Jami to'lov</span>
                 <span className="text-xl font-bold text-primary">¥{calculateTotal()}</span>
               </div>
+            </div>
+
+            {/* Escrow Notice */}
+            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 flex items-start gap-2">
+              <Shield className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+              <p className="text-xs text-emerald-700 dark:text-emerald-300">
+                To'lov escrow hisobda saqlanadi va xizmat tugagandan so'ng tarjimonga o'tkaziladi.
+              </p>
             </div>
 
             {/* Reminders Notice */}
@@ -447,7 +723,9 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
     switch (step) {
       case 'datetime': return 'Davom etish';
       case 'details': return "To'lovga o'tish";
-      case 'payment': return 'Tasdiqlash';
+      case 'payment': 
+        const total = calculateTotal();
+        return walletBalance >= total ? 'Tasdiqlash' : 'Davom etish';
       case 'confirm': return `¥${calculateTotal()} to'lash va bron qilish`;
     }
   };
@@ -494,7 +772,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
             )}
             <Button 
               onClick={step === 'confirm' ? handleConfirmBooking : handleNext}
-              disabled={loading}
+              disabled={loading || (step === 'payment' && insufficientBalance)}
               className="flex-1"
             >
               {loading ? "Yuklanmoqda..." : getButtonText()}
