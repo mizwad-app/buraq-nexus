@@ -1,4 +1,4 @@
-import { Star, MapPin, BadgeCheck, Shield, Clock, Video, MessageCircle } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Clock, Video, MessageCircle, Users } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -131,13 +131,21 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
             )}
 
             {/* Stats Row */}
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-3 text-sm flex-wrap">
               {/* Rating */}
               {translator.rating > 0 && (
                 <div className="flex items-center gap-1">
                   <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
                   <span className="font-medium text-foreground">{translator.rating.toFixed(1)}</span>
                   <span className="text-muted-foreground text-xs">({translator.total_reviews})</span>
+                </div>
+              )}
+
+              {/* Completed Clients - Xizmat ko'rsatilgan mijozlar */}
+              {translator.completed_bookings && translator.completed_bookings > 0 && (
+                <div className="flex items-center gap-1 text-muted-foreground">
+                  <Users className="w-3.5 h-3.5" />
+                  <span className="text-xs">{translator.completed_bookings} mijoz</span>
                 </div>
               )}
 
@@ -149,6 +157,14 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
                 <Clock className="w-3 h-3" />
                 {translator.is_available ? "Mavjud" : "Band"}
               </span>
+
+              {/* Buraq Verified Badge */}
+              {translator.is_verified && (
+                <Badge variant="outline" className="text-[10px] px-1.5 py-0 border-primary/50 text-primary gap-0.5">
+                  <BadgeCheck className="w-3 h-3" />
+                  Buraq tasdiqlagan
+                </Badge>
+              )}
             </div>
           </div>
         </div>
