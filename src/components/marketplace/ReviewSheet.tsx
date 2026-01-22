@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Star, Send, ThumbsUp, Globe, Briefcase, Clock, Shield } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Star, Send, Globe, Briefcase, Clock, Shield, AlertCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
@@ -44,13 +44,47 @@ export const ReviewSheet = ({
   const { toast } = useToast();
 
   const [ratings, setRatings] = useState<RatingCategory[]>([
-    { key: 'language_proficiency', label: 'Til bilish', description: 'Xitoy tilini qanchalik yaxshi biladi?', icon: <Globe className="w-5 h-5" />, value: 0 },
-    { key: 'work_expertise', label: 'Ish bilish', description: 'Sohani qanchalik tushunadi?', icon: <Briefcase className="w-5 h-5" />, value: 0 },
+    { key: 'language_proficiency', label: 'Til bilish darajasi', description: 'Xitoy tilini qanchalik yaxshi biladi?', icon: <Globe className="w-5 h-5" />, value: 0 },
+    { key: 'work_expertise', label: 'Ish bilish darajasi', description: 'Sohani qanchalik tushunadi?', icon: <Briefcase className="w-5 h-5" />, value: 0 },
     { key: 'reliability', label: 'Ishonchlilik', description: 'Qanchalik ishonchli va mas\'uliyatli?', icon: <Shield className="w-5 h-5" />, value: 0 },
-    { key: 'punctuality', label: 'Punktuallik', description: 'Vaqtga qanchalik rioya qiladi?', icon: <Clock className="w-5 h-5" />, value: 0 },
+    { key: 'punctuality', label: 'Punktualnost', description: 'Vaqtga qanchalik rioya qiladi?', icon: <Clock className="w-5 h-5" />, value: 0 },
   ]);
   const [reviewText, setReviewText] = useState("");
   const [loading, setLoading] = useState(false);
+  const [canReview, setCanReview] = useState(false);
+  const [checkingBooking, setCheckingBooking] = useState(true);
+
+  // Check if user can review (only after completed booking)
+  useEffect(() => {
+    const checkBookingStatus = async () => {
+      if (!user || !open) {
+        setCheckingBooking(false);
+        return;
+      }
+      
+      setCheckingBooking(true);
+      try {
+        // Check if user has a completed booking with this translator
+        const { data, error } = await supabase
+          .from('translator_bookings')
+          .select('id, status')
+          .eq('client_id', user.id)
+          .eq('translator_id', translatorId)
+          .eq('status', 'completed')
+          .limit(1);
+        
+        if (error) throw error;
+        setCanReview(data && data.length > 0);
+      } catch (error) {
+        console.error("Error checking booking:", error);
+        setCanReview(false);
+      } finally {
+        setCheckingBooking(false);
+      }
+    };
+    
+    checkBookingStatus();
+  }, [user, translatorId, open]);
 
   const setRating = (key: string, value: number) => {
     setRatings(prev => prev.map(r => 
@@ -129,67 +163,85 @@ export const ReviewSheet = ({
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto p-5 space-y-6">
-          {/* Rating Categories */}
-          {ratings.map((category) => (
-            <div key={category.key} className="space-y-2">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                  {category.icon}
-                </div>
-                <div>
-                  <p className="font-medium text-foreground">{category.label}</p>
-                  <p className="text-xs text-muted-foreground">{category.description}</p>
-                </div>
-              </div>
-              {renderStars(category)}
+          {checkingBooking ? (
+            <div className="flex justify-center py-12">
+              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
-          ))}
+          ) : !canReview ? (
+            <div className="text-center py-12">
+              <AlertCircle className="w-16 h-16 text-amber-500 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-foreground mb-2">Sharh qoldirish mumkin emas</h3>
+              <p className="text-sm text-muted-foreground">
+                Faqat xizmat tugagandan keyin sharh qoldirishingiz mumkin. Avval tarjimon bilan buyurtma yarating va u tugagandan keyin qaytib keling.
+              </p>
+            </div>
+          ) : (
+            <>
+              {/* Rating Categories */}
+              {ratings.map((category) => (
+                <div key={category.key} className="space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                      {category.icon}
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">{category.label}</p>
+                      <p className="text-xs text-muted-foreground">{category.description}</p>
+                    </div>
+                  </div>
+                  {renderStars(category)}
+                </div>
+              ))}
 
-          {/* Overall Preview */}
-          {isComplete && (
-            <div className="bg-gradient-to-r from-amber-500/10 to-amber-500/5 rounded-xl p-4 flex items-center gap-4">
-              <div className="text-center">
-                <div className="flex items-center gap-1 justify-center">
-                  <Star className="w-6 h-6 fill-amber-500 text-amber-500" />
-                  <span className="text-2xl font-bold text-amber-500">{averageRating.toFixed(1)}</span>
+              {/* Overall Preview */}
+              {isComplete && (
+                <div className="bg-gradient-to-r from-amber-500/10 to-amber-500/5 rounded-xl p-4 flex items-center gap-4">
+                  <div className="text-center">
+                    <div className="flex items-center gap-1 justify-center">
+                      <Star className="w-6 h-6 fill-amber-500 text-amber-500" />
+                      <span className="text-2xl font-bold text-amber-500">{averageRating.toFixed(1)}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">Umumiy baho</p>
+                  </div>
+                  <div className="flex-1 text-sm text-muted-foreground">
+                    {averageRating >= 4.5 ? "A'lo darajada!" : 
+                     averageRating >= 3.5 ? "Yaxshi!" : 
+                     averageRating >= 2.5 ? "O'rtacha" : "Qoniqarsiz"}
+                  </div>
                 </div>
-                <p className="text-xs text-muted-foreground">Umumiy baho</p>
+              )}
+
+              {/* Written Review */}
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-foreground">Yozma sharh (ixtiyoriy)</label>
+                <Textarea
+                  value={reviewText}
+                  onChange={(e) => setReviewText(e.target.value)}
+                  placeholder="Tajribangiz haqida batafsil yozing..."
+                  rows={4}
+                />
               </div>
-              <div className="flex-1 text-sm text-muted-foreground">
-                {averageRating >= 4.5 ? "A'lo darajada!" : 
-                 averageRating >= 3.5 ? "Yaxshi!" : 
-                 averageRating >= 2.5 ? "O'rtacha" : "Qoniqarsiz"}
-              </div>
-            </div>
+            </>
           )}
-
-          {/* Written Review */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-foreground">Yozma sharh (ixtiyoriy)</label>
-            <Textarea
-              value={reviewText}
-              onChange={(e) => setReviewText(e.target.value)}
-              placeholder="Tajribangiz haqida batafsil yozing..."
-              rows={4}
-            />
-          </div>
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-border/50 bg-background">
-          <Button 
-            className="w-full gap-2" 
-            onClick={handleSubmit}
-            disabled={!isComplete || loading}
-          >
-            {loading ? "Yuklanmoqda..." : (
-              <>
-                <Send className="w-4 h-4" />
-                Sharhni yuborish
-              </>
-            )}
-          </Button>
-        </div>
+        {canReview && !checkingBooking && (
+          <div className="p-4 border-t border-border/50 bg-background">
+            <Button 
+              className="w-full gap-2" 
+              onClick={handleSubmit}
+              disabled={!isComplete || loading}
+            >
+              {loading ? "Yuklanmoqda..." : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Sharhni yuborish
+                </>
+              )}
+            </Button>
+          </div>
+        )}
       </SheetContent>
     </Sheet>
   );

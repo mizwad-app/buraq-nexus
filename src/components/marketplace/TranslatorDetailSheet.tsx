@@ -15,14 +15,43 @@ import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 
+// Helper functions for video embedding
+const getYoutubeId = (url: string): string => {
+  const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
+  return match ? match[1] : '';
+};
+
+const getVimeoId = (url: string): string => {
+  const match = url.match(/vimeo\.com\/(?:.*\/)?([0-9]+)/);
+  return match ? match[1] : '';
+};
+
+const SPECIALIZATIONS: Record<string, string> = {
+  medical: "Tibbiyot",
+  legal: "Huquqiy",
+  it: "IT",
+  construction: "Qurilish",
+  manufacturing: "Ishlab chiqarish",
+  electronics: "Elektronika",
+  furniture: "Mebel",
+  textile: "To'qimachilik",
+  automotive: "Avtomobil",
+  trade: "Savdo",
+  tourism: "Turizm",
+  education: "Ta'lim",
+  finance: "Moliya",
+  general: "Umumiy"
+};
+
 interface TranslatorDetailSheetProps {
   translator: MarketplaceTranslator | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onBook: () => void;
+  onChat?: () => void;
 }
 
-export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook }: TranslatorDetailSheetProps) => {
+export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, onChat }: TranslatorDetailSheetProps) => {
   const { t } = useTranslation();
   const { getField } = useTranslatedField();
 
@@ -141,24 +170,50 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook }
               </SheetHeader>
             </div>
 
-            {/* Video Preview */}
+            {/* Video Preview - Embedded Player */}
             {translator.intro_video_url && (
               <div className="px-5 mb-4">
-                <a
-                  href={translator.intro_video_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 p-4 bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-xl border border-red-500/20"
-                >
-                  <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center">
-                    <Video className="w-6 h-6 text-white" />
+                <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <Video className="w-4 h-4 text-red-500" />
+                  Tanishuv videosi (1 daqiqa)
+                </h4>
+                {translator.intro_video_url.includes('youtube') || translator.intro_video_url.includes('youtu.be') ? (
+                  <div className="aspect-video rounded-xl overflow-hidden bg-muted">
+                    <iframe
+                      src={`https://www.youtube.com/embed/${getYoutubeId(translator.intro_video_url)}?rel=0`}
+                      title="Tanishuv videosi"
+                      className="w-full h-full"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground">Tanishuv videosi</p>
-                    <p className="text-xs text-muted-foreground">1 daqiqalik video</p>
+                ) : translator.intro_video_url.includes('vimeo') ? (
+                  <div className="aspect-video rounded-xl overflow-hidden bg-muted">
+                    <iframe
+                      src={`https://player.vimeo.com/video/${getVimeoId(translator.intro_video_url)}`}
+                      title="Tanishuv videosi"
+                      className="w-full h-full"
+                      allow="autoplay; fullscreen; picture-in-picture"
+                      allowFullScreen
+                    />
                   </div>
-                  <ExternalLink className="w-5 h-5 text-muted-foreground" />
-                </a>
+                ) : (
+                  <a
+                    href={translator.intro_video_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-4 bg-gradient-to-r from-red-500/10 to-red-500/5 rounded-xl border border-red-500/20"
+                  >
+                    <div className="w-12 h-12 bg-red-500 rounded-xl flex items-center justify-center">
+                      <Video className="w-6 h-6 text-white" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-medium text-foreground">Tanishuv videosi</p>
+                      <p className="text-xs text-muted-foreground">Tashqi havola</p>
+                    </div>
+                    <ExternalLink className="w-5 h-5 text-muted-foreground" />
+                  </a>
+                )}
               </div>
             )}
 
@@ -212,7 +267,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook }
                 <div className="flex flex-wrap gap-2">
                   {translator.specializations.map((spec, idx) => (
                     <Badge key={idx} variant="secondary" className="px-3 py-1">
-                      {spec}
+                      {SPECIALIZATIONS[spec.toLowerCase()] || spec}
                     </Badge>
                   ))}
                 </div>
@@ -237,27 +292,39 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook }
             {/* Quick Contact */}
             <div className="px-5 mb-4">
               <h4 className="text-sm font-semibold text-foreground mb-3">Tezkor aloqa</h4>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-2">
+                {/* In-App Chat */}
+                {onChat && (
+                  <button
+                    onClick={onChat}
+                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-primary/10 hover:bg-primary/20 border border-primary/30 transition-all"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
+                      <MessageCircle className="w-5 h-5 text-primary-foreground" />
+                    </div>
+                    <span className="font-medium text-xs">Buraq Chat</span>
+                  </button>
+                )}
                 {translator.whatsapp_number && (
                   <button
                     onClick={() => openContact('whatsapp')}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 transition-all"
+                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 transition-all"
                   >
                     <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center">
                       <Phone className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-medium text-sm">WhatsApp</span>
+                    <span className="font-medium text-xs">WhatsApp</span>
                   </button>
                 )}
                 {translator.telegram_username && (
                   <button
                     onClick={() => openContact('telegram')}
-                    className="flex items-center gap-3 p-3 rounded-xl bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/30 transition-all"
+                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/30 transition-all"
                   >
                     <div className="w-10 h-10 rounded-full bg-[#0088cc] flex items-center justify-center">
                       <MessageCircle className="w-5 h-5 text-white" />
                     </div>
-                    <span className="font-medium text-sm">Telegram</span>
+                    <span className="font-medium text-xs">Telegram</span>
                   </button>
                 )}
               </div>

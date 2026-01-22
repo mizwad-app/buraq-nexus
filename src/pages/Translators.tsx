@@ -159,19 +159,19 @@ const Translators = () => {
           <button onClick={() => navigate(-1)} className="p-2 -ml-2 hover:bg-muted rounded-xl">
             <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <div className="p-2 bg-gradient-to-br from-primary to-accent rounded-xl shadow-lg">
-                <Users className="w-5 h-5 text-primary-foreground" />
+            <div className="flex-1">
+              <div className="flex items-center gap-2">
+                <div className="p-2 bg-gradient-to-br from-primary to-accent rounded-xl shadow-lg">
+                  <Users className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {t("translators.subtitle", "Tasdiqlangan tarjimonlarni toping")}
+                </span>
               </div>
-              <span className="text-sm font-medium text-muted-foreground">
-                {t("translators.subtitle")}
-              </span>
+              <h1 className="text-2xl font-display font-bold text-foreground mt-1">
+                {t("translators.title", "Tarjimonlar")}
+              </h1>
             </div>
-            <h1 className="text-2xl font-display font-bold text-foreground mt-1">
-              {t("translators.title")}
-            </h1>
-          </div>
         </div>
 
         {/* City Filter */}
@@ -179,11 +179,11 @@ const Translators = () => {
           <SelectTrigger className="w-full">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-muted-foreground" />
-              <SelectValue placeholder={t("translators.allCities")} />
+              <SelectValue placeholder={t("translators.allCities", "Barcha shaharlar")} />
             </div>
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">{t("translators.allCities")}</SelectItem>
+            <SelectItem value="all">{t("translators.allCities", "Barcha shaharlar")}</SelectItem>
             {cities.map(city => (
               <SelectItem key={city} value={city}>{city}</SelectItem>
             ))}
