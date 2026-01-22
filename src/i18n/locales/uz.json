@@ -485,7 +485,7 @@
       "adapter": "Elektr adapteri (Xitoy vilkasi)"
     }
   },
-  "translator": {
+  "translators": {
     "title": "Tarjimonlar",
     "subtitle": "Tasdiqlangan tarjimonlarni toping",
     "hskLevel": "HSK Darajasi",
@@ -496,10 +496,41 @@
     "available": "Mavjud",
     "busy": "Band",
     "verified": "Buraq tomonidan tasdiqlangan",
+    "verifiedByBuraq": "Buraq tasdiqlagan",
     "specializations": "Mutaxassisliklar",
     "contact": "Aloqa",
     "noTranslators": "Tarjimonlar topilmadi",
-    "filterCity": "Shahar bo'yicha filtrlash"
+    "noResults": "Tarjimonlar topilmadi",
+    "filterCity": "Shahar bo'yicha filtrlash",
+    "allCities": "Barcha shaharlar",
+    "about": "Haqida",
+    "perDay": "Kunlik",
+    "contactMessage": "Salom! Men Buraq orqali {{name}} bilan bog'lanmoqchiman.",
+    "contactVia": "{{method}} orqali bog'lanish"
+  },
+  "marketplace": {
+    "title": "Tarjimonlar Marketplace",
+    "searchPlaceholder": "Ism yoki shahar bo'yicha qidirish...",
+    "results": "{{count}} tarjimon topildi",
+    "noResults": "Tarjimonlar topilmadi",
+    "tryDifferent": "Boshqa filterni sinab ko'ring",
+    "clearFilters": "Filtrlarni tozalash",
+    "clearAll": "Hammasini tozalash",
+    "filters": "Filtrlar",
+    "reset": "Qayta o'rnatish",
+    "city": "Shahar",
+    "allCities": "Barcha shaharlar",
+    "specialization": "Mutaxassislik",
+    "allSpecializations": "Barcha mutaxassisliklar",
+    "gender": "Jins",
+    "allGenders": "Barchasi",
+    "male": "Erkak",
+    "female": "Ayol",
+    "priceRange": "Narx oralig'i (¥/kun)",
+    "minRating": "Minimal reyting",
+    "buraqVerified": "Buraq tasdiqlagan HSK",
+    "verifiedDesc": "Video intervyu orqali tasdiqlangan",
+    "applyFilters": "Qo'llash"
   },
   "services": {
     "title": "Xizmatlar",

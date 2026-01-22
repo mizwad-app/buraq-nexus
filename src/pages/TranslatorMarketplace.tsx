@@ -49,6 +49,9 @@ import { Slider } from "@/components/ui/slider";
 import { TranslatorProfileCard } from "@/components/marketplace/TranslatorProfileCard";
 import { TranslatorDetailSheet } from "@/components/marketplace/TranslatorDetailSheet";
 import { BookingSheet } from "@/components/marketplace/BookingSheet";
+import { ChatSheet } from "@/components/marketplace/ChatSheet";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 export interface MarketplaceTranslator {
   id: string;
@@ -91,26 +94,28 @@ export interface MarketplaceTranslator {
 }
 
 const SPECIALIZATIONS = [
-  { value: 'medical', label: 'Medical' },
-  { value: 'legal', label: 'Legal' },
+  { value: 'medical', label: 'Tibbiyot' },
+  { value: 'legal', label: 'Huquqiy' },
   { value: 'it', label: 'IT' },
-  { value: 'construction', label: 'Construction' },
-  { value: 'manufacturing', label: 'Manufacturing' },
-  { value: 'electronics', label: 'Electronics' },
-  { value: 'furniture', label: 'Furniture' },
-  { value: 'textile', label: 'Textile' },
-  { value: 'automotive', label: 'Automotive' },
-  { value: 'trade', label: 'Trade' },
-  { value: 'tourism', label: 'Tourism' },
-  { value: 'education', label: 'Education' },
-  { value: 'finance', label: 'Finance' },
-  { value: 'general', label: 'General' },
+  { value: 'construction', label: 'Qurilish' },
+  { value: 'manufacturing', label: 'Ishlab chiqarish' },
+  { value: 'electronics', label: 'Elektronika' },
+  { value: 'furniture', label: 'Mebel' },
+  { value: 'textile', label: "To'qimachilik" },
+  { value: 'automotive', label: 'Avtomobil' },
+  { value: 'trade', label: 'Savdo' },
+  { value: 'tourism', label: 'Turizm' },
+  { value: 'education', label: "Ta'lim" },
+  { value: 'finance', label: 'Moliya' },
+  { value: 'general', label: 'Umumiy' },
 ];
 
 const TranslatorMarketplace = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { getField } = useTranslatedField();
+  const { user } = useAuth();
+  const { toast } = useToast();
   
   const [translators, setTranslators] = useState<MarketplaceTranslator[]>([]);
   const [loading, setLoading] = useState(true);
@@ -119,6 +124,8 @@ const TranslatorMarketplace = () => {
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [conversationId, setConversationId] = useState<string | null>(null);
   
   // Filters
   const [selectedCity, setSelectedCity] = useState("all");
@@ -207,6 +214,47 @@ const TranslatorMarketplace = () => {
     setSelectedTranslator(translator);
     setDetailOpen(false);
     setBookingOpen(true);
+  };
+
+  const handleChat = async (translator: MarketplaceTranslator) => {
+    if (!user) {
+      toast({ title: "Iltimos, avval tizimga kiring", variant: "destructive" });
+      return;
+    }
+    
+    try {
+      // Check for existing conversation or create new one
+      const { data: existing } = await supabase
+        .from('chat_conversations')
+        .select('id')
+        .eq('client_id', user.id)
+        .eq('translator_id', translator.id)
+        .limit(1)
+        .single();
+      
+      if (existing) {
+        setConversationId(existing.id);
+      } else {
+        const { data: newConv, error } = await supabase
+          .from('chat_conversations')
+          .insert({
+            client_id: user.id,
+            translator_id: translator.id,
+          })
+          .select()
+          .single();
+        
+        if (error) throw error;
+        setConversationId(newConv.id);
+      }
+      
+      setSelectedTranslator(translator);
+      setDetailOpen(false);
+      setChatOpen(true);
+    } catch (error) {
+      console.error("Error starting chat:", error);
+      toast({ title: "Chat ochishda xatolik", variant: "destructive" });
+    }
   };
 
   return (
@@ -486,6 +534,7 @@ const TranslatorMarketplace = () => {
         open={detailOpen}
         onOpenChange={setDetailOpen}
         onBook={() => selectedTranslator && handleBooking(selectedTranslator)}
+        onChat={() => selectedTranslator && handleChat(selectedTranslator)}
       />
 
       {/* Booking Sheet */}
@@ -493,6 +542,15 @@ const TranslatorMarketplace = () => {
         translator={selectedTranslator}
         open={bookingOpen}
         onOpenChange={setBookingOpen}
+      />
+
+      {/* Chat Sheet */}
+      <ChatSheet
+        conversationId={conversationId}
+        recipientName={selectedTranslator ? getField(selectedTranslator, 'name') : ''}
+        recipientAvatar={selectedTranslator?.avatar_url}
+        open={chatOpen}
+        onOpenChange={setChatOpen}
       />
     </div>
   );

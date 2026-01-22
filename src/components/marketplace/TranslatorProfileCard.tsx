@@ -8,6 +8,23 @@ import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 
+const SPECIALIZATIONS: Record<string, string> = {
+  medical: "Tibbiyot",
+  legal: "Huquqiy",
+  it: "IT",
+  construction: "Qurilish",
+  manufacturing: "Ishlab chiqarish",
+  electronics: "Elektronika",
+  furniture: "Mebel",
+  textile: "To'qimachilik",
+  automotive: "Avtomobil",
+  trade: "Savdo",
+  tourism: "Turizm",
+  education: "Ta'lim",
+  finance: "Moliya",
+  general: "Umumiy"
+};
+
 interface TranslatorProfileCardProps {
   translator: MarketplaceTranslator;
   onClick: () => void;
@@ -101,7 +118,7 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook }: Translato
               <div className="flex flex-wrap gap-1 mb-2">
                 {translator.specializations.slice(0, 3).map((spec, idx) => (
                   <Badge key={idx} variant="secondary" className="text-[10px] px-2 py-0">
-                    {spec}
+                    {SPECIALIZATIONS[spec.toLowerCase()] || spec}
                   </Badge>
                 ))}
                 {translator.specializations.length > 3 && (
