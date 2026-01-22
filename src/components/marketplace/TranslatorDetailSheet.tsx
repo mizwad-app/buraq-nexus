@@ -171,13 +171,13 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             </div>
 
             {/* Video Preview - Embedded Player */}
-            {translator.intro_video_url && (
-              <div className="px-5 mb-4">
-                <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
-                  <Video className="w-4 h-4 text-red-500" />
-                  Tanishuv videosi (1 daqiqa)
-                </h4>
-                {translator.intro_video_url.includes('youtube') || translator.intro_video_url.includes('youtu.be') ? (
+            <div className="px-5 mb-4">
+              <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
+                <Video className="w-4 h-4 text-red-500" />
+                Tanishuv videosi (1 daqiqa)
+              </h4>
+              {translator.intro_video_url ? (
+                translator.intro_video_url.includes('youtube') || translator.intro_video_url.includes('youtu.be') ? (
                   <div className="aspect-video rounded-xl overflow-hidden bg-muted">
                     <iframe
                       src={`https://www.youtube.com/embed/${getYoutubeId(translator.intro_video_url)}?rel=0`}
@@ -213,9 +213,15 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                     </div>
                     <ExternalLink className="w-5 h-5 text-muted-foreground" />
                   </a>
-                )}
-              </div>
-            )}
+                )
+              ) : (
+                <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-muted/80 to-muted/40 border border-border/50 flex flex-col items-center justify-center">
+                  <Video className="w-12 h-12 text-muted-foreground/50 mb-3" />
+                  <p className="text-sm text-muted-foreground font-medium">Video tanishtiruv yuklanmagan</p>
+                  <p className="text-xs text-muted-foreground/70 mt-1">Tarjimon hali video qo'shmagan</p>
+                </div>
+              )}
+            </div>
 
             {/* Stats Grid */}
             <div className="px-5 mb-4">

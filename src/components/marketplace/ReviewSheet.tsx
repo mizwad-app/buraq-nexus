@@ -44,10 +44,10 @@ export const ReviewSheet = ({
   const { toast } = useToast();
 
   const [ratings, setRatings] = useState<RatingCategory[]>([
-    { key: 'language_proficiency', label: 'Til bilish darajasi', description: 'Xitoy tilini qanchalik yaxshi biladi?', icon: <Globe className="w-5 h-5" />, value: 0 },
-    { key: 'work_expertise', label: 'Ish bilish darajasi', description: 'Sohani qanchalik tushunadi?', icon: <Briefcase className="w-5 h-5" />, value: 0 },
+    { key: 'language_proficiency', label: 'Til bilish', description: 'Xitoy tilini qanchalik yaxshi biladi?', icon: <Globe className="w-5 h-5" />, value: 0 },
+    { key: 'work_expertise', label: 'Soha tajribasi', description: 'Sohani qanchalik tushunadi?', icon: <Briefcase className="w-5 h-5" />, value: 0 },
     { key: 'reliability', label: 'Ishonchlilik', description: 'Qanchalik ishonchli va mas\'uliyatli?', icon: <Shield className="w-5 h-5" />, value: 0 },
-    { key: 'punctuality', label: 'Punktualnost', description: 'Vaqtga qanchalik rioya qiladi?', icon: <Clock className="w-5 h-5" />, value: 0 },
+    { key: 'punctuality', label: 'Vaqtga rioya qilish', description: 'Vaqtga qanchalik rioya qiladi?', icon: <Clock className="w-5 h-5" />, value: 0 },
   ]);
   const [reviewText, setReviewText] = useState("");
   const [loading, setLoading] = useState(false);

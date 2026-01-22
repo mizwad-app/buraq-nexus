@@ -273,7 +273,7 @@ const TranslatorMarketplace = () => {
               <Badge variant="secondary" className="text-[10px]">PRO</Badge>
             </div>
             <h1 className="text-xl font-display font-bold text-foreground mt-1">
-              {t("marketplace.title", "Translator Marketplace")}
+              Tarjimonlar Marketplace
             </h1>
           </div>
         </div>
@@ -285,7 +285,7 @@ const TranslatorMarketplace = () => {
             <Input
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t("marketplace.searchPlaceholder", "Search by name or city...")}
+              placeholder="Ism yoki shahar bo'yicha qidirish..."
               className="pl-9 pr-9"
             />
             {searchQuery && (
@@ -339,7 +339,7 @@ const TranslatorMarketplace = () => {
               onClick={clearFilters}
               className="text-xs text-muted-foreground hover:text-foreground"
             >
-              {t("marketplace.clearAll", "Clear all")}
+              Hammasini tozalash
             </button>
           </div>
         )}
@@ -348,7 +348,7 @@ const TranslatorMarketplace = () => {
       {/* Results Count */}
       <div className="px-5 py-3 border-b border-border/30">
         <p className="text-sm text-muted-foreground">
-          {t("marketplace.results", "{{count}} translators found", { count: filteredTranslators.length })}
+          {filteredTranslators.length} tarjimon topildi
         </p>
       </div>
 
@@ -362,13 +362,13 @@ const TranslatorMarketplace = () => {
           <div className="text-center py-12">
             <Users className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-foreground mb-2">
-              {t("marketplace.noResults", "No translators found")}
+              Tarjimonlar topilmadi
             </h3>
             <p className="text-sm text-muted-foreground mb-4">
-              {t("marketplace.tryDifferent", "Try adjusting your filters")}
+              Boshqa filterni sinab ko'ring
             </p>
             <Button variant="outline" onClick={clearFilters}>
-              {t("marketplace.clearFilters", "Clear Filters")}
+              Filtrlarni tozalash
             </Button>
           </div>
         ) : (
@@ -390,9 +390,9 @@ const TranslatorMarketplace = () => {
         <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl">
           <SheetHeader className="pb-4">
             <div className="flex items-center justify-between">
-              <SheetTitle>{t("marketplace.filters", "Filters")}</SheetTitle>
+              <SheetTitle>Filtrlar</SheetTitle>
               <Button variant="ghost" size="sm" onClick={clearFilters}>
-                {t("marketplace.reset", "Reset")}
+                Qayta o'rnatish
               </Button>
             </div>
           </SheetHeader>
@@ -401,14 +401,14 @@ const TranslatorMarketplace = () => {
             {/* City Filter */}
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">
-                {t("marketplace.city", "City")}
+                Shahar
               </label>
               <Select value={selectedCity} onValueChange={setSelectedCity}>
                 <SelectTrigger>
-                  <SelectValue placeholder={t("marketplace.allCities", "All Cities")} />
+                  <SelectValue placeholder="Barcha shaharlar" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("marketplace.allCities", "All Cities")}</SelectItem>
+                  <SelectItem value="all">Barcha shaharlar</SelectItem>
                   {cities.map(city => (
                     <SelectItem key={city} value={city}>{city}</SelectItem>
                   ))}
@@ -419,14 +419,14 @@ const TranslatorMarketplace = () => {
             {/* Specialization Filter */}
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">
-                {t("marketplace.specialization", "Specialization")}
+                Mutaxassislik
               </label>
               <Select value={selectedSpecialization} onValueChange={setSelectedSpecialization}>
                 <SelectTrigger>
-                  <SelectValue placeholder={t("marketplace.allSpecializations", "All Specializations")} />
+                  <SelectValue placeholder="Barcha mutaxassisliklar" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("marketplace.allSpecializations", "All")}</SelectItem>
+                  <SelectItem value="all">Barcha mutaxassisliklar</SelectItem>
                   {SPECIALIZATIONS.map(spec => (
                     <SelectItem key={spec.value} value={spec.value}>{spec.label}</SelectItem>
                   ))}
@@ -437,16 +437,16 @@ const TranslatorMarketplace = () => {
             {/* Gender Filter */}
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">
-                {t("marketplace.gender", "Gender")}
+                Jins
               </label>
               <Select value={selectedGender} onValueChange={setSelectedGender}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">{t("marketplace.allGenders", "All")}</SelectItem>
-                  <SelectItem value="male">{t("marketplace.male", "Male")}</SelectItem>
-                  <SelectItem value="female">{t("marketplace.female", "Female")}</SelectItem>
+                  <SelectItem value="all">Barchasi</SelectItem>
+                  <SelectItem value="male">Erkak</SelectItem>
+                  <SelectItem value="female">Ayol</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -454,7 +454,7 @@ const TranslatorMarketplace = () => {
             {/* Price Range */}
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">
-                {t("marketplace.priceRange", "Price Range (¥/day)")}
+                Narx oralig'i (¥/kun)
               </label>
               <div className="px-2">
                 <Slider
@@ -475,7 +475,7 @@ const TranslatorMarketplace = () => {
             {/* Min Rating */}
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">
-                {t("marketplace.minRating", "Minimum Rating")}
+                Minimal reyting
               </label>
               <div className="flex gap-2">
                 {[0, 3, 4, 4.5].map(rating => (
@@ -490,7 +490,7 @@ const TranslatorMarketplace = () => {
                     )}
                   >
                     {rating > 0 && <Star className="w-3 h-3 fill-amber-500 text-amber-500" />}
-                    <span className="text-sm">{rating === 0 ? "All" : `${rating}+`}</span>
+                    <span className="text-sm">{rating === 0 ? "Barchasi" : `${rating}+`}</span>
                   </button>
                 ))}
               </div>
@@ -501,8 +501,8 @@ const TranslatorMarketplace = () => {
               <div className="flex items-center gap-2">
                 <Shield className="w-5 h-5 text-primary" />
                 <div>
-                  <p className="text-sm font-medium">{t("marketplace.buraqVerified", "Buraq Verified HSK")}</p>
-                  <p className="text-xs text-muted-foreground">{t("marketplace.verifiedDesc", "Verified via video interview")}</p>
+                  <p className="text-sm font-medium">Buraq tasdiqlagan HSK</p>
+                  <p className="text-xs text-muted-foreground">Video intervyu orqali tasdiqlangan</p>
                 </div>
               </div>
               <button
@@ -522,7 +522,7 @@ const TranslatorMarketplace = () => {
 
           <div className="absolute bottom-0 left-0 right-0 p-4 bg-background border-t border-border">
             <Button className="w-full" onClick={() => setFilterOpen(false)}>
-              {t("marketplace.showResults", "Show {{count}} Results", { count: filteredTranslators.length })}
+              {filteredTranslators.length} natijani ko'rsatish
             </Button>
           </div>
         </SheetContent>
