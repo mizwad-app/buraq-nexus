@@ -25,8 +25,8 @@
   },
   "nav": {
     "home": "Главная",
-    "cargo": "Грузы",
-    "rewards": "Награды",
+    "travel": "Путешествия",
+    "mosques": "Мечети",
     "profile": "Профиль"
   },
   "modules": {
@@ -40,13 +40,10 @@
     "guide": "Гид Путешественника"
   },
   "home": {
-    "guestPrompt": "Начните зарабатывать баллы",
-    "guestPromptDesc": "Войдите и получайте награды",
-    "umraProgress": "Путешествие Умра",
-    "sacredPilgrimage": "Священное паломничество",
-    "progress": "Прогресс",
-    "latestCargo": "Последний груз",
-    "activeCargo": "Активный груз",
+    "guestPrompt": "Используйте наши услуги",
+    "guestPromptDesc": "Войдите и бронируйте",
+    "tagline": "Ваш гид по Китаю",
+    "user": "Пользователь",
     "quickAccess": "Быстрый доступ",
     "travelChecklist": "Чек-лист путешествия",
     "travelChecklistDesc": "Подготовка к поездке",
@@ -54,9 +51,7 @@
     "translatorsDesc": "Проверенные переводчики",
     "services": "Услуги",
     "servicesDesc": "Инспекция и бронирование",
-    "transport": "Транспорт",
-    "ecoImpact": "Экологический вклад",
-    "umraMessage": "Отправьте еще {{points}} кубов груза и получите поездку на Умру!"
+    "transport": "Транспорт"
   },
   "business": {
     "title": "B2B Хаб",
@@ -235,20 +230,25 @@
     "title": "Профиль",
     "login": "Вход / Регистрация",
     "loginPrompt": "Войдите чтобы увидеть свой профиль",
+    "user": "Пользователь",
     "signOut": "Выйти",
-    "myReports": "Мои отчеты",
-    "scanHistory": "История сканирования",
+    "myBookings": "Мои бронирования",
+    "translatorBookings": "Бронирования переводчиков",
+    "noBookings": "Пока нет бронирований",
+    "findTranslator": "Найти переводчика",
+    "viewAll": "Посмотреть все",
+    "unknownTranslator": "Неизвестный переводчик",
     "savedPlaces": "Сохраненные места",
     "notifications": "Уведомления",
     "settings": "Настройки",
     "language": "Язык",
-    "deepCheck": "Глубокая проверка",
-    "rewards": "Награды",
-    "adminPanel": "Панель администратора",
-    "points": "баллов",
-    "cargos": "Грузы",
-    "places": "Места",
-    "reports": "Отчеты"
+    "adminPanel": "Панель администратора"
+  },
+  "booking": {
+    "confirmed": "Подтверждено",
+    "pending": "Ожидает",
+    "completed": "Завершено",
+    "cancelled": "Отменено"
   },
   "language": {
     "title": "Выберите язык",

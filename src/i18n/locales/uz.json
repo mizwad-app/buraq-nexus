@@ -25,8 +25,8 @@
   },
   "nav": {
     "home": "Bosh sahifa",
-    "cargo": "Yuk",
-    "rewards": "Mukofotlar",
+    "travel": "Sayohat",
+    "mosques": "Masjidlar",
     "profile": "Profil"
   },
   "modules": {
@@ -40,13 +40,10 @@
     "guide": "Sayohat Qo'llanmasi"
   },
   "home": {
-    "guestPrompt": "Ball yig'ishni boshlang",
-    "guestPromptDesc": "Tizimga kiring va mukofotlar oling",
-    "umraProgress": "Umra Sayohati",
-    "sacredPilgrimage": "Muqaddas ziyorat",
-    "progress": "Jarayon",
-    "latestCargo": "Oxirgi yuk",
-    "activeCargo": "Faol yuk",
+    "guestPrompt": "Xizmatlardan foydalaning",
+    "guestPromptDesc": "Tizimga kiring va bron qiling",
+    "tagline": "Xitoyda sayohat qo'llanmasi",
+    "user": "Foydalanuvchi",
     "quickAccess": "Tezkor Kirish",
     "travelChecklist": "Sayohat Ro'yxati",
     "travelChecklistDesc": "Sayohatga tayyorgarlik",
@@ -54,9 +51,7 @@
     "translatorsDesc": "Tasdiqlangan tarjimonlar",
     "services": "Xizmatlar",
     "servicesDesc": "Tekshiruv va bron qilish",
-    "transport": "Transport",
-    "ecoImpact": "Ekologik ta'sir",
-    "umraMessage": "Yana {{points}} kub yuk topshirsangiz, Umra yo'llanmasini qo'lga kiritasiz!"
+    "transport": "Transport"
   },
   "business": {
     "title": "B2B Hub",
@@ -235,20 +230,25 @@
     "title": "Profil",
     "login": "Kirish / Ro'yxatdan o'tish",
     "loginPrompt": "Profilingizni ko'rish uchun tizimga kiring",
+    "user": "Foydalanuvchi",
     "signOut": "Chiqish",
-    "myReports": "Mening hisobotlarim",
-    "scanHistory": "Skanerlash tarixi",
+    "myBookings": "Mening bronlarim",
+    "translatorBookings": "Tarjimon Bronlari",
+    "noBookings": "Hali bronlar yo'q",
+    "findTranslator": "Tarjimon topish",
+    "viewAll": "Barchasini ko'rish",
+    "unknownTranslator": "Noma'lum tarjimon",
     "savedPlaces": "Saqlangan joylar",
     "notifications": "Bildirishnomalar",
     "settings": "Sozlamalar",
     "language": "Til",
-    "deepCheck": "Chuqur tekshiruv",
-    "rewards": "Mukofotlar",
-    "adminPanel": "Admin Panel",
-    "points": "ball",
-    "cargos": "Yuklar",
-    "places": "Joylar",
-    "reports": "Hisobotlar"
+    "adminPanel": "Admin Panel"
+  },
+  "booking": {
+    "confirmed": "Tasdiqlangan",
+    "pending": "Kutilmoqda",
+    "completed": "Bajarildi",
+    "cancelled": "Bekor qilindi"
   },
   "language": {
     "title": "Tilni tanlang",

@@ -25,8 +25,8 @@
   },
   "nav": {
     "home": "Home",
-    "cargo": "Cargo",
-    "rewards": "Rewards",
+    "travel": "Travel",
+    "mosques": "Mosques",
     "profile": "Profile"
   },
   "modules": {
@@ -40,13 +40,10 @@
     "guide": "Travel Guide"
   },
   "home": {
-    "guestPrompt": "Start earning points",
-    "guestPromptDesc": "Sign in and get rewards",
-    "umraProgress": "Umra Journey",
-    "sacredPilgrimage": "Sacred pilgrimage",
-    "progress": "Progress",
-    "latestCargo": "Latest cargo",
-    "activeCargo": "Active cargo",
+    "guestPrompt": "Use our services",
+    "guestPromptDesc": "Sign in and book services",
+    "tagline": "Your travel guide in China",
+    "user": "User",
     "quickAccess": "Quick Access",
     "travelChecklist": "Travel Checklist",
     "travelChecklistDesc": "Pre-travel preparation",
@@ -54,9 +51,7 @@
     "translatorsDesc": "Find verified translators",
     "services": "Services",
     "servicesDesc": "Inspection & booking",
-    "transport": "Transport",
-    "ecoImpact": "Eco Impact",
-    "umraMessage": "Ship {{points}} more cubic meters to earn your Umra trip!"
+    "transport": "Transport"
   },
   "business": {
     "title": "B2B Hub",
@@ -235,20 +230,25 @@
     "title": "Profile",
     "login": "Sign In / Sign Up",
     "loginPrompt": "Sign in to view your profile",
+    "user": "User",
     "signOut": "Sign Out",
-    "myReports": "My Reports",
-    "scanHistory": "Scan History",
+    "myBookings": "My Bookings",
+    "translatorBookings": "Translator Bookings",
+    "noBookings": "No bookings yet",
+    "findTranslator": "Find a Translator",
+    "viewAll": "View All",
+    "unknownTranslator": "Unknown translator",
     "savedPlaces": "Saved Places",
     "notifications": "Notifications",
     "settings": "Settings",
     "language": "Language",
-    "deepCheck": "Deep Check",
-    "rewards": "Rewards",
-    "adminPanel": "Admin Panel",
-    "points": "points",
-    "cargos": "Cargos",
-    "places": "Places",
-    "reports": "Reports"
+    "adminPanel": "Admin Panel"
+  },
+  "booking": {
+    "confirmed": "Confirmed",
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
   },
   "language": {
     "title": "Select Language",
