@@ -6,6 +6,7 @@ import {
   Star, 
   BadgeCheck, 
   MessageCircle,
+  CalendarCheck,
   ChevronLeft,
   Filter,
   Globe,
@@ -15,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
+import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
+import { BookingSheet } from "@/components/marketplace/BookingSheet";
 import {
   Sheet,
   SheetContent,
@@ -28,6 +31,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 
 interface Translator {
   id: string;
@@ -72,6 +76,46 @@ const Translators = () => {
   const [selectedCity, setSelectedCity] = useState("all");
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
+  const [bookingOpen, setBookingOpen] = useState(false);
+
+  const bookableTranslator: MarketplaceTranslator | null = useMemo(() => {
+    if (!selectedTranslator) return null;
+    // Map public translator view to the marketplace translator shape used by BookingSheet
+    return {
+      id: selectedTranslator.id,
+      name: selectedTranslator.name,
+      name_uz: selectedTranslator.name_uz ?? null,
+      name_ru: selectedTranslator.name_ru ?? null,
+      name_en: selectedTranslator.name_en ?? null,
+      name_ar: selectedTranslator.name_ar ?? null,
+      city: selectedTranslator.city,
+      city_uz: selectedTranslator.city_uz ?? null,
+      city_ru: selectedTranslator.city_ru ?? null,
+      city_en: selectedTranslator.city_en ?? null,
+      city_ar: selectedTranslator.city_ar ?? null,
+      hsk_level: selectedTranslator.hsk_level,
+      specializations: selectedTranslator.specializations ?? null,
+      bio: selectedTranslator.bio ?? null,
+      bio_uz: selectedTranslator.bio_uz ?? null,
+      bio_ru: selectedTranslator.bio_ru ?? null,
+      bio_en: selectedTranslator.bio_en ?? null,
+      bio_ar: selectedTranslator.bio_ar ?? null,
+      price_per_day: selectedTranslator.price_per_day ?? null,
+      hourly_rate: null,
+      daily_rate: null,
+      is_verified: selectedTranslator.is_verified,
+      is_available: selectedTranslator.is_available,
+      avatar_url: selectedTranslator.avatar_url,
+      intro_video_url: null,
+      rating: selectedTranslator.rating,
+      total_reviews: selectedTranslator.total_reviews,
+      user_id: (selectedTranslator.user_id as string | null) ?? null,
+      // Optional computed fields
+      self_declared_hsk: null,
+      buraq_verified_hsk: null,
+      buraq_verified_at: null,
+    } as MarketplaceTranslator;
+  }, [selectedTranslator]);
 
   useEffect(() => {
     fetchTranslators();
@@ -254,11 +298,25 @@ const Translators = () => {
                           {translator.is_available ? t("translators.available") : t("translators.busy")}
                         </span>
                       </div>
-                      {translator.price_per_day && (
-                        <span className="text-sm font-semibold text-primary">
-                          ¥{translator.price_per_day}/day
-                        </span>
-                      )}
+                      <div className="flex items-center gap-2">
+                        {translator.price_per_day && (
+                          <span className="text-sm font-semibold text-primary">
+                            ¥{translator.price_per_day}/day
+                          </span>
+                        )}
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedTranslator(translator);
+                            setBookingOpen(true);
+                          }}
+                          className="border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground"
+                        >
+                          Band qilish
+                        </Button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -357,18 +415,38 @@ const Translators = () => {
 
               {/* Internal Chat Button */}
               <div className="pt-4 border-t border-border/50">
-                <button
-                  onClick={() => openChat(selectedTranslator)}
-                  className="w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-primary hover:bg-primary/90 transition-all"
-                >
-                  <MessageCircle className="w-6 h-6 text-primary-foreground" />
-                  <span className="font-semibold text-primary-foreground text-lg">Xabar yozish</span>
-                </button>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    onClick={() => openChat(selectedTranslator)}
+                    className="w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-primary hover:bg-primary/90 transition-all"
+                  >
+                    <MessageCircle className="w-6 h-6 text-primary-foreground" />
+                    <span className="font-semibold text-primary-foreground">Xabar yozish</span>
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setDetailOpen(false);
+                      setBookingOpen(true);
+                    }}
+                    className="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+                  >
+                    <CalendarCheck className="w-6 h-6" />
+                    <span className="font-semibold">Band qilish</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
         </SheetContent>
       </Sheet>
+
+      {/* Booking Sheet */}
+      <BookingSheet
+        translator={bookableTranslator}
+        open={bookingOpen}
+        onOpenChange={setBookingOpen}
+      />
     </div>
   );
 };
