@@ -1,4 +1,4 @@
-import { Star, MapPin, BadgeCheck, Shield, Clock, Video, Calendar, Briefcase, MessageCircle, Phone, ExternalLink, Award, TrendingUp, ThumbsUp } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -115,17 +115,6 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
     );
   };
 
-  const openContact = (method: 'whatsapp' | 'telegram') => {
-    const message = encodeURIComponent(
-      `Salom! Men Buraq orqali ${getField(translator, 'name')} bilan bog'lanmoqchiman.`
-    );
-    
-    if (method === 'whatsapp' && translator.whatsapp_number) {
-      window.open(`https://wa.me/${translator.whatsapp_number.replace(/[^0-9]/g, '')}?text=${message}`, '_blank');
-    } else if (method === 'telegram' && translator.telegram_username) {
-      window.open(`https://t.me/${translator.telegram_username.replace('@', '')}`, '_blank');
-    }
-  };
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -295,57 +284,31 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               </div>
             </div>
 
-            {/* Quick Contact */}
-            <div className="px-5 mb-4">
-              <h4 className="text-sm font-semibold text-foreground mb-3">Tezkor aloqa</h4>
-              <div className="grid grid-cols-3 gap-2">
-                {/* In-App Chat */}
-                {onChat && (
-                  <button
-                    onClick={onChat}
-                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-primary/10 hover:bg-primary/20 border border-primary/30 transition-all"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center">
-                      <MessageCircle className="w-5 h-5 text-primary-foreground" />
-                    </div>
-                    <span className="font-medium text-xs">Buraq Chat</span>
-                  </button>
-                )}
-                {translator.whatsapp_number && (
-                  <button
-                    onClick={() => openContact('whatsapp')}
-                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366]/20 border border-[#25D366]/30 transition-all"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-[#25D366] flex items-center justify-center">
-                      <Phone className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="font-medium text-xs">WhatsApp</span>
-                  </button>
-                )}
-                {translator.telegram_username && (
-                  <button
-                    onClick={() => openContact('telegram')}
-                    className="flex flex-col items-center gap-2 p-3 rounded-xl bg-[#0088cc]/10 hover:bg-[#0088cc]/20 border border-[#0088cc]/30 transition-all"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-[#0088cc] flex items-center justify-center">
-                      <MessageCircle className="w-5 h-5 text-white" />
-                    </div>
-                    <span className="font-medium text-xs">Telegram</span>
-                  </button>
-                )}
-              </div>
-            </div>
 
             {/* Spacer for bottom button */}
             <div className="h-24" />
           </div>
 
-          {/* Fixed Bottom Button */}
+          {/* Fixed Bottom Buttons */}
           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background to-transparent">
-            <Button size="lg" className="w-full gap-2" onClick={onBook}>
-              <Calendar className="w-5 h-5" />
-              Bron qilish — ¥{price}/kun
-            </Button>
+            <div className="flex gap-2">
+              {/* Primary: Online Chat */}
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="flex-1 gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                onClick={onChat}
+              >
+                <MessageCircle className="w-5 h-5" />
+                Xabar yozish
+              </Button>
+              
+              {/* Secondary: Book */}
+              <Button size="lg" className="flex-1 gap-2" onClick={onBook}>
+                <Calendar className="w-5 h-5" />
+                Bron qilish
+              </Button>
+            </div>
           </div>
         </div>
       </SheetContent>
