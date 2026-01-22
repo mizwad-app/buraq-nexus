@@ -618,6 +618,105 @@ export type Database = {
         }
         Relationships: []
       }
+      halal_shops: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_chinese: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_ru: string | null
+          city_uz: string | null
+          country: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_ru: string | null
+          description_uz: string | null
+          id: string
+          image_url: string | null
+          is_verified: boolean | null
+          latitude: number | null
+          longitude: number | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          phone: string | null
+          rating: number | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          id?: string
+          image_url?: string | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          rating?: number | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_chinese?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          id?: string
+          image_url?: string | null
+          is_verified?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          phone?: string | null
+          rating?: number | null
+        }
+        Relationships: []
+      }
       hub_product_categories: {
         Row: {
           category_id: string
