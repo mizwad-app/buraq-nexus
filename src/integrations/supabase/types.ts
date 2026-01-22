@@ -14,6 +14,47 @@ export type Database = {
   }
   public: {
     Tables: {
+      booking_reminders: {
+        Row: {
+          booking_id: string
+          created_at: string | null
+          id: string
+          is_sent: boolean | null
+          reminder_type: string
+          scheduled_for: string
+          sent_at: string | null
+          user_id: string
+        }
+        Insert: {
+          booking_id: string
+          created_at?: string | null
+          id?: string
+          is_sent?: boolean | null
+          reminder_type: string
+          scheduled_for: string
+          sent_at?: string | null
+          user_id: string
+        }
+        Update: {
+          booking_id?: string
+          created_at?: string | null
+          id?: string
+          is_sent?: boolean | null
+          reminder_type?: string
+          scheduled_for?: string
+          sent_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "booking_reminders_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "translator_bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cargo_trackings: {
         Row: {
           created_at: string
@@ -55,6 +96,99 @@ export type Database = {
           volume_m3?: number | null
         }
         Relationships: []
+      }
+      chat_conversations: {
+        Row: {
+          booking_id: string | null
+          client_id: string
+          created_at: string | null
+          id: string
+          is_active: boolean | null
+          last_message_at: string | null
+          translator_id: string
+        }
+        Insert: {
+          booking_id?: string | null
+          client_id: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_message_at?: string | null
+          translator_id: string
+        }
+        Update: {
+          booking_id?: string | null
+          client_id?: string
+          created_at?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_message_at?: string | null
+          translator_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_conversations_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "translator_bookings"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_conversations_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "chat_conversations_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      chat_messages: {
+        Row: {
+          content: string
+          conversation_id: string
+          created_at: string | null
+          id: string
+          is_read: boolean | null
+          message_type: string | null
+          read_at: string | null
+          sender_id: string
+        }
+        Insert: {
+          content: string
+          conversation_id: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message_type?: string | null
+          read_at?: string | null
+          sender_id: string
+        }
+        Update: {
+          content?: string
+          conversation_id?: string
+          created_at?: string | null
+          id?: string
+          is_read?: boolean | null
+          message_type?: string | null
+          read_at?: string | null
+          sender_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "chat_messages_conversation_id_fkey"
+            columns: ["conversation_id"]
+            isOneToOne: false
+            referencedRelation: "chat_conversations"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       companies: {
         Row: {
@@ -1509,30 +1643,201 @@ export type Database = {
         }
         Relationships: []
       }
+      translator_availability: {
+        Row: {
+          created_at: string | null
+          day_of_week: number | null
+          end_time: string
+          id: string
+          is_available: boolean | null
+          is_recurring: boolean | null
+          specific_date: string | null
+          start_time: string
+          translator_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          day_of_week?: number | null
+          end_time: string
+          id?: string
+          is_available?: boolean | null
+          is_recurring?: boolean | null
+          specific_date?: string | null
+          start_time: string
+          translator_id: string
+        }
+        Update: {
+          created_at?: string | null
+          day_of_week?: number | null
+          end_time?: string
+          id?: string
+          is_available?: boolean | null
+          is_recurring?: boolean | null
+          specific_date?: string | null
+          start_time?: string
+          translator_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "translator_availability_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "translator_availability_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      translator_bookings: {
+        Row: {
+          agreed_rate: number
+          booking_date: string
+          cancellation_reason: string | null
+          cancelled_at: string | null
+          cancelled_by: string | null
+          client_id: string
+          completed_at: string | null
+          confirmed_at: string | null
+          created_at: string | null
+          currency: string | null
+          description: string | null
+          end_time: string
+          id: string
+          location: string | null
+          service_type: string
+          specialization: string | null
+          start_time: string
+          started_at: string | null
+          status: Database["public"]["Enums"]["booking_status"] | null
+          total_amount: number
+          total_hours: number | null
+          translator_id: string
+          updated_at: string | null
+        }
+        Insert: {
+          agreed_rate: number
+          booking_date: string
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          cancelled_by?: string | null
+          client_id: string
+          completed_at?: string | null
+          confirmed_at?: string | null
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          end_time: string
+          id?: string
+          location?: string | null
+          service_type: string
+          specialization?: string | null
+          start_time: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          total_amount: number
+          total_hours?: number | null
+          translator_id: string
+          updated_at?: string | null
+        }
+        Update: {
+          agreed_rate?: number
+          booking_date?: string
+          cancellation_reason?: string | null
+          cancelled_at?: string | null
+          cancelled_by?: string | null
+          client_id?: string
+          completed_at?: string | null
+          confirmed_at?: string | null
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          end_time?: string
+          id?: string
+          location?: string | null
+          service_type?: string
+          specialization?: string | null
+          start_time?: string
+          started_at?: string | null
+          status?: Database["public"]["Enums"]["booking_status"] | null
+          total_amount?: number
+          total_hours?: number | null
+          translator_id?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "translator_bookings_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "translator_bookings_translator_id_fkey"
+            columns: ["translator_id"]
+            isOneToOne: false
+            referencedRelation: "translators_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       translator_reviews: {
         Row: {
+          booking_id: string | null
           comment: string | null
           created_at: string
           id: string
+          is_public: boolean | null
+          language_proficiency: number | null
+          overall_rating: number | null
+          punctuality: number | null
           rating: number | null
+          reliability: number | null
+          responded_at: string | null
           translator_id: string
+          translator_response: string | null
           user_id: string
+          work_expertise: number | null
         }
         Insert: {
+          booking_id?: string | null
           comment?: string | null
           created_at?: string
           id?: string
+          is_public?: boolean | null
+          language_proficiency?: number | null
+          overall_rating?: number | null
+          punctuality?: number | null
           rating?: number | null
+          reliability?: number | null
+          responded_at?: string | null
           translator_id: string
+          translator_response?: string | null
           user_id: string
+          work_expertise?: number | null
         }
         Update: {
+          booking_id?: string | null
           comment?: string | null
           created_at?: string
           id?: string
+          is_public?: boolean | null
+          language_proficiency?: number | null
+          overall_rating?: number | null
+          punctuality?: number | null
           rating?: number | null
+          reliability?: number | null
+          responded_at?: string | null
           translator_id?: string
+          translator_response?: string | null
           user_id?: string
+          work_expertise?: number | null
         }
         Relationships: [
           {
@@ -1559,15 +1864,23 @@ export type Database = {
           bio_en: string | null
           bio_ru: string | null
           bio_uz: string | null
+          buraq_verified_at: string | null
+          buraq_verified_hsk: number | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          completed_bookings: number | null
           created_at: string
+          currency: string | null
+          daily_rate: number | null
           email: string | null
+          gender: string | null
+          hourly_rate: number | null
           hsk_level: number | null
           id: string
+          intro_video_url: string | null
           is_available: boolean | null
           is_verified: boolean | null
           name: string
@@ -1578,10 +1891,17 @@ export type Database = {
           phone: string | null
           price_per_day: number | null
           rating: number | null
+          self_declared_hsk: number | null
           specializations: string[] | null
+          telegram_username: string | null
+          total_bookings: number | null
           total_reviews: number | null
           updated_at: string
           user_id: string | null
+          verification_documents: string[] | null
+          verified_at: string | null
+          whatsapp_number: string | null
+          years_experience: number | null
         }
         Insert: {
           avatar_url?: string | null
@@ -1590,15 +1910,23 @@ export type Database = {
           bio_en?: string | null
           bio_ru?: string | null
           bio_uz?: string | null
+          buraq_verified_at?: string | null
+          buraq_verified_hsk?: number | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          completed_bookings?: number | null
           created_at?: string
+          currency?: string | null
+          daily_rate?: number | null
           email?: string | null
+          gender?: string | null
+          hourly_rate?: number | null
           hsk_level?: number | null
           id?: string
+          intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
           name: string
@@ -1609,10 +1937,17 @@ export type Database = {
           phone?: string | null
           price_per_day?: number | null
           rating?: number | null
+          self_declared_hsk?: number | null
           specializations?: string[] | null
+          telegram_username?: string | null
+          total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string
           user_id?: string | null
+          verification_documents?: string[] | null
+          verified_at?: string | null
+          whatsapp_number?: string | null
+          years_experience?: number | null
         }
         Update: {
           avatar_url?: string | null
@@ -1621,15 +1956,23 @@ export type Database = {
           bio_en?: string | null
           bio_ru?: string | null
           bio_uz?: string | null
+          buraq_verified_at?: string | null
+          buraq_verified_hsk?: number | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          completed_bookings?: number | null
           created_at?: string
+          currency?: string | null
+          daily_rate?: number | null
           email?: string | null
+          gender?: string | null
+          hourly_rate?: number | null
           hsk_level?: number | null
           id?: string
+          intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
           name?: string
@@ -1640,10 +1983,17 @@ export type Database = {
           phone?: string | null
           price_per_day?: number | null
           rating?: number | null
+          self_declared_hsk?: number | null
           specializations?: string[] | null
+          telegram_username?: string | null
+          total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string
           user_id?: string | null
+          verification_documents?: string[] | null
+          verified_at?: string | null
+          whatsapp_number?: string | null
+          years_experience?: number | null
         }
         Relationships: []
       }
@@ -1724,6 +2074,86 @@ export type Database = {
           user_id?: string
         }
         Relationships: []
+      }
+      user_wallets: {
+        Row: {
+          balance: number | null
+          created_at: string | null
+          currency: string | null
+          held_balance: number | null
+          id: string
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          balance?: number | null
+          created_at?: string | null
+          currency?: string | null
+          held_balance?: number | null
+          id?: string
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          balance?: number | null
+          created_at?: string | null
+          currency?: string | null
+          held_balance?: number | null
+          id?: string
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      wallet_transactions: {
+        Row: {
+          amount: number
+          booking_id: string | null
+          created_at: string | null
+          currency: string | null
+          description: string | null
+          id: string
+          processed_at: string | null
+          reference_id: string | null
+          status: Database["public"]["Enums"]["payment_status"] | null
+          transaction_type: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          booking_id?: string | null
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          id?: string
+          processed_at?: string | null
+          reference_id?: string | null
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          transaction_type: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          booking_id?: string | null
+          created_at?: string | null
+          currency?: string | null
+          description?: string | null
+          id?: string
+          processed_at?: string | null
+          reference_id?: string | null
+          status?: Database["public"]["Enums"]["payment_status"] | null
+          transaction_type?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallet_transactions_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "translator_bookings"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       wholesale_markets: {
         Row: {
@@ -1964,7 +2394,30 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user"
+      booking_status:
+        | "pending"
+        | "confirmed"
+        | "in_progress"
+        | "completed"
+        | "cancelled"
+        | "disputed"
       halal_status: "halol" | "haram" | "shubhali"
+      payment_status: "pending" | "held" | "released" | "refunded" | "disputed"
+      translator_specialization:
+        | "medical"
+        | "legal"
+        | "it"
+        | "construction"
+        | "manufacturing"
+        | "electronics"
+        | "furniture"
+        | "textile"
+        | "automotive"
+        | "trade"
+        | "tourism"
+        | "education"
+        | "finance"
+        | "general"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -2093,7 +2546,32 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user"],
+      booking_status: [
+        "pending",
+        "confirmed",
+        "in_progress",
+        "completed",
+        "cancelled",
+        "disputed",
+      ],
       halal_status: ["halol", "haram", "shubhali"],
+      payment_status: ["pending", "held", "released", "refunded", "disputed"],
+      translator_specialization: [
+        "medical",
+        "legal",
+        "it",
+        "construction",
+        "manufacturing",
+        "electronics",
+        "furniture",
+        "textile",
+        "automotive",
+        "trade",
+        "tourism",
+        "education",
+        "finance",
+        "general",
+      ],
     },
   },
 } as const
