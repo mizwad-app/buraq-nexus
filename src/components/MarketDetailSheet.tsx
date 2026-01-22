@@ -187,10 +187,10 @@ export const MarketDetailSheet = ({ open, onOpenChange, market }: MarketDetailSh
               {taxiInfo && (
                 <div className="bg-card rounded-xl p-3 border border-border/50">
                   <div className="flex items-center gap-2 mb-2">
-                    <div className="w-8 h-8 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-                      <Car className="w-4 h-4 text-yellow-500" />
+                    <div className="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                      <Car className="w-4 h-4 text-amber-500" />
                     </div>
-                    <span className="text-xs font-medium text-muted-foreground">{t('business.taxi')}</span>
+                    <span className="text-xs font-medium text-muted-foreground">Aeroportdan taksi</span>
                   </div>
                   <p className="text-sm font-semibold text-foreground">{taxiInfo}</p>
                 </div>

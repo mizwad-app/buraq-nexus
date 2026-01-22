@@ -27,6 +27,11 @@ import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { RestaurantDetailSheet } from "@/components/RestaurantDetailSheet";
 import { MosqueDetailSheet } from "@/components/MosqueDetailSheet";
 
+// Import mosque images for list view
+import huaisheng1 from "@/assets/mosques/huaisheng-1.jpg";
+import abiVaqqos1 from "@/assets/mosques/abi-vaqqos-1.jpg";
+import xiaodongying1 from "@/assets/mosques/xiaodongying-1.jpg";
+
 interface Restaurant {
   id: string;
   name: string;
@@ -99,6 +104,15 @@ interface Mosque {
 
 const RESTAURANT_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80";
 const MOSQUE_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
+
+// Map mosque names to their actual images
+const getMosqueImage = (mosqueName: string): string => {
+  const lowerName = mosqueName.toLowerCase();
+  if (lowerName.includes("huaisheng") || lowerName.includes("怀圣")) return huaisheng1;
+  if (lowerName.includes("vaqqos") || lowerName.includes("先贤") || lowerName.includes("xianxian")) return abiVaqqos1;
+  if (lowerName.includes("xiaodongying") || lowerName.includes("小东营")) return xiaodongying1;
+  return MOSQUE_FALLBACK_IMAGE;
+};
 
 // Ingredients to avoid
 const harmfulIngredients = [
@@ -582,7 +596,7 @@ const Ibadah = () => {
                 >
                   <div className="relative h-40 w-full">
                     <img
-                      src={mosque.image_url || MOSQUE_FALLBACK_IMAGE}
+                      src={getMosqueImage(mosque.name)}
                       alt={getField(mosque, 'name')}
                       className="w-full h-full object-cover"
                       onError={(e) => {

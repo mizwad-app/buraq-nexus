@@ -15,6 +15,7 @@ import {
   Star,
   ChevronLeft,
   ChevronRight,
+  Clock,
 } from "lucide-react";
 import { useState } from "react";
 import { MapNavigationSheet } from "./MapNavigationSheet";
@@ -83,8 +84,10 @@ const MOSQUE_HISTORY: Record<string, {
   features?: string[];
   poem?: string;
   poemTitle?: string;
+  yearBuilt?: string;
 }> = {
   "huaisheng": {
+    yearBuilt: "627-yil (milodiy)",
     origin: "\"Huai\" — sog'inish/xotirlash, \"Sheng\" — muqaddas/payg'ambar demakdir. Ya'ni, \"Payg'ambarimiz Muhammad (s.a.v)ni sog'inib qurilgan masjid\".",
     history: "Bu masjid Xitoydagi eng qadimiy bino bo'lib, milodiy 627-yilda Arabistondan kelgan ilk musulmon da'vatchilar tomonidan qurilgan. Xitoyga kelgan dastlabki musulmon da'vatchilarini yodga oladi.",
     features: [
@@ -96,6 +99,7 @@ const MOSQUE_HISTORY: Record<string, {
     poemTitle: "Yuz so'zli madhiya — Imperator Xongvu (1368)"
   },
   "abi_vaqqos": {
+    yearBuilt: "627-yil (milodiy)",
     origin: "Sahoba Sa'd ibn Abu Vaqqos (r.a.) sharafiga nomlangan. \"Xianxian\" — \"Donishmandlar va azizlar masjidi\" demakdir.",
     history: "Bu joy sahoba Sa'd ibn Abu Vaqqos (r.a.)ning muborak qabri joylashgan tabarruk hudud hisoblanadi. Hududda juda qadimiy musulmonlar qabristoni va Guangzhou Islom Assotsiatsiyasi joylashgan. Xitoyga Islom dinini olib kelgan dastlabki da'vatchilardan biri sifatida u katta hurmatga sazovordir.",
     features: [
@@ -106,6 +110,7 @@ const MOSQUE_HISTORY: Record<string, {
     ]
   },
   "xiaodongying": {
+    yearBuilt: "1368-1644 yillar (Ming sulolasi)",
     history: "Ming sulolasi (1368–1644) davrida musulmon askarlar tomonidan qurilgan. Bu masjid harbiy-islomiy tarixning noyob yodgorligi bo'lib, o'sha davrdagi musulmon jangchilarning imon va jasurligini aks ettiradi.",
     features: [
       "Ming sulolasi me'morchiligi",
@@ -115,6 +120,7 @@ const MOSQUE_HISTORY: Record<string, {
     ]
   },
   "haopan": {
+    yearBuilt: "1600-yillar (tahminiy)",
     history: "Guangzhoudagi tarixiy masjidlardan biri bo'lib, mahalliy musulmonlar jamiyatiga xizmat qiladi. Bu masjid shahardagi musulmonlar uchun muhim ibodat va jamiyat markazi hisoblanadi.",
     features: [
       "Mahalliy musulmonlar markazi",
@@ -250,8 +256,26 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
             {/* Image Gallery Carousel */}
             <ImageGallery images={galleryImages} mosqueName={translatedName} />
 
+            {/* Year Built Badge - at the top */}
+            {historyData?.yearBuilt && (
+              <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl p-3 border border-emerald-500/20 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-emerald-500" />
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Qurilgan yili</p>
+                  <p className="font-bold text-foreground">{historyData.yearBuilt}</p>
+                </div>
+              </div>
+            )}
+
             {/* Feature Badges */}
             <div className="flex flex-wrap gap-2">
+              {/* 5 mahal namoz badge - always show for historical mosques */}
+              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-600 text-xs font-medium border border-blue-500/20">
+                <Moon className="w-3 h-3" />
+                5 mahal namoz
+              </span>
               {mosque.has_friday_prayer && (
                 <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 text-xs font-medium border border-emerald-500/20">
                   <Check className="w-3 h-3" />
