@@ -1,4 +1,4 @@
-import { Star, MapPin, BadgeCheck, Shield, Clock, Video, Calendar, Briefcase } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Clock, Video, MessageCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -29,9 +29,10 @@ interface TranslatorProfileCardProps {
   translator: MarketplaceTranslator;
   onClick: () => void;
   onBook: () => void;
+  onChat: () => void;
 }
 
-export const TranslatorProfileCard = ({ translator, onClick, onBook }: TranslatorProfileCardProps) => {
+export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: TranslatorProfileCardProps) => {
   const { t } = useTranslation();
   const { getField } = useTranslatedField();
 
@@ -139,14 +140,6 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook }: Translato
                   <span className="text-muted-foreground text-xs">({translator.total_reviews})</span>
                 </div>
               )}
-              
-              {/* Completed Bookings */}
-              {translator.completed_bookings && translator.completed_bookings > 0 && (
-                <div className="flex items-center gap-1 text-muted-foreground">
-                  <Calendar className="w-3.5 h-3.5" />
-                  <span className="text-xs">{translator.completed_bookings} buyurtma</span>
-                </div>
-              )}
 
               {/* Availability */}
               <span className={cn(
@@ -161,7 +154,7 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook }: Translato
         </div>
       </div>
 
-      {/* Card Footer - Pricing & Book Button */}
+      {/* Card Footer - Pricing & Chat Button */}
       <div className="px-4 py-3 bg-muted/30 border-t border-border/30 flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-2">
@@ -174,11 +167,11 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook }: Translato
         </div>
         <Button 
           size="sm" 
-          onClick={(e) => { e.stopPropagation(); onBook(); }}
+          onClick={(e) => { e.stopPropagation(); onChat(); }}
           className="gap-1.5"
         >
-          <Calendar className="w-4 h-4" />
-          Bron qilish
+          <MessageCircle className="w-4 h-4" />
+          Xabar yozish
         </Button>
       </div>
     </div>

@@ -379,6 +379,7 @@ const TranslatorMarketplace = () => {
                 translator={translator}
                 onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
                 onBook={() => handleBooking(translator)}
+                onChat={() => handleChat(translator)}
               />
             ))}
           </div>
