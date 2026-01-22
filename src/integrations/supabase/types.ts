@@ -1858,6 +1858,7 @@ export type Database = {
       }
       translators: {
         Row: {
+          age: number | null
           avatar_url: string | null
           bio: string | null
           bio_ar: string | null
@@ -1904,6 +1905,7 @@ export type Database = {
           years_experience: number | null
         }
         Insert: {
+          age?: number | null
           avatar_url?: string | null
           bio?: string | null
           bio_ar?: string | null
@@ -1950,6 +1952,7 @@ export type Database = {
           years_experience?: number | null
         }
         Update: {
+          age?: number | null
           avatar_url?: string | null
           bio?: string | null
           bio_ar?: string | null
@@ -2285,20 +2288,29 @@ export type Database = {
     Views: {
       translators_public: {
         Row: {
+          age: number | null
           avatar_url: string | null
           bio: string | null
           bio_ar: string | null
           bio_en: string | null
           bio_ru: string | null
           bio_uz: string | null
+          buraq_verified_at: string | null
+          buraq_verified_hsk: number | null
           city: string | null
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          completed_bookings: number | null
           created_at: string | null
+          currency: string | null
+          daily_rate: number | null
+          gender: string | null
+          hourly_rate: number | null
           hsk_level: number | null
           id: string | null
+          intro_video_url: string | null
           is_available: boolean | null
           is_verified: boolean | null
           name: string | null
@@ -2308,26 +2320,38 @@ export type Database = {
           name_uz: string | null
           price_per_day: number | null
           rating: number | null
+          self_declared_hsk: number | null
           specializations: string[] | null
+          total_bookings: number | null
           total_reviews: number | null
           updated_at: string | null
           user_id: string | null
+          years_experience: number | null
         }
         Insert: {
+          age?: number | null
           avatar_url?: string | null
           bio?: string | null
           bio_ar?: string | null
           bio_en?: string | null
           bio_ru?: string | null
           bio_uz?: string | null
+          buraq_verified_at?: string | null
+          buraq_verified_hsk?: number | null
           city?: string | null
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          completed_bookings?: number | null
           created_at?: string | null
+          currency?: string | null
+          daily_rate?: number | null
+          gender?: string | null
+          hourly_rate?: number | null
           hsk_level?: number | null
           id?: string | null
+          intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
           name?: string | null
@@ -2337,26 +2361,38 @@ export type Database = {
           name_uz?: string | null
           price_per_day?: number | null
           rating?: number | null
+          self_declared_hsk?: number | null
           specializations?: string[] | null
+          total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string | null
           user_id?: string | null
+          years_experience?: number | null
         }
         Update: {
+          age?: number | null
           avatar_url?: string | null
           bio?: string | null
           bio_ar?: string | null
           bio_en?: string | null
           bio_ru?: string | null
           bio_uz?: string | null
+          buraq_verified_at?: string | null
+          buraq_verified_hsk?: number | null
           city?: string | null
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          completed_bookings?: number | null
           created_at?: string | null
+          currency?: string | null
+          daily_rate?: number | null
+          gender?: string | null
+          hourly_rate?: number | null
           hsk_level?: number | null
           id?: string | null
+          intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
           name?: string | null
@@ -2366,10 +2402,13 @@ export type Database = {
           name_uz?: string | null
           price_per_day?: number | null
           rating?: number | null
+          self_declared_hsk?: number | null
           specializations?: string[] | null
+          total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string | null
           user_id?: string | null
+          years_experience?: number | null
         }
         Relationships: []
       }
