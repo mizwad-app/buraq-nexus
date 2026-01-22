@@ -1,4 +1,4 @@
-import { Star, MapPin, BadgeCheck, Shield, Clock, Video, MessageCircle, Users } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Clock, Video, MessageCircle, Users, CalendarCheck } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -176,7 +176,7 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
         </div>
       </div>
 
-      {/* Card Footer - Pricing & Chat Button */}
+      {/* Card Footer - Pricing & Action Buttons */}
       <div className="px-4 py-3 bg-muted/30 border-t border-border/30 flex items-center justify-between">
         <div>
           <div className="flex items-baseline gap-2">
@@ -187,14 +187,25 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
             <span className="text-xs text-muted-foreground">¥{hourlyPrice}/soat</span>
           )}
         </div>
-        <Button 
-          size="sm" 
-          onClick={(e) => { e.stopPropagation(); onChat(); }}
-          className="gap-1.5"
-        >
-          <MessageCircle className="w-4 h-4" />
-          Xabar yozish
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button 
+            size="sm" 
+            variant="outline"
+            onClick={(e) => { e.stopPropagation(); onChat(); }}
+            className="gap-1.5 border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <MessageCircle className="w-4 h-4" />
+            Xabar
+          </Button>
+          <Button 
+            size="sm" 
+            onClick={(e) => { e.stopPropagation(); onBook(); }}
+            className="gap-1.5"
+          >
+            <CalendarCheck className="w-4 h-4" />
+            Band qilish
+          </Button>
+        </div>
       </div>
     </div>
   );
