@@ -164,12 +164,12 @@ const Translators = () => {
                 <div className="p-2 bg-gradient-to-br from-primary to-accent rounded-xl shadow-lg">
                   <Users className="w-5 h-5 text-primary-foreground" />
                 </div>
-                <span className="text-sm font-medium text-muted-foreground">
-                  {t("translators.subtitle", "Tasdiqlangan tarjimonlarni toping")}
+              <span className="text-sm font-medium text-muted-foreground">
+                  Professional tarjima xizmatlari
                 </span>
               </div>
               <h1 className="text-2xl font-display font-bold text-foreground mt-1">
-                {t("translators.title", "Tarjimonlar")}
+                Tarjimonlar
               </h1>
             </div>
         </div>
@@ -179,11 +179,11 @@ const Translators = () => {
           <SelectTrigger className="w-full">
             <div className="flex items-center gap-2">
               <MapPin className="w-4 h-4 text-muted-foreground" />
-              <SelectValue placeholder={t("translators.allCities", "Barcha shaharlar")} />
-            </div>
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">{t("translators.allCities", "Barcha shaharlar")}</SelectItem>
+            <SelectValue placeholder="Barcha shaharlar" />
+          </div>
+        </SelectTrigger>
+        <SelectContent>
+          <SelectItem value="all">Barcha shaharlar</SelectItem>
             {cities.map(city => (
               <SelectItem key={city} value={city}>{city}</SelectItem>
             ))}
@@ -372,7 +372,7 @@ const Translators = () => {
                   </div>
                   <div className="text-left flex-1">
                     <p className="font-semibold text-foreground">WhatsApp</p>
-                    <p className="text-sm text-muted-foreground">{t("translators.contactVia", { method: "WhatsApp" })}</p>
+                    <p className="text-sm text-muted-foreground">WhatsApp orqali bog'lanish</p>
                   </div>
                 </button>
 
@@ -385,7 +385,7 @@ const Translators = () => {
                   </div>
                   <div className="text-left flex-1">
                     <p className="font-semibold text-foreground">Telegram</p>
-                    <p className="text-sm text-muted-foreground">{t("translators.contactVia", { method: "Telegram" })}</p>
+                    <p className="text-sm text-muted-foreground">Telegram orqali bog'lanish</p>
                   </div>
                 </button>
               </div>
