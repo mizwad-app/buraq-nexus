@@ -15,6 +15,8 @@ import {
   Users,
   Store,
   ScrollText,
+  Phone,
+  BadgeCheck,
 } from "lucide-react";
 import { AIScannerModal } from "@/components/AIScannerModal";
 import { supabase } from "@/integrations/supabase/client";
@@ -102,6 +104,39 @@ interface Mosque {
   [key: string]: unknown;
 }
 
+interface HalalShop {
+  id: string;
+  name: string;
+  city: string;
+  country: string;
+  address: string | null;
+  address_chinese: string | null;
+  phone: string | null;
+  description: string | null;
+  image_url: string | null;
+  is_verified: boolean;
+  latitude: number | null;
+  longitude: number | null;
+  rating: number | null;
+  name_uz?: string | null;
+  name_ru?: string | null;
+  name_en?: string | null;
+  name_ar?: string | null;
+  description_uz?: string | null;
+  description_ru?: string | null;
+  description_en?: string | null;
+  description_ar?: string | null;
+  city_uz?: string | null;
+  city_ru?: string | null;
+  city_en?: string | null;
+  city_ar?: string | null;
+  address_uz?: string | null;
+  address_ru?: string | null;
+  address_en?: string | null;
+  address_ar?: string | null;
+  [key: string]: unknown;
+}
+
 const RESTAURANT_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80";
 const MOSQUE_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
 
@@ -142,6 +177,7 @@ const Ibadah = () => {
   const [scannerOpen, setScannerOpen] = useState(false);
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [mosques, setMosques] = useState<Mosque[]>([]);
+  const [halalShops, setHalalShops] = useState<HalalShop[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState<ActiveSection>('restaurants');
   const [halalFilter, setHalalFilter] = useState<HalalFilter>('all');
@@ -169,13 +205,15 @@ const Ibadah = () => {
 
   const fetchData = async () => {
     try {
-      const [restaurantsRes, mosquesRes] = await Promise.all([
+      const [restaurantsRes, mosquesRes, shopsRes] = await Promise.all([
         supabase.from("restaurants").select("*").order("rating", { ascending: false }),
         supabase.from("mosques").select("*").order("name", { ascending: true }),
+        supabase.from("halal_shops" as any).select("*").order("name", { ascending: true }),
       ]);
 
       if (restaurantsRes.data) setRestaurants(restaurantsRes.data as Restaurant[]);
       if (mosquesRes.data) setMosques(mosquesRes.data as Mosque[]);
+      if (shopsRes.data) setHalalShops(shopsRes.data as unknown as HalalShop[]);
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
@@ -214,6 +252,11 @@ const Ibadah = () => {
     if (selectedCity === "all") return mosques;
     return mosques.filter(m => m.city === selectedCity);
   }, [mosques, selectedCity]);
+
+  const filteredShops = useMemo(() => {
+    if (selectedCity === "all") return halalShops;
+    return halalShops.filter(s => s.city === selectedCity);
+  }, [halalShops, selectedCity]);
 
   const requestLocation = () => {
     setLoadingLocation(true);
@@ -675,26 +718,116 @@ const Ibadah = () => {
         </section>
       )}
 
-      {/* Halal Shops Section - Coming Soon */}
+      {/* Halol Do'konlar Section */}
       {activeSection === 'shops' && (
         <section className="px-5 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-display font-semibold text-foreground">
-              {t("halal.halalShops")}
-            </h2>
+            <div>
+              <h2 className="text-lg font-display font-semibold text-foreground">
+                {t("halal.shopsTitle")}
+              </h2>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                {t("halal.shopsSubtitle")}
+              </p>
+            </div>
           </div>
 
-          <div className="bg-card rounded-2xl p-8 border border-border/50 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-              <Store className="w-8 h-8 text-primary" />
+          {loading ? (
+            <div className="flex items-center justify-center py-8">
+              <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin" />
             </div>
-            <h3 className="font-display font-semibold text-foreground mb-2">
-              {t("productSearch.comingSoon")}
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              {t("halal.shopsComingSoon")}
-            </p>
-          </div>
+          ) : filteredShops.length === 0 ? (
+            <div className="bg-card rounded-2xl p-8 border border-border/50 text-center">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                <Store className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="font-display font-semibold text-foreground mb-2">
+                {t("halal.noShops")}
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                {t("halal.shopsSoon")}
+              </p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredShops.map((shop, index) => (
+                <div
+                  key={shop.id}
+                  className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all animate-fade-in"
+                  style={{ animationDelay: `${index * 100}ms` }}
+                >
+                  {/* Shop Image */}
+                  <div className="relative h-40 bg-gradient-to-br from-emerald-900/80 to-emerald-700/80">
+                    {shop.image_url ? (
+                      <img
+                        src={shop.image_url}
+                        alt={getField(shop, 'name')}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <Store className="w-16 h-16 text-white/30" />
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                    
+                    {/* Verified Badge */}
+                    {shop.is_verified && (
+                      <div className="absolute top-3 right-3">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/90 text-white text-xs font-medium">
+                          <BadgeCheck className="w-3 h-3" />
+                          {t("halal.verified")}
+                        </span>
+                      </div>
+                    )}
+                    
+                    <div className="absolute bottom-3 left-4 right-4">
+                      <h3 className="font-semibold text-white text-lg">{getField(shop, 'name')}</h3>
+                      <div className="flex items-center gap-1.5 text-white/80 text-sm mt-1">
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>{getField(shop, 'city')}, {shop.country}</span>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Shop Info */}
+                  <div className="p-4">
+                    {/* Address */}
+                    <div className="flex items-start gap-3 mb-3">
+                      <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                        <MapPin className="w-4 h-4 text-muted-foreground" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs text-muted-foreground">{t("halal.address")}</p>
+                        <p className="text-sm font-medium text-foreground">{getField(shop, 'address')}</p>
+                        {shop.address_chinese && (
+                          <p className="text-xs text-muted-foreground font-mono mt-0.5">{shop.address_chinese}</p>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Description */}
+                    {getField(shop, 'description') && (
+                      <p className="text-xs text-muted-foreground mb-3 line-clamp-2">
+                        {getField(shop, 'description')}
+                      </p>
+                    )}
+
+                    {/* Click-to-Call Button */}
+                    {shop.phone && (
+                      <a
+                        href={`tel:${shop.phone}`}
+                        className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-medium transition-colors"
+                      >
+                        <Phone className="w-4 h-4" />
+                        <span>{shop.phone}</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </section>
       )}
 
