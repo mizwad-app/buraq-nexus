@@ -3,43 +3,42 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
-import { MyReports } from "@/components/MyReports";
 import { LanguageSelector } from "@/components/LanguageSelector";
-import { MembershipBadge } from "@/components/MembershipBadge";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
+import { format } from "date-fns";
 import { 
   User, 
   Settings, 
-  History, 
   MapPin, 
   LogOut, 
   ChevronRight,
-  Scan,
-  FileText,
   Bell,
-  Star,
+  CalendarCheck,
+  Languages,
   Shield
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// Demo user constants
-const DEMO_PHONE = "+998900006611";
-const DEMO_ANNUAL_VOLUME = 750;
+interface TranslatorBooking {
+  id: string;
+  booking_date: string;
+  status: string;
+  total_amount: number;
+  translator: {
+    name: string;
+    city: string;
+  } | null;
+}
 
 const Profile = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user, loading, signOut } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [showReports, setShowReports] = useState(false);
-  const [userPoints, setUserPoints] = useState(0);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [stats, setStats] = useState({ scans: 0, places: 0, reports: 0 });
-  const [annualVolume, setAnnualVolume] = useState(0);
-
-  // Check if demo user
-  const isDemoUser = user?.phone === DEMO_PHONE;
+  const [bookings, setBookings] = useState<TranslatorBooking[]>([]);
+  const [bookingsLoading, setBookingsLoading] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -54,25 +53,6 @@ const Profile = () => {
   }, [user]);
 
   const fetchUserData = async () => {
-    // Demo user gets hardcoded values
-    if (isDemoUser) {
-      setUserPoints(7500);
-      setAnnualVolume(DEMO_ANNUAL_VOLUME);
-      setStats({ scans: 3, places: 5, reports: 2 });
-      return;
-    }
-
-    // Fetch points
-    const { data: pointsData } = await supabase
-      .from("user_points")
-      .select("total_points")
-      .eq("user_id", user?.id)
-      .maybeSingle();
-    
-    if (pointsData) {
-      setUserPoints(pointsData.total_points);
-    }
-
     // Check admin role
     const { data: roleData } = await supabase
       .from("user_roles")
@@ -83,38 +63,28 @@ const Profile = () => {
     
     setIsAdmin(!!roleData);
 
-    // Fetch stats
-    const { count: reportsCount } = await supabase
-      .from("deep_checks")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", user?.id);
+    // Fetch translator bookings
+    setBookingsLoading(true);
+    const { data: bookingsData } = await supabase
+      .from("translator_bookings")
+      .select(`
+        id,
+        booking_date,
+        status,
+        total_amount,
+        translator:translator_id (
+          name,
+          city
+        )
+      `)
+      .eq("client_id", user?.id)
+      .order("booking_date", { ascending: false })
+      .limit(10);
 
-    const { count: cargoCount } = await supabase
-      .from("cargo_trackings")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", user?.id);
-
-    const { count: placesCount } = await supabase
-      .from("saved_places")
-      .select("*", { count: "exact", head: true })
-      .eq("user_id", user?.id);
-
-    // Calculate annual volume
-    const { data: cargoData } = await supabase
-      .from("cargo_trackings")
-      .select("volume_m3")
-      .eq("user_id", user?.id);
-
-    if (cargoData) {
-      const totalVolume = cargoData.reduce((sum, cargo) => sum + (cargo.volume_m3 || 0), 0);
-      setAnnualVolume(Math.round(totalVolume));
+    if (bookingsData) {
+      setBookings(bookingsData as unknown as TranslatorBooking[]);
     }
-
-    setStats({
-      scans: cargoCount || 0,
-      places: placesCount || 0,
-      reports: reportsCount || 0,
-    });
+    setBookingsLoading(false);
   };
 
   const handleSignOut = async () => {
@@ -122,12 +92,31 @@ const Profile = () => {
   };
 
   const menuItems = [
-    { icon: FileText, label: t("profile.myReports"), count: stats.reports, action: () => setShowReports(!showReports) },
-    { icon: History, label: t("profile.scanHistory"), count: stats.scans },
-    { icon: MapPin, label: t("profile.savedPlaces"), count: stats.places },
+    { icon: CalendarCheck, label: t("profile.myBookings"), action: () => {} },
+    { icon: MapPin, label: t("profile.savedPlaces") },
     { icon: Bell, label: t("profile.notifications") },
     { icon: Settings, label: t("profile.settings") },
   ];
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'confirmed': return 'text-emerald-500 bg-emerald-500/10';
+      case 'pending': return 'text-amber-500 bg-amber-500/10';
+      case 'completed': return 'text-blue-500 bg-blue-500/10';
+      case 'cancelled': return 'text-destructive bg-destructive/10';
+      default: return 'text-muted-foreground bg-muted';
+    }
+  };
+
+  const getStatusLabel = (status: string) => {
+    switch (status) {
+      case 'confirmed': return t("booking.confirmed");
+      case 'pending': return t("booking.pending");
+      case 'completed': return t("booking.completed");
+      case 'cancelled': return t("booking.cancelled");
+      default: return status;
+    }
+  };
 
   if (loading) {
     return (
@@ -168,11 +157,11 @@ const Profile = () => {
     );
   }
 
-  const userName = user.user_metadata?.full_name || "Foydalanuvchi";
+  const userName = user.user_metadata?.full_name || t("profile.user");
   const userPhone = user.user_metadata?.phone || user.email?.split("@")[0];
 
   return (
-    <div className="min-h-screen bg-background safe-bottom">
+    <div className="min-h-screen bg-background safe-bottom pb-24">
       {/* Header */}
       <header className="px-5 pt-12 pb-6">
         <h1 className="text-2xl font-display font-bold text-foreground">
@@ -195,57 +184,8 @@ const Profile = () => {
               <p className="text-sm text-muted-foreground">
                 {userPhone}
               </p>
-              <div className="flex items-center gap-1 mt-1">
-                <Star className="w-4 h-4 text-primary" />
-                <span className="text-sm font-bold text-primary">{userPoints.toLocaleString()} {t("profile.points")}</span>
-              </div>
             </div>
           </div>
-
-          {/* Stats */}
-          <div className="relative grid grid-cols-3 gap-4 mt-5 pt-5 border-t border-border/30">
-            <div className="text-center">
-              <p className="text-xl font-bold text-primary">{stats.scans}</p>
-              <p className="text-xs text-muted-foreground">{t("profile.cargos")}</p>
-            </div>
-            <div className="text-center border-x border-border/30">
-              <p className="text-xl font-bold text-primary">{stats.places}</p>
-              <p className="text-xs text-muted-foreground">{t("profile.places")}</p>
-            </div>
-            <div className="text-center">
-              <p className="text-xl font-bold text-primary">{stats.reports}</p>
-              <p className="text-xs text-muted-foreground">{t("profile.reports")}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Membership Status */}
-      <section className="px-5 mb-4">
-        <MembershipBadge annualVolume={annualVolume} variant="small" className="w-full justify-center" />
-      </section>
-
-      {/* Quick Actions */}
-      <section className="px-5 mb-6">
-        <div className="grid grid-cols-2 gap-3">
-          <button 
-            onClick={() => navigate("/deep-check")}
-            className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
-          >
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Scan className="w-5 h-5 text-primary" />
-            </div>
-            <span className="text-sm font-medium text-foreground">{t("profile.deepCheck")}</span>
-          </button>
-          <button 
-            onClick={() => navigate("/rewards")}
-            className="flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
-          >
-            <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
-              <Star className="w-5 h-5 text-amber-400" />
-            </div>
-            <span className="text-sm font-medium text-foreground">{t("profile.rewards")}</span>
-          </button>
         </div>
       </section>
 
@@ -253,7 +193,7 @@ const Profile = () => {
       {isAdmin && (
         <section className="px-5 mb-4">
           <button
-            onClick={() => navigate("/admin/deep-checks")}
+            onClick={() => navigate("/admin/dashboard")}
             className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/10 border border-amber-500/30 hover:border-amber-500/50 transition-all"
           >
             <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
@@ -266,6 +206,73 @@ const Profile = () => {
           </button>
         </section>
       )}
+
+      {/* Translator Bookings */}
+      <section className="px-5 mb-6">
+        <div className="flex items-center justify-between mb-3">
+          <h3 className="text-sm font-semibold text-foreground">
+            {t("profile.translatorBookings")}
+          </h3>
+          <button 
+            onClick={() => navigate("/translators")}
+            className="text-xs text-primary hover:underline"
+          >
+            {t("profile.viewAll")}
+          </button>
+        </div>
+
+        {bookingsLoading ? (
+          <div className="flex justify-center py-6">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : bookings.length === 0 ? (
+          <div className="text-center py-6 bg-card rounded-xl border border-border/50">
+            <CalendarCheck className="w-10 h-10 text-muted-foreground mx-auto mb-2" />
+            <p className="text-sm text-muted-foreground">{t("profile.noBookings")}</p>
+            <Button
+              variant="link"
+              onClick={() => navigate("/translators")}
+              className="mt-2 text-primary"
+            >
+              {t("profile.findTranslator")}
+            </Button>
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {bookings.map((booking) => (
+              <div
+                key={booking.id}
+                className="p-4 rounded-xl bg-card border border-border/50"
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <div>
+                    <p className="font-medium text-foreground">
+                      {booking.translator?.name || t("profile.unknownTranslator")}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {booking.translator?.city}
+                    </p>
+                  </div>
+                  <span className={cn(
+                    "px-2 py-1 rounded-full text-xs font-medium",
+                    getStatusColor(booking.status)
+                  )}>
+                    {getStatusLabel(booking.status)}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-muted-foreground">
+                    {format(new Date(booking.booking_date), "dd.MM.yyyy")}
+                  </span>
+                  <span className="font-semibold text-primary">
+                    ¥{booking.total_amount}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
       {/* Menu Items */}
       <section className="px-5 mb-6">
@@ -290,27 +297,12 @@ const Profile = () => {
                 <span className="flex-1 text-left text-sm font-medium text-foreground">
                   {item.label}
                 </span>
-                {item.count !== undefined && item.count > 0 && (
-                  <span className="px-2 py-0.5 rounded-full bg-primary/10 text-xs font-medium text-primary">
-                    {item.count}
-                  </span>
-                )}
                 <ChevronRight className="w-5 h-5 text-muted-foreground" />
               </button>
             );
           })}
         </div>
       </section>
-
-      {/* My Reports Section */}
-      {showReports && (
-        <section className="px-5 mb-6">
-          <h3 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
-            {t("profile.myReports")}
-          </h3>
-          <MyReports />
-        </section>
-      )}
 
       {/* Sign Out */}
       <section className="px-5 pb-8">

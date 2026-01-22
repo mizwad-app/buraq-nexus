@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Home, Compass, Gift, User, ScanLine } from "lucide-react";
+import { Home, Map, User, ScanLine } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AIScannerModal } from "./AIScannerModal";
 
@@ -12,11 +12,11 @@ export const BottomNavigation = () => {
 
   const navItems = [
     { path: "/", icon: Home, label: t("nav.home") },
-    { path: "/cargo", icon: Compass, label: t("nav.cargo") },
+    { path: "/travel", icon: Map, label: t("nav.travel") },
   ];
 
   const rightNavItems = [
-    { path: "/rewards", icon: Gift, label: t("nav.rewards") },
+    { path: "/mosques", icon: Map, label: t("nav.mosques") },
     { path: "/profile", icon: User, label: t("nav.profile") },
   ];
 

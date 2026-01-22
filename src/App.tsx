@@ -11,13 +11,10 @@ import Travel from "./pages/Travel";
 import Ibadah from "./pages/Ibadah";
 import Business from "./pages/Business";
 import Profile from "./pages/Profile";
-import Cargo from "./pages/Cargo";
-import Rewards from "./pages/Rewards";
 import DeepCheckRequest from "./pages/DeepCheckRequest";
 import AdminDeepChecks from "./pages/AdminDeepChecks";
 import AdminLocations from "./pages/AdminLocations";
 import Mosques from "./pages/Mosques";
-import Eco from "./pages/Eco";
 import TravelGuide from "./pages/TravelGuide";
 import TravelChecklist from "./pages/TravelChecklist";
 import Translators from "./pages/Translators";
@@ -61,11 +58,8 @@ const App = () => (
                       <Route path="/ibadah" element={<Ibadah />} />
                       <Route path="/business" element={<Business />} />
                       <Route path="/profile" element={<Profile />} />
-                      <Route path="/cargo" element={<Cargo />} />
-                      <Route path="/rewards" element={<Rewards />} />
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
                       <Route path="/mosques" element={<Mosques />} />
-                      <Route path="/eco" element={<Eco />} />
                       <Route path="/guide" element={<TravelGuide />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
                       <Route path="/translators" element={<Translators />} />
