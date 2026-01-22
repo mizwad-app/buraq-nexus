@@ -18,7 +18,7 @@ import {
   Briefcase,
   GraduationCap
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -113,6 +113,7 @@ const SPECIALIZATIONS = [
 const TranslatorMarketplace = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const location = useLocation();
   const { getField } = useTranslatedField();
   const { user } = useAuth();
   const { toast } = useToast();
@@ -138,6 +139,17 @@ const TranslatorMarketplace = () => {
   useEffect(() => {
     fetchTranslators();
   }, []);
+
+  // Handle incoming translator selection from /translators page
+  useEffect(() => {
+    const selectedId = location.state?.selectedTranslatorId;
+    if (selectedId && translators.length > 0) {
+      const translator = translators.find(t => t.id === selectedId);
+      if (translator) {
+        handleChat(translator);
+      }
+    }
+  }, [location.state?.selectedTranslatorId, translators]);
 
   const fetchTranslators = async () => {
     try {

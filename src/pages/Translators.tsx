@@ -104,9 +104,9 @@ const Translators = () => {
     return translators.filter(t => t.city === selectedCity);
   }, [translators, selectedCity]);
 
-  // Navigate to translator marketplace for chat
-  const openChat = () => {
-    navigate('/translator-marketplace');
+  // Open chat for selected translator - navigate to marketplace with translator selected
+  const openChat = (translator: Translator) => {
+    navigate('/translator-marketplace', { state: { selectedTranslatorId: translator.id } });
   };
 
   const renderHSKBadge = (level: number | null) => {
@@ -344,7 +344,7 @@ const Translators = () => {
               {/* Internal Chat Button */}
               <div className="pt-4 border-t border-border/50">
                 <button
-                  onClick={openChat}
+                  onClick={() => openChat(selectedTranslator)}
                   className="w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-primary hover:bg-primary/90 transition-all"
                 >
                   <MessageCircle className="w-6 h-6 text-primary-foreground" />

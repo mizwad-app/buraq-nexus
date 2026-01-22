@@ -206,8 +206,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               ) : (
                 <div className="aspect-video rounded-xl overflow-hidden bg-gradient-to-br from-muted/80 to-muted/40 border border-border/50 flex flex-col items-center justify-center">
                   <Video className="w-12 h-12 text-muted-foreground/50 mb-3" />
-                  <p className="text-sm text-muted-foreground font-medium">Video tanishtiruv yuklanmagan</p>
-                  <p className="text-xs text-muted-foreground/70 mt-1">Tarjimon hali video qo'shmagan</p>
+                  <p className="text-sm text-muted-foreground font-medium">Video tanishtiruv yaqin orada yuklanadi</p>
                 </div>
               )}
             </div>
