@@ -109,7 +109,7 @@
       "addressCopied": "Manzil nusxalandi!"
     },
     "marketCard": {
-      "taxiFare": "Taksi",
+      "taxiFare": "Aeroportdan taksi",
       "metro": "Metro",
       "hours": "Ish vaqti",
       "distance": "Masofa",
@@ -170,8 +170,8 @@
     "restaurantsTab": "Restoranlar",
     "mosquesTab": "Masjidlar",
     "shopsTab": "Do'konlar",
-    "halalShops": "Halol Do'konlar",
-    "shopsComingSoon": "Tasdiqlangan halol oziq-ovqat do'konlari va bozorlarni qo'shmoqdamiz. Tez orada tekshiring!",
+    "halalShops": "Halol do'kon",
+    "shopsComingSoon": "Tasdiqlangan halol do'konlarni qo'shmoqdamiz. Tez orada tekshiring!",
     "viewOnMap": "Xaritada",
     "halalCertified": "Halol sertifikatlangan",
     "hasHalalFood": "Halol taom mavjud",
