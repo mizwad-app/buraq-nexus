@@ -26,6 +26,7 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
 import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
 import { BookingSheet } from "@/components/marketplace/BookingSheet";
+import { TranslatorDetailSheet } from "@/components/marketplace/TranslatorDetailSheet";
 import {
   Sheet,
   SheetContent,
@@ -493,153 +494,113 @@ const Translators = () => {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="space-y-4">
             {filteredTranslators.map((translator) => (
               <div
                 key={translator.id}
                 className="bg-card rounded-2xl border border-border/50 hover:border-primary/30 transition-all overflow-hidden"
               >
-                {/* Preply-Style Video Preview */}
+                {/* Full-Width Card - Preply Style Horizontal Layout */}
                 <div 
-                  className="relative aspect-video cursor-pointer group"
+                  className="flex gap-4 p-4 cursor-pointer"
                   onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
                 >
-                  {/* Video Thumbnail / Avatar as Background */}
-                  <img
-                    src={translator.avatar_url || AVATAR_PLACEHOLDER}
-                    alt={getField(translator, 'name')}
-                    className="w-full h-full object-cover"
-                  />
-                  
-                  {/* Dark Gradient Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                  
-                  {/* Play Button - Preply Pink Style */}
-                  <div className="absolute bottom-3 left-3">
-                    <div className={cn(
-                      "w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110",
-                      translator.intro_video_url 
-                        ? "bg-[#FF4081]" 
-                        : "bg-muted-foreground/50"
-                    )}>
-                      <Play className={cn(
-                        "w-6 h-6 ml-0.5",
-                        translator.intro_video_url ? "text-white fill-white" : "text-white/70"
-                      )} />
-                    </div>
-                  </div>
-                  
-                  {/* Video Label */}
-                  {translator.intro_video_url && (
-                    <div className="absolute bottom-3 left-[68px]">
-                      <span className="px-2 py-1 rounded-lg bg-black/60 backdrop-blur-sm text-white text-xs font-medium flex items-center gap-1">
-                        <Video className="w-3 h-3" />
-                        Video tanishuv
+                  {/* Large Profile Picture */}
+                  <div className="relative flex-shrink-0">
+                    <img
+                      src={translator.avatar_url || AVATAR_PLACEHOLDER}
+                      alt={getField(translator, 'name')}
+                      className="w-24 h-24 rounded-2xl object-cover shadow-lg"
+                    />
+                    {/* Availability Badge */}
+                    <div className="absolute -bottom-1 -right-1">
+                      <span className={cn(
+                        "px-2 py-0.5 rounded-lg text-[10px] font-bold shadow-md",
+                        translator.is_available 
+                          ? "bg-emerald-500 text-white" 
+                          : "bg-gray-500 text-white"
+                      )}>
+                        {translator.is_available ? "✓" : "—"}
                       </span>
                     </div>
-                  )}
-                  
-                  {/* Verification Badge - Top Right */}
-                  {translator.is_verified && (
-                    <div className="absolute top-3 right-3 p-1.5 bg-primary rounded-full shadow-lg">
-                      <BadgeCheck className="w-4 h-4 text-primary-foreground" />
-                    </div>
-                  )}
-                  
-                  {/* Availability Status - Top Left */}
-                  <div className="absolute top-3 left-3">
-                    <span className={cn(
-                      "px-2 py-1 rounded-lg text-xs font-medium backdrop-blur-sm",
-                      translator.is_available 
-                        ? "bg-emerald-500/90 text-white" 
-                        : "bg-gray-500/80 text-white"
-                    )}>
-                      {translator.is_available ? "Mavjud" : "Band"}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Card Content */}
-                <div 
-                  className="p-4 cursor-pointer" 
-                  onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
-                >
-                  <div className="flex items-start gap-3">
-                    {/* Small Avatar overlapping video */}
-                    <div className="relative flex-shrink-0">
-                      <img
-                        src={translator.avatar_url || AVATAR_PLACEHOLDER}
-                        alt={getField(translator, 'name')}
-                        className="w-14 h-14 rounded-xl object-cover border-2 border-background shadow-md -mt-10"
-                      />
-                    </div>
-
-                    {/* Info */}
-                    <div className="flex-1 min-w-0 pt-1">
-                      <div className="flex items-center gap-2 flex-wrap mb-1">
-                        <h3 className="font-semibold text-foreground text-lg truncate">{getField(translator, 'name')}</h3>
-                        {renderHSKBadge(translator.hsk_level)}
+                    {/* Video Indicator */}
+                    {translator.intro_video_url && (
+                      <div className="absolute top-1 left-1">
+                        <div className="w-6 h-6 rounded-lg bg-[#FF4081] flex items-center justify-center shadow-md">
+                          <Play className="w-3 h-3 text-white fill-white ml-0.5" />
+                        </div>
                       </div>
-                      
-                      <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                    )}
+                  </div>
+
+                  {/* Info Section */}
+                  <div className="flex-1 min-w-0">
+                    {/* Header Row - Name + Verification */}
+                    <div className="flex items-center gap-2 mb-1">
+                      <h3 className="font-bold text-foreground text-lg truncate">{getField(translator, 'name')}</h3>
+                      {translator.is_verified && (
+                        <BadgeCheck className="w-5 h-5 text-primary flex-shrink-0" />
+                      )}
+                    </div>
+                    
+                    {/* Location, Age, HSK Row */}
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2 flex-wrap">
+                      <div className="flex items-center gap-1">
                         <MapPin className="w-3.5 h-3.5" />
                         <span>{getField(translator, 'city')}</span>
-                        {translator.age && (
-                          <>
-                            <span className="text-muted-foreground/50">•</span>
-                            <span>{translator.age} yosh</span>
-                          </>
-                        )}
                       </div>
+                      {translator.age && (
+                        <>
+                          <span className="text-muted-foreground/40">•</span>
+                          <span>{translator.age} yosh</span>
+                        </>
+                      )}
+                      {translator.hsk_level && (
+                        <>
+                          <span className="text-muted-foreground/40">•</span>
+                          {renderHSKBadge(translator.hsk_level)}
+                        </>
+                      )}
                     </div>
-                  </div>
 
-                  {/* Stats Row - Preply Style */}
-                  <div className="flex items-center justify-between py-3 mt-2 border-t border-border/50">
-                    {/* Rating */}
-                    <div className="flex items-center gap-1.5">
-                      <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
-                      <span className="font-bold text-foreground">{translator.rating?.toFixed(1) || "5.0"}</span>
+                    {/* Price - Prominent */}
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className="text-xl font-bold text-primary">¥{translator.price_per_day || 0}</span>
+                      <span className="text-sm text-muted-foreground">/kun</span>
+                      {translator.rating && (
+                        <div className="flex items-center gap-1 ml-auto">
+                          <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                          <span className="font-semibold text-foreground">{translator.rating?.toFixed(1)}</span>
+                        </div>
+                      )}
                     </div>
-                    
-                    {/* Price */}
-                    <div className="text-center">
-                      <span className="text-lg font-bold text-foreground">¥{translator.price_per_day || 0}</span>
-                      <span className="text-xs text-muted-foreground">/kun</span>
-                    </div>
-                    
-                    {/* Reviews */}
-                    <div className="text-right">
-                      <span className="font-medium text-foreground">{translator.total_reviews || 0}</span>
-                      <span className="text-xs text-muted-foreground ml-1">sharh</span>
-                    </div>
-                    
-                    {/* Clients */}
-                    <div className="text-right">
-                      <span className="font-medium text-foreground">{translator.completed_bookings || 0}</span>
-                      <span className="text-xs text-muted-foreground ml-1">mijoz</span>
-                    </div>
-                  </div>
 
-                  {/* Transport & Specialization Badges */}
-                  <div className="flex flex-wrap gap-1.5 mt-2">
-                    {translator.has_personal_car && (
-                      <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
-                        <Car className="w-3 h-3" />
-                        🚗 Avtomobil
-                      </span>
-                    )}
-                    {translator.has_chinese_driving_license && (
-                      <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
-                        <IdCard className="w-3 h-3" />
-                        🪪 Guvohnoma
-                      </span>
-                    )}
-                    {translator.specializations && translator.specializations.slice(0, 2).map((spec, idx) => (
-                      <span key={idx} className="px-2 py-0.5 bg-muted rounded-full text-[10px] text-muted-foreground">
-                        {spec}
-                      </span>
-                    ))}
+                    {/* Transport Badges - Buraq Green */}
+                    <div className="flex flex-wrap gap-1.5">
+                      {translator.has_personal_car && (
+                        <span className="px-2 py-0.5 bg-primary/15 border border-primary/30 rounded-lg text-[11px] text-primary flex items-center gap-1 font-medium">
+                          <Car className="w-3 h-3" />
+                          🚗 Avtomobil
+                        </span>
+                      )}
+                      {translator.has_chinese_driving_license && (
+                        <span className="px-2 py-0.5 bg-primary/15 border border-primary/30 rounded-lg text-[11px] text-primary flex items-center gap-1 font-medium">
+                          <IdCard className="w-3 h-3" />
+                          🪪 Guvohnoma
+                        </span>
+                      )}
+                      {/* Stats badges */}
+                      {(translator.completed_bookings ?? 0) > 0 && (
+                        <span className="px-2 py-0.5 bg-muted rounded-lg text-[11px] text-muted-foreground">
+                          {translator.completed_bookings}+ mijoz
+                        </span>
+                      )}
+                      {(translator.total_reviews ?? 0) > 0 && (
+                        <span className="px-2 py-0.5 bg-muted rounded-lg text-[11px] text-muted-foreground">
+                          {translator.total_reviews} sharh
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
 
@@ -676,142 +637,21 @@ const Translators = () => {
         )}
       </section>
 
-      {/* Translator Detail Sheet */}
-      <Sheet open={detailOpen} onOpenChange={setDetailOpen}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
-          {selectedTranslator && (
-            <div className="h-full overflow-y-auto">
-              <SheetHeader className="text-left pb-4">
-                <div className="flex items-start gap-4">
-                  <div className="relative">
-                    <img
-                      src={selectedTranslator.avatar_url || AVATAR_PLACEHOLDER}
-                      alt={getField(selectedTranslator, 'name')}
-                      className="w-20 h-20 rounded-2xl object-cover"
-                    />
-                    {selectedTranslator.is_verified && (
-                      <div className="absolute -bottom-1 -right-1 p-1.5 bg-primary rounded-full">
-                        <BadgeCheck className="w-4 h-4 text-primary-foreground" />
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <SheetTitle className="text-xl">{getField(selectedTranslator, 'name')}</SheetTitle>
-                      {renderHSKBadge(selectedTranslator.hsk_level)}
-                    </div>
-                    <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-                      <MapPin className="w-4 h-4" />
-                      <span>{getField(selectedTranslator, 'city')}</span>
-                      {selectedTranslator.age && (
-                        <>
-                          <span className="text-muted-foreground/50">•</span>
-                          <span>{selectedTranslator.age} yosh</span>
-                        </>
-                      )}
-                    </div>
-                    {selectedTranslator.is_verified && (
-                      <div className="flex items-center gap-1 mt-1 text-xs text-primary">
-                        <BadgeCheck className="w-3 h-3" />
-                        {t("translators.verifiedByBuraq")}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </SheetHeader>
-
-              {/* Detailed Rating Matrix (replaces single rating stat) */}
-              <div className="mb-4">
-              <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
-                  {([
-                    { label: "Ishonchlilik", value: selectedTranslator.rating },
-                    { label: "Muzokara san'ati", value: selectedTranslator.rating },
-                    { label: "Vaqtga rioya qilish (Punktualnost)", value: selectedTranslator.rating },
-                    { label: "Bilim darajasi", value: selectedTranslator.rating },
-                  ] as const).map((row) => (
-                    <div key={row.label} className="flex items-center justify-between">
-                      <span className="text-sm text-foreground/80">{row.label}</span>
-                      <div className="flex items-center gap-1">
-                        {[1, 2, 3, 4, 5].map((star) => (
-                          <Star
-                            key={star}
-                            className={cn(
-                              "w-4 h-4 transition-colors",
-                              star <= Math.round(Number(row.value) || 0)
-                                ? "fill-primary text-primary"
-                                : "text-muted-foreground/30"
-                            )}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Stats */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
-                <div className="bg-muted/50 rounded-xl p-3 text-center">
-                  <div className="font-bold text-foreground mb-1">{selectedTranslator.total_reviews}</div>
-                  <p className="text-[10px] text-muted-foreground">{t("translators.reviews")}</p>
-                </div>
-                <div className="bg-muted/50 rounded-xl p-3 text-center">
-                  <div className="font-bold text-primary mb-1">
-                    {selectedTranslator.price_per_day ? `¥${selectedTranslator.price_per_day}` : "—"}
-                  </div>
-                  <p className="text-[10px] text-muted-foreground">{t("translators.perDay")}</p>
-                </div>
-              </div>
-
-              {/* Bio */}
-              {getField(selectedTranslator, 'bio') && (
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-foreground mb-2">{t("translators.about")}</h4>
-                  <p className="text-sm text-muted-foreground">{getField(selectedTranslator, 'bio')}</p>
-                </div>
-              )}
-
-              {/* Specializations */}
-              {selectedTranslator.specializations && selectedTranslator.specializations.length > 0 && (
-                <div className="mb-4">
-                  <h4 className="text-sm font-semibold text-foreground mb-2">{t("translators.specializations")}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedTranslator.specializations.map((spec, idx) => (
-                      <span key={idx} className="px-3 py-1 bg-primary/10 text-primary rounded-full text-xs">
-                        {spec}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Internal Chat Button */}
-              <div className="pt-4 border-t border-border/50">
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => openChat(selectedTranslator)}
-                    className="w-full flex items-center justify-center gap-3 p-4 rounded-xl bg-primary hover:bg-primary/90 transition-all"
-                  >
-                    <MessageCircle className="w-6 h-6 text-primary-foreground" />
-                    <span className="font-semibold text-primary-foreground">Xabar yozish</span>
-                  </button>
-
-                  <button
-                    onClick={() => {
-                      setDetailOpen(false);
-                      setBookingOpen(true);
-                    }}
-                    className="w-full flex items-center justify-center gap-3 p-4 rounded-xl border border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground transition-all"
-                  >
-                    <CalendarCheck className="w-6 h-6" />
-                    <span className="font-semibold">Band qilish</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </SheetContent>
-      </Sheet>
+      {/* Translator Detail Sheet - With Video Player */}
+      <TranslatorDetailSheet
+        translator={bookableTranslator}
+        open={detailOpen}
+        onOpenChange={setDetailOpen}
+        onBook={() => {
+          setDetailOpen(false);
+          setBookingOpen(true);
+        }}
+        onChat={() => {
+          if (selectedTranslator) {
+            openChat(selectedTranslator);
+          }
+        }}
+      />
 
       {/* Booking Sheet */}
       <BookingSheet
