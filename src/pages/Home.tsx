@@ -17,7 +17,8 @@ import {
   Lock,
   Ticket,
   Utensils,
-  Map
+  Map,
+  Users
 } from "lucide-react";
 
 import halalFood from "@/assets/halol-food.jpg";
@@ -58,6 +59,7 @@ const Home = () => {
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel", icon: Map },
     { id: "mosques", title: t("modules.mosques"), image: mosque, route: "/mosques", icon: MapPin },
     { id: "business", title: t("modules.business"), image: business, route: "/business", icon: Briefcase },
+    { id: "translators", title: "Tarjimonlar", image: travelGuide, route: "/translators", icon: Users },
     { id: "guide", title: t("modules.guide"), image: travelGuide, route: "/guide", icon: ClipboardCheck },
   ];
 
