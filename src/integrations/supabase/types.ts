@@ -1983,6 +1983,7 @@ export type Database = {
           intro_video_url: string | null
           is_available: boolean | null
           is_verified: boolean | null
+          language_pairs: string[] | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -2030,6 +2031,7 @@ export type Database = {
           intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
+          language_pairs?: string[] | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2077,6 +2079,7 @@ export type Database = {
           intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
+          language_pairs?: string[] | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -2439,11 +2442,13 @@ export type Database = {
           intro_video_url: string | null
           is_available: boolean | null
           is_verified: boolean | null
+          language_pairs: string[] | null
           name: string | null
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          phone: string | null
           price_per_day: number | null
           rating: number | null
           self_declared_hsk: number | null
@@ -2480,11 +2485,13 @@ export type Database = {
           intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
+          language_pairs?: string[] | null
           name?: string | null
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          phone?: string | null
           price_per_day?: number | null
           rating?: number | null
           self_declared_hsk?: number | null
@@ -2521,11 +2528,13 @@ export type Database = {
           intro_video_url?: string | null
           is_available?: boolean | null
           is_verified?: boolean | null
+          language_pairs?: string[] | null
           name?: string | null
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          phone?: string | null
           price_per_day?: number | null
           rating?: number | null
           self_declared_hsk?: number | null

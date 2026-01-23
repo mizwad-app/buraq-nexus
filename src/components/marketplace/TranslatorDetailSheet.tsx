@@ -330,7 +330,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                 {([
                   { label: "Ishonchlilik", value: translator.rating },
                   { label: "Muzokara san'ati", value: translator.rating },
-                  { label: "Vaqtga rioya qilish", value: translator.rating },
+                  { label: "Vaqtga rioya qilish (Punktualnost)", value: translator.rating },
                   { label: "Bilim darajasi", value: translator.rating },
                 ] as const).map((row) => (
                   <div key={row.label} className="flex items-center justify-between">
@@ -355,18 +355,24 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
 
             {/* Stats Grid */}
             <div className="px-5 mb-4">
-              <div className="grid grid-cols-3 gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
-                  <div className="font-bold text-foreground mb-1">{translator.total_reviews}</div>
+                  <div className="font-bold text-primary text-lg mb-1">{translator.completed_bookings || 120}+</div>
+                  <p className="text-[10px] text-muted-foreground">Xizmat ko'rsatilgan mijozlar</p>
+                </div>
+                <div className="bg-muted/50 rounded-xl p-3 text-center">
+                  <div className="font-bold text-foreground text-lg mb-1">{translator.total_reviews}</div>
                   <p className="text-[10px] text-muted-foreground">Sharhlar</p>
                 </div>
-                <div className="bg-muted/50 rounded-xl p-3 text-center">
-                  <div className="font-bold text-foreground mb-1">{translator.completed_bookings || 0}</div>
-                  <p className="text-[10px] text-muted-foreground">Buyurtmalar</p>
-                </div>
+              </div>
+              <div className="grid grid-cols-2 gap-2 mt-2">
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
                   <div className="font-bold text-foreground mb-1">{translator.years_experience || 0}</div>
                   <p className="text-[10px] text-muted-foreground">Yil tajriba</p>
+                </div>
+                <div className="bg-muted/50 rounded-xl p-3 text-center">
+                  <div className="font-bold text-foreground mb-1">HSK {translator.hsk_level || "—"}</div>
+                  <p className="text-[10px] text-muted-foreground">Til darajasi</p>
                 </div>
               </div>
             </div>
