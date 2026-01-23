@@ -56,16 +56,17 @@ const Home = () => {
     checkUserInterests();
   }, [user]);
 
-  // Main 6-module grid (3 columns x 2 rows)
+  // Main 6-module grid (2 columns x 3 rows)
   const modules = [
     // Row 1
     { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah", icon: Utensils },
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel", icon: Map },
-    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators", icon: Users },
     // Row 2
+    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators", icon: Users },
     { id: "business", title: t("modules.business"), image: business, route: "/business", icon: Briefcase },
+    // Row 3
     { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check", icon: ShieldCheck, isAudit: true },
-    { id: "travelGuide", title: t("modules.travelGuide"), image: mosque, route: "/guide", icon: Landmark },
+    { id: "travelGuide", title: t("modules.guide"), image: mosque, route: "/guide", icon: Landmark },
   ];
 
   return (
@@ -151,9 +152,9 @@ const Home = () => {
         </h2>
       </section>
 
-      {/* Module Grid - 3 columns x 2 rows */}
+      {/* Module Grid - 2 columns x 3 rows */}
       <section className="px-5 pb-4">
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-3">
           {modules.map((module, index) => (
             <ImageCard
               key={module.id}
@@ -162,7 +163,6 @@ const Home = () => {
               onClick={() => navigate(module.route)}
               delay={index * 60}
               isPremium={module.id === "business"}
-              isCompact
             />
           ))}
         </div>
