@@ -19,7 +19,7 @@ import {
   Users,
   ShieldCheck,
   Landmark,
-  PlayCircle
+  BookOpen
 } from "lucide-react";
 
 import halalFood from "@/assets/halol-food.jpg";
@@ -65,7 +65,7 @@ const Home = () => {
     // Row 2
     { id: "business", title: t("modules.business"), image: business, route: "/business", icon: Briefcase },
     { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check", icon: ShieldCheck, isAudit: true },
-    { id: "consulates", title: t("modules.consulates"), image: mosque, route: "/guide", icon: Landmark },
+    { id: "travelGuide", title: t("modules.travelGuide"), image: mosque, route: "/guide", icon: Landmark },
   ];
 
   return (
@@ -168,28 +168,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Foydali Maslahatlar - Video Tips Section */}
-      <section className="px-5 pb-8">
-        <button
-          onClick={() => navigate("/guide?tab=video")}
-          className="w-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/30 p-4 group hover:border-primary/50 transition-all"
-        >
-          <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
-              <PlayCircle className="w-7 h-7 text-primary" />
-            </div>
-            <div className="flex-1 text-left">
-              <h3 className="font-display font-semibold text-foreground text-base">
-                {t("modules.videoTips")}
-              </h3>
-              <p className="text-sm text-muted-foreground mt-0.5">
-                SIM-karta, VPN, to'lovlar haqida video maslahatlar
-              </p>
-            </div>
-            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
-          </div>
-        </button>
-      </section>
 
       {/* Admin Entry - Footer */}
       <footer className="px-5 pb-24 flex justify-center">
