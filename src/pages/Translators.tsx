@@ -5,15 +5,18 @@ import {
   MapPin, 
   Star, 
   BadgeCheck, 
-  MessageCircle,
-  CalendarCheck,
   ChevronLeft,
-  Globe,
   Clock,
   Languages,
   Car,
   IdCard,
-  CircleDollarSign
+  CircleDollarSign,
+  SlidersHorizontal,
+  X,
+  RotateCcw,
+  Check,
+  MessageCircle,
+  CalendarCheck
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -102,13 +105,34 @@ const Translators = () => {
   const { getField } = useTranslatedField();
   const [translators, setTranslators] = useState<Translator[]>([]);
   const [loading, setLoading] = useState(true);
+  const [filterOpen, setFilterOpen] = useState(false);
+  
+  // Filter states
   const [selectedCity, setSelectedCity] = useState("all");
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedPriceRange, setSelectedPriceRange] = useState("all");
   const [selectedTransport, setSelectedTransport] = useState("all");
+  
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+
+  // Count active filters
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCity !== "all") count++;
+    if (selectedLanguage !== "all") count++;
+    if (selectedPriceRange !== "all") count++;
+    if (selectedTransport !== "all") count++;
+    return count;
+  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport]);
+
+  const resetFilters = () => {
+    setSelectedCity("all");
+    setSelectedLanguage("all");
+    setSelectedPriceRange("all");
+    setSelectedTransport("all");
+  };
 
   const bookableTranslator: MarketplaceTranslator | null = useMemo(() => {
     if (!selectedTranslator) return null;
@@ -261,100 +285,199 @@ const Translators = () => {
             </div>
         </div>
 
-        {/* Filters */}
-        <div className="space-y-2">
-          {/* Language Pair Filter - Full Width */}
-          <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-            <SelectTrigger className={cn(
-              "w-full transition-colors",
-              selectedLanguage !== "all" && "border-primary bg-primary/10"
-            )}>
-              <div className="flex items-center gap-2">
-                <Languages className={cn(
-                  "w-4 h-4",
-                  selectedLanguage !== "all" ? "text-primary" : "text-muted-foreground"
-                )} />
-                <SelectValue placeholder="Barcha tillar" />
-              </div>
-            </SelectTrigger>
-            <SelectContent>
-              {LANGUAGE_PAIRS.map(lang => (
-                <SelectItem key={lang.id} value={lang.id}>{lang.label}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        {/* Clean Filter Button */}
+        <Button 
+          variant={activeFilterCount > 0 ? "default" : "outline"}
+          className="w-full gap-2"
+          onClick={() => setFilterOpen(true)}
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          <span>Filtrlash</span>
+          {activeFilterCount > 0 && (
+            <span className="ml-auto bg-primary-foreground text-primary text-xs font-bold px-2 py-0.5 rounded-full">
+              {activeFilterCount}
+            </span>
+          )}
+        </Button>
 
-          {/* Compact Filter Row - Scrollable */}
-          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
-            {/* City Filter */}
-            <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger className={cn(
-                "min-w-[120px] flex-shrink-0 transition-colors",
-                selectedCity !== "all" && "border-primary bg-primary/10"
-              )}>
-                <div className="flex items-center gap-1.5">
-                  <MapPin className={cn(
-                    "w-3.5 h-3.5",
-                    selectedCity !== "all" ? "text-primary" : "text-muted-foreground"
-                  )} />
-                  <span className="text-xs truncate">Shahar</span>
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Barcha shaharlar</SelectItem>
-                {cities.map(city => (
-                  <SelectItem key={city} value={city}>{city}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {/* Price Range Filter */}
-            <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
-              <SelectTrigger className={cn(
-                "min-w-[130px] flex-shrink-0 transition-colors",
-                selectedPriceRange !== "all" && "border-primary bg-primary/10"
-              )}>
-                <div className="flex items-center gap-1.5">
-                  <CircleDollarSign className={cn(
-                    "w-3.5 h-3.5",
-                    selectedPriceRange !== "all" ? "text-primary" : "text-muted-foreground"
-                  )} />
-                  <span className="text-xs truncate">Narx (Kunlik)</span>
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                {PRICE_RANGES.map(range => (
-                  <SelectItem key={range.id} value={range.id}>{range.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            {/* Transport Filter */}
-            <Select value={selectedTransport} onValueChange={setSelectedTransport}>
-              <SelectTrigger className={cn(
-                "min-w-[120px] flex-shrink-0 transition-colors",
-                selectedTransport !== "all" && "border-primary bg-primary/10"
-              )}>
-                <div className="flex items-center gap-1.5">
-                  <Car className={cn(
-                    "w-3.5 h-3.5",
-                    selectedTransport !== "all" ? "text-primary" : "text-muted-foreground"
-                  )} />
-                  <span className="text-xs truncate">Transport</span>
-                </div>
-              </SelectTrigger>
-              <SelectContent>
-                {TRANSPORT_OPTIONS.map(option => (
-                  <SelectItem key={option.id} value={option.id}>{option.label}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+        {/* Active Filters Summary */}
+        {activeFilterCount > 0 && (
+          <div className="flex flex-wrap gap-1.5 mt-3">
+            {selectedLanguage !== "all" && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
+                <Languages className="w-3 h-3" />
+                {LANGUAGE_PAIRS.find(l => l.id === selectedLanguage)?.label}
+              </span>
+            )}
+            {selectedCity !== "all" && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
+                <MapPin className="w-3 h-3" />
+                {selectedCity}
+              </span>
+            )}
+            {selectedPriceRange !== "all" && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
+                <CircleDollarSign className="w-3 h-3" />
+                {PRICE_RANGES.find(p => p.id === selectedPriceRange)?.label}
+              </span>
+            )}
+            {selectedTransport !== "all" && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
+                <Car className="w-3 h-3" />
+                {TRANSPORT_OPTIONS.find(t => t.id === selectedTransport)?.label}
+              </span>
+            )}
           </div>
-        </div>
+        )}
       </header>
 
+      {/* Filter Modal */}
+      <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
+        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
+          <SheetHeader className="pb-4 border-b border-border/50">
+            <div className="flex items-center justify-between">
+              <SheetTitle className="text-xl font-bold">Filtrlash</SheetTitle>
+              <button 
+                onClick={() => setFilterOpen(false)}
+                className="p-2 hover:bg-muted rounded-full"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+          </SheetHeader>
+
+          <div className="py-6 space-y-6 overflow-y-auto h-[calc(100%-160px)]">
+            {/* Language Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Languages className="w-4 h-4 text-primary" />
+                Til
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {LANGUAGE_PAIRS.map(lang => (
+                  <button
+                    key={lang.id}
+                    onClick={() => setSelectedLanguage(lang.id)}
+                    className={cn(
+                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedLanguage === lang.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* City Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-primary" />
+                Shahar
+              </label>
+              <Select value={selectedCity} onValueChange={setSelectedCity}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Barcha shaharlar" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Barcha shaharlar</SelectItem>
+                  {cities.map(city => (
+                    <SelectItem key={city} value={city}>{city}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Price Range Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <CircleDollarSign className="w-4 h-4 text-primary" />
+                Narx diapazoni (kunlik)
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {PRICE_RANGES.map(range => (
+                  <button
+                    key={range.id}
+                    onClick={() => setSelectedPriceRange(range.id)}
+                    className={cn(
+                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedPriceRange === range.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {range.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Transport Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Car className="w-4 h-4 text-primary" />
+                Transport
+              </label>
+              <div className="space-y-2">
+                {TRANSPORT_OPTIONS.map(option => (
+                  <button
+                    key={option.id}
+                    onClick={() => setSelectedTransport(option.id)}
+                    className={cn(
+                      "w-full px-4 py-3 rounded-xl text-sm font-medium transition-all border flex items-center justify-between",
+                      selectedTransport === option.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    <span>{option.label}</span>
+                    {selectedTransport === option.id && <Check className="w-4 h-4" />}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 bg-background border-t border-border/50 flex gap-3">
+            <Button 
+              variant="outline" 
+              className="flex-1 gap-2"
+              onClick={resetFilters}
+            >
+              <RotateCcw className="w-4 h-4" />
+              Tozalash
+            </Button>
+            <Button 
+              className="flex-1 gap-2"
+              onClick={() => setFilterOpen(false)}
+            >
+              <Check className="w-4 h-4" />
+              Tasdiqlash ({filteredTranslators.length})
+            </Button>
+          </div>
+        </SheetContent>
+      </Sheet>
+
       {/* Translators List */}
-      <section className="px-5">
+      <section className="px-5 pt-4">
+        {/* Results Count */}
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm text-muted-foreground">
+            {filteredTranslators.length} tarjimon topildi
+          </p>
+          {activeFilterCount > 0 && (
+            <button 
+              onClick={resetFilters}
+              className="text-xs text-primary hover:underline"
+            >
+              Filtrlarni tozalash
+            </button>
+          )}
+        </div>
+
         {loading ? (
           <div className="flex justify-center py-8">
             <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
@@ -362,7 +485,10 @@ const Translators = () => {
         ) : filteredTranslators.length === 0 ? (
           <div className="text-center py-8">
             <Users className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
-            <p className="text-muted-foreground">{t("translators.noResults")}</p>
+            <p className="text-muted-foreground mb-3">{t("translators.noResults")}</p>
+            <Button variant="outline" size="sm" onClick={resetFilters}>
+              Filtrlarni tozalash
+            </Button>
           </div>
         ) : (
           <div className="space-y-3">
