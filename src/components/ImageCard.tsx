@@ -7,6 +7,7 @@ interface ImageCardProps {
   delay?: number;
   className?: string;
   isPremium?: boolean;
+  isCompact?: boolean;
 }
 
 export const ImageCard = ({
@@ -16,12 +17,14 @@ export const ImageCard = ({
   delay = 0,
   className,
   isPremium = false,
+  isCompact = false,
 }: ImageCardProps) => {
   return (
     <button
       onClick={onClick}
       className={cn(
-        "module-card w-full text-left animate-scale-in group",
+        "w-full text-left animate-scale-in group relative overflow-hidden rounded-[20px]",
+        isCompact ? "aspect-[4/5]" : "aspect-[4/3]",
         isPremium && "ring-2 ring-amber-500/50",
         className
       )}
@@ -39,7 +42,7 @@ export const ImageCard = ({
         "absolute inset-0",
         isPremium 
           ? "bg-gradient-to-t from-amber-950/90 via-amber-900/40 to-transparent"
-          : "gradient-card-overlay"
+          : "bg-gradient-to-t from-black/80 via-black/30 to-transparent"
       )} />
       
       {/* Premium Badge */}
@@ -50,10 +53,14 @@ export const ImageCard = ({
       )}
       
       {/* Content */}
-      <div className="absolute inset-x-0 bottom-0 p-4">
+      <div className={cn(
+        "absolute inset-x-0 bottom-0",
+        isCompact ? "p-2" : "p-4"
+      )}>
         <h3 className={cn(
-          "font-display font-semibold text-lg leading-tight",
-          isPremium ? "text-amber-100" : "text-foreground"
+          "font-display font-semibold leading-tight",
+          isCompact ? "text-sm" : "text-lg",
+          isPremium ? "text-amber-100" : "text-white"
         )}>
           {title}
         </h3>
