@@ -37,7 +37,8 @@
     "cargo": "Yuk Kuzatuvi",
     "mosques": "Masjidlar",
     "eco": "Eko Loyihalar",
-    "guide": "Sayohat Qo'llanmasi"
+    "guide": "Sayohat Qo'llanmasi",
+    "deepCheck": "Zavod va Kompaniya Tekshiruvi"
   },
   "home": {
     "guestPrompt": "Xizmatlardan foydalaning",
@@ -479,7 +480,7 @@
     "defaultItems": {
       "passport": "Pasport",
       "visa": "Viza",
-      "cantonBadge": "Canton Fair Badge",
+      "cantonBadge": "Kanton yarmarkasi bedji",
       "neckPillow": "Bo'yin yostig'i",
       "prayerMat": "Joynamoz",
       "pen": "Ruchka (deklaratsiya uchun)",
@@ -513,7 +514,45 @@
     "about": "Haqida",
     "perDay": "Kunlik",
     "contactMessage": "Salom! Men Buraq orqali {{name}} bilan bog'lanmoqchiman.",
-    "contactVia": "{{method}} orqali bog'lanish"
+    "contactVia": "{{method}} orqali bog'lanish",
+    "myResume": "Mening rezyumem",
+    "translator": "Tarjimon",
+    "study": "O'qish",
+    "cantonFair": "Kanton yarmarkasi",
+    "university": "Guangzhou Universiteti",
+    "ratingMatrix": {
+      "reliability": "Ishonchlilik",
+      "negotiation": "Muzokara san'ati",
+      "punctuality": "Vaqtga rioya qilish",
+      "expertise": "Bilim darajasi"
+    },
+    "languages": {
+      "uzbekNative": "O'zbek (Ona tili)",
+      "chinese": "Xitoy",
+      "english": "Ingliz"
+    },
+    "transport": {
+      "personalCar": "Shaxsiy avtomobil",
+      "drivingLicense": "Xitoy haydovchilik guvohnomasi"
+    },
+    "specialization": {
+      "medical": "Tibbiyot",
+      "legal": "Huquqiy",
+      "it": "IT",
+      "construction": "Qurilish",
+      "manufacturing": "Ishlab chiqarish",
+      "electronics": "Elektronika",
+      "furniture": "Mebel",
+      "textile": "To'qimachilik",
+      "automotive": "Avtomobil",
+      "trade": "Savdo",
+      "tourism": "Turizm",
+      "education": "Ta'lim",
+      "finance": "Moliya",
+      "general": "Umumiy",
+      "business": "Biznes",
+      "factory": "Zavodlar"
+    }
   },
   "marketplace": {
     "title": "Tarjimonlar Marketplace",

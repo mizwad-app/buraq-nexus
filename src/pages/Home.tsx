@@ -57,10 +57,9 @@ const Home = () => {
   const modules = [
     { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah", icon: Utensils },
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel", icon: Map },
-    { id: "mosques", title: t("modules.mosques"), image: mosque, route: "/mosques", icon: MapPin },
     { id: "business", title: t("modules.business"), image: business, route: "/business", icon: Briefcase },
-    { id: "translators", title: "Tarjimonlar", image: translatorsImg, route: "/translators", icon: Users },
-    { id: "guide", title: t("modules.guide"), image: travelGuide, route: "/guide", icon: ClipboardCheck },
+    { id: "translators", title: t("translators.title"), image: translatorsImg, route: "/translators", icon: Users },
+    { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check", icon: ClipboardCheck },
   ];
 
   return (
@@ -149,7 +148,7 @@ const Home = () => {
       {/* Module Grid */}
       <section className="px-5 pb-8">
         <div className="grid grid-cols-2 gap-3">
-          {modules.map((module, index) => (
+          {modules.slice(0, 4).map((module, index) => (
             <ImageCard
               key={module.id}
               image={module.image}
@@ -160,6 +159,19 @@ const Home = () => {
             />
           ))}
         </div>
+        {/* Last module spans full width for balanced layout */}
+        {modules.length > 4 && (
+          <div className="mt-3">
+            <ImageCard
+              key={modules[4].id}
+              image={modules[4].image}
+              title={modules[4].title}
+              onClick={() => navigate(modules[4].route)}
+              delay={4 * 60}
+              isPremium={modules[4].id === "business"}
+            />
+          </div>
+        )}
       </section>
 
       {/* Admin Entry - Footer */}
