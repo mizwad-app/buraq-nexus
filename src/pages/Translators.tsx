@@ -76,6 +76,13 @@ const LANGUAGE_PAIRS = [
   { id: "es-zh", label: "Ispan-Xitoy" },
 ];
 
+const PRICE_RANGES = [
+  { id: "all", label: "Barchasi", min: 0, max: Infinity },
+  { id: "0-300", label: "¥0 - ¥300", min: 0, max: 300 },
+  { id: "300-500", label: "¥300 - ¥500", min: 300, max: 500 },
+  { id: "500+", label: "¥500+", min: 500, max: Infinity },
+];
+
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 
 
@@ -87,6 +94,7 @@ const Translators = () => {
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState("all");
   const [selectedLanguage, setSelectedLanguage] = useState("all");
+  const [selectedPriceRange, setSelectedPriceRange] = useState("all");
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -171,8 +179,19 @@ const Translators = () => {
       );
     }
     
+    // Price range filter
+    if (selectedPriceRange !== "all") {
+      const priceRange = PRICE_RANGES.find(p => p.id === selectedPriceRange);
+      if (priceRange) {
+        result = result.filter(t => {
+          const price = t.price_per_day || 0;
+          return price >= priceRange.min && price < priceRange.max;
+        });
+      }
+    }
+    
     return result;
-  }, [translators, selectedCity, selectedLanguage]);
+  }, [translators, selectedCity, selectedLanguage, selectedPriceRange]);
 
   // Open chat for selected translator - navigate to marketplace with translator selected
   const openChat = (translator: Translator) => {
@@ -241,21 +260,39 @@ const Translators = () => {
             </SelectContent>
           </Select>
 
-          {/* City Filter */}
-          <Select value={selectedCity} onValueChange={setSelectedCity}>
-            <SelectTrigger className="w-full">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                <SelectValue placeholder="Barcha shaharlar" />
-              </div>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Barcha shaharlar</SelectItem>
-              {cities.map(city => (
-                <SelectItem key={city} value={city}>{city}</SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          {/* City and Price Filters Row */}
+          <div className="grid grid-cols-2 gap-2">
+            {/* City Filter */}
+            <Select value={selectedCity} onValueChange={setSelectedCity}>
+              <SelectTrigger className="w-full">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-muted-foreground" />
+                  <SelectValue placeholder="Shahar" />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">Barcha shaharlar</SelectItem>
+                {cities.map(city => (
+                  <SelectItem key={city} value={city}>{city}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Price Range Filter */}
+            <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
+              <SelectTrigger className="w-full">
+                <div className="flex items-center gap-2">
+                  <Filter className="w-4 h-4 text-muted-foreground" />
+                  <SelectValue placeholder="Narx" />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                {PRICE_RANGES.map(range => (
+                  <SelectItem key={range.id} value={range.id}>{range.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </header>
 
