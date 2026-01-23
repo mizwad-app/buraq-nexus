@@ -92,12 +92,12 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
           <div className={cn(
             "w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110",
             translator.intro_video_url 
-              ? "bg-[#FF4081]" 
+              ? "bg-primary shadow-primary/30" 
               : "bg-muted-foreground/50"
           )}>
             <Play className={cn(
               "w-6 h-6 ml-0.5",
-              translator.intro_video_url ? "text-white fill-white" : "text-white/70"
+              translator.intro_video_url ? "text-primary-foreground fill-primary-foreground" : "text-white/70"
             )} />
           </div>
         </div>
@@ -124,8 +124,8 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
           <span className={cn(
             "px-2 py-1 rounded-lg text-xs font-medium backdrop-blur-sm",
             translator.is_available 
-              ? "bg-emerald-500/90 text-white" 
-              : "bg-gray-500/80 text-white"
+              ? "bg-primary/90 text-primary-foreground" 
+              : "bg-muted/80 text-muted-foreground"
           )}>
             {translator.is_available ? "Mavjud" : "Band"}
           </span>
@@ -243,7 +243,7 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
         <Button 
           size="sm" 
           onClick={(e) => { e.stopPropagation(); onBook(); }}
-          className="flex-1 gap-1.5 bg-[#FF4081] hover:bg-[#E91E63] text-white"
+          className="flex-1 gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md shadow-primary/20"
         >
           <CalendarCheck className="w-4 h-4" />
           Band qilish

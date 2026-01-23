@@ -517,8 +517,8 @@ const Translators = () => {
                       <span className={cn(
                         "px-2 py-0.5 rounded-lg text-[10px] font-bold shadow-md",
                         translator.is_available 
-                          ? "bg-emerald-500 text-white" 
-                          : "bg-gray-500 text-white"
+                          ? "bg-primary text-primary-foreground" 
+                          : "bg-muted text-muted-foreground"
                       )}>
                         {translator.is_available ? "✓" : "—"}
                       </span>
@@ -526,8 +526,8 @@ const Translators = () => {
                     {/* Video Indicator */}
                     {translator.intro_video_url && (
                       <div className="absolute top-1 left-1">
-                        <div className="w-6 h-6 rounded-lg bg-[#FF4081] flex items-center justify-center shadow-md">
-                          <Play className="w-3 h-3 text-white fill-white ml-0.5" />
+                        <div className="w-6 h-6 rounded-lg bg-primary flex items-center justify-center shadow-md shadow-primary/30">
+                          <Play className="w-3 h-3 text-primary-foreground fill-primary-foreground ml-0.5" />
                         </div>
                       </div>
                     )}
@@ -625,7 +625,7 @@ const Translators = () => {
                       setSelectedTranslator(translator);
                       setBookingOpen(true);
                     }}
-                    className="flex-1 gap-1.5 bg-[#FF4081] hover:bg-[#E91E63] text-white"
+                    className="flex-1 gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md shadow-primary/20"
                   >
                     <CalendarCheck className="w-4 h-4" />
                     Band qilish
