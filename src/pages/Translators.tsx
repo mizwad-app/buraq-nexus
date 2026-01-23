@@ -8,12 +8,12 @@ import {
   MessageCircle,
   CalendarCheck,
   ChevronLeft,
-  Filter,
   Globe,
   Clock,
   Languages,
   Car,
-  IdCard
+  IdCard,
+  CircleDollarSign
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -81,16 +81,16 @@ const LANGUAGE_PAIRS = [
 ];
 
 const PRICE_RANGES = [
-  { id: "all", label: "Barchasi", min: 0, max: Infinity },
-  { id: "0-300", label: "¥0 - ¥300", min: 0, max: 300 },
-  { id: "300-500", label: "¥300 - ¥500", min: 300, max: 500 },
-  { id: "500+", label: "¥500+", min: 500, max: Infinity },
+  { id: "all", label: "Hammasi", min: 0, max: Infinity },
+  { id: "0-300", label: "Arzonroq (¥300 gacha)", min: 0, max: 300 },
+  { id: "300-500", label: "O'rtacha (¥300-¥500)", min: 300, max: 500 },
+  { id: "500+", label: "Premium (¥500+)", min: 500, max: Infinity },
 ];
 
 const TRANSPORT_OPTIONS = [
-  { id: "all", label: "Barchasi" },
-  { id: "has_car", label: "Avtomobil bor" },
-  { id: "has_license", label: "Haydovchilik guvohnomasi" },
+  { id: "all", label: "Hammasi" },
+  { id: "has_car", label: "Faqat avtomobil borlar" },
+  { id: "has_license", label: "Faqat guvohnoma borlar" },
 ];
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
@@ -262,13 +262,19 @@ const Translators = () => {
         </div>
 
         {/* Filters */}
-        <div className="space-y-3">
-          {/* Language Pair Filter */}
+        <div className="space-y-2">
+          {/* Language Pair Filter - Full Width */}
           <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger className={cn(
+              "w-full transition-colors",
+              selectedLanguage !== "all" && "border-primary bg-primary/10"
+            )}>
               <div className="flex items-center gap-2">
-                <Languages className="w-4 h-4 text-muted-foreground" />
-                <SelectValue placeholder="Til juftligi" />
+                <Languages className={cn(
+                  "w-4 h-4",
+                  selectedLanguage !== "all" ? "text-primary" : "text-muted-foreground"
+                )} />
+                <SelectValue placeholder="Barcha tillar" />
               </div>
             </SelectTrigger>
             <SelectContent>
@@ -278,14 +284,20 @@ const Translators = () => {
             </SelectContent>
           </Select>
 
-          {/* City, Price and Transport Filters Row */}
-          <div className="grid grid-cols-3 gap-2">
+          {/* Compact Filter Row - Scrollable */}
+          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1">
             {/* City Filter */}
             <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger className="w-full">
-                <div className="flex items-center gap-2">
-                  <MapPin className="w-4 h-4 text-muted-foreground" />
-                  <SelectValue placeholder="Shahar" />
+              <SelectTrigger className={cn(
+                "min-w-[120px] flex-shrink-0 transition-colors",
+                selectedCity !== "all" && "border-primary bg-primary/10"
+              )}>
+                <div className="flex items-center gap-1.5">
+                  <MapPin className={cn(
+                    "w-3.5 h-3.5",
+                    selectedCity !== "all" ? "text-primary" : "text-muted-foreground"
+                  )} />
+                  <span className="text-xs truncate">Shahar</span>
                 </div>
               </SelectTrigger>
               <SelectContent>
@@ -298,10 +310,16 @@ const Translators = () => {
 
             {/* Price Range Filter */}
             <Select value={selectedPriceRange} onValueChange={setSelectedPriceRange}>
-              <SelectTrigger className="w-full">
-                <div className="flex items-center gap-2">
-                  <Filter className="w-4 h-4 text-muted-foreground" />
-                  <SelectValue placeholder="Narx" />
+              <SelectTrigger className={cn(
+                "min-w-[130px] flex-shrink-0 transition-colors",
+                selectedPriceRange !== "all" && "border-primary bg-primary/10"
+              )}>
+                <div className="flex items-center gap-1.5">
+                  <CircleDollarSign className={cn(
+                    "w-3.5 h-3.5",
+                    selectedPriceRange !== "all" ? "text-primary" : "text-muted-foreground"
+                  )} />
+                  <span className="text-xs truncate">Narx (Kunlik)</span>
                 </div>
               </SelectTrigger>
               <SelectContent>
@@ -313,10 +331,16 @@ const Translators = () => {
 
             {/* Transport Filter */}
             <Select value={selectedTransport} onValueChange={setSelectedTransport}>
-              <SelectTrigger className="w-full">
-                <div className="flex items-center gap-2">
-                  <Car className="w-4 h-4 text-muted-foreground" />
-                  <SelectValue placeholder="Transport" />
+              <SelectTrigger className={cn(
+                "min-w-[120px] flex-shrink-0 transition-colors",
+                selectedTransport !== "all" && "border-primary bg-primary/10"
+              )}>
+                <div className="flex items-center gap-1.5">
+                  <Car className={cn(
+                    "w-3.5 h-3.5",
+                    selectedTransport !== "all" ? "text-primary" : "text-muted-foreground"
+                  )} />
+                  <span className="text-xs truncate">Transport</span>
                 </div>
               </SelectTrigger>
               <SelectContent>
