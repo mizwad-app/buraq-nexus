@@ -28,27 +28,33 @@ const getVimeoId = (url: string): string => {
   return match ? match[1] : '';
 };
 
-const SPECIALIZATIONS: Record<string, string> = {
-  medical: "Tibbiyot",
-  legal: "Huquqiy",
-  it: "IT",
-  construction: "Qurilish",
-  manufacturing: "Ishlab chiqarish",
-  electronics: "Elektronika",
-  furniture: "Mebel",
-  textile: "To'qimachilik",
-  automotive: "Avtomobil",
-  trade: "Savdo",
-  tourism: "Turizm",
-  education: "Ta'lim",
-  finance: "Moliya",
-  general: "Umumiy"
+// Specializations will use translations from i18n
+const getSpecializationTranslation = (t: (key: string) => string, key: string): string => {
+  const translations: Record<string, string> = {
+    medical: t("translators.specialization.medical"),
+    legal: t("translators.specialization.legal"),
+    it: t("translators.specialization.it"),
+    construction: t("translators.specialization.construction"),
+    manufacturing: t("translators.specialization.manufacturing"),
+    electronics: t("translators.specialization.electronics"),
+    furniture: t("translators.specialization.furniture"),
+    textile: t("translators.specialization.textile"),
+    automotive: t("translators.specialization.automotive"),
+    trade: t("translators.specialization.trade"),
+    tourism: t("translators.specialization.tourism"),
+    education: t("translators.specialization.education"),
+    finance: t("translators.specialization.finance"),
+    general: t("translators.specialization.general"),
+    business: t("translators.specialization.business"),
+    factory: t("translators.specialization.factory"),
+  };
+  return translations[key.toLowerCase()] || key;
 };
 
-// Sample resume data - in production this would come from database
-const SAMPLE_RESUME = [
-  { period: "2022 — 2024", title: "Tarjimon", description: "Canton Fair" },
-  { period: "2018 — 2022", title: "O'qish", description: "Guangzhou University" },
+// Sample resume data - fully localized in Uzbek
+const getSampleResume = (t: (key: string) => string) => [
+  { period: "2022 — 2024", title: t("translators.translator"), description: t("translators.cantonFair") },
+  { period: "2018 — 2022", title: t("translators.study"), description: t("translators.university") },
 ];
 
 interface TranslatorDetailSheetProps {
@@ -109,14 +115,14 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
     const hskLevel = translator.buraq_verified_hsk || translator.self_declared_hsk || translator.hsk_level || 0;
     return (
       <div className="flex flex-wrap gap-1.5 mt-2">
-        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-xs">
-          O'zbek (Native)
+        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
+          {t("translators.languages.uzbekNative")}
         </Badge>
         <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-500/30 text-xs">
-          Xitoy (HSK {hskLevel})
+          {t("translators.languages.chinese")} (HSK {hskLevel})
         </Badge>
         <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
-          Ingliz (B1)
+          {t("translators.languages.english")} (B1)
         </Badge>
       </div>
     );
@@ -179,18 +185,19 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
 
   // Resume timeline section
   const renderResumeSection = () => {
+    const resumeData = getSampleResume(t);
     return (
       <div className="px-5 mb-4">
         <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
           <GraduationCap className="w-4 h-4 text-primary" />
-          Mening rezyumem
+          {t("translators.myResume")}
         </h4>
         <div className="space-y-3">
-          {SAMPLE_RESUME.map((item, idx) => (
+          {resumeData.map((item, idx) => (
             <div key={idx} className="flex gap-3">
               <div className="flex flex-col items-center">
                 <div className="w-2.5 h-2.5 rounded-full bg-primary" />
-                {idx < SAMPLE_RESUME.length - 1 && (
+                {idx < resumeData.length - 1 && (
                   <div className="w-0.5 h-full bg-border mt-1" />
                 )}
               </div>
@@ -413,11 +420,11 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             <div className="px-5 mb-4">
               <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
                 {([
-                  { label: "Ishonchlilik", value: translator.rating },
-                  { label: "Muzokara san'ati", value: translator.rating },
-                  { label: "Vaqtga rioya qilish (Punktualnost)", value: translator.rating },
-                  { label: "Bilim darajasi", value: translator.rating },
-                ] as const).map((row) => (
+                  { label: t("translators.ratingMatrix.reliability"), value: translator.rating },
+                  { label: t("translators.ratingMatrix.negotiation"), value: translator.rating },
+                  { label: t("translators.ratingMatrix.punctuality"), value: translator.rating },
+                  { label: t("translators.ratingMatrix.expertise"), value: translator.rating },
+                ]).map((row) => (
                   <div key={row.label} className="flex items-center justify-between">
                     <span className="text-sm text-foreground/80">{row.label}</span>
                     <div className="flex items-center gap-1">
@@ -485,12 +492,12 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               <div className="px-5 mb-4">
                 <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
                   <Briefcase className="w-4 h-4" />
-                  Mutaxassisliklar
+                  {t("translators.specializations")}
                 </h4>
                 <div className="flex flex-wrap gap-2">
                   {translator.specializations.map((spec, idx) => (
                     <Badge key={idx} variant="secondary" className="px-3 py-1">
-                      {SPECIALIZATIONS[spec.toLowerCase()] || spec}
+                      {getSpecializationTranslation(t, spec)}
                     </Badge>
                   ))}
                 </div>
