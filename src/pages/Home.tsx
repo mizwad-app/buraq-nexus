@@ -1,9 +1,12 @@
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
+import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
+import { supabase } from "@/integrations/supabase/client";
 import { 
   Star, 
   ChevronRight,
@@ -27,6 +30,28 @@ const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
+  const [showSurvey, setShowSurvey] = useState(false);
+
+  // Check if user has completed the business survey
+  useEffect(() => {
+    const checkUserInterests = async () => {
+      if (!user) return;
+      
+      const { data } = await supabase
+        .from("user_interests")
+        .select("id")
+        .eq("user_id", user.id)
+        .maybeSingle();
+      
+      // Show survey if user hasn't completed it yet
+      if (!data) {
+        // Small delay for better UX
+        setTimeout(() => setShowSurvey(true), 1000);
+      }
+    };
+
+    checkUserInterests();
+  }, [user]);
 
   const modules = [
     { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah", icon: Utensils },
@@ -157,6 +182,9 @@ const Home = () => {
 
       {/* Support Chat FAB */}
       <SupportChat />
+
+      {/* Business Survey Modal */}
+      <BusinessSurveyModal open={showSurvey} onOpenChange={setShowSurvey} />
     </div>
   );
 };
