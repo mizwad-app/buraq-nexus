@@ -38,7 +38,10 @@
     "mosques": "Masjidlar",
     "eco": "Eko Loyihalar",
     "guide": "Sayohat Qo'llanmasi",
-    "deepCheck": "Zavod va Kompaniya Tekshiruvi"
+    "deepCheck": "Zavod va Kompaniya Tekshiruvi",
+    "translators": "Tarjimonlar",
+    "consulates": "Konsulliklar",
+    "videoTips": "Foydali Maslahatlar"
   },
   "home": {
     "guestPrompt": "Xizmatlardan foydalaning",

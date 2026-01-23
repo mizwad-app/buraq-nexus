@@ -10,14 +10,16 @@ import { supabase } from "@/integrations/supabase/client";
 import { 
   Star, 
   ChevronRight,
-  MapPin,
   ClipboardCheck,
   Briefcase,
   Lock,
   Ticket,
   Utensils,
   Map,
-  Users
+  Users,
+  ShieldCheck,
+  Landmark,
+  PlayCircle
 } from "lucide-react";
 
 import halalFood from "@/assets/halol-food.jpg";
@@ -54,12 +56,16 @@ const Home = () => {
     checkUserInterests();
   }, [user]);
 
+  // Main 6-module grid (3 columns x 2 rows)
   const modules = [
+    // Row 1
     { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah", icon: Utensils },
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel", icon: Map },
+    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators", icon: Users },
+    // Row 2
     { id: "business", title: t("modules.business"), image: business, route: "/business", icon: Briefcase },
-    { id: "translators", title: t("translators.title"), image: translatorsImg, route: "/translators", icon: Users },
-    { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check", icon: ClipboardCheck },
+    { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check", icon: ShieldCheck, isAudit: true },
+    { id: "consulates", title: t("modules.consulates"), image: mosque, route: "/guide", icon: Landmark },
   ];
 
   return (
@@ -145,10 +151,10 @@ const Home = () => {
         </h2>
       </section>
 
-      {/* Module Grid */}
-      <section className="px-5 pb-8">
-        <div className="grid grid-cols-2 gap-3">
-          {modules.slice(0, 4).map((module, index) => (
+      {/* Module Grid - 3 columns x 2 rows */}
+      <section className="px-5 pb-4">
+        <div className="grid grid-cols-3 gap-2">
+          {modules.map((module, index) => (
             <ImageCard
               key={module.id}
               image={module.image}
@@ -156,22 +162,33 @@ const Home = () => {
               onClick={() => navigate(module.route)}
               delay={index * 60}
               isPremium={module.id === "business"}
+              isCompact
             />
           ))}
         </div>
-        {/* Last module spans full width for balanced layout */}
-        {modules.length > 4 && (
-          <div className="mt-3">
-            <ImageCard
-              key={modules[4].id}
-              image={modules[4].image}
-              title={modules[4].title}
-              onClick={() => navigate(modules[4].route)}
-              delay={4 * 60}
-              isPremium={modules[4].id === "business"}
-            />
+      </section>
+
+      {/* Foydali Maslahatlar - Video Tips Section */}
+      <section className="px-5 pb-8">
+        <button
+          onClick={() => navigate("/guide?tab=video")}
+          className="w-full relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary/20 to-accent/10 border border-primary/30 p-4 group hover:border-primary/50 transition-all"
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-xl bg-primary/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <PlayCircle className="w-7 h-7 text-primary" />
+            </div>
+            <div className="flex-1 text-left">
+              <h3 className="font-display font-semibold text-foreground text-base">
+                {t("modules.videoTips")}
+              </h3>
+              <p className="text-sm text-muted-foreground mt-0.5">
+                SIM-karta, VPN, to'lovlar haqida video maslahatlar
+              </p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
           </div>
-        )}
+        </button>
       </section>
 
       {/* Admin Entry - Footer */}
