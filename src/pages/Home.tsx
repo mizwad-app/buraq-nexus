@@ -12,7 +12,6 @@ import {
   ChevronRight,
   MapPin,
   ClipboardCheck,
-  Languages,
   Briefcase,
   Lock,
   Ticket,
@@ -26,6 +25,7 @@ import travelNature from "@/assets/travel-nature.jpg";
 import business from "@/assets/business.jpg";
 import mosque from "@/assets/mosque.jpg";
 import travelGuide from "@/assets/travel-guide.jpg";
+import translatorsImg from "@/assets/translators.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -59,7 +59,7 @@ const Home = () => {
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel", icon: Map },
     { id: "mosques", title: t("modules.mosques"), image: mosque, route: "/mosques", icon: MapPin },
     { id: "business", title: t("modules.business"), image: business, route: "/business", icon: Briefcase },
-    { id: "translators", title: "Tarjimonlar", image: travelGuide, route: "/translators", icon: Users },
+    { id: "translators", title: "Tarjimonlar", image: translatorsImg, route: "/translators", icon: Users },
     { id: "guide", title: t("modules.guide"), image: travelGuide, route: "/guide", icon: ClipboardCheck },
   ];
 
@@ -108,7 +108,7 @@ const Home = () => {
         <h2 className="text-lg font-display font-semibold text-foreground mb-3">
           {t("home.quickAccess")}
         </h2>
-        <div className="grid grid-cols-4 gap-2">
+        <div className="grid grid-cols-3 gap-2">
           <button
             onClick={() => navigate("/checklist")}
             className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
@@ -126,15 +126,6 @@ const Home = () => {
               <Ticket className="w-5 h-5 text-white" />
             </div>
             <span className="text-xs font-medium text-foreground text-center">{t("home.transport")}</span>
-          </button>
-          <button
-            onClick={() => navigate("/translators")}
-            className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
-          >
-            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center">
-              <Languages className="w-5 h-5 text-accent-foreground" />
-            </div>
-            <span className="text-xs font-medium text-foreground text-center">{t("home.translators")}</span>
           </button>
           <button
             onClick={() => navigate("/services")}
