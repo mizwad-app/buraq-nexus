@@ -10,7 +10,8 @@ import {
   ChevronLeft,
   Filter,
   Globe,
-  Clock
+  Clock,
+  Languages
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -61,8 +62,19 @@ interface Translator {
   age?: number | null;
   years_experience?: number | null;
   phone?: string | null;
+  completed_bookings?: number | null;
+  language_pairs?: string[] | null;
+  intro_video_url?: string | null;
   [key: string]: unknown;
 }
+
+const LANGUAGE_PAIRS = [
+  { id: "all", label: "Barcha tillar" },
+  { id: "uz-zh", label: "Xitoy-O'zbek" },
+  { id: "ru-zh", label: "Rus-Xitoy" },
+  { id: "en-zh", label: "Ingliz-Xitoy" },
+  { id: "es-zh", label: "Ispan-Xitoy" },
+];
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 
@@ -74,6 +86,7 @@ const Translators = () => {
   const [translators, setTranslators] = useState<Translator[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedCity, setSelectedCity] = useState("all");
+  const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -106,7 +119,7 @@ const Translators = () => {
       is_verified: selectedTranslator.is_verified,
       is_available: selectedTranslator.is_available,
       avatar_url: selectedTranslator.avatar_url,
-      intro_video_url: null,
+      intro_video_url: selectedTranslator.intro_video_url ?? null,
       rating: selectedTranslator.rating,
       total_reviews: selectedTranslator.total_reviews,
       user_id: (selectedTranslator.user_id as string | null) ?? null,
@@ -146,9 +159,20 @@ const Translators = () => {
   }, [translators]);
 
   const filteredTranslators = useMemo(() => {
-    if (selectedCity === "all") return translators;
-    return translators.filter(t => t.city === selectedCity);
-  }, [translators, selectedCity]);
+    let result = translators;
+    
+    if (selectedCity !== "all") {
+      result = result.filter(t => t.city === selectedCity);
+    }
+    
+    if (selectedLanguage !== "all") {
+      result = result.filter(t => 
+        t.language_pairs && t.language_pairs.includes(selectedLanguage)
+      );
+    }
+    
+    return result;
+  }, [translators, selectedCity, selectedLanguage]);
 
   // Open chat for selected translator - navigate to marketplace with translator selected
   const openChat = (translator: Translator) => {
@@ -200,21 +224,39 @@ const Translators = () => {
             </div>
         </div>
 
-        {/* City Filter */}
-        <Select value={selectedCity} onValueChange={setSelectedCity}>
-          <SelectTrigger className="w-full">
-            <div className="flex items-center gap-2">
-              <MapPin className="w-4 h-4 text-muted-foreground" />
-            <SelectValue placeholder="Barcha shaharlar" />
-          </div>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">Barcha shaharlar</SelectItem>
-            {cities.map(city => (
-              <SelectItem key={city} value={city}>{city}</SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        {/* Filters */}
+        <div className="space-y-3">
+          {/* Language Pair Filter */}
+          <Select value={selectedLanguage} onValueChange={setSelectedLanguage}>
+            <SelectTrigger className="w-full">
+              <div className="flex items-center gap-2">
+                <Languages className="w-4 h-4 text-muted-foreground" />
+                <SelectValue placeholder="Til juftligi" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              {LANGUAGE_PAIRS.map(lang => (
+                <SelectItem key={lang.id} value={lang.id}>{lang.label}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+
+          {/* City Filter */}
+          <Select value={selectedCity} onValueChange={setSelectedCity}>
+            <SelectTrigger className="w-full">
+              <div className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-muted-foreground" />
+                <SelectValue placeholder="Barcha shaharlar" />
+              </div>
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Barcha shaharlar</SelectItem>
+              {cities.map(city => (
+                <SelectItem key={city} value={city}>{city}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </header>
 
       {/* Translators List */}
@@ -372,11 +414,11 @@ const Translators = () => {
 
               {/* Detailed Rating Matrix (replaces single rating stat) */}
               <div className="mb-4">
-                <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
+              <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
                   {([
                     { label: "Ishonchlilik", value: selectedTranslator.rating },
                     { label: "Muzokara san'ati", value: selectedTranslator.rating },
-                    { label: "Vaqtga rioya qilish", value: selectedTranslator.rating },
+                    { label: "Vaqtga rioya qilish (Punktualnost)", value: selectedTranslator.rating },
                     { label: "Bilim darajasi", value: selectedTranslator.rating },
                   ] as const).map((row) => (
                     <div key={row.label} className="flex items-center justify-between">
