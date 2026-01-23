@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -377,12 +377,27 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                     {/* Language Proficiency Badges */}
                     {renderLanguageBadges()}
                     
-                    {translator.is_verified && (
-                      <Badge className="bg-primary/20 text-primary border-primary/30 gap-1 mt-2">
-                        <BadgeCheck className="w-3 h-3" />
-                        Buraq Verified
-                      </Badge>
-                    )}
+                    {/* Transport & Verification Badges */}
+                    <div className="flex flex-wrap gap-1.5 mt-2">
+                      {translator.is_verified && (
+                        <Badge className="bg-primary/20 text-primary border-primary/30 gap-1">
+                          <BadgeCheck className="w-3 h-3" />
+                          Buraq Verified
+                        </Badge>
+                      )}
+                      {translator.has_personal_car && (
+                        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 gap-1 text-xs">
+                          <Car className="w-3 h-3" />
+                          Avtomobil mavjud
+                        </Badge>
+                      )}
+                      {translator.has_chinese_driving_license && (
+                        <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30 gap-1 text-xs">
+                          <IdCard className="w-3 h-3" />
+                          Xitoy guvohnomasi
+                        </Badge>
+                      )}
+                    </div>
                   </div>
                 </div>
               </SheetHeader>

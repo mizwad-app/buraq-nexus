@@ -11,7 +11,9 @@ import {
   Filter,
   Globe,
   Clock,
-  Languages
+  Languages,
+  Car,
+  IdCard
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -65,6 +67,8 @@ interface Translator {
   completed_bookings?: number | null;
   language_pairs?: string[] | null;
   intro_video_url?: string | null;
+  has_personal_car?: boolean | null;
+  has_chinese_driving_license?: boolean | null;
   [key: string]: unknown;
 }
 
@@ -83,6 +87,12 @@ const PRICE_RANGES = [
   { id: "500+", label: "¥500+", min: 500, max: Infinity },
 ];
 
+const TRANSPORT_OPTIONS = [
+  { id: "all", label: "Barchasi" },
+  { id: "has_car", label: "Avtomobil bor" },
+  { id: "has_license", label: "Haydovchilik guvohnomasi" },
+];
+
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 
 
@@ -95,6 +105,7 @@ const Translators = () => {
   const [selectedCity, setSelectedCity] = useState("all");
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedPriceRange, setSelectedPriceRange] = useState("all");
+  const [selectedTransport, setSelectedTransport] = useState("all");
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -190,8 +201,15 @@ const Translators = () => {
       }
     }
     
+    // Transport filter
+    if (selectedTransport === "has_car") {
+      result = result.filter(t => t.has_personal_car === true);
+    } else if (selectedTransport === "has_license") {
+      result = result.filter(t => t.has_chinese_driving_license === true);
+    }
+    
     return result;
-  }, [translators, selectedCity, selectedLanguage, selectedPriceRange]);
+  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport]);
 
   // Open chat for selected translator - navigate to marketplace with translator selected
   const openChat = (translator: Translator) => {
@@ -260,8 +278,8 @@ const Translators = () => {
             </SelectContent>
           </Select>
 
-          {/* City and Price Filters Row */}
-          <div className="grid grid-cols-2 gap-2">
+          {/* City, Price and Transport Filters Row */}
+          <div className="grid grid-cols-3 gap-2">
             {/* City Filter */}
             <Select value={selectedCity} onValueChange={setSelectedCity}>
               <SelectTrigger className="w-full">
@@ -289,6 +307,21 @@ const Translators = () => {
               <SelectContent>
                 {PRICE_RANGES.map(range => (
                   <SelectItem key={range.id} value={range.id}>{range.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            {/* Transport Filter */}
+            <Select value={selectedTransport} onValueChange={setSelectedTransport}>
+              <SelectTrigger className="w-full">
+                <div className="flex items-center gap-2">
+                  <Car className="w-4 h-4 text-muted-foreground" />
+                  <SelectValue placeholder="Transport" />
+                </div>
+              </SelectTrigger>
+              <SelectContent>
+                {TRANSPORT_OPTIONS.map(option => (
+                  <SelectItem key={option.id} value={option.id}>{option.label}</SelectItem>
                 ))}
               </SelectContent>
             </Select>
@@ -348,16 +381,27 @@ const Translators = () => {
                       )}
                     </div>
 
-                    {/* Specializations */}
-                    {translator.specializations && translator.specializations.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-2">
-                        {translator.specializations.slice(0, 3).map((spec, idx) => (
-                          <span key={idx} className="px-2 py-0.5 bg-muted rounded-full text-[10px] text-muted-foreground">
-                            {spec}
-                          </span>
-                        ))}
-                      </div>
-                    )}
+                    {/* Specializations & Transport Badges */}
+                    <div className="flex flex-wrap gap-1 mt-2">
+                      {translator.specializations && translator.specializations.slice(0, 3).map((spec, idx) => (
+                        <span key={idx} className="px-2 py-0.5 bg-muted rounded-full text-[10px] text-muted-foreground">
+                          {spec}
+                        </span>
+                      ))}
+                      {/* Transport Badges */}
+                      {translator.has_personal_car && (
+                        <span className="px-2 py-0.5 bg-primary/10 border border-primary/20 rounded-full text-[10px] text-primary flex items-center gap-1">
+                          <Car className="w-3 h-3" />
+                          Avtomobil
+                        </span>
+                      )}
+                      {translator.has_chinese_driving_license && (
+                        <span className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] text-amber-600 flex items-center gap-1">
+                          <IdCard className="w-3 h-3" />
+                          Guvohnoma
+                        </span>
+                      )}
+                    </div>
 
                     {/* Bottom Row */}
                     <div className="flex items-center justify-between mt-3">

@@ -92,6 +92,9 @@ export interface MarketplaceTranslator {
   telegram_username?: string | null;
   whatsapp_number?: string | null;
   user_id?: string | null;
+  // Transport & Driving fields
+  has_personal_car?: boolean | null;
+  has_chinese_driving_license?: boolean | null;
   // Rating breakdown averages (computed from reviews)
   avg_reliability?: number | null;
   avg_expertise?: number | null;

@@ -1977,6 +1977,8 @@ export type Database = {
           daily_rate: number | null
           email: string | null
           gender: string | null
+          has_chinese_driving_license: boolean | null
+          has_personal_car: boolean | null
           hourly_rate: number | null
           hsk_level: number | null
           id: string
@@ -2025,6 +2027,8 @@ export type Database = {
           daily_rate?: number | null
           email?: string | null
           gender?: string | null
+          has_chinese_driving_license?: boolean | null
+          has_personal_car?: boolean | null
           hourly_rate?: number | null
           hsk_level?: number | null
           id?: string
@@ -2073,6 +2077,8 @@ export type Database = {
           daily_rate?: number | null
           email?: string | null
           gender?: string | null
+          has_chinese_driving_license?: boolean | null
+          has_personal_car?: boolean | null
           hourly_rate?: number | null
           hsk_level?: number | null
           id?: string
@@ -2436,6 +2442,8 @@ export type Database = {
           currency: string | null
           daily_rate: number | null
           gender: string | null
+          has_chinese_driving_license: boolean | null
+          has_personal_car: boolean | null
           hourly_rate: number | null
           hsk_level: number | null
           id: string | null
@@ -2479,6 +2487,8 @@ export type Database = {
           currency?: string | null
           daily_rate?: number | null
           gender?: string | null
+          has_chinese_driving_license?: boolean | null
+          has_personal_car?: boolean | null
           hourly_rate?: number | null
           hsk_level?: number | null
           id?: string | null
@@ -2522,6 +2532,8 @@ export type Database = {
           currency?: string | null
           daily_rate?: number | null
           gender?: string | null
+          has_chinese_driving_license?: boolean | null
+          has_personal_car?: boolean | null
           hourly_rate?: number | null
           hsk_level?: number | null
           id?: string | null

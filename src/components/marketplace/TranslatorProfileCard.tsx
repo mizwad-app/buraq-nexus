@@ -1,4 +1,4 @@
-import { Star, MapPin, BadgeCheck, Shield, Clock, Video, MessageCircle, Users, CalendarCheck } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Clock, Video, MessageCircle, Users, CalendarCheck, Car, IdCard } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -120,21 +120,32 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
               )}
             </div>
 
-            {/* Specializations */}
-            {translator.specializations && translator.specializations.length > 0 && (
-              <div className="flex flex-wrap gap-1 mb-2">
-                {translator.specializations.slice(0, 3).map((spec, idx) => (
-                  <Badge key={idx} variant="secondary" className="text-[10px] px-2 py-0">
-                    {SPECIALIZATIONS[spec.toLowerCase()] || spec}
-                  </Badge>
-                ))}
-                {translator.specializations.length > 3 && (
-                  <Badge variant="outline" className="text-[10px] px-2 py-0">
-                    +{translator.specializations.length - 3}
-                  </Badge>
-                )}
-              </div>
-            )}
+            {/* Specializations & Transport Badges */}
+            <div className="flex flex-wrap gap-1 mb-2">
+              {translator.specializations && translator.specializations.slice(0, 3).map((spec, idx) => (
+                <Badge key={idx} variant="secondary" className="text-[10px] px-2 py-0">
+                  {SPECIALIZATIONS[spec.toLowerCase()] || spec}
+                </Badge>
+              ))}
+              {translator.specializations && translator.specializations.length > 3 && (
+                <Badge variant="outline" className="text-[10px] px-2 py-0">
+                  +{translator.specializations.length - 3}
+                </Badge>
+              )}
+              {/* Transport Badges */}
+              {translator.has_personal_car && (
+                <Badge variant="outline" className="text-[10px] px-2 py-0 bg-primary/10 text-primary border-primary/20 gap-0.5">
+                  <Car className="w-3 h-3" />
+                  Avto
+                </Badge>
+              )}
+              {translator.has_chinese_driving_license && (
+                <Badge variant="outline" className="text-[10px] px-2 py-0 bg-amber-500/10 text-amber-600 border-amber-500/20 gap-0.5">
+                  <IdCard className="w-3 h-3" />
+                  Guvoh.
+                </Badge>
+              )}
+            </div>
 
             {/* Stats Row */}
             <div className="flex items-center gap-3 text-sm flex-wrap">
