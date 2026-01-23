@@ -16,7 +16,9 @@ import {
   RotateCcw,
   Check,
   MessageCircle,
-  CalendarCheck
+  CalendarCheck,
+  Play,
+  Video
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -491,112 +493,182 @@ const Translators = () => {
             </Button>
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredTranslators.map((translator) => (
               <div
                 key={translator.id}
-                onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
-                className="bg-card rounded-2xl p-4 border border-border/50 hover:border-primary/30 transition-all cursor-pointer"
+                className="bg-card rounded-2xl border border-border/50 hover:border-primary/30 transition-all overflow-hidden"
               >
-                <div className="flex items-start gap-4">
-                  {/* Avatar */}
-                  <div className="relative">
-                    <img
-                      src={translator.avatar_url || AVATAR_PLACEHOLDER}
-                      alt={getField(translator, 'name')}
-                      className="w-16 h-16 rounded-xl object-cover"
-                    />
-                    {translator.is_verified && (
-                      <div className="absolute -bottom-1 -right-1 p-1 bg-primary rounded-full">
-                        <BadgeCheck className="w-3 h-3 text-primary-foreground" />
+                {/* Preply-Style Video Preview */}
+                <div 
+                  className="relative aspect-video cursor-pointer group"
+                  onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
+                >
+                  {/* Video Thumbnail / Avatar as Background */}
+                  <img
+                    src={translator.avatar_url || AVATAR_PLACEHOLDER}
+                    alt={getField(translator, 'name')}
+                    className="w-full h-full object-cover"
+                  />
+                  
+                  {/* Dark Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                  
+                  {/* Play Button - Preply Pink Style */}
+                  <div className="absolute bottom-3 left-3">
+                    <div className={cn(
+                      "w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-transform group-hover:scale-110",
+                      translator.intro_video_url 
+                        ? "bg-[#FF4081]" 
+                        : "bg-muted-foreground/50"
+                    )}>
+                      <Play className={cn(
+                        "w-6 h-6 ml-0.5",
+                        translator.intro_video_url ? "text-white fill-white" : "text-white/70"
+                      )} />
+                    </div>
+                  </div>
+                  
+                  {/* Video Label */}
+                  {translator.intro_video_url && (
+                    <div className="absolute bottom-3 left-[68px]">
+                      <span className="px-2 py-1 rounded-lg bg-black/60 backdrop-blur-sm text-white text-xs font-medium flex items-center gap-1">
+                        <Video className="w-3 h-3" />
+                        Video tanishuv
+                      </span>
+                    </div>
+                  )}
+                  
+                  {/* Verification Badge - Top Right */}
+                  {translator.is_verified && (
+                    <div className="absolute top-3 right-3 p-1.5 bg-primary rounded-full shadow-lg">
+                      <BadgeCheck className="w-4 h-4 text-primary-foreground" />
+                    </div>
+                  )}
+                  
+                  {/* Availability Status - Top Left */}
+                  <div className="absolute top-3 left-3">
+                    <span className={cn(
+                      "px-2 py-1 rounded-lg text-xs font-medium backdrop-blur-sm",
+                      translator.is_available 
+                        ? "bg-emerald-500/90 text-white" 
+                        : "bg-gray-500/80 text-white"
+                    )}>
+                      {translator.is_available ? "Mavjud" : "Band"}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Card Content */}
+                <div 
+                  className="p-4 cursor-pointer" 
+                  onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
+                >
+                  <div className="flex items-start gap-3">
+                    {/* Small Avatar overlapping video */}
+                    <div className="relative flex-shrink-0">
+                      <img
+                        src={translator.avatar_url || AVATAR_PLACEHOLDER}
+                        alt={getField(translator, 'name')}
+                        className="w-14 h-14 rounded-xl object-cover border-2 border-background shadow-md -mt-10"
+                      />
+                    </div>
+
+                    {/* Info */}
+                    <div className="flex-1 min-w-0 pt-1">
+                      <div className="flex items-center gap-2 flex-wrap mb-1">
+                        <h3 className="font-semibold text-foreground text-lg truncate">{getField(translator, 'name')}</h3>
+                        {renderHSKBadge(translator.hsk_level)}
                       </div>
-                    )}
+                      
+                      <div className="flex items-center gap-1.5 text-sm text-muted-foreground">
+                        <MapPin className="w-3.5 h-3.5" />
+                        <span>{getField(translator, 'city')}</span>
+                        {translator.age && (
+                          <>
+                            <span className="text-muted-foreground/50">•</span>
+                            <span>{translator.age} yosh</span>
+                          </>
+                        )}
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Info */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <h3 className="font-semibold text-foreground">{getField(translator, 'name')}</h3>
-                      {renderHSKBadge(translator.hsk_level)}
+                  {/* Stats Row - Preply Style */}
+                  <div className="flex items-center justify-between py-3 mt-2 border-t border-border/50">
+                    {/* Rating */}
+                    <div className="flex items-center gap-1.5">
+                      <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                      <span className="font-bold text-foreground">{translator.rating?.toFixed(1) || "5.0"}</span>
                     </div>
                     
-                    <div className="flex items-center gap-2 mt-1 text-sm text-muted-foreground">
-                      <MapPin className="w-3 h-3" />
-                      <span>{getField(translator, 'city')}</span>
-                      {translator.age && (
-                        <>
-                          <span className="text-muted-foreground/50">•</span>
-                          <span>{translator.age} yosh</span>
-                        </>
-                      )}
+                    {/* Price */}
+                    <div className="text-center">
+                      <span className="text-lg font-bold text-foreground">¥{translator.price_per_day || 0}</span>
+                      <span className="text-xs text-muted-foreground">/kun</span>
                     </div>
-
-                    {/* Specializations */}
-                    <div className="flex flex-wrap gap-1 mt-2">
-                      {translator.specializations && translator.specializations.slice(0, 3).map((spec, idx) => (
-                        <span key={idx} className="px-2 py-0.5 bg-muted rounded-full text-[10px] text-muted-foreground">
-                          {spec}
-                        </span>
-                      ))}
+                    
+                    {/* Reviews */}
+                    <div className="text-right">
+                      <span className="font-medium text-foreground">{translator.total_reviews || 0}</span>
+                      <span className="text-xs text-muted-foreground ml-1">sharh</span>
                     </div>
-
-                    {/* Transport Badges - Separate Row */}
-                    {(translator.has_personal_car || translator.has_chinese_driving_license) && (
-                      <div className="flex flex-wrap gap-1.5 mt-2">
-                        {translator.has_personal_car && (
-                          <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
-                            <Car className="w-3 h-3" />
-                            🚗 Avtomobil
-                          </span>
-                        )}
-                        {translator.has_chinese_driving_license && (
-                          <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
-                            <IdCard className="w-3 h-3" />
-                            🪪 Guvohnoma
-                          </span>
-                        )}
-                      </div>
-                    )}
-
-                    {/* Bottom Row */}
-                    <div className="flex items-center justify-between mt-3">
-                      <div className="flex items-center gap-3">
-                        {translator.rating > 0 && (
-                          <div className="flex items-center gap-1 text-amber-500">
-                            <Star className="w-3 h-3 fill-current" />
-                            <span className="text-xs font-medium">{translator.rating.toFixed(1)}</span>
-                            <span className="text-[10px] text-muted-foreground">({translator.total_reviews})</span>
-                          </div>
-                        )}
-                        <span className={cn(
-                          "flex items-center gap-1 text-xs",
-                          translator.is_available ? "text-emerald-500" : "text-muted-foreground"
-                        )}>
-                          <Clock className="w-3 h-3" />
-                          {translator.is_available ? t("translators.available") : t("translators.busy")}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        {translator.price_per_day && (
-                          <span className="text-sm font-semibold text-primary">
-                            ¥{translator.price_per_day}/day
-                          </span>
-                        )}
-                        <Button
-                          size="sm"
-                          variant="outline"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedTranslator(translator);
-                            setBookingOpen(true);
-                          }}
-                          className="border-primary/40 text-primary hover:bg-primary hover:text-primary-foreground"
-                        >
-                          Band qilish
-                        </Button>
-                      </div>
+                    
+                    {/* Clients */}
+                    <div className="text-right">
+                      <span className="font-medium text-foreground">{translator.completed_bookings || 0}</span>
+                      <span className="text-xs text-muted-foreground ml-1">mijoz</span>
                     </div>
                   </div>
+
+                  {/* Transport & Specialization Badges */}
+                  <div className="flex flex-wrap gap-1.5 mt-2">
+                    {translator.has_personal_car && (
+                      <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
+                        <Car className="w-3 h-3" />
+                        🚗 Avtomobil
+                      </span>
+                    )}
+                    {translator.has_chinese_driving_license && (
+                      <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
+                        <IdCard className="w-3 h-3" />
+                        🪪 Guvohnoma
+                      </span>
+                    )}
+                    {translator.specializations && translator.specializations.slice(0, 2).map((spec, idx) => (
+                      <span key={idx} className="px-2 py-0.5 bg-muted rounded-full text-[10px] text-muted-foreground">
+                        {spec}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Card Footer - Action Buttons */}
+                <div className="px-4 py-3 bg-muted/30 border-t border-border/30 flex items-center gap-2">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      openChat(translator);
+                    }}
+                    className="flex-1 gap-1.5 border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    Xabar
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedTranslator(translator);
+                      setBookingOpen(true);
+                    }}
+                    className="flex-1 gap-1.5 bg-[#FF4081] hover:bg-[#E91E63] text-white"
+                  >
+                    <CalendarCheck className="w-4 h-4" />
+                    Band qilish
+                  </Button>
                 </div>
               </div>
             ))}
