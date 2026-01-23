@@ -531,27 +531,32 @@ const Translators = () => {
                       )}
                     </div>
 
-                    {/* Specializations & Transport Badges */}
+                    {/* Specializations */}
                     <div className="flex flex-wrap gap-1 mt-2">
                       {translator.specializations && translator.specializations.slice(0, 3).map((spec, idx) => (
                         <span key={idx} className="px-2 py-0.5 bg-muted rounded-full text-[10px] text-muted-foreground">
                           {spec}
                         </span>
                       ))}
-                      {/* Transport Badges */}
-                      {translator.has_personal_car && (
-                        <span className="px-2 py-0.5 bg-primary/10 border border-primary/20 rounded-full text-[10px] text-primary flex items-center gap-1">
-                          <Car className="w-3 h-3" />
-                          Avtomobil
-                        </span>
-                      )}
-                      {translator.has_chinese_driving_license && (
-                        <span className="px-2 py-0.5 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] text-amber-600 flex items-center gap-1">
-                          <IdCard className="w-3 h-3" />
-                          Guvohnoma
-                        </span>
-                      )}
                     </div>
+
+                    {/* Transport Badges - Separate Row */}
+                    {(translator.has_personal_car || translator.has_chinese_driving_license) && (
+                      <div className="flex flex-wrap gap-1.5 mt-2">
+                        {translator.has_personal_car && (
+                          <span className="px-2.5 py-0.5 bg-slate-800/60 border border-slate-700/50 rounded-full text-[10px] text-emerald-400 flex items-center gap-1">
+                            <Car className="w-3 h-3" />
+                            Avtomobil
+                          </span>
+                        )}
+                        {translator.has_chinese_driving_license && (
+                          <span className="px-2.5 py-0.5 bg-slate-800/60 border border-slate-700/50 rounded-full text-[10px] text-amber-400 flex items-center gap-1">
+                            <IdCard className="w-3 h-3" />
+                            Guvohnoma
+                          </span>
+                        )}
+                      </div>
+                    )}
 
                     {/* Bottom Row */}
                     <div className="flex items-center justify-between mt-3">

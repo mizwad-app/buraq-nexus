@@ -132,20 +132,25 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
                   +{translator.specializations.length - 3}
                 </Badge>
               )}
-              {/* Transport Badges */}
-              {translator.has_personal_car && (
-                <Badge variant="outline" className="text-[10px] px-2 py-0 bg-primary/10 text-primary border-primary/20 gap-0.5">
-                  <Car className="w-3 h-3" />
-                  Avto
-                </Badge>
-              )}
-              {translator.has_chinese_driving_license && (
-                <Badge variant="outline" className="text-[10px] px-2 py-0 bg-amber-500/10 text-amber-600 border-amber-500/20 gap-0.5">
-                  <IdCard className="w-3 h-3" />
-                  Guvoh.
-                </Badge>
-              )}
             </div>
+
+            {/* Transport Badges - Dedicated Row */}
+            {(translator.has_personal_car || translator.has_chinese_driving_license) && (
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {translator.has_personal_car && (
+                  <Badge variant="outline" className="text-[10px] px-2.5 py-0.5 bg-slate-800/60 text-emerald-400 border-slate-700/50 gap-1">
+                    <Car className="w-3 h-3" />
+                    Avtomobil
+                  </Badge>
+                )}
+                {translator.has_chinese_driving_license && (
+                  <Badge variant="outline" className="text-[10px] px-2.5 py-0.5 bg-slate-800/60 text-amber-400 border-slate-700/50 gap-1">
+                    <IdCard className="w-3 h-3" />
+                    Guvohnoma
+                  </Badge>
+                )}
+              </div>
+            )}
 
             {/* Stats Row */}
             <div className="flex items-center gap-3 text-sm flex-wrap">
