@@ -389,17 +389,17 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                     
                     {/* Transport Badges - Clear Visual */}
                     {(translator.has_personal_car || translator.has_chinese_driving_license) && (
-                      <div className="flex flex-wrap gap-2 mt-3 p-2.5 bg-slate-800/40 rounded-xl border border-slate-700/30">
+                      <div className="flex flex-wrap gap-2 mt-3 p-2.5 bg-primary/10 rounded-xl border border-primary/20">
                         {translator.has_personal_car && (
-                          <Badge variant="outline" className="bg-emerald-500/15 text-emerald-400 border-emerald-500/30 gap-1.5 text-xs px-3 py-1">
+                          <Badge variant="outline" className="bg-primary/15 text-primary border-primary/30 gap-1.5 text-xs px-3 py-1 font-medium">
                             <Car className="w-3.5 h-3.5" />
-                            Shaxsiy avtomobil
+                            🚗 Shaxsiy avtomobil
                           </Badge>
                         )}
                         {translator.has_chinese_driving_license && (
-                          <Badge variant="outline" className="bg-amber-500/15 text-amber-400 border-amber-500/30 gap-1.5 text-xs px-3 py-1">
+                          <Badge variant="outline" className="bg-primary/15 text-primary border-primary/30 gap-1.5 text-xs px-3 py-1 font-medium">
                             <IdCard className="w-3.5 h-3.5" />
-                            Xitoy guvohnomasi
+                            🪪 Xitoy guvohnomasi
                           </Badge>
                         )}
                       </div>

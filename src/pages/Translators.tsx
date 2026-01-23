@@ -544,15 +544,15 @@ const Translators = () => {
                     {(translator.has_personal_car || translator.has_chinese_driving_license) && (
                       <div className="flex flex-wrap gap-1.5 mt-2">
                         {translator.has_personal_car && (
-                          <span className="px-2.5 py-0.5 bg-slate-800/60 border border-slate-700/50 rounded-full text-[10px] text-emerald-400 flex items-center gap-1">
+                          <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
                             <Car className="w-3 h-3" />
-                            Avtomobil
+                            🚗 Avtomobil
                           </span>
                         )}
                         {translator.has_chinese_driving_license && (
-                          <span className="px-2.5 py-0.5 bg-slate-800/60 border border-slate-700/50 rounded-full text-[10px] text-amber-400 flex items-center gap-1">
+                          <span className="px-2.5 py-0.5 bg-primary/15 border border-primary/30 rounded-full text-[10px] text-primary flex items-center gap-1 font-medium">
                             <IdCard className="w-3 h-3" />
-                            Guvohnoma
+                            🪪 Guvohnoma
                           </span>
                         )}
                       </div>
