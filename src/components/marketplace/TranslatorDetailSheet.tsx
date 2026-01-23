@@ -377,27 +377,33 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                     {/* Language Proficiency Badges */}
                     {renderLanguageBadges()}
                     
-                    {/* Transport & Verification Badges */}
-                    <div className="flex flex-wrap gap-1.5 mt-2">
-                      {translator.is_verified && (
+                    {/* Verification Badge */}
+                    {translator.is_verified && (
+                      <div className="mt-2">
                         <Badge className="bg-primary/20 text-primary border-primary/30 gap-1">
                           <BadgeCheck className="w-3 h-3" />
                           Buraq Verified
                         </Badge>
-                      )}
-                      {translator.has_personal_car && (
-                        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 gap-1 text-xs">
-                          <Car className="w-3 h-3" />
-                          Avtomobil mavjud
-                        </Badge>
-                      )}
-                      {translator.has_chinese_driving_license && (
-                        <Badge variant="outline" className="bg-amber-500/10 text-amber-600 border-amber-500/30 gap-1 text-xs">
-                          <IdCard className="w-3 h-3" />
-                          Xitoy guvohnomasi
-                        </Badge>
-                      )}
-                    </div>
+                      </div>
+                    )}
+                    
+                    {/* Transport Badges - Clear Visual */}
+                    {(translator.has_personal_car || translator.has_chinese_driving_license) && (
+                      <div className="flex flex-wrap gap-2 mt-3 p-2.5 bg-slate-800/40 rounded-xl border border-slate-700/30">
+                        {translator.has_personal_car && (
+                          <Badge variant="outline" className="bg-emerald-500/15 text-emerald-400 border-emerald-500/30 gap-1.5 text-xs px-3 py-1">
+                            <Car className="w-3.5 h-3.5" />
+                            Shaxsiy avtomobil
+                          </Badge>
+                        )}
+                        {translator.has_chinese_driving_license && (
+                          <Badge variant="outline" className="bg-amber-500/15 text-amber-400 border-amber-500/30 gap-1.5 text-xs px-3 py-1">
+                            <IdCard className="w-3.5 h-3.5" />
+                            Xitoy guvohnomasi
+                          </Badge>
+                        )}
+                      </div>
+                    )}
                   </div>
                 </div>
               </SheetHeader>
