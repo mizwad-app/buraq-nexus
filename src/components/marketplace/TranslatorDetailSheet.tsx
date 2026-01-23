@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -44,6 +44,12 @@ const SPECIALIZATIONS: Record<string, string> = {
   finance: "Moliya",
   general: "Umumiy"
 };
+
+// Sample resume data - in production this would come from database
+const SAMPLE_RESUME = [
+  { period: "2022 — 2024", title: "Tarjimon", description: "Canton Fair" },
+  { period: "2018 — 2022", title: "O'qish", description: "Guangzhou University" },
+];
 
 interface TranslatorDetailSheetProps {
   translator: MarketplaceTranslator | null;
@@ -98,6 +104,24 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
     }
   };
 
+  // Language proficiency badges
+  const renderLanguageBadges = () => {
+    const hskLevel = translator.buraq_verified_hsk || translator.self_declared_hsk || translator.hsk_level || 0;
+    return (
+      <div className="flex flex-wrap gap-1.5 mt-2">
+        <Badge variant="outline" className="bg-emerald-500/10 text-emerald-400 border-emerald-500/30 text-xs">
+          O'zbek (Native)
+        </Badge>
+        <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-500/30 text-xs">
+          Xitoy (HSK {hskLevel})
+        </Badge>
+        <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
+          Ingliz (B1)
+        </Badge>
+      </div>
+    );
+  };
+
   const renderHSKSection = () => {
     return (
       <div className="bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl p-4 space-y-3">
@@ -149,6 +173,35 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             ✓ Video intervyu orqali tasdiqlangan ({translator.buraq_verified_at ? new Date(translator.buraq_verified_at as string).toLocaleDateString() : ''})
           </p>
         )}
+      </div>
+    );
+  };
+
+  // Resume timeline section
+  const renderResumeSection = () => {
+    return (
+      <div className="px-5 mb-4">
+        <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+          <GraduationCap className="w-4 h-4 text-primary" />
+          Mening rezyumem
+        </h4>
+        <div className="space-y-3">
+          {SAMPLE_RESUME.map((item, idx) => (
+            <div key={idx} className="flex gap-3">
+              <div className="flex flex-col items-center">
+                <div className="w-2.5 h-2.5 rounded-full bg-primary" />
+                {idx < SAMPLE_RESUME.length - 1 && (
+                  <div className="w-0.5 h-full bg-border mt-1" />
+                )}
+              </div>
+              <div className="flex-1 pb-2">
+                <p className="text-xs text-muted-foreground">{item.period}</p>
+                <p className="text-sm font-medium text-foreground">{item.title}</p>
+                <p className="text-xs text-muted-foreground">{item.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     );
   };
@@ -269,13 +322,13 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                   )}
                 </div>
               ) : (
-                // No Video Placeholder - Preply Style
+                // No Video Placeholder - Professional style with loading message
                 <div className="aspect-video rounded-t-3xl overflow-hidden bg-gradient-to-br from-muted to-muted/60 flex flex-col items-center justify-center border-b border-border/30">
                   <div className="w-20 h-20 rounded-full bg-muted-foreground/10 flex items-center justify-center mb-4">
                     <Video className="w-10 h-10 text-muted-foreground/40" />
                   </div>
                   <p className="text-sm text-muted-foreground font-medium text-center px-8">
-                    Video tanishtiruv yaqin orada yuklanadi
+                    Video tanishtiruv yuklanmoqda...
                   </p>
                 </div>
               )}
@@ -302,9 +355,17 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                   <div className="flex-1 min-w-0 pt-1">
                     <SheetTitle className="text-xl mb-1">{getField(translator, 'name')}</SheetTitle>
                     
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
-                      <MapPin className="w-4 h-4" />
-                      <span>{getField(translator, 'city')}</span>
+                    {/* City + Experience Badge */}
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1 flex-wrap">
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4" />
+                        <span>{getField(translator, 'city')}</span>
+                      </div>
+                      <span className="text-muted-foreground/30">•</span>
+                      <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs gap-1">
+                        <Clock className="w-3 h-3" />
+                        {translator.years_experience || 6} yillik tajriba
+                      </Badge>
                     </div>
                     
                     {translator.age && (
@@ -312,9 +373,12 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                         <span className="font-medium">Yosh:</span> {String(translator.age)}
                       </div>
                     )}
+
+                    {/* Language Proficiency Badges */}
+                    {renderLanguageBadges()}
                     
                     {translator.is_verified && (
-                      <Badge className="bg-primary/20 text-primary border-primary/30 gap-1">
+                      <Badge className="bg-primary/20 text-primary border-primary/30 gap-1 mt-2">
                         <BadgeCheck className="w-3 h-3" />
                         Buraq Verified
                       </Badge>
@@ -357,7 +421,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             <div className="px-5 mb-4">
               <div className="grid grid-cols-2 gap-2">
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
-                  <div className="font-bold text-primary text-lg mb-1">{translator.completed_bookings || 120}+</div>
+                  <div className="font-bold text-primary text-lg mb-1">{translator.completed_bookings || 150}+</div>
                   <p className="text-[10px] text-muted-foreground">Xizmat ko'rsatilgan mijozlar</p>
                 </div>
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
@@ -367,7 +431,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               </div>
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
-                  <div className="font-bold text-foreground mb-1">{translator.years_experience || 0}</div>
+                  <div className="font-bold text-foreground mb-1">{translator.years_experience || 6}</div>
                   <p className="text-[10px] text-muted-foreground">Yil tajriba</p>
                 </div>
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
@@ -391,6 +455,9 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                 </p>
               </div>
             )}
+
+            {/* Resume Timeline Section */}
+            {renderResumeSection()}
 
             {/* Specializations */}
             {translator.specializations && translator.specializations.length > 0 && (
@@ -426,11 +493,15 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
 
 
             {/* Spacer for bottom button */}
-            <div className="h-24" />
+            <div className="h-28" />
           </div>
 
-          {/* Fixed Bottom Buttons */}
+          {/* Fixed Bottom Buttons with Social Proof */}
           <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background to-transparent">
+            {/* Social Proof Text */}
+            <p className="text-xs text-center text-muted-foreground mb-2">
+              Xizmat ko'rsatilgan mijozlar: <span className="text-primary font-semibold">{translator.completed_bookings || 150}+</span>
+            </p>
             <div className="flex gap-2">
               {/* Primary: Online Chat */}
               <Button 
@@ -455,3 +526,5 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
     </Sheet>
   );
 };
+
+export default TranslatorDetailSheet;
