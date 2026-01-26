@@ -104,11 +104,12 @@ const DeepCheckRequest = () => {
 
         if (uploadError) throw uploadError;
 
-        const { data: { publicUrl } } = supabase.storage
+        // Use signed URL (bucket is now private for security)
+        const { data: signedUrlData } = await supabase.storage
           .from("deep-checks")
-          .getPublicUrl(fileName);
+          .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry for stored reference
 
-        imageUrl = publicUrl;
+        imageUrl = signedUrlData?.signedUrl || null;
       }
 
       // Create deep check request

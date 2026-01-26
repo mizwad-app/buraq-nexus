@@ -2463,7 +2463,7 @@ export type Database = {
           total_bookings: number | null
           total_reviews: number | null
           updated_at: string | null
-          verified_at: string | null
+          user_id: string | null
           years_experience: number | null
         }
         Insert: {
@@ -2507,7 +2507,7 @@ export type Database = {
           total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string | null
-          verified_at?: string | null
+          user_id?: string | null
           years_experience?: number | null
         }
         Update: {
@@ -2551,7 +2551,7 @@ export type Database = {
           total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string | null
-          verified_at?: string | null
+          user_id?: string | null
           years_experience?: number | null
         }
         Relationships: []

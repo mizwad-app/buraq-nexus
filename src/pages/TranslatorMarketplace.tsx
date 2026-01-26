@@ -163,10 +163,10 @@ const TranslatorMarketplace = () => {
 
   const fetchTranslators = async () => {
     try {
+      // Use the public view that excludes sensitive contact info (email, phone, etc.)
       const { data, error } = await supabase
-        .from("translators")
+        .from("translators_public")
         .select("*")
-        .eq("is_available", true)
         .order("is_verified", { ascending: false })
         .order("rating", { ascending: false });
 
