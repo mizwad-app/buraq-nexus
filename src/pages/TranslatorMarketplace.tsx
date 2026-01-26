@@ -142,9 +142,12 @@ const TranslatorMarketplace = () => {
   const [selectedCity, setSelectedCity] = useState("all");
   const [selectedSpecialization, setSelectedSpecialization] = useState("all");
   const [selectedGender, setSelectedGender] = useState("all");
+  const [selectedHskLevel, setSelectedHskLevel] = useState("all");
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
   const [minRating, setMinRating] = useState(0);
   const [verifiedOnly, setVerifiedOnly] = useState(false);
+  const [hasCarOnly, setHasCarOnly] = useState(false);
+  const [hasLicenseOnly, setHasLicenseOnly] = useState(false);
 
   useEffect(() => {
     fetchTranslators();
@@ -205,6 +208,13 @@ const TranslatorMarketplace = () => {
       // Gender filter
       if (selectedGender !== "all" && translator.gender !== selectedGender) return false;
       
+      // HSK Level filter
+      if (selectedHskLevel !== "all") {
+        const requiredLevel = parseInt(selectedHskLevel);
+        const translatorLevel = translator.hsk_level || translator.self_declared_hsk || translator.buraq_verified_hsk || 0;
+        if (translatorLevel !== requiredLevel) return false;
+      }
+      
       // Price filter
       const price = translator.daily_rate || translator.price_per_day || 0;
       if (price < priceRange[0] || price > priceRange[1]) return false;
@@ -215,22 +225,30 @@ const TranslatorMarketplace = () => {
       // Verified filter
       if (verifiedOnly && !translator.buraq_verified_hsk) return false;
       
+      // Transport filters
+      if (hasCarOnly && !translator.has_personal_car) return false;
+      if (hasLicenseOnly && !translator.has_chinese_driving_license) return false;
+      
       return true;
     });
-  }, [translators, searchQuery, selectedCity, selectedSpecialization, selectedGender, priceRange, minRating, verifiedOnly, getField]);
+  }, [translators, searchQuery, selectedCity, selectedSpecialization, selectedGender, selectedHskLevel, priceRange, minRating, verifiedOnly, hasCarOnly, hasLicenseOnly, getField]);
 
   const clearFilters = () => {
     setSelectedCity("all");
     setSelectedSpecialization("all");
     setSelectedGender("all");
+    setSelectedHskLevel("all");
     setPriceRange([0, 2000]);
     setMinRating(0);
     setVerifiedOnly(false);
+    setHasCarOnly(false);
+    setHasLicenseOnly(false);
     setSearchQuery("");
   };
 
   const hasActiveFilters = selectedCity !== "all" || selectedSpecialization !== "all" || 
-    selectedGender !== "all" || minRating > 0 || verifiedOnly || searchQuery !== "";
+    selectedGender !== "all" || selectedHskLevel !== "all" || minRating > 0 || verifiedOnly || 
+    hasCarOnly || hasLicenseOnly || searchQuery !== "";
 
   const handleBooking = (translator: MarketplaceTranslator) => {
     setSelectedTranslator(translator);
@@ -343,11 +361,30 @@ const TranslatorMarketplace = () => {
                 <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedCity("all")} />
               </Badge>
             )}
+            {selectedHskLevel !== "all" && (
+              <Badge variant="secondary" className="gap-1 bg-primary/20">
+                <GraduationCap className="w-3 h-3" />
+                HSK {selectedHskLevel}
+                <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedHskLevel("all")} />
+              </Badge>
+            )}
             {selectedSpecialization !== "all" && (
               <Badge variant="secondary" className="gap-1">
                 <Briefcase className="w-3 h-3" />
-                {selectedSpecialization}
+                {SPECIALIZATIONS.find(s => s.value === selectedSpecialization)?.label || selectedSpecialization}
                 <X className="w-3 h-3 cursor-pointer" onClick={() => setSelectedSpecialization("all")} />
+              </Badge>
+            )}
+            {hasCarOnly && (
+              <Badge variant="secondary" className="gap-1 bg-primary/20">
+                🚗 Avtomobil
+                <X className="w-3 h-3 cursor-pointer" onClick={() => setHasCarOnly(false)} />
+              </Badge>
+            )}
+            {hasLicenseOnly && (
+              <Badge variant="secondary" className="gap-1 bg-primary/20">
+                🪪 Guvohnoma
+                <X className="w-3 h-3 cursor-pointer" onClick={() => setHasLicenseOnly(false)} />
               </Badge>
             )}
             {verifiedOnly && (
@@ -474,6 +511,29 @@ const TranslatorMarketplace = () => {
               </Select>
             </div>
 
+            {/* HSK Level Filter */}
+            <div>
+              <label className="text-sm font-medium text-foreground mb-2 block">
+                HSK darajasi
+              </label>
+              <div className="flex gap-2 flex-wrap">
+                {["all", "4", "5", "6"].map(level => (
+                  <button
+                    key={level}
+                    onClick={() => setSelectedHskLevel(level)}
+                    className={cn(
+                      "flex items-center gap-1 px-4 py-2 rounded-lg border transition-all",
+                      selectedHskLevel === level 
+                        ? "border-primary bg-primary/10 text-primary font-medium" 
+                        : "border-border hover:border-primary/50"
+                    )}
+                  >
+                    {level === "all" ? "Barchasi" : `HSK ${level}`}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Price Range */}
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">
@@ -519,6 +579,51 @@ const TranslatorMarketplace = () => {
               </div>
             </div>
 
+            {/* Transport Filters */}
+            <div>
+              <label className="text-sm font-medium text-foreground mb-3 block">
+                Transport
+              </label>
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🚗</span>
+                    <span className="text-sm font-medium">Shaxsiy avtomobil</span>
+                  </div>
+                  <button
+                    onClick={() => setHasCarOnly(!hasCarOnly)}
+                    className={cn(
+                      "w-12 h-6 rounded-full transition-all",
+                      hasCarOnly ? "bg-primary" : "bg-muted"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-5 h-5 bg-background rounded-full transition-all shadow-sm",
+                      hasCarOnly ? "translate-x-6" : "translate-x-0.5"
+                    )} />
+                  </button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg">🪪</span>
+                    <span className="text-sm font-medium">Xitoy haydovchilik guvohnomasi</span>
+                  </div>
+                  <button
+                    onClick={() => setHasLicenseOnly(!hasLicenseOnly)}
+                    className={cn(
+                      "w-12 h-6 rounded-full transition-all",
+                      hasLicenseOnly ? "bg-primary" : "bg-muted"
+                    )}
+                  >
+                    <div className={cn(
+                      "w-5 h-5 bg-background rounded-full transition-all shadow-sm",
+                      hasLicenseOnly ? "translate-x-6" : "translate-x-0.5"
+                    )} />
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* Verified Only */}
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -536,7 +641,7 @@ const TranslatorMarketplace = () => {
                 )}
               >
                 <div className={cn(
-                  "w-5 h-5 bg-white rounded-full transition-all shadow-sm",
+                  "w-5 h-5 bg-background rounded-full transition-all shadow-sm",
                   verifiedOnly ? "translate-x-6" : "translate-x-0.5"
                 )} />
               </button>

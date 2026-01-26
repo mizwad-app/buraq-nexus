@@ -99,6 +99,13 @@ const TRANSPORT_OPTIONS = [
   { id: "has_license", label: "Faqat guvohnoma borlar" },
 ];
 
+const HSK_LEVELS = [
+  { id: "all", label: "Barchasi" },
+  { id: "4", label: "HSK 4" },
+  { id: "5", label: "HSK 5" },
+  { id: "6", label: "HSK 6" },
+];
+
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 
 
@@ -115,6 +122,7 @@ const Translators = () => {
   const [selectedLanguage, setSelectedLanguage] = useState("all");
   const [selectedPriceRange, setSelectedPriceRange] = useState("all");
   const [selectedTransport, setSelectedTransport] = useState("all");
+  const [selectedHskLevel, setSelectedHskLevel] = useState("all");
   
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
@@ -127,14 +135,16 @@ const Translators = () => {
     if (selectedLanguage !== "all") count++;
     if (selectedPriceRange !== "all") count++;
     if (selectedTransport !== "all") count++;
+    if (selectedHskLevel !== "all") count++;
     return count;
-  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport]);
+  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
 
   const resetFilters = () => {
     setSelectedCity("all");
     setSelectedLanguage("all");
     setSelectedPriceRange("all");
     setSelectedTransport("all");
+    setSelectedHskLevel("all");
   };
 
   const bookableTranslator: MarketplaceTranslator | null = useMemo(() => {
@@ -235,8 +245,14 @@ const Translators = () => {
       result = result.filter(t => t.has_chinese_driving_license === true);
     }
     
+    // HSK Level filter
+    if (selectedHskLevel !== "all") {
+      const level = parseInt(selectedHskLevel);
+      result = result.filter(t => t.hsk_level === level);
+    }
+    
     return result;
-  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport]);
+  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
 
   // Open chat for selected translator - navigate to marketplace with translator selected
   const openChat = (translator: Translator) => {
@@ -328,6 +344,11 @@ const Translators = () => {
               <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
                 <Car className="w-3 h-3" />
                 {TRANSPORT_OPTIONS.find(t => t.id === selectedTransport)?.label}
+              </span>
+            )}
+            {selectedHskLevel !== "all" && (
+              <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
+                HSK {selectedHskLevel}
               </span>
             )}
           </div>
@@ -437,6 +458,29 @@ const Translators = () => {
                   >
                     <span>{option.label}</span>
                     {selectedTransport === option.id && <Check className="w-4 h-4" />}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* HSK Level Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                HSK darajasi
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {HSK_LEVELS.map(level => (
+                  <button
+                    key={level.id}
+                    onClick={() => setSelectedHskLevel(level.id)}
+                    className={cn(
+                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedHskLevel === level.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {level.label}
                   </button>
                 ))}
               </div>
