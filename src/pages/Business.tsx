@@ -456,7 +456,7 @@ const Business = () => {
       </div>
 
       {/* Goal Selection - Horizontal 3 Buttons */}
-      <h3 className="font-semibold text-foreground mb-3 text-sm">Maqsadingizni tanlang</h3>
+      <h3 className="font-semibold text-foreground mb-3 text-sm">{t("sourcing.selectGoal")}</h3>
       <div className="grid grid-cols-3 gap-2 mb-4">
         <button
           onClick={() => handleGoalSelect("factories")}
@@ -468,7 +468,7 @@ const Business = () => {
           )}
         >
           <Factory className={cn("w-6 h-6", selectedGoal === "factories" ? "text-primary" : "text-muted-foreground")} />
-          <span className="text-[11px] font-medium text-center leading-tight">🏭 Zavodlar</span>
+          <span className="text-[11px] font-medium text-center leading-tight">🏭 {t("sourcing.factories")}</span>
         </button>
 
         <button
@@ -481,7 +481,7 @@ const Business = () => {
           )}
         >
           <Store className={cn("w-6 h-6", selectedGoal === "markets" ? "text-primary" : "text-amber-500")} />
-          <span className="text-[11px] font-medium text-center leading-tight">🛍️ Bozorlar</span>
+          <span className="text-[11px] font-medium text-center leading-tight">🛍️ {t("sourcing.markets")}</span>
         </button>
 
         <button
@@ -494,7 +494,7 @@ const Business = () => {
           )}
         >
           <Calendar className={cn("w-6 h-6", selectedGoal === "exhibitions" ? "text-primary" : "text-purple-500")} />
-          <span className="text-[11px] font-medium text-center leading-tight">📅 Ko'rgazmalar</span>
+          <span className="text-[11px] font-medium text-center leading-tight">📅 {t("sourcing.exhibitions")}</span>
         </button>
       </div>
 
@@ -511,13 +511,13 @@ const Business = () => {
         <div className="mt-2">
           <div className="mb-3 flex items-center gap-2">
             <Factory className="w-4 h-4 text-primary" />
-            <h4 className="font-medium text-foreground text-sm">Zavodlar markazi</h4>
+            <h4 className="font-medium text-foreground text-sm">{t("sourcing.factoriesDesc")}</h4>
           </div>
 
           {results.cities.length === 0 ? (
             <div className="text-center py-6 bg-card rounded-xl border border-border/50">
               <Info className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
-              <p className="text-sm text-muted-foreground">Bu kategoriyada zavod topilmadi</p>
+              <p className="text-sm text-muted-foreground">{t("sourcing.noFactoriesFound")}</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -580,13 +580,13 @@ const Business = () => {
         <div className="mt-2">
           <div className="mb-3 flex items-center gap-2">
             <Store className="w-4 h-4 text-amber-500" />
-            <h4 className="font-medium text-foreground text-sm">Optom bozorlar</h4>
+            <h4 className="font-medium text-foreground text-sm">{t("sourcing.marketsDesc")}</h4>
           </div>
 
           {results.cities.length === 0 ? (
             <div className="text-center py-6 bg-card rounded-xl border border-border/50">
               <Info className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
-              <p className="text-sm text-muted-foreground">Bu kategoriyada bozor topilmadi</p>
+              <p className="text-sm text-muted-foreground">{t("sourcing.noMarketsFound")}</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -714,8 +714,8 @@ const Business = () => {
             {t("business.title")}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {step === "product" && "1-qadam: Mahsulot tanlang"}
-            {step === "goal" && (selectedGoal ? "2-qadam: Natijalar" : "2-qadam: Maqsadingizni tanlang")}
+            {step === "product" && t("sourcing.step1")}
+            {step === "goal" && (selectedGoal ? t("sourcing.step2") : t("sourcing.selectGoal"))}
           </p>
         </div>
       </header>
@@ -747,7 +747,7 @@ const Business = () => {
                   {t("sourcing.howItWorks")}
                 </h3>
                 <p className="text-xs text-muted-foreground mt-1">
-                  Mahsulot tanlang → Maqsad tanlang → Shahar va manzillarni ko'ring
+                  {t("sourcing.howItWorksDesc")}
                 </p>
               </div>
             </div>
