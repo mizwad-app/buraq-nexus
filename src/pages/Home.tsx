@@ -6,34 +6,36 @@ import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
 import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
+import { ModeToggle, AppMode } from "@/components/ModeToggle";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Star, 
   ChevronRight,
   ClipboardCheck,
-  Briefcase,
-  Lock,
   Ticket,
-  Utensils,
-  Map,
-  Users,
-  ShieldCheck,
-  Landmark,
-  BookOpen
+  Lock,
 } from "lucide-react";
 
+// Images
 import halalFood from "@/assets/halol-food.jpg";
 import travelNature from "@/assets/travel-nature.jpg";
 import business from "@/assets/business.jpg";
 import mosque from "@/assets/mosque.jpg";
 import travelGuide from "@/assets/travel-guide.jpg";
 import translatorsImg from "@/assets/translators.jpg";
+import b2bHub from "@/assets/b2b-hub.jpg";
+import wallet from "@/assets/wallet.jpg";
+import attractions from "@/assets/attractions.jpg";
+import exhibitions from "@/assets/exhibitions.jpg";
+import legalHelp from "@/assets/legal-help.jpg";
+import cargo from "@/assets/cargo.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
   const [showSurvey, setShowSurvey] = useState(false);
+  const [mode, setMode] = useState<AppMode>("business");
 
   // Check if user has completed the business survey
   useEffect(() => {
@@ -56,18 +58,27 @@ const Home = () => {
     checkUserInterests();
   }, [user]);
 
-  // Main 6-module grid (2 columns x 3 rows)
-  const modules = [
-    // Row 1
-    { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah", icon: Utensils },
-    { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel", icon: Map },
-    // Row 2
-    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators", icon: Users },
-    { id: "business", title: t("modules.business"), image: business, route: "/business", icon: Briefcase },
-    // Row 3
-    { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check", icon: ShieldCheck, isAudit: true },
-    { id: "travelGuide", title: t("modules.guide"), image: mosque, route: "/guide", icon: Landmark },
+  // Business mode modules (6 cards)
+  const businessModules = [
+    { id: "b2bHub", title: t("modules.b2bHub"), image: b2bHub, route: "/business" },
+    { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check" },
+    { id: "exhibitions", title: t("modules.exhibitions"), image: exhibitions, route: "/business" },
+    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators" },
+    { id: "wallet", title: t("modules.wallet"), image: wallet, route: "/profile" },
+    { id: "transportVpn", title: t("modules.transportVpn"), image: cargo, route: "/transport" },
   ];
+
+  // Travel mode modules (6 cards)
+  const travelModules = [
+    { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah" },
+    { id: "attractions", title: t("modules.attractions"), image: attractions, route: "/travel" },
+    { id: "guide", title: t("modules.guide"), image: mosque, route: "/guide" },
+    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators" },
+    { id: "legalHelp", title: t("modules.legalHelp"), image: legalHelp, route: "/guide" },
+    { id: "transportVpn", title: t("modules.transportVpn"), image: cargo, route: "/transport" },
+  ];
+
+  const activeModules = mode === "business" ? businessModules : travelModules;
 
   return (
     <div className="min-h-screen bg-background safe-bottom">
@@ -85,6 +96,16 @@ const Home = () => {
           <LanguageSelector />
         </div>
       </header>
+
+      {/* Mode Toggle */}
+      <section className="px-5 mb-5">
+        <div className="flex justify-center">
+          <ModeToggle mode={mode} onModeChange={setMode} />
+        </div>
+        <p className="text-center text-xs text-muted-foreground mt-2">
+          {mode === "business" ? "Tadbirkorlar uchun" : "Sayohatchilar uchun"}
+        </p>
+      </section>
 
       {/* Guest Prompt */}
       {!user && (
@@ -114,33 +135,24 @@ const Home = () => {
         <h2 className="text-lg font-display font-semibold text-foreground mb-3">
           {t("home.quickAccess")}
         </h2>
-        <div className="grid grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <button
             onClick={() => navigate("/checklist")}
-            className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+            className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
           >
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
               <ClipboardCheck className="w-5 h-5 text-primary" />
             </div>
-            <span className="text-xs font-medium text-foreground text-center">{t("home.travelChecklist")}</span>
+            <span className="text-sm font-medium text-foreground">{t("home.travelChecklist")}</span>
           </button>
           <button
             onClick={() => navigate("/transport")}
-            className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+            className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
               <Ticket className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xs font-medium text-foreground text-center">{t("home.transport")}</span>
-          </button>
-          <button
-            onClick={() => navigate("/services")}
-            className="flex flex-col items-center gap-2 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
-          >
-            <div className="w-10 h-10 rounded-xl bg-secondary flex items-center justify-center">
-              <Briefcase className="w-5 h-5 text-secondary-foreground" />
-            </div>
-            <span className="text-xs font-medium text-foreground text-center">{t("home.services")}</span>
+            <span className="text-sm font-medium text-foreground">{t("home.transport")}</span>
           </button>
         </div>
       </section>
@@ -155,19 +167,18 @@ const Home = () => {
       {/* Module Grid - 2 columns x 3 rows */}
       <section className="px-5 pb-4">
         <div className="grid grid-cols-2 gap-3">
-          {modules.map((module, index) => (
+          {activeModules.map((module, index) => (
             <ImageCard
               key={module.id}
               image={module.image}
               title={module.title}
               onClick={() => navigate(module.route)}
               delay={index * 60}
-              isPremium={module.id === "business"}
+              isPremium={module.id === "wallet"}
             />
           ))}
         </div>
       </section>
-
 
       {/* Admin Entry - Footer */}
       <footer className="px-5 pb-24 flex justify-center">
