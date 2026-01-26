@@ -2456,7 +2456,6 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
-          phone: string | null
           price_per_day: number | null
           rating: number | null
           self_declared_hsk: number | null
@@ -2464,7 +2463,7 @@ export type Database = {
           total_bookings: number | null
           total_reviews: number | null
           updated_at: string | null
-          user_id: string | null
+          verified_at: string | null
           years_experience: number | null
         }
         Insert: {
@@ -2501,7 +2500,6 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
-          phone?: string | null
           price_per_day?: number | null
           rating?: number | null
           self_declared_hsk?: number | null
@@ -2509,7 +2507,7 @@ export type Database = {
           total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string | null
-          user_id?: string | null
+          verified_at?: string | null
           years_experience?: number | null
         }
         Update: {
@@ -2546,7 +2544,6 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
-          phone?: string | null
           price_per_day?: number | null
           rating?: number | null
           self_declared_hsk?: number | null
@@ -2554,7 +2551,7 @@ export type Database = {
           total_bookings?: number | null
           total_reviews?: number | null
           updated_at?: string | null
-          user_id?: string | null
+          verified_at?: string | null
           years_experience?: number | null
         }
         Relationships: []
