@@ -162,7 +162,21 @@
     "noMarketsFound": "لا توجد أسواق لهذه الفئة",
     "noExhibitionsFound": "لا توجد معارض لهذه الفئة",
     "logistics": "اللوجستيات",
-    "cityInfo": "معلومات المدينة"
+    "cityInfo": "معلومات المدينة",
+    "productFilters": "فلاتر المنتجات",
+    "searchExhibition": "البحث في المعارض...",
+    "upcomingExhibitions": "المعارض القادمة",
+    "upcomingIn30Days": "خلال 30 يوماً القادمة",
+    "exhibitionsCount": "معرض",
+    "upcoming": "قريباً",
+    "filterTags": {
+      "furniture": "أثاث",
+      "ceramics": "سيراميك",
+      "electronics": "إلكترونيات",
+      "autoParts": "قطع غيار سيارات",
+      "textiles": "منسوجات",
+      "construction": "مواد بناء"
+    }
   },
   "productSearch": {
     "title": "البحث حسب المنتج",

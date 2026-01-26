@@ -162,7 +162,21 @@
     "noMarketsFound": "No markets found for this category",
     "noExhibitionsFound": "No exhibitions found for this category",
     "logistics": "Logistics",
-    "cityInfo": "City information"
+    "cityInfo": "City information",
+    "productFilters": "Product Filters",
+    "searchExhibition": "Search exhibitions...",
+    "upcomingExhibitions": "Upcoming exhibitions",
+    "upcomingIn30Days": "Within next 30 days",
+    "exhibitionsCount": "exhibitions",
+    "upcoming": "Upcoming",
+    "filterTags": {
+      "furniture": "Furniture",
+      "ceramics": "Ceramics",
+      "electronics": "Electronics",
+      "autoParts": "Auto Parts",
+      "textiles": "Textiles",
+      "construction": "Construction Materials"
+    }
   },
   "productSearch": {
     "title": "Search by Product",

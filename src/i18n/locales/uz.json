@@ -162,7 +162,21 @@
     "noMarketsFound": "Bu kategoriya uchun bozorlar topilmadi",
     "noExhibitionsFound": "Bu kategoriya uchun ko'rgazmalar topilmadi",
     "logistics": "Logistika",
-    "cityInfo": "Shahar haqida ma'lumot"
+    "cityInfo": "Shahar haqida ma'lumot",
+    "productFilters": "Mahsulot filtrlari",
+    "searchExhibition": "Ko'rgazmalarni qidirish...",
+    "upcomingExhibitions": "Yaqinlashayotgan ko'rgazmalar",
+    "upcomingIn30Days": "Yaqin 30 kun ichida",
+    "exhibitionsCount": "ta ko'rgazma",
+    "upcoming": "Yaqinda",
+    "filterTags": {
+      "furniture": "Mebel",
+      "ceramics": "Chinni idishlar",
+      "electronics": "Elektronika",
+      "autoParts": "Avto ehtiyot qismlar",
+      "textiles": "Tekstil",
+      "construction": "Qurilish materiallari"
+    }
   },
   "productSearch": {
     "title": "Mahsulot bo'yicha qidirish",
