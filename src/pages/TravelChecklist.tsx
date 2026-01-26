@@ -28,20 +28,18 @@ interface ChecklistItem {
   sort_order: number;
 }
 
-// Default checklist items
+// Default checklist items - Updated to exactly 10 essential items
 const DEFAULT_ITEMS = [
   { name: "passport", icon: Book },
   { name: "cantonFairBadge", icon: Shield },
-  { name: "neckPillow", icon: Briefcase },
-  { name: "prayerMat", icon: Book },
-  { name: "pen", icon: Book },
-  { name: "eyeMask", icon: Briefcase },
+  { name: "visaCard", icon: Briefcase },
+  { name: "powerBank", icon: Briefcase },
   { name: "toothbrush", icon: Briefcase },
   { name: "perfume", icon: Briefcase },
   { name: "hairbrush", icon: Briefcase },
-  { name: "phoneCharger", icon: Briefcase },
-  { name: "powerAdapter", icon: Briefcase },
-  { name: "medications", icon: Shield },
+  { name: "neckPillow", icon: Briefcase },
+  { name: "simCard", icon: Shield },
+  { name: "pen", icon: Book },
 ];
 
 const TravelChecklist = () => {

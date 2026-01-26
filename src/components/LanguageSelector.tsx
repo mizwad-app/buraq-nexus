@@ -14,6 +14,7 @@ const languages = [
   { code: "uz", label: "O'zbekcha", shortLabel: "UZ", flag: "🇺🇿" },
   { code: "en", label: "English", shortLabel: "EN", flag: "🌐" },
   { code: "ru", label: "Русский", shortLabel: "RU", flag: "🇷🇺" },
+  { code: "fr", label: "Français", shortLabel: "FR", flag: "🇫🇷" },
   { code: "ar", label: "العربية", shortLabel: "AR", flag: "🇸🇦", rtl: true },
 ];
 

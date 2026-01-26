@@ -131,7 +131,7 @@
     "subtitle": "Mahsulot tanlang — qayerga borish kerakligini ko'ring",
     "howItWorks": "Qanday ishlaydi?",
     "howItWorksDesc": "Mahsulot kategoriyasini tanlang. Biz sizga qaysi shaharda ishlab chiqarilishini, qanday yetib borishni va optom bozorlarni ko'rsatamiz.",
-    "searchProduct": "Mahsulot qidirish...",
+    "searchProduct": "Sanoat yoki mahsulot turi bo'yicha qidirish...",
     "selectProduct": "Mahsulot tanlang",
     "allProducts": "Barcha mahsulotlar",
     "foundInCities": "{{count}} ta shaharda topildi",
@@ -146,7 +146,23 @@
     "quickLinks": "Tezkor havolalar",
     "verifyFactories": "Zavod va kompaniyalarni tekshiring",
     "hireExpert": "Tajribali tarjimon yollang",
-    "tryDifferentCategory": "Boshqa kategoriyani tanlang"
+    "tryDifferentCategory": "Boshqa kategoriyani tanlang",
+    "step1": "1-qadam: Mahsulot tanlash",
+    "step2": "2-qadam: Maqsad tanlash",
+    "selectGoal": "Maqsadingizni tanlang",
+    "factories": "Zavodlar",
+    "factoriesDesc": "Ishlab chiqarish markazlari",
+    "markets": "Bozorlar",
+    "marketsDesc": "Optom bozorlar",
+    "exhibitions": "Ko'rgazmalar",
+    "exhibitionsDesc": "Yaqinlashayotgan yarmarkalar",
+    "productSelected": "Mahsulot tanlandi",
+    "changeProduct": "Mahsulotni o'zgartirish",
+    "noFactoriesFound": "Bu kategoriya uchun zavodlar topilmadi",
+    "noMarketsFound": "Bu kategoriya uchun bozorlar topilmadi",
+    "noExhibitionsFound": "Bu kategoriya uchun ko'rgazmalar topilmadi",
+    "logistics": "Logistika",
+    "cityInfo": "Shahar haqida ma'lumot"
   },
   "productSearch": {
     "title": "Mahsulot bo'yicha qidirish",
@@ -287,6 +303,7 @@
     "uz": "O'zbekcha",
     "en": "English",
     "ru": "Русский",
+    "fr": "Français",
     "ar": "العربية"
   },
   "common": {
@@ -503,25 +520,29 @@
     "inquiryAbout": "So'rov"
   },
   "checklist": {
-    "title": "Sayohat Ro'yxati",
+    "title": "Sayohat check-listi",
     "subtitle": "Sayohatga tayyorgarlik",
     "progress": "{{checked}} / {{total}} element",
     "addItem": "Element qo'shish",
     "addItemPlaceholder": "Element nomini kiriting...",
-    "defaultItems": {
+    "ready": "Sayohatga tayyor!",
+    "itemAdded": "Element qo'shildi",
+    "itemDeleted": "Element o'chirildi",
+    "errorLoading": "Yuklashda xatolik",
+    "errorUpdating": "Yangilashda xatolik",
+    "errorAdding": "Qo'shishda xatolik",
+    "errorDeleting": "O'chirishda xatolik",
+    "items": {
       "passport": "Pasport",
-      "visa": "Viza",
-      "cantonBadge": "Kanton yarmarkasi bedji",
-      "neckPillow": "Bo'yin yostig'i",
-      "prayerMat": "Joynamoz",
-      "pen": "Ruchka (deklaratsiya uchun)",
-      "eyeMask": "Ko'z niqobi",
-      "toothbrush": "Tish cho'tkasi va pasta",
-      "perfume": "Atir",
-      "hairbrush": "Soch tarash",
-      "charger": "Telefon zaryadlagich",
+      "cantonFairBadge": "Canton Fair bajik",
+      "visaCard": "Visa card",
       "powerBank": "Power Bank",
-      "adapter": "Elektr adapteri (Xitoy vilkasi)"
+      "toothbrush": "Tish cho'tkasi",
+      "perfume": "Atir",
+      "hairbrush": "Taroq",
+      "neckPillow": "Samolyotda bo'yin uchun yostiq",
+      "simCard": "Sim karta",
+      "pen": "Ruchka"
     }
   },
   "translators": {
