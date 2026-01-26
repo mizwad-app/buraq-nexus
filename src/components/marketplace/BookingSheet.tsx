@@ -239,7 +239,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
 
     const totalAmount = calculateTotal();
     
-    // Check balance one more time
+    // Check balance one more time (client-side check for UX only - server validates atomically)
     if (walletBalance < totalAmount) {
       toast({ title: "Balans yetarli emas", variant: "destructive" });
       setStep('payment');
@@ -249,79 +249,61 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
 
     setLoading(true);
     try {
-      // 1. Re-fetch wallet row (create if missing), then deduct & hold in escrow
-      const { data: walletRow, error: walletGetError } = await supabase
-        .from('user_wallets')
-        .select('balance, held_balance')
-        .eq('user_id', user.id)
-        .maybeSingle();
+      // Process each booking date atomically using secure RPC function
+      // This prevents race conditions and double-spend attacks
+      const bookingResults: { success: boolean; booking_id?: string; new_balance?: number; error?: string }[] = [];
+      
+      for (const date of selectedDates) {
+        const perDayAmount = serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice);
+        
+        const { data: rpcResult, error: rpcError } = await supabase.rpc(
+          'process_booking_payment',
+          {
+            p_translator_id: translator.id,
+            p_booking_date: format(date, 'yyyy-MM-dd'),
+            p_start_time: startTime,
+            p_end_time: endTime,
+            p_service_type: serviceType,
+            p_specialization: specialization || '',
+            p_location: location,
+            p_description: description || '',
+            p_agreed_rate: serviceType === 'daily' ? dailyPrice : hourlyPrice,
+            p_total_hours: serviceType === 'hourly' ? calculateHours() : null,
+            p_total_amount: perDayAmount
+          }
+        );
 
-      if (walletGetError) throw walletGetError;
+        if (rpcError) {
+          throw rpcError;
+        }
 
-      const currentBalance = Number(walletRow?.balance ?? 0);
-      const currentHeld = Number(walletRow?.held_balance ?? 0);
-
-      if (!walletRow) {
-        const { error: createWalletError } = await supabase
-          .from('user_wallets')
-          .insert({ user_id: user.id, balance: currentBalance, held_balance: currentHeld })
-          .select('id')
-          .maybeSingle();
-
-        if (createWalletError) throw createWalletError;
+        const result = rpcResult as { success?: boolean; error?: string; booking_id?: string; new_balance?: number } | null;
+        
+        if (!result?.success) {
+          // If insufficient balance, show appropriate message
+          if (result?.error === 'Insufficient balance') {
+            setInsufficientBalance(true);
+            setStep('payment');
+            toast({ title: "Balans yetarli emas", variant: "destructive" });
+            return;
+          }
+          throw new Error(result?.error || 'Booking failed');
+        }
+        
+        bookingResults.push({
+          success: true,
+          booking_id: result.booking_id,
+          new_balance: result.new_balance
+        });
       }
 
-      if (currentBalance < totalAmount) {
-        setInsufficientBalance(true);
-        setStep('payment');
-        toast({ title: "Balans yetarli emas", variant: "destructive" });
-        return;
+      // Update local wallet balance from the last successful booking
+      const lastResult = bookingResults[bookingResults.length - 1];
+      if (lastResult?.new_balance !== undefined) {
+        setWalletBalance(lastResult.new_balance);
       }
 
-      const { error: walletUpdateError } = await supabase
-        .from('user_wallets')
-        .update({
-          balance: currentBalance - totalAmount,
-          held_balance: currentHeld + totalAmount,
-          updated_at: new Date().toISOString(),
-        })
-        .eq('user_id', user.id);
-
-      if (walletUpdateError) throw walletUpdateError;
-
-      setWalletBalance(currentBalance - totalAmount);
-
-      // 2. Create booking records for each selected date
-      const bookingPromises = selectedDates.map(date => 
-        supabase
-          .from('translator_bookings')
-          .insert({
-            translator_id: translator.id,
-            client_id: user.id,
-            booking_date: format(date, 'yyyy-MM-dd'),
-            start_time: startTime,
-            end_time: endTime,
-            service_type: serviceType,
-            specialization: specialization || null,
-            location: location,
-            description: description || null,
-            agreed_rate: serviceType === 'daily' ? dailyPrice : hourlyPrice,
-            total_hours: serviceType === 'hourly' ? calculateHours() : null,
-            total_amount: serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice),
-            status: 'confirmed',
-            confirmed_at: new Date().toISOString()
-          })
-          .select()
-          .single()
-      );
-
-      const results = await Promise.all(bookingPromises);
-      const errors = results.filter(r => r.error);
-      if (errors.length > 0) {
-        throw errors[0].error;
-      }
-
-      // 3. Send automated message to translator in chat
+      // Send automated message to translator in chat
       const dateList = selectedDates.map(d => format(d, 'dd.MM.yyyy')).join(', ');
       const chatMessage = `📅 Mijoz ${dateList} kunlari uchun sizni band qildi va to'lovni amalga oshirdi. Jami: ¥${totalAmount}`;
       
