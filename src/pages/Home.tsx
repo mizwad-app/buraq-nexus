@@ -12,7 +12,6 @@ import {
   Star, 
   ChevronRight,
   ClipboardCheck,
-  Ticket,
   Lock,
 } from "lucide-react";
 
@@ -135,26 +134,15 @@ const Home = () => {
         <h2 className="text-lg font-display font-semibold text-foreground mb-3">
           {t("home.quickAccess")}
         </h2>
-        <div className="grid grid-cols-2 gap-2">
-          <button
-            onClick={() => navigate("/checklist")}
-            className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
-          >
-            <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-              <ClipboardCheck className="w-5 h-5 text-primary" />
-            </div>
-            <span className="text-sm font-medium text-foreground">{t("home.travelChecklist")}</span>
-          </button>
-          <button
-            onClick={() => navigate("/transport")}
-            className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
-          >
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center">
-              <Ticket className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-sm font-medium text-foreground">{t("home.transport")}</span>
-          </button>
-        </div>
+        <button
+          onClick={() => navigate("/checklist")}
+          className="w-full flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
+        >
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <ClipboardCheck className="w-5 h-5 text-primary" />
+          </div>
+          <span className="text-sm font-medium text-foreground">{t("home.travelChecklist")}</span>
+        </button>
       </section>
 
       {/* Section Title */}
