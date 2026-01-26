@@ -117,7 +117,7 @@ interface ProductCategory {
   [key: string]: unknown;
 }
 
-type Step = "product" | "goal" | "results";
+type Step = "product" | "goal";
 type GoalType = "factories" | "markets" | "exhibitions";
 
 // City logistics data
@@ -311,20 +311,19 @@ const Business = () => {
     setPopoverOpen(false);
     setSearchQuery("");
     setStep("goal");
+    setSelectedGoal(null); // Reset goal when new product is selected
   };
 
   const handleGoalSelect = (goal: GoalType) => {
     setSelectedGoal(goal);
-    setStep("results");
+    // No step change - stay on goal step but show results
   };
 
   const handleBack = () => {
-    if (step === "results") {
-      setStep("goal");
-      setSelectedGoal(null);
-    } else if (step === "goal") {
+    if (step === "goal") {
       setStep("product");
       setSelectedCategory(null);
+      setSelectedGoal(null);
       setSearchQuery("");
     }
   };
@@ -447,128 +446,122 @@ const Business = () => {
   const renderGoalStep = () => (
     <section className="px-5 pb-4">
       {/* Selected Category Badge */}
-      <div className="mb-4 bg-accent/10 rounded-xl p-3 border border-accent/20">
+      <div className="mb-4 bg-gradient-to-br from-primary/15 to-accent/10 rounded-xl p-3 border border-primary/20">
         <div className="flex items-center gap-2">
-          <Package className="w-4 h-4 text-accent" />
-          <span className="text-sm font-medium text-foreground">
+          <Package className="w-5 h-5 text-primary" />
+          <span className="text-sm font-semibold text-foreground">
             {selectedCategory ? getField(selectedCategory, 'name') : ''}
           </span>
         </div>
       </div>
 
-      {/* Goal Selection */}
-      <h3 className="font-semibold text-foreground mb-3">Maqsadingizni tanlang</h3>
-      <div className="space-y-3">
+      {/* Goal Selection - Horizontal 3 Buttons */}
+      <h3 className="font-semibold text-foreground mb-3 text-sm">Maqsadingizni tanlang</h3>
+      <div className="grid grid-cols-3 gap-2 mb-4">
         <button
           onClick={() => handleGoalSelect("factories")}
-          className="w-full bg-card rounded-2xl p-4 border border-border/50 hover:border-primary/30 transition-all text-left flex items-center gap-4"
+          className={cn(
+            "flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all",
+            selectedGoal === "factories"
+              ? "bg-primary/20 border-primary text-primary"
+              : "bg-card border-border/50 hover:border-primary/30 text-foreground"
+          )}
         >
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
-            <Factory className="w-7 h-7 text-primary" />
-          </div>
-          <div className="flex-1">
-            <h4 className="font-semibold text-foreground">🏭 Zavodlar markazi</h4>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Ishlab chiqarish markazlari va fabrikalar
-            </p>
-          </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+          <Factory className={cn("w-6 h-6", selectedGoal === "factories" ? "text-primary" : "text-muted-foreground")} />
+          <span className="text-[11px] font-medium text-center leading-tight">🏭 Zavodlar</span>
         </button>
 
         <button
           onClick={() => handleGoalSelect("markets")}
-          className="w-full bg-card rounded-2xl p-4 border border-border/50 hover:border-amber-500/30 transition-all text-left flex items-center gap-4"
+          className={cn(
+            "flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all",
+            selectedGoal === "markets"
+              ? "bg-primary/20 border-primary text-primary"
+              : "bg-card border-border/50 hover:border-amber-500/30 text-foreground"
+          )}
         >
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/10 flex items-center justify-center">
-            <Store className="w-7 h-7 text-amber-500" />
-          </div>
-          <div className="flex-1">
-            <h4 className="font-semibold text-foreground">🛍️ Optom bozorlar</h4>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Ulgurji savdo bozorlari va do'konlar
-            </p>
-          </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+          <Store className={cn("w-6 h-6", selectedGoal === "markets" ? "text-primary" : "text-amber-500")} />
+          <span className="text-[11px] font-medium text-center leading-tight">🛍️ Bozorlar</span>
         </button>
 
         <button
           onClick={() => handleGoalSelect("exhibitions")}
-          className="w-full bg-card rounded-2xl p-4 border border-border/50 hover:border-purple-500/30 transition-all text-left flex items-center gap-4"
+          className={cn(
+            "flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all",
+            selectedGoal === "exhibitions"
+              ? "bg-primary/20 border-primary text-primary"
+              : "bg-card border-border/50 hover:border-purple-500/30 text-foreground"
+          )}
         >
-          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/10 flex items-center justify-center">
-            <Calendar className="w-7 h-7 text-purple-500" />
-          </div>
-          <div className="flex-1">
-            <h4 className="font-semibold text-foreground">📅 Ko'rgazmalar</h4>
-            <p className="text-xs text-muted-foreground mt-0.5">
-              Yarmarkalar va savdo ko'rgazmalari
-            </p>
-          </div>
-          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+          <Calendar className={cn("w-6 h-6", selectedGoal === "exhibitions" ? "text-primary" : "text-purple-500")} />
+          <span className="text-[11px] font-medium text-center leading-tight">📅 Ko'rgazmalar</span>
         </button>
       </div>
+
+      {/* Results Section - Inline */}
+      {selectedGoal && renderGoalResults()}
     </section>
   );
 
-  const renderResults = () => {
+  const renderGoalResults = () => {
     if (!selectedGoal) return null;
 
     if (selectedGoal === "factories") {
       return (
-        <section className="px-5 pb-4">
-          <div className="mb-4 flex items-center gap-2">
-            <Factory className="w-5 h-5 text-primary" />
-            <h3 className="font-semibold text-foreground">Zavodlar markazi</h3>
+        <div className="mt-2">
+          <div className="mb-3 flex items-center gap-2">
+            <Factory className="w-4 h-4 text-primary" />
+            <h4 className="font-medium text-foreground text-sm">Zavodlar markazi</h4>
           </div>
 
           {results.cities.length === 0 ? (
-            <div className="text-center py-8">
-              <Info className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
-              <p className="text-muted-foreground">Bu kategoriyada zavod topilmadi</p>
+            <div className="text-center py-6 bg-card rounded-xl border border-border/50">
+              <Info className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+              <p className="text-sm text-muted-foreground">Bu kategoriyada zavod topilmadi</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {(results.cities as { city: string; cityTranslated: string; logistics: typeof cityLogistics[string]; hubs: ProductionHub[] }[]).map((cityData) => (
-                <div key={cityData.city} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+                <div key={cityData.city} className="bg-card rounded-xl border border-border/50 overflow-hidden">
                   {/* City Header */}
-                  <div className="bg-gradient-to-br from-primary/15 to-accent/10 p-4 border-b border-border/30">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-                        <MapPin className="w-5 h-5 text-primary-foreground" />
+                  <div className="bg-gradient-to-br from-primary/15 to-accent/10 p-3 border-b border-border/30">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-primary-foreground" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-foreground">{cityData.cityTranslated}</h4>
-                        <p className="text-xs text-muted-foreground">{cityData.logistics.province}</p>
+                        <h4 className="font-semibold text-foreground text-sm">{cityData.cityTranslated}</h4>
+                        <p className="text-[10px] text-muted-foreground">{cityData.logistics.province}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Logistics */}
-                  <div className="p-4 space-y-3">
+                  <div className="p-3 space-y-2">
                     <div className="grid grid-cols-2 gap-2">
                       <div className="flex items-center gap-2 bg-blue-500/10 rounded-lg p-2">
-                        <Plane className="w-4 h-4 text-blue-500" />
+                        <Plane className="w-3 h-3 text-blue-500" />
                         <div>
-                          <p className="text-[10px] text-muted-foreground">Yaqin aeroport</p>
-                          <p className="text-xs font-medium">{cityData.logistics.airport} ({cityData.logistics.airportCode})</p>
+                          <p className="text-[9px] text-muted-foreground">Yaqin aeroport</p>
+                          <p className="text-[11px] font-medium">{cityData.logistics.airport} ({cityData.logistics.airportCode})</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 bg-emerald-500/10 rounded-lg p-2">
-                        <Train className="w-4 h-4 text-emerald-500" />
+                        <Train className="w-3 h-3 text-emerald-500" />
                         <div>
-                          <p className="text-[10px] text-muted-foreground">Guangzhou'dan</p>
-                          <p className="text-xs font-medium">{cityData.logistics.trainFromGZ}</p>
+                          <p className="text-[9px] text-muted-foreground">Guangzhou'dan</p>
+                          <p className="text-[11px] font-medium">{cityData.logistics.trainFromGZ}</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Hub List */}
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       {cityData.hubs.map((hub) => (
-                        <div key={hub.id} className="bg-muted/30 rounded-lg p-3">
-                          <p className="text-sm font-medium text-foreground">{getField(hub, 'industry')}</p>
+                        <div key={hub.id} className="bg-muted/30 rounded-lg p-2">
+                          <p className="text-xs font-medium text-foreground">{getField(hub, 'industry')}</p>
                           {hub.description && (
-                            <p className="text-xs text-muted-foreground mt-1">{getField(hub, 'description')}</p>
+                            <p className="text-[10px] text-muted-foreground mt-0.5 line-clamp-2">{getField(hub, 'description')}</p>
                           )}
                         </div>
                       ))}
@@ -578,66 +571,66 @@ const Business = () => {
               ))}
             </div>
           )}
-        </section>
+        </div>
       );
     }
 
     if (selectedGoal === "markets") {
       return (
-        <section className="px-5 pb-4">
-          <div className="mb-4 flex items-center gap-2">
-            <Store className="w-5 h-5 text-amber-500" />
-            <h3 className="font-semibold text-foreground">Optom bozorlar</h3>
+        <div className="mt-2">
+          <div className="mb-3 flex items-center gap-2">
+            <Store className="w-4 h-4 text-amber-500" />
+            <h4 className="font-medium text-foreground text-sm">Optom bozorlar</h4>
           </div>
 
           {results.cities.length === 0 ? (
-            <div className="text-center py-8">
-              <Info className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
-              <p className="text-muted-foreground">Bu kategoriyada bozor topilmadi</p>
+            <div className="text-center py-6 bg-card rounded-xl border border-border/50">
+              <Info className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+              <p className="text-sm text-muted-foreground">Bu kategoriyada bozor topilmadi</p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {(results.cities as { city: string; cityTranslated: string; logistics: typeof cityLogistics[string]; markets: WholesaleMarket[] }[]).map((cityData) => (
-                <div key={cityData.city} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+                <div key={cityData.city} className="bg-card rounded-xl border border-border/50 overflow-hidden">
                   {/* City Header */}
-                  <div className="bg-gradient-to-br from-amber-500/15 to-yellow-500/10 p-4 border-b border-border/30">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center">
-                        <MapPin className="w-5 h-5 text-white" />
+                  <div className="bg-gradient-to-br from-amber-500/15 to-yellow-500/10 p-3 border-b border-border/30">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-white" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-foreground">{cityData.cityTranslated}</h4>
-                        <p className="text-xs text-muted-foreground">{cityData.logistics.province}</p>
+                        <h4 className="font-semibold text-foreground text-sm">{cityData.cityTranslated}</h4>
+                        <p className="text-[10px] text-muted-foreground">{cityData.logistics.province}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Markets List */}
-                  <div className="p-4 space-y-3">
+                  <div className="p-3 space-y-2">
                     {cityData.markets.map((market) => {
                       const chineseAddress = market.address_chinese || market.address;
                       return (
-                        <div key={market.id} className="bg-muted/30 rounded-lg p-3">
+                        <div key={market.id} className="bg-muted/30 rounded-lg p-2.5">
                           <div className="flex items-start justify-between gap-2">
-                            <div className="flex-1">
-                              <p className="text-xs text-muted-foreground font-mono">{market.name}</p>
-                              <p className="text-sm font-medium text-foreground">{getField(market, 'name')}</p>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-[10px] text-muted-foreground font-mono truncate">{market.name}</p>
+                              <p className="text-xs font-medium text-foreground">{getField(market, 'name')}</p>
                             </div>
                             {chineseAddress && (
                               <button
                                 onClick={() => copyAddress(chineseAddress)}
-                                className="p-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 transition-colors flex-shrink-0"
+                                className="p-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 transition-colors flex-shrink-0"
                               >
                                 {copiedAddress === chineseAddress ? (
-                                  <Check className="w-4 h-4 text-emerald-500" />
+                                  <Check className="w-3.5 h-3.5 text-emerald-500" />
                                 ) : (
-                                  <Copy className="w-4 h-4 text-amber-500" />
+                                  <Copy className="w-3.5 h-3.5 text-amber-500" />
                                 )}
                               </button>
                             )}
                           </div>
                           {chineseAddress && (
-                            <p className="text-xs text-muted-foreground mt-1 font-mono">{chineseAddress}</p>
+                            <p className="text-[10px] text-muted-foreground mt-1 font-mono">{chineseAddress}</p>
                           )}
                         </div>
                       );
@@ -647,39 +640,39 @@ const Business = () => {
               ))}
             </div>
           )}
-        </section>
+        </div>
       );
     }
 
     if (selectedGoal === "exhibitions") {
       const exhibitionItems = results.items as Exhibition[];
       return (
-        <section className="px-5 pb-4">
-          <div className="mb-4 flex items-center gap-2">
-            <Calendar className="w-5 h-5 text-purple-500" />
-            <h3 className="font-semibold text-foreground">Ko'rgazmalar</h3>
+        <div className="mt-2">
+          <div className="mb-3 flex items-center gap-2">
+            <Calendar className="w-4 h-4 text-purple-500" />
+            <h4 className="font-medium text-foreground text-sm">Ko'rgazmalar</h4>
           </div>
 
           {exhibitionItems.length === 0 ? (
-            <div className="text-center py-8">
-              <Info className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
-              <p className="text-muted-foreground">Bu kategoriyada ko'rgazma topilmadi</p>
+            <div className="text-center py-6 bg-card rounded-xl border border-border/50">
+              <Info className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
+              <p className="text-sm text-muted-foreground">Bu kategoriyada ko'rgazma topilmadi</p>
             </div>
           ) : (
-            <div className="space-y-3">
+            <div className="space-y-2">
               {exhibitionItems.map((ex) => (
-                <div key={ex.id} className="bg-card rounded-2xl border border-border/50 p-4">
-                  <div className="flex items-start gap-3">
-                    <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                      <Calendar className="w-6 h-6 text-purple-500" />
+                <div key={ex.id} className="bg-card rounded-xl border border-border/50 p-3">
+                  <div className="flex items-start gap-2">
+                    <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                      <Calendar className="w-5 h-5 text-purple-500" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-foreground">{getField(ex, 'name')}</h4>
-                      <p className="text-xs text-muted-foreground mt-1">
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-medium text-foreground text-sm">{getField(ex, 'name')}</h4>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">
                         {getTranslatedCity(ex)} • {ex.venue && getField(ex, 'venue')}
                       </p>
-                      <div className="mt-2 flex items-center gap-2">
-                        <span className="px-2 py-1 rounded-full bg-purple-500/20 text-xs font-medium text-purple-400">
+                      <div className="mt-1.5">
+                        <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-[10px] font-medium text-purple-400">
                           {formatDate(ex.start_date)} - {formatDate(ex.end_date)}
                         </span>
                       </div>
@@ -689,7 +682,7 @@ const Business = () => {
               ))}
             </div>
           )}
-        </section>
+        </div>
       );
     }
 
@@ -722,8 +715,7 @@ const Business = () => {
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
             {step === "product" && "1-qadam: Mahsulot tanlang"}
-            {step === "goal" && "2-qadam: Maqsadingizni tanlang"}
-            {step === "results" && "3-qadam: Natijalar"}
+            {step === "goal" && (selectedGoal ? "2-qadam: Natijalar" : "2-qadam: Maqsadingizni tanlang")}
           </p>
         </div>
       </header>
@@ -733,15 +725,11 @@ const Business = () => {
         <div className="flex gap-2">
           <div className={cn(
             "h-1.5 flex-1 rounded-full transition-colors",
-            step === "product" ? "bg-primary" : "bg-primary"
+            "bg-primary"
           )} />
           <div className={cn(
             "h-1.5 flex-1 rounded-full transition-colors",
-            step === "goal" || step === "results" ? "bg-primary" : "bg-muted"
-          )} />
-          <div className={cn(
-            "h-1.5 flex-1 rounded-full transition-colors",
-            step === "results" ? "bg-primary" : "bg-muted"
+            step === "goal" ? "bg-primary" : "bg-muted"
           )} />
         </div>
       </div>
@@ -770,7 +758,6 @@ const Business = () => {
       {/* Step Content */}
       {step === "product" && renderProductStep()}
       {step === "goal" && renderGoalStep()}
-      {step === "results" && renderResults()}
 
       {/* Support Chat FAB */}
       <SupportChat />
