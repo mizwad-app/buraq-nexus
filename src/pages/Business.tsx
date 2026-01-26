@@ -10,21 +10,21 @@ import {
   Info,
   Store,
   Calendar,
+  Factory,
+  ArrowLeft,
+  Plane,
+  Train,
+  Copy,
+  Check,
 } from "lucide-react";
 import { BusinessEcosystemIcon } from "@/components/icons/BusinessEcosystemIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { SupportChat } from "@/components/SupportChat";
-import { CityInsightCard } from "@/components/CityInsightCard";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
+import { cn } from "@/lib/utils";
+import { toast } from "sonner";
 
 interface WholesaleMarket {
   id: string;
@@ -65,6 +65,10 @@ interface ProductionHub {
   city_ru?: string | null;
   city_en?: string | null;
   city_ar?: string | null;
+  description_uz?: string | null;
+  description_ru?: string | null;
+  description_en?: string | null;
+  description_ar?: string | null;
   [key: string]: unknown;
 }
 
@@ -90,6 +94,10 @@ interface Exhibition {
   category_ru?: string | null;
   category_en?: string | null;
   category_ar?: string | null;
+  venue_uz?: string | null;
+  venue_ru?: string | null;
+  venue_en?: string | null;
+  venue_ar?: string | null;
   [key: string]: unknown;
 }
 
@@ -105,7 +113,10 @@ interface ProductCategory {
   [key: string]: unknown;
 }
 
-// City logistics data (static for now, can be moved to DB later)
+type Step = "product" | "goal" | "results";
+type GoalType = "factories" | "markets" | "exhibitions";
+
+// City logistics data
 const cityLogistics: Record<string, { province: string; airport: string; airportCode: string; trainFromGZ: string }> = {
   "Guangzhou": { province: "Guangdong", airport: "Baiyun", airportCode: "CAN", trainFromGZ: "—" },
   "Shenzhen": { province: "Guangdong", airport: "Bao'an", airportCode: "SZX", trainFromGZ: "30 daqiqa" },
@@ -115,6 +126,8 @@ const cityLogistics: Record<string, { province: string; airport: string; airport
   "Hangzhou": { province: "Zhejiang", airport: "Xiaoshan", airportCode: "HGH", trainFromGZ: "7 soat" },
   "Chaozhou": { province: "Guangdong", airport: "Jieyang", airportCode: "SWA", trainFromGZ: "3 soat" },
   "Dongguan": { province: "Guangdong", airport: "Baiyun (GZ)", airportCode: "CAN", trainFromGZ: "45 daqiqa" },
+  "Beijing": { province: "Beijing", airport: "Daxing", airportCode: "PKX", trainFromGZ: "8 soat" },
+  "Shanghai": { province: "Shanghai", airport: "Pudong", airportCode: "PVG", trainFromGZ: "6.5 soat" },
 };
 
 const Business = () => {
@@ -122,10 +135,14 @@ const Business = () => {
   const { t, i18n } = useTranslation();
   const { getField, currentLanguage } = useTranslatedField();
   
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  // Step state
+  const [step, setStep] = useState<Step>("product");
+  const [selectedCategory, setSelectedCategory] = useState<ProductCategory | null>(null);
+  const [selectedGoal, setSelectedGoal] = useState<GoalType | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedMarket, setSelectedMarket] = useState<WholesaleMarket | null>(null);
   const [marketDetailOpen, setMarketDetailOpen] = useState(false);
+  const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
   
   // Data states
   const [markets, setMarkets] = useState<WholesaleMarket[]>([]);
@@ -144,7 +161,7 @@ const Business = () => {
         supabase.from("wholesale_markets").select("*"),
         supabase.from("production_hubs").select("*"),
         supabase.from("exhibitions").select("*").order("start_date", { ascending: true }),
-        supabase.from("product_categories").select("*"),
+        supabase.from("product_categories").select("*").order("name"),
       ]);
 
       if (marketsRes.data) setMarkets(marketsRes.data as WholesaleMarket[]);
@@ -158,189 +175,459 @@ const Business = () => {
     }
   };
 
-  // Get translated city name for display
+  // Get translated city name
   const getTranslatedCity = (item: { city: string; city_uz?: string | null; city_ru?: string | null; city_en?: string | null; city_ar?: string | null }) => {
     return getField(item, 'city');
   };
 
-  // Get unique categories for filter
-  const allCategories = useMemo(() => {
-    const categoriesMap = new Map<string, { base: string; translated: string }>();
-    markets.forEach(m => {
-      if (!categoriesMap.has(m.category)) {
-        categoriesMap.set(m.category, { base: m.category, translated: getField(m, 'category') });
-      }
-    });
-    hubs.forEach(h => {
-      if (!categoriesMap.has(h.industry)) {
-        categoriesMap.set(h.industry, { base: h.industry, translated: getField(h, 'industry') });
-      }
-    });
-    // Also add categories from product_categories table
-    categories.forEach(c => {
-      if (!categoriesMap.has(c.slug)) {
-        categoriesMap.set(c.slug, { base: c.slug, translated: getField(c, 'name') });
-      }
-    });
-    return Array.from(categoriesMap.values()).sort((a, b) => a.translated.localeCompare(b.translated));
-  }, [markets, hubs, categories, currentLanguage]);
-
-  // Filter categories by search
+  // Filter categories by search query (live search)
   const filteredCategories = useMemo(() => {
-    if (!searchQuery) return allCategories;
-    const searchLower = searchQuery.toLowerCase();
-    return allCategories.filter(c => 
-      c.translated.toLowerCase().includes(searchLower) ||
-      c.base.toLowerCase().includes(searchLower)
-    );
-  }, [allCategories, searchQuery]);
-
-  // Get selected category translated name
-  const selectedCategoryTranslated = useMemo(() => {
-    if (selectedCategory === "all") return "";
-    const cat = allCategories.find(c => c.base === selectedCategory);
-    return cat?.translated || selectedCategory;
-  }, [selectedCategory, allCategories]);
+    if (!searchQuery.trim()) return categories;
+    const query = searchQuery.toLowerCase();
+    return categories.filter(cat => {
+      const translatedName = getField(cat, 'name').toLowerCase();
+      const baseName = cat.name.toLowerCase();
+      const slug = cat.slug.toLowerCase().replace(/_/g, ' ');
+      return translatedName.includes(query) || baseName.includes(query) || slug.includes(query);
+    });
+  }, [categories, searchQuery, currentLanguage]);
 
   const formatDate = (dateStr: string) => {
     const locale = i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'ar' ? 'ar-SA' : 'en-US';
     return new Date(dateStr).toLocaleDateString(locale, {
       month: "short",
       day: "numeric",
+      year: "numeric",
     });
   };
 
-  // Build city insight data based on selected category
-  const cityInsights = useMemo(() => {
-    const cityDataMap = new Map<string, {
-      cityName: string;
-      cityNameTranslated: string;
-      province: string;
-      industries: string[];
-      nearestAirport: string;
-      airportCode: string;
-      trainInfo: string;
-      markets: { name: string; nameTranslated: string; address?: string }[];
-      upcomingExhibition?: {
-        name: string;
-        nameTranslated: string;
-        date: string;
-        phase?: string;
-      };
-    }>();
+  // Get results based on selected goal
+  const results = useMemo(() => {
+    if (!selectedCategory || !selectedGoal) return { cities: [], items: [] };
 
-    // Filter hubs by category if selected
-    const relevantHubs = selectedCategory === "all" 
-      ? hubs 
-      : hubs.filter(h => {
-          const searchLower = selectedCategory.toLowerCase();
-          const translatedIndustry = getField(h, 'industry').toLowerCase();
-          return translatedIndustry.includes(searchLower) ||
-            h.industry.toLowerCase().includes(searchLower) ||
-            h.specializations?.some(s => s.toLowerCase().includes(searchLower));
-        });
+    const categoryName = selectedCategory.name.toLowerCase();
+    const categorySlug = selectedCategory.slug.toLowerCase();
 
-    // Filter markets by category if selected
-    const relevantMarkets = selectedCategory === "all"
-      ? markets
-      : markets.filter(m => {
-          const searchLower = selectedCategory.toLowerCase();
-          const translatedCategory = getField(m, 'category').toLowerCase();
-          return translatedCategory.includes(searchLower) ||
-            m.category.toLowerCase().includes(searchLower);
-        });
+    if (selectedGoal === "factories") {
+      // Filter hubs by category
+      const relevantHubs = hubs.filter(h => {
+        const industry = h.industry.toLowerCase();
+        const specs = h.specializations?.map(s => s.toLowerCase()) || [];
+        return industry.includes(categoryName) || 
+               industry.includes(categorySlug) ||
+               specs.some(s => s.includes(categoryName) || s.includes(categorySlug));
+      });
 
-    // Build city data from hubs
-    relevantHubs.forEach(hub => {
-      const cityKey = hub.city;
-      const logistics = cityLogistics[cityKey] || { 
-        province: "China", 
-        airport: "—", 
-        airportCode: "—", 
-        trainFromGZ: "—" 
-      };
-
-      if (!cityDataMap.has(cityKey)) {
-        cityDataMap.set(cityKey, {
-          cityName: cityKey,
-          cityNameTranslated: getTranslatedCity(hub),
-          province: logistics.province,
-          industries: [],
-          nearestAirport: logistics.airport,
-          airportCode: logistics.airportCode,
-          trainInfo: logistics.trainFromGZ,
-          markets: [],
-        });
-      }
-
-      const cityData = cityDataMap.get(cityKey)!;
-      const industryTranslated = getField(hub, 'industry');
-      if (!cityData.industries.includes(industryTranslated)) {
-        cityData.industries.push(industryTranslated);
-      }
-    });
-
-    // Add markets to city data
-    relevantMarkets.forEach(market => {
-      const cityKey = market.city;
-      const logistics = cityLogistics[cityKey] || { 
-        province: "China", 
-        airport: "—", 
-        airportCode: "—", 
-        trainFromGZ: "—" 
-      };
-
-      if (!cityDataMap.has(cityKey)) {
-        cityDataMap.set(cityKey, {
-          cityName: cityKey,
-          cityNameTranslated: getTranslatedCity(market),
-          province: logistics.province,
-          industries: [getField(market, 'category')],
-          nearestAirport: logistics.airport,
-          airportCode: logistics.airportCode,
-          trainInfo: logistics.trainFromGZ,
-          markets: [],
-        });
-      }
-
-      const cityData = cityDataMap.get(cityKey)!;
-      const marketExists = cityData.markets.some(m => m.name === market.name);
-      if (!marketExists) {
-        cityData.markets.push({
-          name: market.name,
-          nameTranslated: getField(market, 'name'),
-          address: market.address_chinese || market.address || undefined,
-        });
-      }
-    });
-
-    // Add upcoming exhibitions to cities
-    const now = new Date();
-    exhibitions.forEach(exhibition => {
-      const exhibitionDate = new Date(exhibition.start_date);
-      if (exhibitionDate >= now) {
-        const cityKey = exhibition.city;
-        if (cityDataMap.has(cityKey)) {
-          const cityData = cityDataMap.get(cityKey)!;
-          if (!cityData.upcomingExhibition) {
-            // Check if exhibition category matches selected category
-            if (selectedCategory === "all" || 
-                exhibition.category.toLowerCase().includes(selectedCategory.toLowerCase()) ||
-                getField(exhibition, 'category').toLowerCase().includes(selectedCategory.toLowerCase())) {
-              cityData.upcomingExhibition = {
-                name: exhibition.name,
-                nameTranslated: getField(exhibition, 'name'),
-                date: formatDate(exhibition.start_date) + " - " + formatDate(exhibition.end_date),
-              };
-            }
-          }
+      // Group by city
+      const cityMap = new Map<string, { city: string; cityTranslated: string; logistics: typeof cityLogistics[string]; hubs: ProductionHub[] }>();
+      relevantHubs.forEach(hub => {
+        if (!cityMap.has(hub.city)) {
+          cityMap.set(hub.city, {
+            city: hub.city,
+            cityTranslated: getTranslatedCity(hub),
+            logistics: cityLogistics[hub.city] || { province: "China", airport: "—", airportCode: "—", trainFromGZ: "—" },
+            hubs: [],
+          });
         }
-      }
-    });
+        cityMap.get(hub.city)!.hubs.push(hub);
+      });
 
-    return Array.from(cityDataMap.values());
-  }, [markets, hubs, exhibitions, selectedCategory, currentLanguage]);
+      return { cities: Array.from(cityMap.values()), items: relevantHubs };
+    }
 
+    if (selectedGoal === "markets") {
+      // Filter markets by category
+      const relevantMarkets = markets.filter(m => {
+        const cat = m.category.toLowerCase();
+        return cat.includes(categoryName) || cat.includes(categorySlug);
+      });
+
+      // Group by city
+      const cityMap = new Map<string, { city: string; cityTranslated: string; logistics: typeof cityLogistics[string]; markets: WholesaleMarket[] }>();
+      relevantMarkets.forEach(market => {
+        if (!cityMap.has(market.city)) {
+          cityMap.set(market.city, {
+            city: market.city,
+            cityTranslated: getTranslatedCity(market),
+            logistics: cityLogistics[market.city] || { province: "China", airport: "—", airportCode: "—", trainFromGZ: "—" },
+            markets: [],
+          });
+        }
+        cityMap.get(market.city)!.markets.push(market);
+      });
+
+      return { cities: Array.from(cityMap.values()), items: relevantMarkets };
+    }
+
+    if (selectedGoal === "exhibitions") {
+      // Filter exhibitions by category
+      const now = new Date();
+      const relevantExhibitions = exhibitions.filter(ex => {
+        const cat = ex.category.toLowerCase();
+        const exDate = new Date(ex.start_date);
+        return exDate >= now && (cat.includes(categoryName) || cat.includes(categorySlug));
+      });
+
+      return { cities: [], items: relevantExhibitions };
+    }
+
+    return { cities: [], items: [] };
+  }, [selectedCategory, selectedGoal, hubs, markets, exhibitions, currentLanguage]);
+
+  const handleCategorySelect = (category: ProductCategory) => {
+    setSelectedCategory(category);
+    setStep("goal");
+  };
+
+  const handleGoalSelect = (goal: GoalType) => {
+    setSelectedGoal(goal);
+    setStep("results");
+  };
+
+  const handleBack = () => {
+    if (step === "results") {
+      setStep("goal");
+      setSelectedGoal(null);
+    } else if (step === "goal") {
+      setStep("product");
+      setSelectedCategory(null);
+      setSearchQuery("");
+    }
+  };
+
+  const copyAddress = (address: string) => {
+    navigator.clipboard.writeText(address);
+    setCopiedAddress(address);
+    toast.success("Manzil nusxalandi!");
+    setTimeout(() => setCopiedAddress(null), 2000);
+  };
+
+  const renderProductStep = () => (
+    <>
+      {/* Search with Live Results */}
+      <section className="px-5 mb-4">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Mahsulot qidirish..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 bg-card border-border/50"
+          />
+        </div>
+
+        {/* Live Search Results */}
+        {searchQuery.trim() && (
+          <div className="mt-2 bg-card rounded-xl border border-border/50 overflow-hidden max-h-64 overflow-y-auto">
+            {filteredCategories.length === 0 ? (
+              <div className="p-4 text-center text-muted-foreground text-sm">
+                Natija topilmadi
+              </div>
+            ) : (
+              filteredCategories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => handleCategorySelect(cat)}
+                  className="w-full px-4 py-3 text-left hover:bg-muted/50 flex items-center gap-3 border-b border-border/30 last:border-b-0 transition-colors"
+                >
+                  <Package className="w-4 h-4 text-primary flex-shrink-0" />
+                  <span className="text-sm font-medium text-foreground">{getField(cat, 'name')}</span>
+                </button>
+              ))
+            )}
+          </div>
+        )}
+      </section>
+
+      {/* Category Grid (when not searching) */}
+      {!searchQuery.trim() && (
+        <section className="px-5 pb-4">
+          <h3 className="font-semibold text-foreground mb-3">Mahsulot kategoriyalari</h3>
+          {loading ? (
+            <div className="flex justify-center py-8">
+              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 gap-2">
+              {categories.slice(0, 12).map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => handleCategorySelect(cat)}
+                  className="bg-card rounded-xl p-3 border border-border/50 hover:border-primary/30 transition-all text-left"
+                >
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Package className="w-4 h-4 text-primary" />
+                    </div>
+                    <span className="text-sm font-medium text-foreground line-clamp-2">
+                      {getField(cat, 'name')}
+                    </span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          )}
+          {categories.length > 12 && (
+            <p className="text-center text-xs text-muted-foreground mt-3">
+              Qidiruvdan foydalanib ko'proq kategoriyalarni toping
+            </p>
+          )}
+        </section>
+      )}
+    </>
+  );
+
+  const renderGoalStep = () => (
+    <section className="px-5 pb-4">
+      {/* Selected Category Badge */}
+      <div className="mb-4 bg-accent/10 rounded-xl p-3 border border-accent/20">
+        <div className="flex items-center gap-2">
+          <Package className="w-4 h-4 text-accent" />
+          <span className="text-sm font-medium text-foreground">
+            {selectedCategory ? getField(selectedCategory, 'name') : ''}
+          </span>
+        </div>
+      </div>
+
+      {/* Goal Selection */}
+      <h3 className="font-semibold text-foreground mb-3">Maqsadingizni tanlang</h3>
+      <div className="space-y-3">
+        <button
+          onClick={() => handleGoalSelect("factories")}
+          className="w-full bg-card rounded-2xl p-4 border border-border/50 hover:border-primary/30 transition-all text-left flex items-center gap-4"
+        >
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/10 flex items-center justify-center">
+            <Factory className="w-7 h-7 text-primary" />
+          </div>
+          <div className="flex-1">
+            <h4 className="font-semibold text-foreground">🏭 Zavodlar markazi</h4>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Ishlab chiqarish markazlari va fabrikalar
+            </p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+        </button>
+
+        <button
+          onClick={() => handleGoalSelect("markets")}
+          className="w-full bg-card rounded-2xl p-4 border border-border/50 hover:border-amber-500/30 transition-all text-left flex items-center gap-4"
+        >
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-amber-500/20 to-amber-500/10 flex items-center justify-center">
+            <Store className="w-7 h-7 text-amber-500" />
+          </div>
+          <div className="flex-1">
+            <h4 className="font-semibold text-foreground">🛍️ Optom bozorlar</h4>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Ulgurji savdo bozorlari va do'konlar
+            </p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+        </button>
+
+        <button
+          onClick={() => handleGoalSelect("exhibitions")}
+          className="w-full bg-card rounded-2xl p-4 border border-border/50 hover:border-purple-500/30 transition-all text-left flex items-center gap-4"
+        >
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-500/10 flex items-center justify-center">
+            <Calendar className="w-7 h-7 text-purple-500" />
+          </div>
+          <div className="flex-1">
+            <h4 className="font-semibold text-foreground">📅 Ko'rgazmalar</h4>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Yarmarkalar va savdo ko'rgazmalari
+            </p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground" />
+        </button>
+      </div>
+    </section>
+  );
+
+  const renderResults = () => {
+    if (!selectedGoal) return null;
+
+    if (selectedGoal === "factories") {
+      return (
+        <section className="px-5 pb-4">
+          <div className="mb-4 flex items-center gap-2">
+            <Factory className="w-5 h-5 text-primary" />
+            <h3 className="font-semibold text-foreground">Zavodlar markazi</h3>
+          </div>
+
+          {results.cities.length === 0 ? (
+            <div className="text-center py-8">
+              <Info className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
+              <p className="text-muted-foreground">Bu kategoriyada zavod topilmadi</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {(results.cities as { city: string; cityTranslated: string; logistics: typeof cityLogistics[string]; hubs: ProductionHub[] }[]).map((cityData) => (
+                <div key={cityData.city} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+                  {/* City Header */}
+                  <div className="bg-gradient-to-br from-primary/15 to-accent/10 p-4 border-b border-border/30">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+                        <MapPin className="w-5 h-5 text-primary-foreground" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">{cityData.cityTranslated}</h4>
+                        <p className="text-xs text-muted-foreground">{cityData.logistics.province}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Logistics */}
+                  <div className="p-4 space-y-3">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div className="flex items-center gap-2 bg-blue-500/10 rounded-lg p-2">
+                        <Plane className="w-4 h-4 text-blue-500" />
+                        <div>
+                          <p className="text-[10px] text-muted-foreground">Yaqin aeroport</p>
+                          <p className="text-xs font-medium">{cityData.logistics.airport} ({cityData.logistics.airportCode})</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 bg-emerald-500/10 rounded-lg p-2">
+                        <Train className="w-4 h-4 text-emerald-500" />
+                        <div>
+                          <p className="text-[10px] text-muted-foreground">Guangzhou'dan</p>
+                          <p className="text-xs font-medium">{cityData.logistics.trainFromGZ}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Hub List */}
+                    <div className="space-y-2">
+                      {cityData.hubs.map((hub) => (
+                        <div key={hub.id} className="bg-muted/30 rounded-lg p-3">
+                          <p className="text-sm font-medium text-foreground">{getField(hub, 'industry')}</p>
+                          {hub.description && (
+                            <p className="text-xs text-muted-foreground mt-1">{getField(hub, 'description')}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      );
+    }
+
+    if (selectedGoal === "markets") {
+      return (
+        <section className="px-5 pb-4">
+          <div className="mb-4 flex items-center gap-2">
+            <Store className="w-5 h-5 text-amber-500" />
+            <h3 className="font-semibold text-foreground">Optom bozorlar</h3>
+          </div>
+
+          {results.cities.length === 0 ? (
+            <div className="text-center py-8">
+              <Info className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
+              <p className="text-muted-foreground">Bu kategoriyada bozor topilmadi</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {(results.cities as { city: string; cityTranslated: string; logistics: typeof cityLogistics[string]; markets: WholesaleMarket[] }[]).map((cityData) => (
+                <div key={cityData.city} className="bg-card rounded-2xl border border-border/50 overflow-hidden">
+                  {/* City Header */}
+                  <div className="bg-gradient-to-br from-amber-500/15 to-yellow-500/10 p-4 border-b border-border/30">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-amber-500 flex items-center justify-center">
+                        <MapPin className="w-5 h-5 text-white" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-foreground">{cityData.cityTranslated}</h4>
+                        <p className="text-xs text-muted-foreground">{cityData.logistics.province}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Markets List */}
+                  <div className="p-4 space-y-3">
+                    {cityData.markets.map((market) => {
+                      const chineseAddress = market.address_chinese || market.address;
+                      return (
+                        <div key={market.id} className="bg-muted/30 rounded-lg p-3">
+                          <div className="flex items-start justify-between gap-2">
+                            <div className="flex-1">
+                              <p className="text-xs text-muted-foreground font-mono">{market.name}</p>
+                              <p className="text-sm font-medium text-foreground">{getField(market, 'name')}</p>
+                            </div>
+                            {chineseAddress && (
+                              <button
+                                onClick={() => copyAddress(chineseAddress)}
+                                className="p-2 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 transition-colors flex-shrink-0"
+                              >
+                                {copiedAddress === chineseAddress ? (
+                                  <Check className="w-4 h-4 text-emerald-500" />
+                                ) : (
+                                  <Copy className="w-4 h-4 text-amber-500" />
+                                )}
+                              </button>
+                            )}
+                          </div>
+                          {chineseAddress && (
+                            <p className="text-xs text-muted-foreground mt-1 font-mono">{chineseAddress}</p>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      );
+    }
+
+    if (selectedGoal === "exhibitions") {
+      const exhibitionItems = results.items as Exhibition[];
+      return (
+        <section className="px-5 pb-4">
+          <div className="mb-4 flex items-center gap-2">
+            <Calendar className="w-5 h-5 text-purple-500" />
+            <h3 className="font-semibold text-foreground">Ko'rgazmalar</h3>
+          </div>
+
+          {exhibitionItems.length === 0 ? (
+            <div className="text-center py-8">
+              <Info className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
+              <p className="text-muted-foreground">Bu kategoriyada ko'rgazma topilmadi</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {exhibitionItems.map((ex) => (
+                <div key={ex.id} className="bg-card rounded-2xl border border-border/50 p-4">
+                  <div className="flex items-start gap-3">
+                    <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center flex-shrink-0">
+                      <Calendar className="w-6 h-6 text-purple-500" />
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-semibold text-foreground">{getField(ex, 'name')}</h4>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {getTranslatedCity(ex)} • {ex.venue && getField(ex, 'venue')}
+                      </p>
+                      <div className="mt-2 flex items-center gap-2">
+                        <span className="px-2 py-1 rounded-full bg-purple-500/20 text-xs font-medium text-purple-400">
+                          {formatDate(ex.start_date)} - {formatDate(ex.end_date)}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <div className="min-h-screen bg-background safe-bottom pb-24">
@@ -348,6 +635,14 @@ const Business = () => {
       <header className="px-5 pt-12 pb-4">
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-2">
+            {step !== "product" && (
+              <button
+                onClick={handleBack}
+                className="p-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors mr-1"
+              >
+                <ArrowLeft className="w-4 h-4" />
+              </button>
+            )}
             <div className="p-2.5 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl shadow-glow">
               <BusinessEcosystemIcon className="w-6 h-6 text-primary-foreground" />
             </div>
@@ -359,139 +654,86 @@ const Business = () => {
             {t("business.title")}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            {t("sourcing.subtitle")}
+            {step === "product" && "1-qadam: Mahsulot tanlang"}
+            {step === "goal" && "2-qadam: Maqsadingizni tanlang"}
+            {step === "results" && "3-qadam: Natijalar"}
           </p>
         </div>
       </header>
 
-      {/* How It Works Info */}
-      <section className="px-5 mb-4">
-        <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20">
-          <div className="flex items-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
-              <Compass className="w-5 h-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground text-sm">
-                {t("sourcing.howItWorks")}
-              </h3>
-              <p className="text-xs text-muted-foreground mt-1">
-                {t("sourcing.howItWorksDesc")}
-              </p>
-            </div>
-          </div>
+      {/* Progress Bar */}
+      <div className="px-5 mb-4">
+        <div className="flex gap-2">
+          <div className={cn(
+            "h-1.5 flex-1 rounded-full transition-colors",
+            step === "product" ? "bg-primary" : "bg-primary"
+          )} />
+          <div className={cn(
+            "h-1.5 flex-1 rounded-full transition-colors",
+            step === "goal" || step === "results" ? "bg-primary" : "bg-muted"
+          )} />
+          <div className={cn(
+            "h-1.5 flex-1 rounded-full transition-colors",
+            step === "results" ? "bg-primary" : "bg-muted"
+          )} />
         </div>
-      </section>
+      </div>
 
-      {/* Product Category Selector */}
-      <section className="px-5 mb-4">
-        <div className="space-y-3">
-          {/* Search */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder={t("sourcing.searchProduct")}
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 bg-card border-border/50"
-            />
-          </div>
-
-          {/* Category Dropdown */}
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full bg-card border-border/50">
-              <Package className="w-4 h-4 mr-2 text-muted-foreground" />
-              <SelectValue placeholder={t("sourcing.selectProduct")} />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-border z-50 max-h-64">
-              <SelectItem value="all">{t("sourcing.allProducts")}</SelectItem>
-              {filteredCategories.map((category) => (
-                <SelectItem key={category.base} value={category.base}>
-                  {category.translated}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-      </section>
-
-      {/* Selected Category Summary */}
-      {selectedCategory !== "all" && (
+      {/* How It Works Info (only on product step) */}
+      {step === "product" && (
         <section className="px-5 mb-4">
-          <div className="bg-accent/10 rounded-xl p-3 border border-accent/20">
-            <p className="text-sm text-foreground">
-              <span className="font-semibold">{selectedCategoryTranslated}</span>{" "}
-              {t("sourcing.foundInCities", { count: cityInsights.length })}
-            </p>
+          <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20">
+            <div className="flex items-start gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                <Compass className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="font-semibold text-foreground text-sm">
+                  {t("sourcing.howItWorks")}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Mahsulot tanlang → Maqsad tanlang → Shahar va manzillarni ko'ring
+                </p>
+              </div>
+            </div>
           </div>
         </section>
       )}
 
-      {/* City Insight Cards */}
-      <section className="px-5 pb-4">
-        {loading ? (
-          <div className="flex justify-center py-8">
-            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : cityInsights.length === 0 ? (
-          <div className="text-center py-8">
-            <div className="w-12 h-12 mx-auto mb-3 rounded-full bg-muted/50 flex items-center justify-center">
-              <Info className="w-6 h-6 text-muted-foreground" />
-            </div>
-            <p className="text-muted-foreground">{t("business.noResults")}</p>
-            <p className="text-xs text-muted-foreground/70 mt-1">
-              {t("sourcing.tryDifferentCategory")}
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4">
-            {cityInsights.map((city) => (
-              <CityInsightCard
-                key={city.cityName}
-                city={city}
-                selectedProduct={selectedCategory !== "all" ? selectedCategoryTranslated : undefined}
-                onViewMarkets={() => {
-                  // Find first market in this city and open detail
-                  const market = markets.find(m => m.city === city.cityName);
-                  if (market) {
-                    setSelectedMarket(market);
-                    setMarketDetailOpen(true);
-                  }
-                }}
-                onViewExhibition={() => navigate("/business?tab=exhibitions")}
-              />
-            ))}
-          </div>
-        )}
-      </section>
+      {/* Step Content */}
+      {step === "product" && renderProductStep()}
+      {step === "goal" && renderGoalStep()}
+      {step === "results" && renderResults()}
 
-      {/* Quick Links */}
-      <section className="px-5 pb-4">
-        <h3 className="font-semibold text-foreground mb-3">{t("sourcing.quickLinks")}</h3>
-        <div className="grid grid-cols-2 gap-3">
-          <button
-            onClick={() => navigate("/deep-check")}
-            className="bg-card rounded-xl p-4 border border-border/50 hover:border-primary/30 transition-all text-left"
-          >
-            <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center mb-2">
-              <Compass className="w-5 h-5 text-primary" />
-            </div>
-            <p className="font-medium text-foreground text-sm">{t("modules.deepCheck")}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.verifyFactories")}</p>
-          </button>
-          
-          <button
-            onClick={() => navigate("/translators")}
-            className="bg-card rounded-xl p-4 border border-border/50 hover:border-accent/30 transition-all text-left"
-          >
-            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center mb-2">
-              <Calendar className="w-5 h-5 text-accent" />
-            </div>
-            <p className="font-medium text-foreground text-sm">{t("modules.translators")}</p>
-            <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.hireExpert")}</p>
-          </button>
-        </div>
-      </section>
+      {/* Quick Links (only on product step) */}
+      {step === "product" && (
+        <section className="px-5 pb-4">
+          <h3 className="font-semibold text-foreground mb-3">{t("sourcing.quickLinks")}</h3>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              onClick={() => navigate("/deep-check")}
+              className="bg-card rounded-xl p-4 border border-border/50 hover:border-primary/30 transition-all text-left"
+            >
+              <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center mb-2">
+                <Compass className="w-5 h-5 text-primary" />
+              </div>
+              <p className="font-medium text-foreground text-sm">{t("modules.deepCheck")}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.verifyFactories")}</p>
+            </button>
+            
+            <button
+              onClick={() => navigate("/translators")}
+              className="bg-card rounded-xl p-4 border border-border/50 hover:border-accent/30 transition-all text-left"
+            >
+              <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center mb-2">
+                <Calendar className="w-5 h-5 text-accent" />
+              </div>
+              <p className="font-medium text-foreground text-sm">{t("modules.translators")}</p>
+              <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.hireExpert")}</p>
+            </button>
+          </div>
+        </section>
+      )}
 
       {/* Support Chat FAB */}
       <SupportChat />
