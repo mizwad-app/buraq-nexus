@@ -41,7 +41,13 @@
     "deepCheck": "Zavod va Kompaniya Tekshiruvi",
     "translators": "Tarjimonlar",
     "consulates": "Konsulliklar",
-    "videoTips": "Foydali Maslahatlar"
+    "videoTips": "Foydali Maslahatlar",
+    "b2bHub": "B2B Sourcing Hub",
+    "exhibitions": "Yarmarka va Ko'rgazmalar",
+    "wallet": "Buraq Wallet",
+    "transportVpn": "Transport & VPN",
+    "attractions": "Diqqatga sazovor joylar",
+    "legalHelp": "Konsulliklar & Yuridik yordam"
   },
   "home": {
     "guestPrompt": "Xizmatlardan foydalaning",
