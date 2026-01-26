@@ -29,7 +29,6 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Button } from "@/components/ui/button";
 
 interface WholesaleMarket {
   id: string;
@@ -135,16 +134,6 @@ const cityLogistics: Record<string, { province: string; airport: string; airport
   "Shanghai": { province: "Shanghai", airport: "Pudong", airportCode: "PVG", trainFromGZ: "6.5 soat" },
 };
 
-// Popular categories slugs (shown by default)
-const POPULAR_CATEGORY_SLUGS = [
-  "electronics",
-  "textiles",
-  "furniture",
-  "ceramics",
-  "toys",
-  "lighting",
-];
-
 const Business = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -196,13 +185,34 @@ const Business = () => {
     return getField(item, 'city');
   };
 
-  // Popular categories (first 6 from defined list)
-  const popularCategories = useMemo(() => {
-    return POPULAR_CATEGORY_SLUGS
-      .map(slug => categories.find(c => c.slug === slug))
-      .filter((c): c is ProductCategory => c !== undefined)
-      .slice(0, 6);
-  }, [categories]);
+  // Helper function to check if market/hub matches selected category
+  const matchesCategory = (itemCategory: string, selectedSlug: string, selectedName: string) => {
+    const itemCat = itemCategory.toLowerCase();
+    const slug = selectedSlug.toLowerCase();
+    const name = selectedName.toLowerCase();
+    
+    // Direct match
+    if (itemCat.includes(slug) || itemCat.includes(name)) return true;
+    
+    // Fuzzy matching for various category names
+    const fuzzyMatches: Record<string, string[]> = {
+      "furniture": ["furniture", "mebel", "顺德", "乐从", "红星"],
+      "consumer_electronics": ["electronics", "电子", "elektronika"],
+      "computer_accessories": ["computer", "kompyuter", "电脑", "数码", "赛格"],
+      "mobile_accessories": ["phone", "telefon", "手机", "accessories", "南方大厦", "新亚洲", "南泰"],
+      "apparel_accessories": ["clothing", "garments", "kiyim", "服装", "textiles", "baima", "白马"],
+      "lights_lighting": ["lights", "lighting", "灯", "yoritish", "灯都"],
+      "luggage_bags": ["leather", "bags", "皮革", "sumka", "charm"],
+      "gifts_crafts": ["toys", "gifts", "o'yinchoq", "小商品", "yiwu"],
+      "eyewear_watches": ["watches", "soat", "眼镜", "钟表"],
+      "hotel_restaurant_supplies": ["hotel", "restaurant", "酒店", "mehmonxona", "沙溪"],
+      "jewelry": ["珠宝", "zargarlik", "jewelry"],
+      "home_garden": ["general", "综合", "umumiy"],
+    };
+    
+    const matches = fuzzyMatches[slug] || [];
+    return matches.some(m => itemCat.includes(m.toLowerCase()));
+  };
 
   // Filter categories by search query (live search)
   const filteredCategories = useMemo(() => {
@@ -260,10 +270,9 @@ const Business = () => {
     }
 
     if (selectedGoal === "markets") {
-      // Filter markets by category
+      // Filter markets by category with improved matching
       const relevantMarkets = markets.filter(m => {
-        const cat = m.category.toLowerCase();
-        return cat.includes(categoryName) || cat.includes(categorySlug);
+        return matchesCategory(m.category, categorySlug, categoryName);
       });
 
       // Group by city
@@ -284,12 +293,11 @@ const Business = () => {
     }
 
     if (selectedGoal === "exhibitions") {
-      // Filter exhibitions by category
+      // Filter exhibitions by category with improved matching
       const now = new Date();
       const relevantExhibitions = exhibitions.filter(ex => {
-        const cat = ex.category.toLowerCase();
         const exDate = new Date(ex.start_date);
-        return exDate >= now && (cat.includes(categoryName) || cat.includes(categorySlug));
+        return exDate >= now && matchesCategory(ex.category, categorySlug, categoryName);
       });
 
       return { cities: [], items: relevantExhibitions };
@@ -330,17 +338,47 @@ const Business = () => {
 
   const renderProductStep = () => (
     <>
-      {/* Search with Popover */}
+      {/* Quick Links - At Top */}
       <section className="px-5 mb-4">
+        <h3 className="font-semibold text-foreground mb-3">{t("sourcing.quickLinks")}</h3>
+        <div className="grid grid-cols-2 gap-3">
+          <button
+            onClick={() => navigate("/deep-check")}
+            className="bg-card rounded-xl p-4 border border-border/50 hover:border-primary/30 transition-all text-left"
+          >
+            <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center mb-2">
+              <Compass className="w-5 h-5 text-primary" />
+            </div>
+            <p className="font-medium text-foreground text-sm">{t("modules.deepCheck")}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.verifyFactories")}</p>
+          </button>
+          
+          <button
+            onClick={() => navigate("/translators")}
+            className="bg-card rounded-xl p-4 border border-border/50 hover:border-accent/30 transition-all text-left"
+          >
+            <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center mb-2">
+              <Calendar className="w-5 h-5 text-accent" />
+            </div>
+            <p className="font-medium text-foreground text-sm">{t("modules.translators")}</p>
+            <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.hireExpert")}</p>
+          </button>
+        </div>
+      </section>
+
+      {/* Search Dropdown - Primary Selection Method */}
+      <section className="px-5 mb-4">
+        <h3 className="font-semibold text-foreground mb-3 text-sm">Mahsulot kategoriyasini tanlang</h3>
         <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
           <PopoverTrigger asChild>
             <button className="w-full">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <div className="flex h-10 w-full items-center rounded-xl border border-border/50 bg-card pl-10 pr-3 text-left text-sm text-muted-foreground cursor-pointer hover:border-primary/30 transition-colors">
-                  Mahsulot qidirish...
+                <div className="flex h-12 w-full items-center rounded-xl border border-primary/30 bg-card pl-10 pr-3 text-left text-sm text-muted-foreground cursor-pointer hover:border-primary/50 hover:bg-muted/30 transition-all shadow-sm">
+                  <span className="flex-1">Mahsulot qidirish...</span>
+                  <span className="text-xs text-primary font-medium mr-2">{categories.length} ta</span>
+                  <ChevronDown className="w-4 h-4 text-primary" />
                 </div>
-                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               </div>
             </button>
           </PopoverTrigger>
@@ -372,7 +410,7 @@ const Business = () => {
             </div>
             
             {/* Scrollable Category List */}
-            <ScrollArea className="h-64">
+            <ScrollArea className="h-72">
               <div className="p-2">
                 {loading ? (
                   <div className="flex justify-center py-8">
@@ -388,10 +426,10 @@ const Business = () => {
                       <button
                         key={cat.id}
                         onClick={() => handleCategorySelect(cat)}
-                        className="w-full px-3 py-2.5 text-left hover:bg-muted/50 rounded-lg flex items-center gap-3 transition-colors"
+                        className="w-full px-3 py-2.5 text-left hover:bg-primary/10 rounded-lg flex items-center gap-3 transition-colors"
                       >
-                        <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          <Package className="w-3.5 h-3.5 text-primary" />
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <Package className="w-4 h-4 text-primary" />
                         </div>
                         <span className="text-sm font-medium text-foreground">{getField(cat, 'name')}</span>
                       </button>
@@ -402,46 +440,6 @@ const Business = () => {
             </ScrollArea>
           </PopoverContent>
         </Popover>
-      </section>
-
-      {/* Popular Categories (6 items) */}
-      <section className="px-5 pb-4">
-        <h3 className="font-semibold text-foreground mb-3 text-sm">Ommabop kategoriyalar</h3>
-        {loading ? (
-          <div className="flex justify-center py-6">
-            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 gap-2">
-            {popularCategories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => handleCategorySelect(cat)}
-                className="bg-card rounded-xl p-3 border border-border/50 hover:border-primary/30 transition-all text-left"
-              >
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Package className="w-4 h-4 text-primary" />
-                  </div>
-                  <span className="text-sm font-medium text-foreground line-clamp-2">
-                    {getField(cat, 'name')}
-                  </span>
-                </div>
-              </button>
-            ))}
-          </div>
-        )}
-        
-        {/* View All Button */}
-        <Button
-          variant="outline"
-          className="w-full mt-3 border-dashed border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30"
-          onClick={() => setPopoverOpen(true)}
-        >
-          <Package className="w-4 h-4 mr-2" />
-          Barcha kategoriyalar
-          <ChevronRight className="w-4 h-4 ml-auto" />
-        </Button>
       </section>
     </>
   );
@@ -773,36 +771,6 @@ const Business = () => {
       {step === "product" && renderProductStep()}
       {step === "goal" && renderGoalStep()}
       {step === "results" && renderResults()}
-
-      {/* Quick Links (only on product step) */}
-      {step === "product" && (
-        <section className="px-5 pb-4">
-          <h3 className="font-semibold text-foreground mb-3">{t("sourcing.quickLinks")}</h3>
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              onClick={() => navigate("/deep-check")}
-              className="bg-card rounded-xl p-4 border border-border/50 hover:border-primary/30 transition-all text-left"
-            >
-              <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center mb-2">
-                <Compass className="w-5 h-5 text-primary" />
-              </div>
-              <p className="font-medium text-foreground text-sm">{t("modules.deepCheck")}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.verifyFactories")}</p>
-            </button>
-            
-            <button
-              onClick={() => navigate("/translators")}
-              className="bg-card rounded-xl p-4 border border-border/50 hover:border-accent/30 transition-all text-left"
-            >
-              <div className="w-10 h-10 rounded-xl bg-accent/20 flex items-center justify-center mb-2">
-                <Calendar className="w-5 h-5 text-accent" />
-              </div>
-              <p className="font-medium text-foreground text-sm">{t("modules.translators")}</p>
-              <p className="text-xs text-muted-foreground mt-0.5">{t("sourcing.hireExpert")}</p>
-            </button>
-          </div>
-        </section>
-      )}
 
       {/* Support Chat FAB */}
       <SupportChat />
