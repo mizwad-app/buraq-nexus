@@ -64,7 +64,7 @@
     "transport": "Transport"
   },
   "business": {
-    "title": "B2B Hub",
+    "title": "B2B Sourcing Hub",
     "subtitle": "Biznes markazi",
     "deepCheck": "Chuqur Tekshiruv",
     "deepCheckDesc": "Mahsulot yoki kompaniyani to'liq tahlil qiling",
@@ -125,6 +125,28 @@
       "copyAddress": "Manzilni nusxalash",
       "moreMarketsSoon": "Boshqa bozorlar tez orada qo'shiladi"
     }
+  },
+  "sourcing": {
+    "strategicPlanner": "Strategik Sayohat Rejalashtirish",
+    "subtitle": "Mahsulot tanlang — qayerga borish kerakligini ko'ring",
+    "howItWorks": "Qanday ishlaydi?",
+    "howItWorksDesc": "Mahsulot kategoriyasini tanlang. Biz sizga qaysi shaharda ishlab chiqarilishini, qanday yetib borishni va optom bozorlarni ko'rsatamiz.",
+    "searchProduct": "Mahsulot qidirish...",
+    "selectProduct": "Mahsulot tanlang",
+    "allProducts": "Barcha mahsulotlar",
+    "foundInCities": "{{count}} ta shaharda topildi",
+    "productionInfo": "Ishlab chiqarish markazi",
+    "mainlyProducedIn": "asosan ishlab chiqariladi:",
+    "howToGetThere": "Qanday yetib borish mumkin?",
+    "nearestAirport": "Yaqin aeroport",
+    "trainFromGZ": "Guangzhou'dan poyezd",
+    "wholesaleMarkets": "Optom bozorlar",
+    "viewAllMarkets": "Barcha bozorlarni ko'rish",
+    "upcomingExhibition": "Yaqinlashayotgan yarmarka",
+    "quickLinks": "Tezkor havolalar",
+    "verifyFactories": "Zavod va kompaniyalarni tekshiring",
+    "hireExpert": "Tajribali tarjimon yollang",
+    "tryDifferentCategory": "Boshqa kategoriyani tanlang"
   },
   "productSearch": {
     "title": "Mahsulot bo'yicha qidirish",
