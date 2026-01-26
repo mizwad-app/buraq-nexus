@@ -133,13 +133,14 @@ const AdminDeepChecks = () => {
 
       if (uploadError) throw uploadError;
 
-      const { data: { publicUrl } } = supabase.storage
+      // Use signed URL (bucket is now private for security)
+      const { data: signedUrlData } = await supabase.storage
         .from("deep-checks")
-        .getPublicUrl(fileName);
+        .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry
 
       await supabase
         .from("deep_checks")
-        .update({ report_pdf_url: publicUrl })
+        .update({ report_pdf_url: signedUrlData?.signedUrl || null })
         .eq("id", requestId);
 
       toast.success("PDF yuklandi!");
