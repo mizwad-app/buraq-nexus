@@ -16,6 +16,8 @@ import {
   Train,
   Copy,
   Check,
+  ChevronDown,
+  X,
 } from "lucide-react";
 import { BusinessEcosystemIcon } from "@/components/icons/BusinessEcosystemIcon";
 import { supabase } from "@/integrations/supabase/client";
@@ -25,6 +27,9 @@ import { SupportChat } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
 
 interface WholesaleMarket {
   id: string;
@@ -130,6 +135,16 @@ const cityLogistics: Record<string, { province: string; airport: string; airport
   "Shanghai": { province: "Shanghai", airport: "Pudong", airportCode: "PVG", trainFromGZ: "6.5 soat" },
 };
 
+// Popular categories slugs (shown by default)
+const POPULAR_CATEGORY_SLUGS = [
+  "electronics",
+  "textiles",
+  "furniture",
+  "ceramics",
+  "toys",
+  "lighting",
+];
+
 const Business = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
@@ -143,6 +158,7 @@ const Business = () => {
   const [selectedMarket, setSelectedMarket] = useState<WholesaleMarket | null>(null);
   const [marketDetailOpen, setMarketDetailOpen] = useState(false);
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
+  const [popoverOpen, setPopoverOpen] = useState(false);
   
   // Data states
   const [markets, setMarkets] = useState<WholesaleMarket[]>([]);
@@ -179,6 +195,14 @@ const Business = () => {
   const getTranslatedCity = (item: { city: string; city_uz?: string | null; city_ru?: string | null; city_en?: string | null; city_ar?: string | null }) => {
     return getField(item, 'city');
   };
+
+  // Popular categories (first 6 from defined list)
+  const popularCategories = useMemo(() => {
+    return POPULAR_CATEGORY_SLUGS
+      .map(slug => categories.find(c => c.slug === slug))
+      .filter((c): c is ProductCategory => c !== undefined)
+      .slice(0, 6);
+  }, [categories]);
 
   // Filter categories by search query (live search)
   const filteredCategories = useMemo(() => {
@@ -276,6 +300,8 @@ const Business = () => {
 
   const handleCategorySelect = (category: ProductCategory) => {
     setSelectedCategory(category);
+    setPopoverOpen(false);
+    setSearchQuery("");
     setStep("goal");
   };
 
@@ -304,76 +330,119 @@ const Business = () => {
 
   const renderProductStep = () => (
     <>
-      {/* Search with Live Results */}
+      {/* Search with Popover */}
       <section className="px-5 mb-4">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Mahsulot qidirish..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-card border-border/50"
-          />
-        </div>
-
-        {/* Live Search Results */}
-        {searchQuery.trim() && (
-          <div className="mt-2 bg-card rounded-xl border border-border/50 overflow-hidden max-h-64 overflow-y-auto">
-            {filteredCategories.length === 0 ? (
-              <div className="p-4 text-center text-muted-foreground text-sm">
-                Natija topilmadi
+        <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
+          <PopoverTrigger asChild>
+            <button className="w-full">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <div className="flex h-10 w-full items-center rounded-xl border border-border/50 bg-card pl-10 pr-3 text-left text-sm text-muted-foreground cursor-pointer hover:border-primary/30 transition-colors">
+                  Mahsulot qidirish...
+                </div>
+                <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               </div>
-            ) : (
-              filteredCategories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => handleCategorySelect(cat)}
-                  className="w-full px-4 py-3 text-left hover:bg-muted/50 flex items-center gap-3 border-b border-border/30 last:border-b-0 transition-colors"
-                >
-                  <Package className="w-4 h-4 text-primary flex-shrink-0" />
-                  <span className="text-sm font-medium text-foreground">{getField(cat, 'name')}</span>
-                </button>
-              ))
-            )}
-          </div>
-        )}
+            </button>
+          </PopoverTrigger>
+          <PopoverContent 
+            className="w-[calc(100vw-2.5rem)] max-w-md p-0 bg-card border-border/50"
+            align="start"
+            sideOffset={8}
+          >
+            {/* Search Input inside Popover */}
+            <div className="p-3 border-b border-border/30">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder="Qidirish..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bg-muted/50 border-border/50"
+                  autoFocus
+                />
+                {searchQuery && (
+                  <button
+                    onClick={() => setSearchQuery("")}
+                    className="absolute right-3 top-1/2 -translate-y-1/2"
+                  >
+                    <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
+                  </button>
+                )}
+              </div>
+            </div>
+            
+            {/* Scrollable Category List */}
+            <ScrollArea className="h-64">
+              <div className="p-2">
+                {loading ? (
+                  <div className="flex justify-center py-8">
+                    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+                  </div>
+                ) : filteredCategories.length === 0 ? (
+                  <div className="py-8 text-center text-muted-foreground text-sm">
+                    Natija topilmadi
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    {filteredCategories.map((cat) => (
+                      <button
+                        key={cat.id}
+                        onClick={() => handleCategorySelect(cat)}
+                        className="w-full px-3 py-2.5 text-left hover:bg-muted/50 rounded-lg flex items-center gap-3 transition-colors"
+                      >
+                        <div className="w-7 h-7 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <Package className="w-3.5 h-3.5 text-primary" />
+                        </div>
+                        <span className="text-sm font-medium text-foreground">{getField(cat, 'name')}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </ScrollArea>
+          </PopoverContent>
+        </Popover>
       </section>
 
-      {/* Category Grid (when not searching) */}
-      {!searchQuery.trim() && (
-        <section className="px-5 pb-4">
-          <h3 className="font-semibold text-foreground mb-3">Mahsulot kategoriyalari</h3>
-          {loading ? (
-            <div className="flex justify-center py-8">
-              <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-2">
-              {categories.slice(0, 12).map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => handleCategorySelect(cat)}
-                  className="bg-card rounded-xl p-3 border border-border/50 hover:border-primary/30 transition-all text-left"
-                >
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Package className="w-4 h-4 text-primary" />
-                    </div>
-                    <span className="text-sm font-medium text-foreground line-clamp-2">
-                      {getField(cat, 'name')}
-                    </span>
+      {/* Popular Categories (6 items) */}
+      <section className="px-5 pb-4">
+        <h3 className="font-semibold text-foreground mb-3 text-sm">Ommabop kategoriyalar</h3>
+        {loading ? (
+          <div className="flex justify-center py-6">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-2">
+            {popularCategories.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => handleCategorySelect(cat)}
+                className="bg-card rounded-xl p-3 border border-border/50 hover:border-primary/30 transition-all text-left"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Package className="w-4 h-4 text-primary" />
                   </div>
-                </button>
-              ))}
-            </div>
-          )}
-          {categories.length > 12 && (
-            <p className="text-center text-xs text-muted-foreground mt-3">
-              Qidiruvdan foydalanib ko'proq kategoriyalarni toping
-            </p>
-          )}
-        </section>
-      )}
+                  <span className="text-sm font-medium text-foreground line-clamp-2">
+                    {getField(cat, 'name')}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
+        )}
+        
+        {/* View All Button */}
+        <Button
+          variant="outline"
+          className="w-full mt-3 border-dashed border-border/50 text-muted-foreground hover:text-foreground hover:border-primary/30"
+          onClick={() => setPopoverOpen(true)}
+        >
+          <Package className="w-4 h-4 mr-2" />
+          Barcha kategoriyalar
+          <ChevronRight className="w-4 h-4 ml-auto" />
+        </Button>
+      </section>
     </>
   );
 
