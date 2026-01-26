@@ -162,7 +162,21 @@
     "noMarketsFound": "Рынки не найдены для этой категории",
     "noExhibitionsFound": "Выставки не найдены для этой категории",
     "logistics": "Логистика",
-    "cityInfo": "Информация о городе"
+    "cityInfo": "Информация о городе",
+    "productFilters": "Фильтры продуктов",
+    "searchExhibition": "Поиск выставок...",
+    "upcomingExhibitions": "Ближайшие выставки",
+    "upcomingIn30Days": "В ближайшие 30 дней",
+    "exhibitionsCount": "выставок",
+    "upcoming": "Скоро",
+    "filterTags": {
+      "furniture": "Мебель",
+      "ceramics": "Керамика",
+      "electronics": "Электроника",
+      "autoParts": "Автозапчасти",
+      "textiles": "Текстиль",
+      "construction": "Стройматериалы"
+    }
   },
   "productSearch": {
     "title": "Поиск по продукту",

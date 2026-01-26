@@ -18,6 +18,7 @@ import {
   Check,
   ChevronDown,
   X,
+  Filter,
 } from "lucide-react";
 import { BusinessEcosystemIcon } from "@/components/icons/BusinessEcosystemIcon";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,8 +28,7 @@ import { SupportChat } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface WholesaleMarket {
   id: string;
@@ -120,6 +120,16 @@ interface ProductCategory {
 type Step = "product" | "goal";
 type GoalType = "factories" | "markets" | "exhibitions";
 
+// Quick filter tags for product categories
+const QUICK_FILTER_TAGS = [
+  { key: "furniture", slug: "furniture", icon: "🪑" },
+  { key: "ceramics", slug: "ceramics", icon: "🏺" },
+  { key: "electronics", slug: "consumer_electronics", icon: "📱" },
+  { key: "autoParts", slug: "auto_parts", icon: "🚗" },
+  { key: "textiles", slug: "apparel_accessories", icon: "👔" },
+  { key: "construction", slug: "construction_materials", icon: "🧱" },
+];
+
 // City logistics data
 const cityLogistics: Record<string, { province: string; airport: string; airportCode: string; trainFromGZ: string }> = {
   "Guangzhou": { province: "Guangdong", airport: "Baiyun", airportCode: "CAN", trainFromGZ: "—" },
@@ -147,7 +157,11 @@ const Business = () => {
   const [selectedMarket, setSelectedMarket] = useState<WholesaleMarket | null>(null);
   const [marketDetailOpen, setMarketDetailOpen] = useState(false);
   const [copiedAddress, setCopiedAddress] = useState<string | null>(null);
-  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [activeFilterTag, setActiveFilterTag] = useState<string | null>(null);
+  
+  // Exhibition filters
+  const [exhibitionSearch, setExhibitionSearch] = useState("");
+  const [exhibitionCategoryFilter, setExhibitionCategoryFilter] = useState<string | null>(null);
   
   // Data states
   const [markets, setMarkets] = useState<WholesaleMarket[]>([]);
@@ -200,7 +214,7 @@ const Business = () => {
       "consumer_electronics": ["electronics", "电子", "elektronika"],
       "computer_accessories": ["computer", "kompyuter", "电脑", "数码", "赛格"],
       "mobile_accessories": ["phone", "telefon", "手机", "accessories", "南方大厦", "新亚洲", "南泰"],
-      "apparel_accessories": ["clothing", "garments", "kiyim", "服装", "textiles", "baima", "白马"],
+      "apparel_accessories": ["clothing", "garments", "kiyim", "服装", "textiles", "baima", "白马", "textile"],
       "lights_lighting": ["lights", "lighting", "灯", "yoritish", "灯都"],
       "luggage_bags": ["leather", "bags", "皮革", "sumka", "charm"],
       "gifts_crafts": ["toys", "gifts", "o'yinchoq", "小商品", "yiwu"],
@@ -208,26 +222,46 @@ const Business = () => {
       "hotel_restaurant_supplies": ["hotel", "restaurant", "酒店", "mehmonxona", "沙溪"],
       "jewelry": ["珠宝", "zargarlik", "jewelry"],
       "home_garden": ["general", "综合", "umumiy"],
+      "ceramics": ["ceramic", "陶瓷", "chinni", "porcelain", "chaozhou"],
+      "auto_parts": ["auto", "car", "avto", "avtomobil", "汽车", "vehicle"],
+      "construction_materials": ["construction", "building", "qurilish", "строительные", "материалы"],
     };
     
     const matches = fuzzyMatches[slug] || [];
     return matches.some(m => itemCat.includes(m.toLowerCase()));
   };
 
-  // Filter categories by search query (live search)
+  // Filter categories by search query or active tag
   const filteredCategories = useMemo(() => {
-    if (!searchQuery.trim()) return categories;
-    const query = searchQuery.toLowerCase();
-    return categories.filter(cat => {
-      const translatedName = getField(cat, 'name').toLowerCase();
-      const baseName = cat.name.toLowerCase();
-      const slug = cat.slug.toLowerCase().replace(/_/g, ' ');
-      return translatedName.includes(query) || baseName.includes(query) || slug.includes(query);
-    });
-  }, [categories, searchQuery, currentLanguage]);
+    let filtered = categories;
+    
+    // Filter by quick filter tag first
+    if (activeFilterTag) {
+      const tagConfig = QUICK_FILTER_TAGS.find(t => t.key === activeFilterTag);
+      if (tagConfig) {
+        filtered = categories.filter(cat => 
+          cat.slug.toLowerCase().includes(tagConfig.slug.toLowerCase()) ||
+          tagConfig.slug.toLowerCase().includes(cat.slug.toLowerCase())
+        );
+      }
+    }
+    
+    // Then apply search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(cat => {
+        const translatedName = getField(cat, 'name').toLowerCase();
+        const baseName = cat.name.toLowerCase();
+        const slug = cat.slug.toLowerCase().replace(/_/g, ' ');
+        return translatedName.includes(query) || baseName.includes(query) || slug.includes(query);
+      });
+    }
+    
+    return filtered;
+  }, [categories, searchQuery, activeFilterTag, currentLanguage]);
 
   const formatDate = (dateStr: string) => {
-    const locale = i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'ar' ? 'ar-SA' : 'en-US';
+    const locale = i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'ar' ? 'ar-SA' : i18n.language === 'fr' ? 'fr-FR' : 'en-US';
     return new Date(dateStr).toLocaleDateString(locale, {
       month: "short",
       day: "numeric",
@@ -295,28 +329,71 @@ const Business = () => {
     if (selectedGoal === "exhibitions") {
       // Filter exhibitions by category with improved matching
       const now = new Date();
-      const relevantExhibitions = exhibitions.filter(ex => {
+      let relevantExhibitions = exhibitions.filter(ex => {
         const exDate = new Date(ex.start_date);
         return exDate >= now && matchesCategory(ex.category, categorySlug, categoryName);
       });
+
+      // Apply exhibition search filter
+      if (exhibitionSearch.trim()) {
+        const query = exhibitionSearch.toLowerCase();
+        relevantExhibitions = relevantExhibitions.filter(ex => {
+          const name = getField(ex, 'name').toLowerCase();
+          const category = getField(ex, 'category').toLowerCase();
+          const city = getTranslatedCity(ex).toLowerCase();
+          return name.includes(query) || category.includes(query) || city.includes(query);
+        });
+      }
 
       return { cities: [], items: relevantExhibitions };
     }
 
     return { cities: [], items: [] };
-  }, [selectedCategory, selectedGoal, hubs, markets, exhibitions, currentLanguage]);
+  }, [selectedCategory, selectedGoal, hubs, markets, exhibitions, currentLanguage, exhibitionSearch]);
+
+  // Get upcoming exhibitions (15-30 days)
+  const upcomingExhibitions = useMemo(() => {
+    const now = new Date();
+    const thirtyDaysLater = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
+    
+    return exhibitions.filter(ex => {
+      const exDate = new Date(ex.start_date);
+      return exDate >= now && exDate <= thirtyDaysLater;
+    });
+  }, [exhibitions]);
+
+  const handleQuickFilterTag = (tagKey: string) => {
+    if (activeFilterTag === tagKey) {
+      setActiveFilterTag(null);
+    } else {
+      setActiveFilterTag(tagKey);
+      // Find matching category and auto-select it
+      const tagConfig = QUICK_FILTER_TAGS.find(t => t.key === tagKey);
+      if (tagConfig) {
+        const matchingCategory = categories.find(cat => 
+          cat.slug.toLowerCase().includes(tagConfig.slug.toLowerCase()) ||
+          tagConfig.slug.toLowerCase().includes(cat.slug.toLowerCase())
+        );
+        if (matchingCategory) {
+          setSelectedCategory(matchingCategory);
+          setStep("goal");
+          setSelectedGoal(null);
+        }
+      }
+    }
+  };
 
   const handleCategorySelect = (category: ProductCategory) => {
     setSelectedCategory(category);
-    setPopoverOpen(false);
     setSearchQuery("");
     setStep("goal");
-    setSelectedGoal(null); // Reset goal when new product is selected
+    setSelectedGoal(null);
   };
 
   const handleGoalSelect = (goal: GoalType) => {
     setSelectedGoal(goal);
-    // No step change - stay on goal step but show results
+    setExhibitionSearch("");
+    setExhibitionCategoryFilter(null);
   };
 
   const handleBack = () => {
@@ -325,13 +402,14 @@ const Business = () => {
       setSelectedCategory(null);
       setSelectedGoal(null);
       setSearchQuery("");
+      setActiveFilterTag(null);
     }
   };
 
   const copyAddress = (address: string) => {
     navigator.clipboard.writeText(address);
     setCopiedAddress(address);
-    toast.success("Manzil nusxalandi!");
+    toast.success(t("business.legalSection.addressCopied"));
     setTimeout(() => setCopiedAddress(null), 2000);
   };
 
@@ -365,80 +443,86 @@ const Business = () => {
         </div>
       </section>
 
-      {/* Search Dropdown - Primary Selection Method */}
+      {/* Product Filter Tags */}
+      <section className="px-5 mb-3">
+        <h3 className="font-semibold text-foreground mb-3 text-sm">{t("sourcing.productFilters")}</h3>
+        <ScrollArea className="w-full whitespace-nowrap">
+          <div className="flex gap-2 pb-2">
+            {QUICK_FILTER_TAGS.map((tag) => (
+              <button
+                key={tag.key}
+                onClick={() => handleQuickFilterTag(tag.key)}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-2 rounded-full border text-sm font-medium transition-all whitespace-nowrap",
+                  activeFilterTag === tag.key
+                    ? "bg-primary/20 border-primary text-primary"
+                    : "bg-card border-border/50 text-foreground hover:border-primary/30"
+                )}
+              >
+                <span>{tag.icon}</span>
+                <span>{t(`sourcing.filterTags.${tag.key}`)}</span>
+              </button>
+            ))}
+          </div>
+          <ScrollBar orientation="horizontal" />
+        </ScrollArea>
+      </section>
+
+      {/* Search Bar */}
       <section className="px-5 mb-4">
-        <h3 className="font-semibold text-foreground mb-3 text-sm">Mahsulot kategoriyasini tanlang</h3>
-        <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
-          <PopoverTrigger asChild>
-            <button className="w-full">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <div className="flex h-12 w-full items-center rounded-xl border border-primary/30 bg-card pl-10 pr-3 text-left text-sm text-muted-foreground cursor-pointer hover:border-primary/50 hover:bg-muted/30 transition-all shadow-sm">
-                  <span className="flex-1">Mahsulot qidirish...</span>
-                  <span className="text-xs text-primary font-medium mr-2">{categories.length} ta</span>
-                  <ChevronDown className="w-4 h-4 text-primary" />
-                </div>
-              </div>
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder={t("sourcing.searchProduct")}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10 bg-card border-border/50 h-12 rounded-xl"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2"
+            >
+              <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
             </button>
-          </PopoverTrigger>
-          <PopoverContent 
-            className="w-[calc(100vw-2.5rem)] max-w-md p-0 bg-card border-border/50"
-            align="start"
-            sideOffset={8}
-          >
-            {/* Search Input inside Popover */}
-            <div className="p-3 border-b border-border/30">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  placeholder="Qidirish..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-muted/50 border-border/50"
-                  autoFocus
-                />
-                {searchQuery && (
-                  <button
-                    onClick={() => setSearchQuery("")}
-                    className="absolute right-3 top-1/2 -translate-y-1/2"
-                  >
-                    <X className="w-4 h-4 text-muted-foreground hover:text-foreground" />
-                  </button>
-                )}
-              </div>
-            </div>
-            
-            {/* Scrollable Category List */}
-            <ScrollArea className="h-72">
-              <div className="p-2">
-                {loading ? (
-                  <div className="flex justify-center py-8">
-                    <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                  </div>
-                ) : filteredCategories.length === 0 ? (
-                  <div className="py-8 text-center text-muted-foreground text-sm">
-                    Natija topilmadi
-                  </div>
-                ) : (
-                  <div className="space-y-1">
-                    {filteredCategories.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => handleCategorySelect(cat)}
-                        className="w-full px-3 py-2.5 text-left hover:bg-primary/10 rounded-lg flex items-center gap-3 transition-colors"
-                      >
-                        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                          <Package className="w-4 h-4 text-primary" />
-                        </div>
-                        <span className="text-sm font-medium text-foreground">{getField(cat, 'name')}</span>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </ScrollArea>
-          </PopoverContent>
-        </Popover>
+          )}
+        </div>
+      </section>
+
+      {/* Category List */}
+      <section className="px-5">
+        {loading ? (
+          <div className="flex justify-center py-8">
+            <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : filteredCategories.length === 0 ? (
+          <div className="py-8 text-center text-muted-foreground text-sm">
+            {t("business.noResults")}
+          </div>
+        ) : (
+          <div className="space-y-2">
+            {filteredCategories.slice(0, 10).map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => handleCategorySelect(cat)}
+                className="w-full px-4 py-3 text-left bg-card hover:bg-primary/10 border border-border/50 hover:border-primary/30 rounded-xl flex items-center gap-3 transition-colors"
+              >
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Package className="w-5 h-5 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <span className="text-sm font-medium text-foreground">{getField(cat, 'name')}</span>
+                </div>
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
+              </button>
+            ))}
+            {filteredCategories.length > 10 && (
+              <p className="text-center text-xs text-muted-foreground pt-2">
+                +{filteredCategories.length - 10} {t("productSearch.categories")}
+              </p>
+            )}
+          </div>
+        )}
       </section>
     </>
   );
@@ -542,14 +626,14 @@ const Business = () => {
                       <div className="flex items-center gap-2 bg-blue-500/10 rounded-lg p-2">
                         <Plane className="w-3 h-3 text-blue-500" />
                         <div>
-                          <p className="text-[9px] text-muted-foreground">Yaqin aeroport</p>
+                          <p className="text-[9px] text-muted-foreground">{t("sourcing.nearestAirport")}</p>
                           <p className="text-[11px] font-medium">{cityData.logistics.airport} ({cityData.logistics.airportCode})</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 bg-emerald-500/10 rounded-lg p-2">
                         <Train className="w-3 h-3 text-emerald-500" />
                         <div>
-                          <p className="text-[9px] text-muted-foreground">Guangzhou'dan</p>
+                          <p className="text-[9px] text-muted-foreground">{t("sourcing.trainFromGZ")}</p>
                           <p className="text-[11px] font-medium">{cityData.logistics.trainFromGZ}</p>
                         </div>
                       </div>
@@ -648,38 +732,85 @@ const Business = () => {
       const exhibitionItems = results.items as Exhibition[];
       return (
         <div className="mt-2">
+          {/* Exhibition Search */}
+          <div className="mb-3">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder={t("sourcing.searchExhibition")}
+                value={exhibitionSearch}
+                onChange={(e) => setExhibitionSearch(e.target.value)}
+                className="pl-10 bg-card border-border/50 h-10 rounded-xl text-sm"
+              />
+            </div>
+          </div>
+
+          {/* Upcoming Section Header */}
           <div className="mb-3 flex items-center gap-2">
             <Calendar className="w-4 h-4 text-purple-500" />
-            <h4 className="font-medium text-foreground text-sm">Ko'rgazmalar</h4>
+            <h4 className="font-medium text-foreground text-sm">{t("sourcing.upcomingExhibitions")}</h4>
           </div>
+
+          {/* Upcoming Badge */}
+          {upcomingExhibitions.length > 0 && exhibitionItems.some(ex => upcomingExhibitions.find(u => u.id === ex.id)) && (
+            <div className="mb-3 bg-purple-500/10 rounded-xl p-3 border border-purple-500/20">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center">
+                  <Calendar className="w-4 h-4 text-purple-500" />
+                </div>
+                <div>
+                  <p className="text-xs font-medium text-foreground">{t("sourcing.upcomingIn30Days")}</p>
+                  <p className="text-[10px] text-muted-foreground">
+                    {exhibitionItems.filter(ex => upcomingExhibitions.find(u => u.id === ex.id)).length} {t("sourcing.exhibitionsCount")}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           {exhibitionItems.length === 0 ? (
             <div className="text-center py-6 bg-card rounded-xl border border-border/50">
               <Info className="w-8 h-8 mx-auto text-muted-foreground mb-2" />
-              <p className="text-sm text-muted-foreground">Bu kategoriyada ko'rgazma topilmadi</p>
+              <p className="text-sm text-muted-foreground">{t("sourcing.noExhibitionsFound")}</p>
             </div>
           ) : (
             <div className="space-y-2">
-              {exhibitionItems.map((ex) => (
-                <div key={ex.id} className="bg-card rounded-xl border border-border/50 p-3">
-                  <div className="flex items-start gap-2">
-                    <div className="w-10 h-10 rounded-lg bg-purple-500/20 flex items-center justify-center flex-shrink-0">
-                      <Calendar className="w-5 h-5 text-purple-500" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h4 className="font-medium text-foreground text-sm">{getField(ex, 'name')}</h4>
-                      <p className="text-[10px] text-muted-foreground mt-0.5">
-                        {getTranslatedCity(ex)} • {ex.venue && getField(ex, 'venue')}
-                      </p>
-                      <div className="mt-1.5">
-                        <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-[10px] font-medium text-purple-400">
-                          {formatDate(ex.start_date)} - {formatDate(ex.end_date)}
-                        </span>
+              {exhibitionItems.map((ex) => {
+                const isUpcoming = upcomingExhibitions.find(u => u.id === ex.id);
+                return (
+                  <div key={ex.id} className={cn(
+                    "bg-card rounded-xl border p-3",
+                    isUpcoming ? "border-purple-500/30" : "border-border/50"
+                  )}>
+                    <div className="flex items-start gap-2">
+                      <div className={cn(
+                        "w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0",
+                        isUpcoming ? "bg-purple-500/30" : "bg-purple-500/20"
+                      )}>
+                        <Calendar className="w-5 h-5 text-purple-500" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-start justify-between">
+                          <h4 className="font-medium text-foreground text-sm">{getField(ex, 'name')}</h4>
+                          {isUpcoming && (
+                            <span className="px-2 py-0.5 rounded-full bg-purple-500/20 text-[9px] font-medium text-purple-400 flex-shrink-0">
+                              {t("sourcing.upcoming")}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[10px] text-muted-foreground mt-0.5">
+                          {getTranslatedCity(ex)} • {ex.venue && getField(ex, 'venue')}
+                        </p>
+                        <div className="mt-1.5">
+                          <span className="px-2 py-0.5 rounded-full bg-purple-500/10 text-[10px] font-medium text-purple-400">
+                            {formatDate(ex.start_date)} - {formatDate(ex.end_date)}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
