@@ -202,6 +202,14 @@ const Business = () => {
     return cat?.translated || selectedCategory;
   }, [selectedCategory, allCategories]);
 
+  const formatDate = (dateStr: string) => {
+    const locale = i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'ar' ? 'ar-SA' : 'en-US';
+    return new Date(dateStr).toLocaleDateString(locale, {
+      month: "short",
+      day: "numeric",
+    });
+  };
+
   // Build city insight data based on selected category
   const cityInsights = useMemo(() => {
     const cityDataMap = new Map<string, {
@@ -333,13 +341,6 @@ const Business = () => {
     return Array.from(cityDataMap.values());
   }, [markets, hubs, exhibitions, selectedCategory, currentLanguage]);
 
-  const formatDate = (dateStr: string) => {
-    const locale = i18n.language === 'ru' ? 'ru-RU' : i18n.language === 'ar' ? 'ar-SA' : 'en-US';
-    return new Date(dateStr).toLocaleDateString(locale, {
-      month: "short",
-      day: "numeric",
-    });
-  };
 
   return (
     <div className="min-h-screen bg-background safe-bottom pb-24">
