@@ -2569,6 +2569,22 @@ export type Database = {
         }
         Returns: boolean
       }
+      process_booking_payment: {
+        Args: {
+          p_agreed_rate: number
+          p_booking_date: string
+          p_description: string
+          p_end_time: string
+          p_location: string
+          p_service_type: string
+          p_specialization: string
+          p_start_time: string
+          p_total_amount: number
+          p_total_hours: number
+          p_translator_id: string
+        }
+        Returns: Json
+      }
       redeem_deep_check_points: {
         Args: { p_deep_check_id: string; p_points: number }
         Returns: Json
