@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import {
   Plane,
   MapPin,
@@ -9,9 +10,11 @@ import {
   Check,
   Compass,
   Navigation,
+  ChevronLeft,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { useSwipeBack } from "@/hooks/useSwipeBack";
 import {
   Select,
   SelectContent,
@@ -89,12 +92,16 @@ type SelectedItem = { type: "park"; data: Park } | { type: "mall"; data: Shoppin
 
 const Travel = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const { getField, currentLanguage } = useTranslatedField();
   const [selectedCity, setSelectedCity] = useState<string>("all");
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [parks, setParks] = useState<Park[]>([]);
   const [malls, setMalls] = useState<ShoppingMall[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  // Enable swipe back gesture
+  useSwipeBack();
   
   // Map navigation sheet state
   const [mapSheetOpen, setMapSheetOpen] = useState(false);
@@ -182,22 +189,31 @@ const Travel = () => {
     <div className="min-h-screen eco-gradient-soft safe-bottom pb-24">
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
-        <div className="animate-fade-in">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 eco-gradient rounded-xl shadow-eco">
-              <Plane className="w-5 h-5 text-primary-foreground" />
+        <div className="flex items-center gap-3 mb-4 animate-fade-in">
+          <button 
+            onClick={() => navigate(-1)} 
+            className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
+            aria-label="Go back"
+          >
+            <ChevronLeft className="w-5 h-5 text-foreground" />
+          </button>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <div className="p-2 eco-gradient rounded-xl shadow-eco">
+                <Plane className="w-5 h-5 text-primary-foreground" />
+              </div>
+              <span className="text-sm font-medium text-muted-foreground">
+                {t("travel.subtitle")}
+              </span>
             </div>
-            <span className="text-sm font-medium text-muted-foreground">
-              {t("travel.subtitle")}
-            </span>
+            <h1 className="text-2xl font-display font-bold text-foreground mt-1">
+              {t("travel.title")}
+            </h1>
           </div>
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            {t("travel.title")}
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            {t("travel.discoverPlaces")}
-          </p>
         </div>
+        <p className="text-muted-foreground">
+          {t("travel.discoverPlaces")}
+        </p>
       </header>
 
       {/* City Filter - Primary */}

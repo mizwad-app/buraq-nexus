@@ -633,5 +633,11 @@
     "transportDesc": "Options de transport local",
     "downloadVpn": "Télécharger VPN",
     "recommended": "Recommandé"
+  },
+  "modes": {
+    "business": "Affaires",
+    "travel": "Voyage",
+    "businessDesc": "Pour les entrepreneurs",
+    "travelDesc": "Pour les voyageurs"
   }
 }

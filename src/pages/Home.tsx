@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
+import { useAppMode } from "@/contexts/AppModeContext";
 import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
 import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
-import { ModeToggle, AppMode } from "@/components/ModeToggle";
+import { ModeToggle } from "@/components/ModeToggle";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Star, 
@@ -33,8 +34,8 @@ const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
+  const { mode, setMode } = useAppMode();
   const [showSurvey, setShowSurvey] = useState(false);
-  const [mode, setMode] = useState<AppMode>("business");
 
   // Check if user has completed the business survey
   useEffect(() => {
@@ -102,7 +103,7 @@ const Home = () => {
           <ModeToggle mode={mode} onModeChange={setMode} />
         </div>
         <p className="text-center text-xs text-muted-foreground mt-2">
-          {mode === "business" ? "Tadbirkorlar uchun" : "Sayohatchilar uchun"}
+          {mode === "business" ? t("modes.businessDesc") : t("modes.travelDesc")}
         </p>
       </section>
 

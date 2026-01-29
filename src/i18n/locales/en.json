@@ -661,5 +661,11 @@
     "requestSent": "Request sent!",
     "adminWillContact": "Our admin will contact you soon",
     "error": "An error occurred"
+  },
+  "modes": {
+    "business": "Business",
+    "travel": "Travel",
+    "businessDesc": "For entrepreneurs",
+    "travelDesc": "For travelers"
   }
 }

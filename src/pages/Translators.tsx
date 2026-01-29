@@ -23,6 +23,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { cn } from "@/lib/utils";
 import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
 import { BookingSheet } from "@/components/marketplace/BookingSheet";
@@ -116,6 +117,9 @@ const Translators = () => {
   const [translators, setTranslators] = useState<Translator[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterOpen, setFilterOpen] = useState(false);
+  
+  // Enable swipe back gesture
+  useSwipeBack();
   
   // Filter states
   const [selectedCity, setSelectedCity] = useState("all");
@@ -286,22 +290,26 @@ const Translators = () => {
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
         <div className="flex items-center gap-3 mb-4">
-          <button onClick={() => navigate(-1)} className="p-2 -ml-2 hover:bg-muted rounded-xl">
+          <button 
+            onClick={() => navigate(-1)} 
+            className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
+            aria-label="Go back"
+          >
             <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
-            <div className="flex-1">
-              <div className="flex items-center gap-2">
-                <div className="p-2 bg-gradient-to-br from-primary to-accent rounded-xl shadow-lg">
-                  <Users className="w-5 h-5 text-primary-foreground" />
-                </div>
-              <span className="text-sm font-medium text-muted-foreground">
-                  Professional tarjima xizmatlari
-                </span>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <div className="p-2 bg-gradient-to-br from-primary to-accent rounded-xl shadow-lg">
+                <Users className="w-5 h-5 text-primary-foreground" />
               </div>
-              <h1 className="text-2xl font-display font-bold text-foreground mt-1">
-                Tarjimonlar
-              </h1>
+              <span className="text-sm font-medium text-muted-foreground">
+                Professional tarjima xizmatlari
+              </span>
             </div>
+            <h1 className="text-2xl font-display font-bold text-foreground mt-1">
+              Tarjimonlar
+            </h1>
+          </div>
         </div>
 
         {/* Clean Filter Button */}

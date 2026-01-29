@@ -19,11 +19,13 @@ import {
   ChevronDown,
   X,
   Filter,
+  ChevronLeft,
 } from "lucide-react";
 import { BusinessEcosystemIcon } from "@/components/icons/BusinessEcosystemIcon";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { SupportChat } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
 import { cn } from "@/lib/utils";
@@ -148,6 +150,9 @@ const Business = () => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { getField, currentLanguage } = useTranslatedField();
+  
+  // Enable swipe back gesture
+  useSwipeBack();
   
   // Step state
   const [step, setStep] = useState<Step>("product");
@@ -825,26 +830,27 @@ const Business = () => {
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
         <div className="animate-fade-in">
-          <div className="flex items-center gap-2 mb-2">
-            {step !== "product" && (
-              <button
-                onClick={handleBack}
-                className="p-2 rounded-xl bg-muted/50 hover:bg-muted transition-colors mr-1"
-              >
-                <ArrowLeft className="w-4 h-4" />
-              </button>
-            )}
+          <div className="flex items-center gap-3 mb-2">
+            <button
+              onClick={() => step === "product" ? navigate(-1) : handleBack()}
+              className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
+              aria-label="Go back"
+            >
+              <ChevronLeft className="w-5 h-5 text-foreground" />
+            </button>
             <div className="p-2.5 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-xl shadow-glow">
               <BusinessEcosystemIcon className="w-6 h-6 text-primary-foreground" />
             </div>
-            <span className="text-sm font-medium text-muted-foreground">
-              {t("sourcing.strategicPlanner")}
-            </span>
+            <div className="flex-1">
+              <span className="text-sm font-medium text-muted-foreground">
+                {t("sourcing.strategicPlanner")}
+              </span>
+              <h1 className="text-2xl font-display font-bold text-foreground">
+                {t("business.title")}
+              </h1>
+            </div>
           </div>
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            {t("business.title")}
-          </h1>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-sm text-muted-foreground mt-1 ml-10">
             {step === "product" && t("sourcing.step1")}
             {step === "goal" && (selectedGoal ? t("sourcing.step2") : t("sourcing.selectGoal"))}
           </p>
