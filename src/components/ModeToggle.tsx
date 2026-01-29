@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Briefcase, Plane } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export type AppMode = "business" | "travel";
 
@@ -9,6 +10,8 @@ interface ModeToggleProps {
 }
 
 export const ModeToggle = ({ mode, onModeChange }: ModeToggleProps) => {
+  const { t } = useTranslation();
+  
   return (
     <div className="flex items-center bg-card rounded-2xl p-1 border border-border/50">
       <button
@@ -21,7 +24,7 @@ export const ModeToggle = ({ mode, onModeChange }: ModeToggleProps) => {
         )}
       >
         <Briefcase className="w-4 h-4" />
-        <span>Biznes</span>
+        <span>{t("modes.business")}</span>
       </button>
       <button
         onClick={() => onModeChange("travel")}
@@ -33,7 +36,7 @@ export const ModeToggle = ({ mode, onModeChange }: ModeToggleProps) => {
         )}
       >
         <Plane className="w-4 h-4" />
-        <span>Sayohat</span>
+        <span>{t("modes.travel")}</span>
       </button>
     </div>
   );

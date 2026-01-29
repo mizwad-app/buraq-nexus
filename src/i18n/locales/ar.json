@@ -615,5 +615,11 @@
     "requestSent": "تم إرسال الطلب!",
     "adminWillContact": "سيتواصل معك مسؤولنا قريباً",
     "error": "حدث خطأ"
+  },
+  "modes": {
+    "business": "أعمال",
+    "travel": "سفر",
+    "businessDesc": "لرجال الأعمال",
+    "travelDesc": "للمسافرين"
   }
 }

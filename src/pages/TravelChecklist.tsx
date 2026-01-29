@@ -15,6 +15,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
+import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -50,6 +51,9 @@ const TravelChecklist = () => {
   const [newItemName, setNewItemName] = useState("");
   const [loading, setLoading] = useState(true);
   const [useLocalStorage, setUseLocalStorage] = useState(false);
+  
+  // Enable swipe back gesture
+  useSwipeBack();
 
   useEffect(() => {
     if (user) {
@@ -237,7 +241,11 @@ const TravelChecklist = () => {
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
         <div className="flex items-center gap-3 mb-4">
-          <button onClick={() => navigate(-1)} className="p-2 -ml-2 hover:bg-muted rounded-xl">
+          <button 
+            onClick={() => navigate(-1)} 
+            className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
+            aria-label="Go back"
+          >
             <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
           <div className="flex-1">

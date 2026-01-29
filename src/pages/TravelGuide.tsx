@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { 
-  ArrowLeft, 
+  ChevronLeft, 
   Play, 
   Smartphone, 
   CreditCard, 
@@ -29,6 +29,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { cn } from "@/lib/utils";
+import { useSwipeBack } from "@/hooks/useSwipeBack";
 
 interface GuideItem {
   id: string;
@@ -89,6 +90,9 @@ const TravelGuide = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<string>("diplomatic");
+  
+  // Enable swipe back gesture
+  useSwipeBack();
 
   const guideItems: GuideItem[] = [
     {
@@ -149,9 +153,10 @@ const TravelGuide = () => {
         <div className="flex items-center gap-4 px-5 py-4">
           <button
             onClick={() => navigate(-1)}
-            className="w-10 h-10 rounded-xl bg-card flex items-center justify-center hover:bg-muted transition-colors"
+            className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
+            aria-label="Go back"
           >
-            <ArrowLeft className="w-5 h-5 text-foreground" />
+            <ChevronLeft className="w-5 h-5 text-foreground" />
           </button>
           <div className="flex-1">
             <h1 className="text-xl font-display font-bold text-foreground">

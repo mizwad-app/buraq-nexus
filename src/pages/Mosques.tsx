@@ -1,12 +1,14 @@
 import { useState, useEffect, useMemo } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { 
   Moon, 
   Clock, 
   MapPin, 
   Navigation,
   Check,
-  Users
+  Users,
+  ChevronLeft
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,6 +16,7 @@ import { useCity } from "@/contexts/CityContext";
 import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
+import { useSwipeBack } from "@/hooks/useSwipeBack";
 
 interface Mosque {
   id: string;
@@ -58,6 +61,7 @@ const prayerTimes = [
 
 const Mosques = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate();
   const { selectedCity } = useCity();
   const { getField, currentLanguage } = useTranslatedField();
   const [mosques, setMosques] = useState<Mosque[]>([]);
@@ -65,6 +69,9 @@ const Mosques = () => {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [locationError, setLocationError] = useState<string | null>(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
+  
+  // Enable swipe back gesture
+  useSwipeBack();
   
   // Map navigation sheet state
   const [mapSheetOpen, setMapSheetOpen] = useState(false);
@@ -140,18 +147,27 @@ const Mosques = () => {
     <div className="min-h-screen bg-background safe-bottom pb-24">
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
-        <div className="animate-fade-in">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-lg">
-              <Moon className="w-5 h-5 text-white" />
+        <div className="flex items-center gap-3 mb-4 animate-fade-in">
+          <button 
+            onClick={() => navigate(-1)} 
+            className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
+            aria-label="Go back"
+          >
+            <ChevronLeft className="w-5 h-5 text-foreground" />
+          </button>
+          <div className="flex-1">
+            <div className="flex items-center gap-2">
+              <div className="p-2 bg-gradient-to-br from-emerald-500 to-teal-600 rounded-xl shadow-lg">
+                <Moon className="w-5 h-5 text-white" />
+              </div>
+              <span className="text-sm font-medium text-muted-foreground">
+                {t("mosques.subtitle")}
+              </span>
             </div>
-            <span className="text-sm font-medium text-muted-foreground">
-              {t("mosques.subtitle")}
-            </span>
+            <h1 className="text-2xl font-display font-bold text-foreground mt-1">
+              {t("mosques.title")}
+            </h1>
           </div>
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            {t("mosques.title")}
-          </h1>
         </div>
       </header>
 

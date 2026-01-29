@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CityProvider } from "@/contexts/CityContext";
+import { AppModeProvider } from "@/contexts/AppModeContext";
 import Home from "./pages/Home";
 import Travel from "./pages/Travel";
 import Ibadah from "./pages/Ibadah";
@@ -30,10 +31,11 @@ import AdminServiceRequests from "./pages/AdminServiceRequests";
 const queryClient = new QueryClient();
 
 const App = () => (
-  <QueryClientProvider client={queryClient}>
+<QueryClientProvider client={queryClient}>
     <AuthProvider>
       <CityProvider>
-        <TooltipProvider>
+        <AppModeProvider>
+          <TooltipProvider>
           <Toaster />
           <Sonner />
           <BrowserRouter>
@@ -74,7 +76,8 @@ const App = () => (
               />
             </Routes>
           </BrowserRouter>
-        </TooltipProvider>
+          </TooltipProvider>
+        </AppModeProvider>
       </CityProvider>
     </AuthProvider>
   </QueryClientProvider>

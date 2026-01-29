@@ -710,5 +710,11 @@
     "requestSent": "So'rov yuborildi!",
     "adminWillContact": "Adminimiz tez orada siz bilan bog'lanadi",
     "error": "Xatolik yuz berdi"
+  },
+  "modes": {
+    "business": "Biznes",
+    "travel": "Sayohat",
+    "businessDesc": "Tadbirkorlar uchun",
+    "travelDesc": "Sayohatchilar uchun"
   }
 }
