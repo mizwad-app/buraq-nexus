@@ -1,70 +1,47 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
-import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
 import { PrayerTimeCard } from "@/components/home/PrayerTimeCard";
 import { ExchangeRateCard } from "@/components/home/ExchangeRateCard";
-import { supabase } from "@/integrations/supabase/client";
-import { 
-  Star, 
+import {
+  Star,
   ChevronRight,
   ClipboardCheck,
   Lock,
+  Moon,
+  Wallet as WalletIcon,
+  type LucideIcon,
 } from "lucide-react";
 
 // Images
-import halalFood from "@/assets/halol-food.jpg";
-import travelNature from "@/assets/travel-nature.jpg";
-import business from "@/assets/business.jpg";
 import mosque from "@/assets/mosque.jpg";
-import travelGuide from "@/assets/travel-guide.jpg";
+import travelNature from "@/assets/travel-nature.jpg";
 import translatorsImg from "@/assets/translators.jpg";
 import b2bHub from "@/assets/b2b-hub.jpg";
 import wallet from "@/assets/wallet.jpg";
-import attractions from "@/assets/attractions.jpg";
-import exhibitions from "@/assets/exhibitions.jpg";
-import legalHelp from "@/assets/legal-help.jpg";
 import cargo from "@/assets/cargo.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
-  const [showSurvey, setShowSurvey] = useState(false);
 
-  // Check if user has completed the business survey
-  useEffect(() => {
-    const checkUserInterests = async () => {
-      if (!user) return;
-      
-      const { data } = await supabase
-        .from("user_interests")
-        .select("id")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      
-      // Show survey if user hasn't completed it yet
-      if (!data) {
-        // Small delay for better UX
-        setTimeout(() => setShowSurvey(true), 1000);
-      }
-    };
-
-    checkUserInterests();
-  }, [user]);
-
-  // Unified modules grid (6 cards)
-  const activeModules = [
+  const modules = [
     { id: "b2bHub", title: t("modules.b2bHub"), image: b2bHub, route: "/business" },
-    { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check" },
-    { id: "exhibitions", title: t("modules.exhibitions"), image: exhibitions, route: "/business" },
     { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators" },
+    { id: "halal", title: t("modules.halal"), image: mosque, route: "/ibadah" },
+    { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel" },
     { id: "wallet", title: t("modules.wallet"), image: wallet, route: "/profile" },
-    { id: "transportVpn", title: t("modules.transportVpn"), image: cargo, route: "/transport" },
+    { id: "cargo", title: t("modules.cargo"), image: cargo, route: "/transport" },
+  ];
+
+  const quickPills: { icon: LucideIcon; label: string; route: string }[] = [
+    { icon: ClipboardCheck, label: t("home.checklistShort"), route: "/checklist" },
+    { icon: Moon, label: t("home.mosquesShort"), route: "/ibadah?tab=mosques" },
+    { icon: WalletIcon, label: t("home.walletShort"), route: "/profile" },
   ];
 
   return (
@@ -102,10 +79,7 @@ const Home = () => {
       {/* Guest Prompt */}
       {!user && (
         <section className="px-5 mb-5">
-          <button 
-            onClick={() => navigate("/profile")}
-            className="w-full"
-          >
+          <button onClick={() => navigate("/profile")} className="w-full">
             <div className="relative rounded-2xl overflow-hidden bg-gradient-to-br from-primary/20 to-accent/10 p-4 border border-primary/20">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center">
@@ -122,20 +96,23 @@ const Home = () => {
         </section>
       )}
 
-      {/* Quick Access Section */}
-      <section className="px-5 mb-4">
+      {/* Quick Access Pill Strip */}
+      <section className="px-5 mb-5">
         <h2 className="text-lg font-display font-semibold text-foreground mb-3">
           {t("home.quickAccess")}
         </h2>
-        <button
-          onClick={() => navigate("/checklist")}
-          className="w-full flex items-center gap-3 p-4 rounded-xl bg-card border border-border/50 hover:border-primary/30 transition-all"
-        >
-          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-            <ClipboardCheck className="w-5 h-5 text-primary" />
-          </div>
-          <span className="text-sm font-medium text-foreground">{t("home.travelChecklist")}</span>
-        </button>
+        <div className="flex gap-2">
+          {quickPills.map(({ icon: Icon, label, route }) => (
+            <button
+              key={label}
+              onClick={() => navigate(route)}
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 px-3 rounded-full bg-secondary/60 hover:bg-secondary transition-all active:scale-95"
+            >
+              <Icon className="w-4 h-4 text-foreground" />
+              <span className="text-[13px] font-medium text-foreground truncate">{label}</span>
+            </button>
+          ))}
+        </div>
       </section>
 
       {/* Section Title */}
@@ -145,10 +122,10 @@ const Home = () => {
         </h2>
       </section>
 
-      {/* Module Grid - 2 columns x 3 rows */}
+      {/* Module Grid - 2 columns x 3 rows (compact) */}
       <section className="px-5 pb-4">
         <div className="grid grid-cols-2 gap-3">
-          {activeModules.map((module, index) => (
+          {modules.map((module, index) => (
             <ImageCard
               key={module.id}
               image={module.image}
@@ -156,6 +133,8 @@ const Home = () => {
               onClick={() => navigate(module.route)}
               delay={index * 60}
               isPremium={module.id === "wallet"}
+              isCompact
+              className="aspect-[4/3]"
             />
           ))}
         </div>
@@ -174,9 +153,6 @@ const Home = () => {
 
       {/* Support Chat FAB */}
       <SupportChat />
-
-      {/* Business Survey Modal */}
-      <BusinessSurveyModal open={showSurvey} onOpenChange={setShowSurvey} />
     </div>
   );
 };
