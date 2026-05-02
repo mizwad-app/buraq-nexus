@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-type LanguageCode = 'uz' | 'en' | 'ru' | 'ar';
+type LanguageCode = 'uz' | 'en' | 'ru' | 'ar' | 'fr' | 'zh';
 
 // Generic interface for translatable items
 interface TranslatableItem {
