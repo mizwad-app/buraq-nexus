@@ -86,6 +86,8 @@ const Profile = () => {
         booking_date,
         status,
         total_amount,
+        translator_amount,
+        service_fee,
         translator:translator_id (
           name,
           city
