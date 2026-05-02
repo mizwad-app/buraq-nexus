@@ -320,11 +320,7 @@ const AdminDeepChecks = () => {
                     {/* Payment Info */}
                     <div className="flex items-center gap-4 text-sm">
                       <span className="text-muted-foreground">To'lov:</span>
-                      {request.payment_type === "points" ? (
-                        <span className="text-gold font-medium">{request.points_spent} ball</span>
-                      ) : (
-                        <span className="text-primary font-medium">${request.amount_paid}</span>
-                      )}
+                      <span className="text-primary font-medium">${request.amount_paid}</span>
                     </div>
 
                     {/* Status Select */}
