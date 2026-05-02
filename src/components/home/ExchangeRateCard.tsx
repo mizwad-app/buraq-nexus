@@ -37,9 +37,9 @@ export const ExchangeRateCard = () => {
 
         <div className="space-y-1.5">
           {rates.map((r, i) => (
-            <div key={i} className="flex items-center justify-between text-sm">
-              <span className="text-muted-foreground">{r.left}</span>
-              <span className="font-mono text-foreground">{r.right}</span>
+            <div key={i} className="flex items-center justify-between gap-2 text-sm min-w-0">
+              <span className="text-muted-foreground whitespace-nowrap shrink-0">{r.left}</span>
+              <span className="font-mono font-semibold text-foreground whitespace-nowrap truncate text-right">{r.right}</span>
             </div>
           ))}
         </div>
