@@ -219,6 +219,34 @@ const Profile = () => {
         </section>
       )}
 
+      {/* Complete Profile (Business Survey opt-in) */}
+      {hasInterests === false && (
+        <section className="px-5 mb-4">
+          <div className="rounded-2xl bg-gradient-to-br from-primary/15 to-accent/10 border border-primary/20 p-4">
+            <div className="flex items-start gap-3 mb-3">
+              <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center shrink-0">
+                <Sparkles className="w-5 h-5 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-foreground text-sm">
+                  {t("profile.completeProfile.title")}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {t("profile.completeProfile.subtitle")}
+                </p>
+              </div>
+            </div>
+            <Button
+              onClick={() => setShowSurvey(true)}
+              className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+              size="sm"
+            >
+              {t("profile.completeProfile.start")}
+            </Button>
+          </div>
+        </section>
+      )}
+
       {/* Translator Bookings */}
       <section className="px-5 mb-6">
         <div className="flex items-center justify-between mb-3">
@@ -327,6 +355,22 @@ const Profile = () => {
           {t("profile.signOut")}
         </Button>
       </section>
+
+      <BusinessSurveyModal
+        open={showSurvey}
+        onOpenChange={(open) => {
+          setShowSurvey(open);
+          if (!open) {
+            // Re-check after closing in case user submitted
+            supabase
+              .from("user_interests")
+              .select("id")
+              .eq("user_id", user?.id)
+              .maybeSingle()
+              .then(({ data }) => setHasInterests(!!data));
+          }
+        }}
+      />
     </div>
   );
 };
