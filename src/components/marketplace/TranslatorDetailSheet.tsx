@@ -560,6 +560,23 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
           </div>
         </div>
       </SheetContent>
+
+      {/* Reviews Placeholder Sheet */}
+      <Sheet open={reviewsOpen} onOpenChange={setReviewsOpen}>
+        <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl">
+          <SheetHeader>
+            <SheetTitle className="text-left">Sharhlar ({translator.total_reviews || 0})</SheetTitle>
+          </SheetHeader>
+          <div className="flex flex-col items-center justify-center h-full -mt-12 text-center px-6">
+            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+              <Star className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Sharhlar tez orada qo'shiladi
+            </p>
+          </div>
+        </SheetContent>
+      </Sheet>
     </Sheet>
   );
 };
