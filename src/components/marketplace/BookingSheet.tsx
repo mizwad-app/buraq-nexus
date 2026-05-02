@@ -620,18 +620,18 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  Tarjimon narxi {serviceType === 'hourly' && `(${calculateHours()} soat)`}
+                  {t('booking.translatorPrice')} {serviceType === 'hourly' && `(${calculateHours()} soat)`}
                 </span>
                 <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground inline-flex items-center gap-1.5">
-                  Buraq xizmat haqi (10%)
+                  {t('booking.serviceFee')} ({t('booking.serviceFeeRate')})
                   <Popover>
                     <PopoverTrigger asChild>
                       <button
                         type="button"
-                        aria-label="Xizmat haqi haqida"
+                        aria-label={t('booking.feeInfo.title')}
                         className="inline-flex items-center justify-center w-4 h-4 rounded-full text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <Info className="w-3.5 h-3.5" />
@@ -639,10 +639,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                     </PopoverTrigger>
                     <PopoverContent side="top" align="center" className="w-64 p-3">
                       <p className="font-semibold text-sm text-foreground mb-1">
-                        Buraq xizmat haqi
+                        {t('booking.feeInfo.title')}
                       </p>
                       <p className="text-xs text-muted-foreground leading-relaxed">
-                        10% xizmat haqi platform xavfsizligi va qo'llab-quvvatlash uchun olinadi. Tarjimon o'z narxini to'liq oladi.
+                        {t('booking.feeInfo.body')}
                       </p>
                     </PopoverContent>
                   </Popover>
@@ -651,7 +651,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
               <div className="h-px bg-border my-2" />
               <div className="flex justify-between items-center">
-                <span className="text-base font-bold text-foreground">Jami to'lov</span>
+                <span className="text-base font-bold text-foreground">{t('booking.totalPayment')}</span>
                 <span className="text-2xl font-bold text-primary">¥{total.toLocaleString()}</span>
               </div>
             </div>
