@@ -140,7 +140,7 @@ export const ReviewSheet = ({
               className={cn(
                 "w-7 h-7 transition-colors",
                 star <= category.value
-                  ? "fill-amber-500 text-amber-500"
+                  ? "fill-gold text-gold"
                   : "text-muted-foreground/30"
               )}
             />
@@ -169,7 +169,7 @@ export const ReviewSheet = ({
             </div>
           ) : !canReview ? (
             <div className="text-center py-12">
-              <AlertCircle className="w-16 h-16 text-amber-500 mx-auto mb-4" />
+              <AlertCircle className="w-16 h-16 text-gold mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-foreground mb-2">Sharh qoldirish mumkin emas</h3>
               <p className="text-sm text-muted-foreground">
                 Faqat xizmat tugagandan keyin sharh qoldirishingiz mumkin. Avval tarjimon bilan buyurtma yarating va u tugagandan keyin qaytib keling.
@@ -198,8 +198,8 @@ export const ReviewSheet = ({
                 <div className="bg-gradient-to-r from-amber-500/10 to-amber-500/5 rounded-xl p-4 flex items-center gap-4">
                   <div className="text-center">
                     <div className="flex items-center gap-1 justify-center">
-                      <Star className="w-6 h-6 fill-amber-500 text-amber-500" />
-                      <span className="text-2xl font-bold text-amber-500">{averageRating.toFixed(1)}</span>
+                      <Star className="w-6 h-6 fill-gold text-gold" />
+                      <span className="text-2xl font-bold text-gold">{averageRating.toFixed(1)}</span>
                     </div>
                     <p className="text-xs text-muted-foreground">Umumiy baho</p>
                   </div>

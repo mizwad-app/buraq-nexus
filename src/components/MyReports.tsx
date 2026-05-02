@@ -27,16 +27,16 @@ interface DeepCheck {
 }
 
 const statusConfig = {
-  pending: { label: "Kutilmoqda", icon: Clock, color: "text-amber-400", bg: "bg-amber-400/10" },
+  pending: { label: "Kutilmoqda", icon: Clock, color: "text-gold", bg: "bg-gold/10" },
   in_progress: { label: "Tekshirilmoqda", icon: FileSearch, color: "text-blue-400", bg: "bg-blue-400/10" },
-  completed: { label: "Yakunlandi", icon: CheckCircle2, color: "text-emerald-400", bg: "bg-emerald-400/10" },
+  completed: { label: "Yakunlandi", icon: CheckCircle2, color: "text-primary", bg: "bg-primary/10" },
   rejected: { label: "Rad etildi", icon: XCircle, color: "text-red-400", bg: "bg-red-400/10" },
 };
 
 const halalConfig = {
-  halol: { label: "Halol", icon: Check, color: "text-emerald-400", bg: "bg-emerald-500/20" },
+  halol: { label: "Halol", icon: Check, color: "text-primary", bg: "bg-primary/20" },
   haram: { label: "Harom", icon: X, color: "text-red-400", bg: "bg-red-500/20" },
-  shubhali: { label: "Shubhali", icon: AlertTriangle, color: "text-amber-400", bg: "bg-amber-500/20" },
+  shubhali: { label: "Shubhali", icon: AlertTriangle, color: "text-gold", bg: "bg-gold/20" },
 };
 
 interface MyReportsProps {

@@ -252,12 +252,12 @@ const Rewards = () => {
       {/* Eco Impact Widget */}
       {treesPlanted > 0 && (
         <section className="px-5 mb-5">
-          <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20">
+          <div className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-primary/20">
             <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center">
               <TreePine className="w-5 h-5 text-white" />
             </div>
             <div className="flex-1">
-              <p className="text-xs text-emerald-400">{t("home.ecoImpact")}</p>
+              <p className="text-xs text-primary">{t("home.ecoImpact")}</p>
               <p className="text-sm font-bold text-foreground">{treesPlanted} {t("eco.treesCount")}</p>
             </div>
           </div>

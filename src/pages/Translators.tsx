@@ -308,7 +308,7 @@ const Translators = () => {
       2: "bg-blue-400",
       3: "bg-blue-500",
       4: "bg-green-500",
-      5: "bg-amber-500",
+      5: "bg-gold",
       6: "bg-red-500",
     };
 
@@ -658,7 +658,7 @@ const Translators = () => {
                       <span className="text-sm text-muted-foreground">/kun</span>
                       {translator.rating && (
                         <div className="flex items-center gap-1 ml-auto">
-                          <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+                          <Star className="w-4 h-4 fill-gold text-gold" />
                           <span className="font-semibold text-foreground">{translator.rating?.toFixed(1)}</span>
                         </div>
                       )}

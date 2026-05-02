@@ -42,8 +42,8 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
       subtitle: t("scanner.resultHalalDesc"),
       bgClass: "bg-gradient-to-br from-emerald-500/20 to-green-600/20",
       borderClass: "border-emerald-500/50",
-      iconBgClass: "bg-emerald-500",
-      textClass: "text-emerald-400",
+      iconBgClass: "bg-primary",
+      textClass: "text-primary",
     },
     haram: {
       icon: X,
@@ -60,8 +60,8 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
       subtitle: t("scanner.resultDoubtfulDesc"),
       bgClass: "bg-gradient-to-br from-amber-500/20 to-yellow-600/20",
       borderClass: "border-amber-500/50",
-      iconBgClass: "bg-amber-500",
-      textClass: "text-amber-400",
+      iconBgClass: "bg-gold",
+      textClass: "text-gold",
     },
   };
 
@@ -284,7 +284,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
               className="w-full flex items-center justify-between gap-3 p-4 hover:bg-secondary/50 transition-colors"
             >
               <div className="flex items-center gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-500" />
+                <AlertTriangle className="w-4 h-4 text-gold" />
                 <span className="text-sm font-medium text-foreground">
                   {t("halal.ingredientsToAvoid")}
                 </span>
@@ -300,20 +300,20 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
                   >
                     <div
                       className={`w-7 h-7 rounded-lg flex items-center justify-center ${
-                        ingredient.category === "haram" ? "bg-red-500/20" : "bg-amber-500/20"
+                        ingredient.category === "haram" ? "bg-red-500/20" : "bg-gold/20"
                       }`}
                     >
                       {ingredient.category === "haram" ? (
                         <XCircle className="w-3.5 h-3.5 text-red-500" />
                       ) : (
-                        <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                        <AlertTriangle className="w-3.5 h-3.5 text-gold" />
                       )}
                     </div>
                     <div className="flex-1">
                       <p className="text-xs font-medium text-foreground">{ingredient.name}</p>
                       <p
                         className={`text-[10px] ${
-                          ingredient.category === "haram" ? "text-red-500" : "text-amber-500"
+                          ingredient.category === "haram" ? "text-red-500" : "text-gold"
                         }`}
                       >
                         {t(`halal.${ingredient.category}`)}

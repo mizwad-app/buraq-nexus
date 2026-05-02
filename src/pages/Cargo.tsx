@@ -258,9 +258,9 @@ const Cargo = () => {
                 </div>
               </div>
               {selectedTracking.points_earned > 0 && (
-                <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20">
-                  <Star className="w-4 h-4 text-amber-400" />
-                  <span className="text-sm font-bold text-amber-400">
+                <div className="flex items-center gap-1 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/20">
+                  <Star className="w-4 h-4 text-gold" />
+                  <span className="text-sm font-bold text-gold">
                     +{selectedTracking.points_earned}
                   </span>
                 </div>
@@ -388,7 +388,7 @@ const Cargo = () => {
                       </div>
                       <div className="flex items-center gap-2">
                         {tracking.points_earned > 0 && (
-                          <div className="flex items-center gap-1 text-amber-400">
+                          <div className="flex items-center gap-1 text-gold">
                             <Star className="w-3.5 h-3.5" />
                             <span className="text-xs font-bold">+{tracking.points_earned}</span>
                           </div>

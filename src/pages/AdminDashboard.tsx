@@ -79,8 +79,8 @@ const AdminDashboard = () => {
       title: "Restoranlar",
       value: stats?.restaurants || 0,
       icon: Utensils,
-      color: "text-emerald-500",
-      bgColor: "bg-emerald-500/10",
+      color: "text-primary",
+      bgColor: "bg-primary/10",
       route: "/admin/locations",
     },
     {
@@ -95,8 +95,8 @@ const AdminDashboard = () => {
       title: "Kutilayotgan tekshiruvlar",
       value: stats?.deepChecksPending || 0,
       icon: Clock,
-      color: "text-amber-500",
-      bgColor: "bg-amber-500/10",
+      color: "text-gold",
+      bgColor: "bg-gold/10",
       route: "/admin/deep-checks",
     },
     {
@@ -178,9 +178,9 @@ const AdminDashboard = () => {
           </button>
           <button
             onClick={() => navigate("/admin/deep-checks")}
-            className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/20 hover:border-amber-500/40 transition-all"
+            className="flex items-center gap-3 p-4 rounded-xl bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-gold/20 hover:border-gold/40 transition-all"
           >
-            <FileSearch className="w-5 h-5 text-amber-500" />
+            <FileSearch className="w-5 h-5 text-gold" />
             <span className="font-medium text-foreground">Tekshiruvlarni ko'rish</span>
           </button>
           <button

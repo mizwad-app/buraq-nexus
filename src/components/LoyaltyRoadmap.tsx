@@ -40,8 +40,8 @@ const milestones: Milestone[] = [
     titleKey: "loyalty.ticketTitle",
     descKey: "loyalty.ticketDesc",
     icon: Plane,
-    color: "text-amber-400",
-    bgColor: "bg-amber-500/20",
+    color: "text-gold",
+    bgColor: "bg-gold/20",
   },
   {
     id: "umra",
@@ -49,8 +49,8 @@ const milestones: Milestone[] = [
     titleKey: "loyalty.umraTitle",
     descKey: "loyalty.umraDesc",
     icon: Trophy,
-    color: "text-emerald-400",
-    bgColor: "bg-emerald-500/20",
+    color: "text-primary",
+    bgColor: "bg-primary/20",
   },
 ];
 
@@ -108,7 +108,7 @@ export const LoyaltyRoadmap = ({ currentVolume, className }: LoyaltyRoadmapProps
 
       {/* Next Goal Message */}
       {nextMilestone && volumeToNext > 0 && (
-        <div className="p-3 rounded-xl bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-amber-500/20">
+        <div className="p-3 rounded-xl bg-gradient-to-r from-amber-500/10 to-yellow-500/10 border border-gold/20">
           <p className="text-sm text-foreground">
             ✨ Yana <span className="font-bold">{volumeToNext}</span> kub yuk topshirsangiz, {t(nextMilestone.titleKey).toLowerCase()} yutasiz!
           </p>
@@ -129,7 +129,7 @@ export const LoyaltyRoadmap = ({ currentVolume, className }: LoyaltyRoadmapProps
               className={cn(
                 "relative p-4 rounded-xl border transition-all",
                 isCompleted 
-                  ? "bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-emerald-500/30" 
+                  ? "bg-gradient-to-r from-emerald-500/10 to-green-500/10 border-primary/30" 
                   : isCurrent
                   ? "bg-card border-primary/30 ring-1 ring-primary/20"
                   : "bg-card/50 border-border/50 opacity-60"
@@ -139,10 +139,10 @@ export const LoyaltyRoadmap = ({ currentVolume, className }: LoyaltyRoadmapProps
                 {/* Icon */}
                 <div className={cn(
                   "w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0",
-                  isCompleted ? "bg-emerald-500/20" : milestone.bgColor
+                  isCompleted ? "bg-primary/20" : milestone.bgColor
                 )}>
                   {isCompleted ? (
-                    <CheckCircle2 className="w-6 h-6 text-emerald-400" />
+                    <CheckCircle2 className="w-6 h-6 text-primary" />
                   ) : (
                     <Icon className={cn("w-6 h-6", milestone.color)} />
                   )}
@@ -157,7 +157,7 @@ export const LoyaltyRoadmap = ({ currentVolume, className }: LoyaltyRoadmapProps
                     <span className={cn(
                       "text-xs font-medium px-2 py-0.5 rounded-full",
                       isCompleted 
-                        ? "bg-emerald-500/20 text-emerald-400" 
+                        ? "bg-primary/20 text-primary" 
                         : "bg-secondary text-muted-foreground"
                     )}>
                       {milestone.volume} kub
@@ -191,11 +191,11 @@ export const LoyaltyRoadmap = ({ currentVolume, className }: LoyaltyRoadmapProps
                       {/* Completed badge */}
                       {isCompleted && (
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-1 text-xs text-emerald-400">
+                          <div className="flex items-center gap-1 text-xs text-primary">
                             <CheckCircle2 className="w-3.5 h-3.5" />
                             <span className="font-medium">{t("loyalty.claimed")}</span>
                           </div>
-                          <span className="text-xs text-emerald-400 font-bold">
+                          <span className="text-xs text-primary font-bold">
                             {milestone.volume}/{milestone.volume}
                           </span>
                         </div>

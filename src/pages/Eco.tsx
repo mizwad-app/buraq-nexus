@@ -138,10 +138,10 @@ const Eco = () => {
                 <div>
                   <p className="text-sm text-muted-foreground">{t("eco.treesPlanted")}</p>
                   <div className="flex items-baseline gap-1">
-                    <span className="text-3xl font-bold text-emerald-400">
+                    <span className="text-3xl font-bold text-primary">
                       {loading ? "..." : ecoStats.treesPlanted}
                     </span>
-                    <span className="text-lg text-emerald-400/70">{t("eco.treesCount")}</span>
+                    <span className="text-lg text-primary/70">{t("eco.treesCount")}</span>
                   </div>
                 </div>
               </div>
@@ -151,7 +151,7 @@ const Eco = () => {
             <div className="grid grid-cols-2 gap-3">
               <div className="bg-black/20 backdrop-blur-sm rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1">
-                  <Package className="w-4 h-4 text-emerald-400" />
+                  <Package className="w-4 h-4 text-primary" />
                   <span className="text-xs text-muted-foreground">{t("eco.totalVolume")}</span>
                 </div>
                 <p className="text-lg font-semibold text-foreground">
@@ -160,7 +160,7 @@ const Eco = () => {
               </div>
               <div className="bg-black/20 backdrop-blur-sm rounded-xl p-3">
                 <div className="flex items-center gap-2 mb-1">
-                  <Globe2 className="w-4 h-4 text-emerald-400" />
+                  <Globe2 className="w-4 h-4 text-primary" />
                   <span className="text-xs text-muted-foreground">{t("eco.co2Reduction")}</span>
                 </div>
                 <p className="text-lg font-semibold text-foreground">
@@ -171,7 +171,7 @@ const Eco = () => {
           </div>
 
           {/* Decorative */}
-          <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-2xl" />
+          <div className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/10 rounded-full blur-2xl" />
         </div>
       </section>
 
@@ -179,8 +179,8 @@ const Eco = () => {
       <section className="px-5 mb-6">
         <div className="bg-card rounded-xl p-4 border border-border/50 animate-fade-in">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-emerald-500/10 rounded-lg">
-              <Sprout className="w-5 h-5 text-emerald-500" />
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Sprout className="w-5 h-5 text-primary" />
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-foreground">{t("eco.howItWorks")}</p>
@@ -226,7 +226,7 @@ const Eco = () => {
                         {t(`eco.projects.${project.projectKey}`)}
                       </h3>
                       {project.status === "upcoming" && (
-                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-500 font-medium">
+                        <span className="text-[10px] px-2 py-0.5 rounded-full bg-gold/20 text-gold font-medium">
                           {t("eco.comingSoon")}
                         </span>
                       )}
@@ -241,7 +241,7 @@ const Eco = () => {
                 {/* Progress */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <div className="flex items-center gap-1 text-emerald-500">
+                    <div className="flex items-center gap-1 text-primary">
                       <TreePine className="w-3 h-3" />
                       <span>{project.trees.toLocaleString()} {t("eco.planted")}</span>
                     </div>

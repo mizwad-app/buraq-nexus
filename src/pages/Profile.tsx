@@ -112,8 +112,8 @@ const Profile = () => {
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'confirmed': return 'text-emerald-500 bg-emerald-500/10';
-      case 'pending': return 'text-amber-500 bg-amber-500/10';
+      case 'confirmed': return 'text-primary bg-primary/10';
+      case 'pending': return 'text-gold bg-gold/10';
       case 'completed': return 'text-blue-500 bg-blue-500/10';
       case 'cancelled': return 'text-destructive bg-destructive/10';
       default: return 'text-muted-foreground bg-muted';
@@ -206,10 +206,10 @@ const Profile = () => {
         <section className="px-5 mb-4">
           <button
             onClick={() => navigate("/admin/dashboard")}
-            className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/10 border border-amber-500/30 hover:border-amber-500/50 transition-all"
+            className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/10 border border-gold/30 hover:border-amber-500/50 transition-all"
           >
-            <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
-              <Shield className="w-5 h-5 text-amber-400" />
+            <div className="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center">
+              <Shield className="w-5 h-5 text-gold" />
             </div>
             <span className="flex-1 text-left text-sm font-medium text-foreground">
               {t("profile.adminPanel")}

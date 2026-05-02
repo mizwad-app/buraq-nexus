@@ -295,7 +295,7 @@ export const AdminLocationPicker = ({
           >
             {copied ? (
               <>
-                <Check className="w-4 h-4 mr-2 text-emerald-500" />
+                <Check className="w-4 h-4 mr-2 text-primary" />
                 {t("admin.copied", "Copied!")}
               </>
             ) : (

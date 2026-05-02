@@ -45,7 +45,7 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
       badges.push(
         <span key="self" className={cn(
           "px-2 py-0.5 rounded-full text-[10px] font-bold text-white",
-          level && level >= 5 ? "bg-amber-500" : level && level >= 3 ? "bg-blue-500" : "bg-gray-500"
+          level && level >= 5 ? "bg-gold" : level && level >= 3 ? "bg-blue-500" : "bg-gray-500"
         )}>
           HSK {level}
         </span>
@@ -176,7 +176,7 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
         <div className="flex items-center justify-between py-3 mt-2 border-t border-border/50">
           {/* Rating */}
           <div className="flex items-center gap-1.5">
-            <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
+            <Star className="w-4 h-4 fill-gold text-gold" />
             <span className="font-bold text-foreground">{translator.rating?.toFixed(1) || "5.0"}</span>
           </div>
           

@@ -566,10 +566,10 @@ const Business = () => {
             "flex flex-col items-center gap-1.5 p-3 rounded-xl border transition-all",
             selectedGoal === "markets"
               ? "bg-primary/20 border-primary text-primary"
-              : "bg-card border-border/50 hover:border-amber-500/30 text-foreground"
+              : "bg-card border-border/50 hover:border-gold/30 text-foreground"
           )}
         >
-          <Store className={cn("w-6 h-6", selectedGoal === "markets" ? "text-primary" : "text-amber-500")} />
+          <Store className={cn("w-6 h-6", selectedGoal === "markets" ? "text-primary" : "text-gold")} />
           <span className="text-[11px] font-medium text-center leading-tight">🛍️ {t("sourcing.markets")}</span>
         </button>
 
@@ -635,8 +635,8 @@ const Business = () => {
                           <p className="text-[11px] font-medium">{cityData.logistics.airport} ({cityData.logistics.airportCode})</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2 bg-emerald-500/10 rounded-lg p-2">
-                        <Train className="w-3 h-3 text-emerald-500" />
+                      <div className="flex items-center gap-2 bg-primary/10 rounded-lg p-2">
+                        <Train className="w-3 h-3 text-primary" />
                         <div>
                           <p className="text-[9px] text-muted-foreground">{t("sourcing.trainFromGZ")}</p>
                           <p className="text-[11px] font-medium">{cityData.logistics.trainFromGZ}</p>
@@ -668,7 +668,7 @@ const Business = () => {
       return (
         <div className="mt-2">
           <div className="mb-3 flex items-center gap-2">
-            <Store className="w-4 h-4 text-amber-500" />
+            <Store className="w-4 h-4 text-gold" />
             <h4 className="font-medium text-foreground text-sm">{t("sourcing.marketsDesc")}</h4>
           </div>
 
@@ -684,7 +684,7 @@ const Business = () => {
                   {/* City Header */}
                   <div className="bg-gradient-to-br from-amber-500/15 to-yellow-500/10 p-3 border-b border-border/30">
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center">
+                      <div className="w-8 h-8 rounded-lg bg-gold flex items-center justify-center">
                         <MapPin className="w-4 h-4 text-white" />
                       </div>
                       <div>
@@ -708,12 +708,12 @@ const Business = () => {
                             {chineseAddress && (
                               <button
                                 onClick={() => copyAddress(chineseAddress)}
-                                className="p-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 transition-colors flex-shrink-0"
+                                className="p-1.5 rounded-lg bg-gold/10 hover:bg-gold/20 transition-colors flex-shrink-0"
                               >
                                 {copiedAddress === chineseAddress ? (
-                                  <Check className="w-3.5 h-3.5 text-emerald-500" />
+                                  <Check className="w-3.5 h-3.5 text-primary" />
                                 ) : (
-                                  <Copy className="w-3.5 h-3.5 text-amber-500" />
+                                  <Copy className="w-3.5 h-3.5 text-gold" />
                                 )}
                               </button>
                             )}

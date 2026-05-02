@@ -41,16 +41,16 @@ interface DeepCheck {
 }
 
 const statusConfig = {
-  pending: { label: "Kutilmoqda", icon: Clock, color: "text-amber-400", bg: "bg-amber-400/10" },
+  pending: { label: "Kutilmoqda", icon: Clock, color: "text-gold", bg: "bg-gold/10" },
   in_progress: { label: "Tekshirilmoqda", icon: FileSearch, color: "text-blue-400", bg: "bg-blue-400/10" },
-  completed: { label: "Yakunlandi", icon: CheckCircle2, color: "text-emerald-400", bg: "bg-emerald-400/10" },
+  completed: { label: "Yakunlandi", icon: CheckCircle2, color: "text-primary", bg: "bg-primary/10" },
   rejected: { label: "Rad etildi", icon: XCircle, color: "text-red-400", bg: "bg-red-400/10" },
 };
 
 const halalOptions = [
-  { value: "halol", label: "Halol", icon: Check, color: "text-emerald-400" },
+  { value: "halol", label: "Halol", icon: Check, color: "text-primary" },
   { value: "haram", label: "Harom", icon: X, color: "text-red-400" },
-  { value: "shubhali", label: "Shubhali", icon: AlertTriangle, color: "text-amber-400" },
+  { value: "shubhali", label: "Shubhali", icon: AlertTriangle, color: "text-gold" },
 ];
 
 const AdminDeepChecks = () => {
@@ -321,9 +321,9 @@ const AdminDeepChecks = () => {
                     <div className="flex items-center gap-4 text-sm">
                       <span className="text-muted-foreground">To'lov:</span>
                       {request.payment_type === "points" ? (
-                        <span className="text-amber-400 font-medium">{request.points_spent} ball</span>
+                        <span className="text-gold font-medium">{request.points_spent} ball</span>
                       ) : (
-                        <span className="text-emerald-400 font-medium">${request.amount_paid}</span>
+                        <span className="text-primary font-medium">${request.amount_paid}</span>
                       )}
                     </div>
 

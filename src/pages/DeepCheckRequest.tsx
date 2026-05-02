@@ -227,23 +227,23 @@ const DeepCheckRequest = () => {
 
       {/* Pricing Info */}
       <section className="px-5 mb-6">
-        <div className="rounded-2xl bg-gradient-to-br from-amber-600/20 to-yellow-600/10 border border-amber-500/20 p-4">
+        <div className="rounded-2xl bg-gradient-to-br from-amber-600/20 to-yellow-600/10 border border-gold/20 p-4">
           <p className="text-sm text-foreground mb-3 font-medium">
             Chuqur tekshiruv narxi:
           </p>
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-2">
-              <Star className="w-5 h-5 text-amber-400" />
-              <span className="font-bold text-amber-400">{DEEP_CHECK_POINTS} ball</span>
+              <Star className="w-5 h-5 text-gold" />
+              <span className="font-bold text-gold">{DEEP_CHECK_POINTS} ball</span>
             </div>
             <span className="text-muted-foreground">yoki</span>
             <div className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-emerald-400" />
-              <span className="font-bold text-emerald-400">${DEEP_CHECK_PRICE}</span>
+              <CreditCard className="w-5 h-5 text-primary" />
+              <span className="font-bold text-primary">${DEEP_CHECK_PRICE}</span>
             </div>
           </div>
           <p className="text-xs text-muted-foreground mt-2">
-            Sizda: <span className="text-amber-400 font-bold">{userPoints}</span> ball
+            Sizda: <span className="text-gold font-bold">{userPoints}</span> ball
           </p>
         </div>
       </section>
@@ -331,18 +331,18 @@ const DeepCheckRequest = () => {
               className={cn(
                 "p-4 rounded-xl border-2 transition-all text-left",
                 paymentType === "points" && canPayWithPoints
-                  ? "border-amber-500 bg-amber-500/10"
+                  ? "border-amber-500 bg-gold/10"
                   : canPayWithPoints
                   ? "border-border/50 bg-card hover:border-amber-500/50"
                   : "border-border/30 bg-card/30 opacity-50 cursor-not-allowed"
               )}
             >
               <div className="flex items-center gap-2 mb-2">
-                <Star className="w-5 h-5 text-amber-400" />
+                <Star className="w-5 h-5 text-gold" />
                 <span className="font-semibold text-foreground">{DEEP_CHECK_POINTS} ball</span>
               </div>
               {paymentType === "points" && canPayWithPoints && (
-                <CheckCircle className="w-4 h-4 text-amber-400" />
+                <CheckCircle className="w-4 h-4 text-gold" />
               )}
               {!canPayWithPoints && (
                 <p className="text-xs text-destructive">Yetarli emas</p>
@@ -354,16 +354,16 @@ const DeepCheckRequest = () => {
               className={cn(
                 "p-4 rounded-xl border-2 transition-all text-left",
                 paymentType === "payment"
-                  ? "border-emerald-500 bg-emerald-500/10"
+                  ? "border-emerald-500 bg-primary/10"
                   : "border-border/50 bg-card hover:border-emerald-500/50"
               )}
             >
               <div className="flex items-center gap-2 mb-2">
-                <CreditCard className="w-5 h-5 text-emerald-400" />
+                <CreditCard className="w-5 h-5 text-primary" />
                 <span className="font-semibold text-foreground">${DEEP_CHECK_PRICE}</span>
               </div>
               {paymentType === "payment" && (
-                <CheckCircle className="w-4 h-4 text-emerald-400" />
+                <CheckCircle className="w-4 h-4 text-primary" />
               )}
             </button>
           </div>

@@ -111,7 +111,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
                   "px-2 py-0.5 rounded-full text-[10px] font-medium",
                   market.market_type === 'wholesale' 
                     ? 'bg-primary/20 text-primary' 
-                    : 'bg-amber-500/20 text-amber-600'
+                    : 'bg-gold/20 text-gold'
                 )}>
                   {market.market_type === 'wholesale' ? t("business.marketCard.wholesale") : t("business.marketCard.retail")}
                 </span>
@@ -134,7 +134,7 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
               className="p-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors flex-shrink-0"
             >
               {copied ? (
-                <Check className="w-3.5 h-3.5 text-emerald-500" />
+                <Check className="w-3.5 h-3.5 text-primary" />
               ) : (
                 <Copy className="w-3.5 h-3.5 text-primary" />
               )}
@@ -149,11 +149,11 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
           {/* Taxi Fare */}
           <div className={cn(
             "flex flex-col items-center p-2 rounded-lg",
-            travelInfo.taxi ? "bg-amber-500/10" : "bg-muted/30"
+            travelInfo.taxi ? "bg-gold/10" : "bg-muted/30"
           )}>
-            <Car className={cn("w-4 h-4 mb-0.5", travelInfo.taxi ? "text-amber-500" : "text-muted-foreground/50")} />
+            <Car className={cn("w-4 h-4 mb-0.5", travelInfo.taxi ? "text-gold" : "text-muted-foreground/50")} />
             <span className="text-[9px] text-muted-foreground">{t("business.marketCard.taxiFare")}</span>
-            <span className={cn("text-[10px] font-semibold truncate max-w-full", travelInfo.taxi ? "text-amber-600" : "text-muted-foreground")}>
+            <span className={cn("text-[10px] font-semibold truncate max-w-full", travelInfo.taxi ? "text-gold" : "text-muted-foreground")}>
               {travelInfo.taxi || "—"}
             </span>
           </div>
@@ -173,11 +173,11 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
           {/* Hours */}
           <div className={cn(
             "flex flex-col items-center p-2 rounded-lg",
-            market.working_hours ? "bg-emerald-500/10" : "bg-muted/30"
+            market.working_hours ? "bg-primary/10" : "bg-muted/30"
           )}>
-            <Clock className={cn("w-4 h-4 mb-0.5", market.working_hours ? "text-emerald-500" : "text-muted-foreground/50")} />
+            <Clock className={cn("w-4 h-4 mb-0.5", market.working_hours ? "text-primary" : "text-muted-foreground/50")} />
             <span className="text-[9px] text-muted-foreground">{t("business.marketCard.hours")}</span>
-            <span className={cn("text-[10px] font-semibold truncate max-w-full", market.working_hours ? "text-emerald-600" : "text-muted-foreground")}>
+            <span className={cn("text-[10px] font-semibold truncate max-w-full", market.working_hours ? "text-primary" : "text-muted-foreground")}>
               {market.working_hours || "—"}
             </span>
           </div>

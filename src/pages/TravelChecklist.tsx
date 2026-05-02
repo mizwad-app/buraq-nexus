@@ -289,7 +289,7 @@ const TravelChecklist = () => {
             />
           </div>
           {progress === 100 && (
-            <div className="flex items-center gap-2 mt-2 text-emerald-500">
+            <div className="flex items-center gap-2 mt-2 text-primary">
               <Plane className="w-4 h-4" />
               <span className="text-sm font-medium">{t("checklist.ready")}</span>
             </div>

@@ -366,8 +366,8 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
     if (bookingComplete) {
       return (
         <div className="flex-1 flex flex-col items-center justify-center text-center px-6">
-          <div className="w-20 h-20 rounded-full bg-emerald-500/20 flex items-center justify-center mb-4">
-            <CheckCircle2 className="w-10 h-10 text-emerald-500" />
+          <div className="w-20 h-20 rounded-full bg-primary/20 flex items-center justify-center mb-4">
+            <CheckCircle2 className="w-10 h-10 text-primary" />
           </div>
           <h3 className="text-xl font-bold text-foreground mb-2">Bron tasdiqlandi!</h3>
           <p className="text-muted-foreground mb-6">
@@ -730,8 +730,8 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
             </div>
 
             {/* Escrow Notice */}
-            <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-3 flex items-start gap-2">
-              <Shield className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
+            <div className="bg-primary/10 border border-primary/30 rounded-xl p-3 flex items-start gap-2">
+              <Shield className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
               <p className="text-xs text-emerald-700 dark:text-emerald-300">
                 To'lov escrow hisobda saqlanadi va xizmat tugagandan so'ng tarjimonga o'tkaziladi.
               </p>
