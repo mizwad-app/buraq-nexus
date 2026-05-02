@@ -17,7 +17,6 @@ import {
   Building2,
   Package
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 const DEEP_CHECK_PRICE = 10;
 
