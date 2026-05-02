@@ -140,6 +140,29 @@ interface HalalShop {
 const RESTAURANT_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80";
 const MOSQUE_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
 
+// Per-cuisine fallback images so different restaurants don't all show the same chicken photo
+const CUISINE_FALLBACK_IMAGES: Record<string, string> = {
+  steakhouse: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+  "middle eastern": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80",
+  arabic: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80",
+  "yemeni/arabic": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80",
+  yemeni: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80",
+  turkish: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=800&q=80",
+  "turkish/middle eastern": "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=800&q=80",
+  "mediterranean/turkish": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+  "fine dining": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+  "chinese muslim": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
+  uyghur: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
+  xinjiang: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
+  pakistani: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=800&q=80",
+  "central asian": "https://images.unsplash.com/photo-1547573854-74d2a71d0826?w=800&q=80",
+};
+
+const getRestaurantFallback = (cuisine: string | null | undefined): string => {
+  if (!cuisine) return RESTAURANT_FALLBACK_IMAGE;
+  return CUISINE_FALLBACK_IMAGES[cuisine.trim().toLowerCase()] || RESTAURANT_FALLBACK_IMAGE;
+};
+
 // Map mosque names to their actual images
 const getMosqueImage = (mosqueName: string): string => {
   const lowerName = mosqueName.toLowerCase();
