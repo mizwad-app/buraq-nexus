@@ -25,9 +25,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { cn } from "@/lib/utils";
-import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
+import type { MarketplaceTranslator } from "@/types/marketplace";
 import { BookingSheet } from "@/components/marketplace/BookingSheet";
 import { TranslatorDetailSheet } from "@/components/marketplace/TranslatorDetailSheet";
+import { ChatSheet } from "@/components/marketplace/ChatSheet";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 import {
   Sheet,
   SheetContent,
