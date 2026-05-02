@@ -14,6 +14,16 @@ interface AIScannerModalProps {
   onOpenChange: (open: boolean) => void;
 }
 
+// Reference list of ingredients to avoid — shown as educational info inside the scanner
+const HARMFUL_INGREDIENTS = [
+  { name: "Gelatin (pork)", category: "haram" as const },
+  { name: "E120 (Carmine)", category: "suspicious" as const },
+  { name: "E441 (Gelatin)", category: "suspicious" as const },
+  { name: "Alcohol", category: "haram" as const },
+  { name: "E422 (Glycerin)", category: "suspicious" as const },
+  { name: "E471 (Mono and diglycerides)", category: "suspicious" as const },
+];
+
 export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
   const { t } = useTranslation();
   const { user } = useAuth();
