@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
+import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -16,7 +17,8 @@ import {
   Bell,
   CalendarCheck,
   Languages,
-  Shield
+  Shield,
+  Sparkles,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -39,6 +41,8 @@ const Profile = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [bookings, setBookings] = useState<TranslatorBooking[]>([]);
   const [bookingsLoading, setBookingsLoading] = useState(false);
+  const [hasInterests, setHasInterests] = useState<boolean | null>(null);
+  const [showSurvey, setShowSurvey] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) {
@@ -62,6 +66,14 @@ const Profile = () => {
       .maybeSingle();
     
     setIsAdmin(!!roleData);
+
+    // Check if user completed business survey
+    const { data: interestsData } = await supabase
+      .from("user_interests")
+      .select("id")
+      .eq("user_id", user?.id)
+      .maybeSingle();
+    setHasInterests(!!interestsData);
 
     // Fetch translator bookings
     setBookingsLoading(true);
