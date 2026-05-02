@@ -2,7 +2,7 @@ import { useState, useRef, useCallback } from "react";
 import { useTranslation } from "react-i18next";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Camera, Upload, ScanLine, X, Check, AlertTriangle, Loader2, FileSearch } from "lucide-react";
+import { Camera, Upload, ScanLine, X, Check, AlertTriangle, Loader2, FileSearch, XCircle, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/contexts/AuthContext";
 import { AuthModal } from "@/components/AuthModal";
