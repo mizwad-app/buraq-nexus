@@ -308,7 +308,16 @@
     "confirmed": "Подтверждено",
     "pending": "Ожидает",
     "completed": "Завершено",
-    "cancelled": "Отменено"
+    "cancelled": "Отменено",
+    "translatorPrice": "Стоимость переводчика",
+    "serviceFee": "Сервисный сбор Buraq",
+    "serviceFeeRate": "10%",
+    "totalPayment": "Итого к оплате",
+    "feeInfo": {
+      "title": "О сервисном сборе Buraq",
+      "body": "10% сервисный сбор покрывает безопасность платформы и поддержку. Переводчик получает свою цену полностью."
+    },
+    "insufficientBalance": "Недостаточно средств в кошельке. Нужно: ¥{{needed}}, доступно: ¥{{available}}"
   },
   "language": {
     "title": "Выберите язык",
