@@ -793,20 +793,27 @@ const Ibadah = () => {
                   className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {/* Shop Image */}
-                  <div className="relative h-40 bg-gradient-to-br from-emerald-900/80 to-emerald-700/80">
+                  {/* Shop Image / Branded header */}
+                  <div className="relative h-40 bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600">
                     {shop.image_url ? (
-                      <img
-                        src={shop.image_url}
-                        alt={getField(shop, 'name')}
-                        className="w-full h-full object-cover"
-                      />
+                      <>
+                        <img
+                          src={shop.image_url}
+                          alt={getField(shop, 'name')}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                      </>
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Store className="w-16 h-16 text-white/30" />
-                      </div>
+                      <>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                            <Store className="w-6 h-6 text-white" strokeWidth={2.5} />
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+                      </>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     
                     {/* Verified Badge */}
                     {shop.is_verified && (
