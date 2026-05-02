@@ -128,7 +128,10 @@ const Home = () => {
               delay={index * 60}
               isPremium={module.id === "wallet"}
               isCompact
-              className="aspect-[4/3]"
+              className={cn(
+                "aspect-[4/3]",
+                index === modules.length - 1 && modules.length % 2 === 1 && "col-span-2 aspect-[16/7]"
+              )}
             />
           ))}
         </div>
