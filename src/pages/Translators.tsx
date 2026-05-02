@@ -85,9 +85,9 @@ interface Translator {
 const LANGUAGE_PAIRS = [
   { id: "all", label: "Barcha tillar" },
   { id: "uz-zh", label: "Xitoy-O'zbek" },
-  { id: "ru-zh", label: "Rus-Xitoy" },
-  { id: "en-zh", label: "Ingliz-Xitoy" },
-  { id: "es-zh", label: "Ispan-Xitoy" },
+  { id: "ru-zh", label: "Xitoy-Rus" },
+  { id: "en-zh", label: "Xitoy-Ingliz" },
+  { id: "ar-zh", label: "Xitoy-Arabcha" },
 ];
 
 const PRICE_RANGES = [
@@ -100,7 +100,7 @@ const PRICE_RANGES = [
 const TRANSPORT_OPTIONS = [
   { id: "all", label: "Hammasi" },
   { id: "has_car", label: "Faqat avtomobil borlar" },
-  { id: "has_license", label: "Faqat guvohnoma borlar" },
+  { id: "has_license", label: "Haydovchilik guvohnomasi bor" },
 ];
 
 const HSK_LEVELS = [
