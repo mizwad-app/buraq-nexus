@@ -265,9 +265,39 @@ const Translators = () => {
     return result;
   }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
 
-  // Open chat for selected translator - navigate to marketplace with translator selected
-  const openChat = (translator: Translator) => {
-    navigate('/translator-marketplace', { state: { selectedTranslatorId: translator.id } });
+  // Open chat for selected translator - inline chat sheet
+  const openChat = async (translator: Translator) => {
+    if (!user) {
+      toast({ title: "Iltimos, avval tizimga kiring", variant: "destructive" });
+      return;
+    }
+    try {
+      const { data: existing } = await supabase
+        .from('chat_conversations')
+        .select('id')
+        .eq('client_id', user.id)
+        .eq('translator_id', translator.id)
+        .limit(1)
+        .single();
+
+      if (existing) {
+        setConversationId(existing.id);
+      } else {
+        const { data: newConv, error } = await supabase
+          .from('chat_conversations')
+          .insert({ client_id: user.id, translator_id: translator.id })
+          .select()
+          .single();
+        if (error) throw error;
+        setConversationId(newConv.id);
+      }
+      setSelectedTranslator(translator);
+      setDetailOpen(false);
+      setChatOpen(true);
+    } catch (error) {
+      console.error("Error starting chat:", error);
+      toast({ title: "Chat ochishda xatolik", variant: "destructive" });
+    }
   };
 
   const renderHSKBadge = (level: number | null) => {
