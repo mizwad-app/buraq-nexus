@@ -300,7 +300,7 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
             <div className="bg-card rounded-2xl p-4 border border-border/50">
               <h3 className="font-semibold text-foreground flex items-center gap-2 mb-2">
                 <MapPin className="w-4 h-4 text-primary" />
-                {t("business.location")}
+                {t("common.address")}
               </h3>
               <p className="text-sm text-muted-foreground">
                 {translatedAddress || `${translatedCity}, ${mosque.country}`}

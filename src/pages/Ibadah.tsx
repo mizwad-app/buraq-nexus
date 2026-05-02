@@ -4,10 +4,8 @@ import {
   Utensils,
   MapPin,
   ScanLine,
-  AlertTriangle,
   ChevronRight,
   Star,
-  XCircle,
   Check,
   Navigation,
   Moon,
@@ -140,6 +138,29 @@ interface HalalShop {
 const RESTAURANT_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&q=80";
 const MOSQUE_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
 
+// Per-cuisine fallback images so different restaurants don't all show the same chicken photo
+const CUISINE_FALLBACK_IMAGES: Record<string, string> = {
+  steakhouse: "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+  "middle eastern": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80",
+  arabic: "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80",
+  "yemeni/arabic": "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80",
+  yemeni: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=800&q=80",
+  turkish: "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=800&q=80",
+  "turkish/middle eastern": "https://images.unsplash.com/photo-1561651823-34feb02250e4?w=800&q=80",
+  "mediterranean/turkish": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
+  "fine dining": "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=80",
+  "chinese muslim": "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
+  uyghur: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
+  xinjiang: "https://images.unsplash.com/photo-1552566626-52f8b828add9?w=800&q=80",
+  pakistani: "https://images.unsplash.com/photo-1567337710282-00832b415979?w=800&q=80",
+  "central asian": "https://images.unsplash.com/photo-1547573854-74d2a71d0826?w=800&q=80",
+};
+
+const getRestaurantFallback = (cuisine: string | null | undefined): string => {
+  if (!cuisine) return RESTAURANT_FALLBACK_IMAGE;
+  return CUISINE_FALLBACK_IMAGES[cuisine.trim().toLowerCase()] || RESTAURANT_FALLBACK_IMAGE;
+};
+
 // Map mosque names to their actual images
 const getMosqueImage = (mosqueName: string): string => {
   const lowerName = mosqueName.toLowerCase();
@@ -149,15 +170,7 @@ const getMosqueImage = (mosqueName: string): string => {
   return MOSQUE_FALLBACK_IMAGE;
 };
 
-// Ingredients to avoid
-const harmfulIngredients = [
-  { name: "Gelatin (pork)", nameKey: "gelatin", category: "haram", severity: "high" },
-  { name: "E120 (Carmine)", nameKey: "e120", category: "suspicious", severity: "medium" },
-  { name: "E441 (Gelatin)", nameKey: "e441", category: "suspicious", severity: "medium" },
-  { name: "Alcohol", nameKey: "alcohol", category: "haram", severity: "high" },
-  { name: "E422 (Glycerin)", nameKey: "e422", category: "suspicious", severity: "low" },
-  { name: "E471 (Mono and diglycerides)", nameKey: "e471", category: "suspicious", severity: "medium" },
-];
+// Ingredients to avoid (now used in AIScannerModal)
 
 const prayerTimes = [
   { name: "Fajr", nameKey: "fajr", time: "05:42", active: false },
@@ -457,16 +470,18 @@ const Ibadah = () => {
                   >
                     <div className="relative h-40 w-full">
                       <img
-                        src={restaurant.image_url || RESTAURANT_FALLBACK_IMAGE}
+                        src={restaurant.image_url || getRestaurantFallback(restaurant.cuisine_type)}
                         alt={getField(restaurant, 'name')}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          target.src = RESTAURANT_FALLBACK_IMAGE;
+                          target.src = getRestaurantFallback(restaurant.cuisine_type);
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                      
+                      {/* Stronger gradient bottom for guaranteed text readability */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+                      {/* Halal status icon — top-right */}
                       <div className="absolute top-3 right-3 z-10">
                         <div className={cn(
                           "rounded-xl p-1 shadow-lg backdrop-blur-sm",
@@ -482,21 +497,33 @@ const Ibadah = () => {
                           />
                         </div>
                       </div>
-                      
-                      <div className="absolute bottom-12 left-3 z-10">
+
+                      {/* Status text badge — top-left, solid background so it doesn't blend */}
+                      <div className="absolute top-3 left-3 z-10">
                         <span className={cn(
-                          "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg",
-                          status === 'certified' && "bg-emerald-500 text-white",
-                          status === 'doubtful' && "bg-amber-500 text-white",
-                          status === 'not_halal' && "bg-red-500 text-white"
+                          "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg",
+                          status === 'certified' && "bg-emerald-600 text-white",
+                          status === 'doubtful' && "bg-amber-600 text-white",
+                          status === 'not_halal' && "bg-red-600 text-white"
                         )}>
                           {t(`halal.status.${status}`)}
                         </span>
                       </div>
-                      
+
+                      {/* Title — bottom, with strong text-shadow and clear gap from badge */}
                       <div className="absolute bottom-3 left-4 right-4">
-                        <h3 className="font-semibold text-white text-lg drop-shadow-lg">{getField(restaurant, 'name')}</h3>
-                        <p className="text-sm text-white/90">{getField(restaurant, 'cuisine_type')}</p>
+                        <h3
+                          className="font-semibold text-white text-lg leading-tight"
+                          style={{ textShadow: '0 2px 6px rgba(0,0,0,0.85), 0 1px 2px rgba(0,0,0,0.95)' }}
+                        >
+                          {getField(restaurant, 'name')}
+                        </h3>
+                        <p
+                          className="text-sm text-white/90"
+                          style={{ textShadow: '0 1px 4px rgba(0,0,0,0.85)' }}
+                        >
+                          {getField(restaurant, 'cuisine_type')}
+                        </p>
                       </div>
                     </div>
                     
@@ -756,20 +783,27 @@ const Ibadah = () => {
                   className="bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-primary/30 transition-all animate-fade-in"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  {/* Shop Image */}
-                  <div className="relative h-40 bg-gradient-to-br from-emerald-900/80 to-emerald-700/80">
+                  {/* Shop Image / Branded header */}
+                  <div className="relative h-40 bg-gradient-to-br from-emerald-600 via-emerald-500 to-teal-600">
                     {shop.image_url ? (
-                      <img
-                        src={shop.image_url}
-                        alt={getField(shop, 'name')}
-                        className="w-full h-full object-cover"
-                      />
+                      <>
+                        <img
+                          src={shop.image_url}
+                          alt={getField(shop, 'name')}
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                      </>
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <Store className="w-16 h-16 text-white/30" />
-                      </div>
+                      <>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                            <Store className="w-6 h-6 text-white" strokeWidth={2.5} />
+                          </div>
+                        </div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+                      </>
                     )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
                     
                     {/* Verified Badge */}
                     {shop.is_verified && (
@@ -831,52 +865,7 @@ const Ibadah = () => {
         </section>
       )}
 
-      {/* Ingredients to Avoid */}
-      <section className="px-5 mb-6">
-        <h2 className="text-lg font-display font-semibold text-foreground mb-4">
-          {t("halal.ingredientsToAvoid")}
-        </h2>
-
-        <div className="space-y-2">
-          {harmfulIngredients.map((ingredient, index) => (
-            <div
-              key={ingredient.nameKey}
-              className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50 animate-fade-in"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <div
-                className={cn(
-                  "w-8 h-8 rounded-lg flex items-center justify-center",
-                  ingredient.category === "haram"
-                    ? "bg-red-500/20"
-                    : "bg-amber-500/20"
-                )}
-              >
-                {ingredient.category === "haram" ? (
-                  <XCircle className="w-4 h-4 text-red-500" />
-                ) : (
-                  <AlertTriangle className="w-4 h-4 text-amber-500" />
-                )}
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">
-                  {ingredient.name}
-                </p>
-                <p
-                  className={cn(
-                    "text-xs",
-                    ingredient.category === "haram"
-                      ? "text-red-500"
-                      : "text-amber-500"
-                  )}
-                >
-                  {t(`halal.${ingredient.category}`)}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Ingredients to Avoid — moved to AIScannerModal as a reference section */}
 
       {/* AI Scanner Modal */}
       <AIScannerModal

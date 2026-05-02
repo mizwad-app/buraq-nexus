@@ -332,7 +332,8 @@
     "cancel": "Cancel",
     "submit": "Submit",
     "delete": "Delete",
-    "edit": "Edit"
+    "edit": "Edit",
+    "address": "Address"
   },
   "cargo": {
     "title": "Cargo Tracking",
