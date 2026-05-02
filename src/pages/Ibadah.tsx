@@ -172,15 +172,7 @@ const getMosqueImage = (mosqueName: string): string => {
   return MOSQUE_FALLBACK_IMAGE;
 };
 
-// Ingredients to avoid
-const harmfulIngredients = [
-  { name: "Gelatin (pork)", nameKey: "gelatin", category: "haram", severity: "high" },
-  { name: "E120 (Carmine)", nameKey: "e120", category: "suspicious", severity: "medium" },
-  { name: "E441 (Gelatin)", nameKey: "e441", category: "suspicious", severity: "medium" },
-  { name: "Alcohol", nameKey: "alcohol", category: "haram", severity: "high" },
-  { name: "E422 (Glycerin)", nameKey: "e422", category: "suspicious", severity: "low" },
-  { name: "E471 (Mono and diglycerides)", nameKey: "e471", category: "suspicious", severity: "medium" },
-];
+// Ingredients to avoid (now used in AIScannerModal)
 
 const prayerTimes = [
   { name: "Fajr", nameKey: "fajr", time: "05:42", active: false },
