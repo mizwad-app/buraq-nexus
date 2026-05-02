@@ -725,7 +725,7 @@ const Translators = () => {
         onOpenChange={setDetailOpen}
         onBook={() => {
           setDetailOpen(false);
-          setBookingOpen(true);
+          setTimeout(() => setBookingOpen(true), 250);
         }}
         onChat={() => {
           if (selectedTranslator) {
