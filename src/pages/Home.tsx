@@ -6,6 +6,8 @@ import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
 import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
+import { PrayerTimeCard } from "@/components/home/PrayerTimeCard";
+import { ExchangeRateCard } from "@/components/home/ExchangeRateCard";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Star, 
@@ -81,6 +83,21 @@ const Home = () => {
           <LanguageSelector />
         </div>
       </header>
+
+      {/* Smart Info Cards */}
+      <section className="mb-5">
+        <h2 className="px-5 text-lg font-display font-semibold text-foreground mb-3">
+          {t("home.todayInfo")}
+        </h2>
+        <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide px-5 pb-1">
+          <div className="snap-start shrink-0 w-[80%]">
+            <PrayerTimeCard />
+          </div>
+          <div className="snap-start shrink-0 w-[80%]">
+            <ExchangeRateCard />
+          </div>
+        </div>
+      </section>
 
       {/* Guest Prompt */}
       {!user && (
