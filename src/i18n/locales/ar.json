@@ -25,9 +25,11 @@
   },
   "nav": {
     "home": "الرئيسية",
+    "business": "الأعمال",
+    "halal": "حلال",
     "travel": "السفر",
     "mosques": "المساجد",
-    "profile": "الملف الشخصي"
+    "profile": "الملف"
   },
   "modules": {
     "halal": "الطعام الحلال",

@@ -24,7 +24,9 @@
     "services": "Xizmatlar"
   },
   "nav": {
-    "home": "Bosh sahifa",
+    "home": "Bosh",
+    "business": "Biznes",
+    "halal": "Halol",
     "travel": "Sayohat",
     "mosques": "Masjidlar",
     "profile": "Profil"

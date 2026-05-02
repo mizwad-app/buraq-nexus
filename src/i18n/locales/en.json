@@ -25,6 +25,8 @@
   },
   "nav": {
     "home": "Home",
+    "business": "Business",
+    "halal": "Halal",
     "travel": "Travel",
     "mosques": "Mosques",
     "profile": "Profile"
