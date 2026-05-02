@@ -308,7 +308,16 @@
     "confirmed": "Confirmé",
     "pending": "En attente",
     "completed": "Terminé",
-    "cancelled": "Annulé"
+    "cancelled": "Annulé",
+    "translatorPrice": "Prix du traducteur",
+    "serviceFee": "Frais de service Buraq",
+    "serviceFeeRate": "10%",
+    "totalPayment": "Paiement total",
+    "feeInfo": {
+      "title": "À propos des frais de service",
+      "body": "Les frais de service de 10% couvrent la sécurité de la plateforme et le support. Le traducteur reçoit son prix complet."
+    },
+    "insufficientBalance": "Solde du portefeuille insuffisant. Nécessaire: ¥{{needed}}, disponible: ¥{{available}}"
   },
   "language": {
     "title": "Sélectionner la langue",
