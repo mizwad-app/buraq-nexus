@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
-import { Calendar as CalendarIcon, Clock, MapPin, CreditCard, Shield, CheckCircle2, AlertCircle, Wallet, Plus } from "lucide-react";
+import { Calendar as CalendarIcon, Clock, MapPin, CreditCard, Shield, CheckCircle2, AlertCircle, Wallet, Plus, Info } from "lucide-react";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { format, addDays, isSameDay, isAfter, isBefore, startOfDay } from "date-fns";
