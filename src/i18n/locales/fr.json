@@ -332,7 +332,8 @@
     "cancel": "Annuler",
     "submit": "Envoyer",
     "delete": "Supprimer",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "address": "Adresse"
   },
   "cargo": {
     "title": "Suivi des cargaisons",

@@ -332,7 +332,8 @@
     "cancel": "Bekor qilish",
     "submit": "Yuborish",
     "delete": "O'chirish",
-    "edit": "Tahrirlash"
+    "edit": "Tahrirlash",
+    "address": "Manzil"
   },
   "cargo": {
     "title": "Yuk Kuzatuvi",
