@@ -60,17 +60,11 @@ const DeepCheckRequest = () => {
       return;
     }
 
-    if (paymentType === "points" && userPoints < DEEP_CHECK_POINTS) {
-      toast.error(`Ballaringiz yetarli emas. Kerak: ${DEEP_CHECK_POINTS} ball`);
-      return;
-    }
-
     setSubmitting(true);
 
     try {
       let imageUrl = null;
 
-      // Upload image if provided
       if (productImage) {
         const fileExt = productImage.name.split('.').pop();
         const fileName = `${user.id}/${Date.now()}.${fileExt}`;
@@ -81,15 +75,13 @@ const DeepCheckRequest = () => {
 
         if (uploadError) throw uploadError;
 
-        // Use signed URL (bucket is now private for security)
         const { data: signedUrlData } = await supabase.storage
           .from("deep-checks")
-          .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry for stored reference
+          .createSignedUrl(fileName, 60 * 60 * 24 * 365);
 
         imageUrl = signedUrlData?.signedUrl || null;
       }
 
-      // Create deep check request
       const { error: insertError } = await supabase
         .from("deep_checks")
         .insert({
@@ -97,40 +89,12 @@ const DeepCheckRequest = () => {
           product_name: productName.trim(),
           manufacturer_name: manufacturerName.trim(),
           product_image_url: imageUrl,
-          payment_type: paymentType,
-          points_spent: paymentType === "points" ? DEEP_CHECK_POINTS : 0,
-          amount_paid: paymentType === "payment" ? DEEP_CHECK_PRICE : 0,
+          payment_type: "payment",
+          points_spent: 0,
+          amount_paid: DEEP_CHECK_PRICE,
         });
 
       if (insertError) throw insertError;
-
-      // Deduct points if paid with points using atomic RPC function
-      if (paymentType === "points") {
-        // Get the deep check ID from the insert
-        const { data: deepCheckData } = await supabase
-          .from("deep_checks")
-          .select("id")
-          .eq("user_id", user.id)
-          .eq("product_name", productName.trim())
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .single();
-
-        if (deepCheckData) {
-          const { data: rpcResult, error: rpcError } = await supabase.rpc(
-            "redeem_deep_check_points",
-            {
-              p_deep_check_id: deepCheckData.id,
-              p_points: DEEP_CHECK_POINTS,
-            }
-          );
-
-          const result = rpcResult as { success?: boolean; error?: string } | null;
-          if (rpcError || (result && !result.success)) {
-            throw new Error(result?.error || rpcError?.message || "Points deduction failed");
-          }
-        }
-      }
 
       toast.success("So'rov muvaffaqiyatli yuborildi!");
       navigate("/profile");
@@ -141,8 +105,6 @@ const DeepCheckRequest = () => {
       setSubmitting(false);
     }
   };
-
-  const canPayWithPoints = userPoints >= DEEP_CHECK_POINTS;
 
   if (authLoading) {
     return (
