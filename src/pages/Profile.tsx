@@ -27,6 +27,8 @@ interface TranslatorBooking {
   booking_date: string;
   status: string;
   total_amount: number;
+  translator_amount: number | null;
+  service_fee: number | null;
   translator: {
     name: string;
     city: string;
