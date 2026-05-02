@@ -335,7 +335,8 @@
     "submit": "Отправить",
     "delete": "Удалить",
     "edit": "Редактировать",
-    "address": "Адрес"
+    "address": "Адрес",
+    "sending": "Отправка..."
   },
   "cargo": {
     "title": "Отслеживание грузов",
@@ -403,7 +404,15 @@
     "mall": "ТЦ",
     "placesFound": "мест найдено",
     "tryDifferentFilters": "Попробуйте другие фильтры",
-    "hasHalalFood": "Есть халяль еда"
+    "hasHalalFood": "Есть халяль еда",
+    "tabs": {
+      "places": "Места",
+      "guide": "Гид",
+      "videos": "Видео советы",
+      "documents": "Документы"
+    },
+    "documentsDescription": "Документы, необходимые для путешествия",
+    "documentsComingSoon": "Скоро будет добавлено."
   },
   "eco": {
     "title": "Ваш экологический вклад",
@@ -603,7 +612,20 @@
     "detailsPlaceholder": "Опишите ваш запрос подробнее...",
     "contactVia": "Как с вами связаться?",
     "instantResponse": "Быстрый ответ",
-    "defaultMessage": "Мне нужна помощь"
+    "defaultMessage": "Мне нужна помощь",
+    "visaHelp": {
+      "title": "Запрос на помощь с визой"
+    },
+    "hotelBooking": {
+      "title": "Бронирование отеля"
+    },
+    "requestSubmitted": "Ваш запрос отправлен",
+    "requestError": "Произошла ошибка",
+    "loginRequired": "Пожалуйста, сначала войдите",
+    "messageRequired": "Пожалуйста, введите подробности",
+    "requestDescription": "Введите подробную информацию ниже. Наши операторы свяжутся с вами в ближайшее время.",
+    "requestPlaceholder": "Чем мы можем помочь?",
+    "submit": "Отправить"
   },
   "transport": {
     "title": "Транспорт и Билеты",

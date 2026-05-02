@@ -335,7 +335,8 @@
     "submit": "Submit",
     "delete": "Delete",
     "edit": "Edit",
-    "address": "Address"
+    "address": "Address",
+    "sending": "Sending..."
   },
   "cargo": {
     "title": "Cargo Tracking",
@@ -403,7 +404,15 @@
     "mall": "Mall",
     "placesFound": "places found",
     "tryDifferentFilters": "Try different filters",
-    "hasHalalFood": "Has halal food"
+    "hasHalalFood": "Has halal food",
+    "tabs": {
+      "places": "Places",
+      "guide": "Guide",
+      "videos": "Video tips",
+      "documents": "Documents"
+    },
+    "documentsDescription": "Documents needed for travel",
+    "documentsComingSoon": "Coming soon."
   },
   "eco": {
     "title": "Your Eco Contribution",
@@ -609,7 +618,20 @@
     "detailsPlaceholder": "Describe your request in detail...",
     "contactVia": "How would you like to be contacted?",
     "instantResponse": "Instant response",
-    "defaultMessage": "I need assistance"
+    "defaultMessage": "I need assistance",
+    "visaHelp": {
+      "title": "Request visa help"
+    },
+    "hotelBooking": {
+      "title": "Book a hotel"
+    },
+    "requestSubmitted": "Your request has been submitted",
+    "requestError": "An error occurred",
+    "loginRequired": "Please sign in first",
+    "messageRequired": "Please enter details",
+    "requestDescription": "Enter details below. Our team will contact you shortly.",
+    "requestPlaceholder": "How can we help?",
+    "submit": "Submit"
   },
   "admin": {
     "locationPicker": "Location Picker",
