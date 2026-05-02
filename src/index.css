@@ -15,8 +15,8 @@
     --popover: 220 25% 10%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 72 100% 50%;
-    --primary-foreground: 220 30% 6%;
+    --primary: 158 75% 42%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 220 20% 16%;
     --secondary-foreground: 0 0% 90%;
@@ -24,36 +24,41 @@
     --muted: 220 20% 14%;
     --muted-foreground: 220 10% 55%;
 
-    --accent: 72 80% 45%;
-    --accent-foreground: 220 30% 6%;
+    --accent: 158 70% 38%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 220 20% 18%;
     --input: 220 20% 18%;
-    --ring: 72 100% 50%;
+    --ring: 158 75% 42%;
 
     --radius: 1rem;
+
+    /* Gold accent (premium / loyalty) */
+    --gold: 42 95% 58%;
+    --gold-foreground: 220 30% 6%;
 
     /* Premium dark theme tokens */
     --dark-deep: 220 30% 6%;
     --dark-card: 220 25% 10%;
     --dark-elevated: 220 22% 14%;
-    --glow-primary: 72 100% 50%;
-    --glow-secondary: 160 100% 40%;
+    --glow-primary: 158 75% 42%;
+    --glow-secondary: 160 80% 35%;
     
     /* Gradients */
-    --gradient-glow: linear-gradient(135deg, hsl(72 100% 50%) 0%, hsl(85 100% 45%) 100%);
+    --gradient-glow: linear-gradient(135deg, hsl(158 75% 42%) 0%, hsl(170 70% 38%) 100%);
     --gradient-card-overlay: linear-gradient(180deg, transparent 40%, hsl(220 30% 6% / 0.9) 100%);
-    --gradient-fab: linear-gradient(135deg, hsl(72 100% 50%) 0%, hsl(120 80% 45%) 100%);
+    --gradient-fab: linear-gradient(135deg, hsl(158 75% 42%) 0%, hsl(180 70% 40%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(42 95% 58%) 0%, hsl(38 90% 50%) 100%);
     
     /* Shadows */
     --shadow-sm: 0 2px 8px -2px hsl(0 0% 0% / 0.3);
     --shadow-md: 0 4px 16px -4px hsl(0 0% 0% / 0.4);
     --shadow-lg: 0 8px 32px -8px hsl(0 0% 0% / 0.5);
-    --shadow-glow: 0 0 30px -5px hsl(72 100% 50% / 0.4);
-    --shadow-glow-lg: 0 0 50px -10px hsl(72 100% 50% / 0.5);
+    --shadow-glow: 0 0 30px -5px hsl(158 75% 42% / 0.4);
+    --shadow-glow-lg: 0 0 50px -10px hsl(158 75% 42% / 0.5);
     
     /* Bottom nav height for safe area */
     --nav-height: 5.5rem;
