@@ -875,52 +875,7 @@ const Ibadah = () => {
         </section>
       )}
 
-      {/* Ingredients to Avoid */}
-      <section className="px-5 mb-6">
-        <h2 className="text-lg font-display font-semibold text-foreground mb-4">
-          {t("halal.ingredientsToAvoid")}
-        </h2>
-
-        <div className="space-y-2">
-          {harmfulIngredients.map((ingredient, index) => (
-            <div
-              key={ingredient.nameKey}
-              className="flex items-center gap-3 p-3 rounded-xl bg-card border border-border/50 animate-fade-in"
-              style={{ animationDelay: `${index * 50}ms` }}
-            >
-              <div
-                className={cn(
-                  "w-8 h-8 rounded-lg flex items-center justify-center",
-                  ingredient.category === "haram"
-                    ? "bg-red-500/20"
-                    : "bg-amber-500/20"
-                )}
-              >
-                {ingredient.category === "haram" ? (
-                  <XCircle className="w-4 h-4 text-red-500" />
-                ) : (
-                  <AlertTriangle className="w-4 h-4 text-amber-500" />
-                )}
-              </div>
-              <div className="flex-1">
-                <p className="text-sm font-medium text-foreground">
-                  {ingredient.name}
-                </p>
-                <p
-                  className={cn(
-                    "text-xs",
-                    ingredient.category === "haram"
-                      ? "text-red-500"
-                      : "text-amber-500"
-                  )}
-                >
-                  {t(`halal.${ingredient.category}`)}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Ingredients to Avoid — moved to AIScannerModal as a reference section */}
 
       {/* AI Scanner Modal */}
       <AIScannerModal
