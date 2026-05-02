@@ -747,9 +747,19 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                 <span className="text-muted-foreground">Manzil</span>
                 <span className="font-medium text-right max-w-[60%]">{location}</span>
               </div>
-              <div className="flex justify-between py-3 bg-primary/5 rounded-xl px-3">
-                <span className="font-semibold">Jami to'lov</span>
-                <span className="text-xl font-bold text-primary">¥{calculateTotal()}</span>
+              <div className="py-3 bg-primary/5 rounded-xl px-3 space-y-1.5">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Tarjimon narxi</span>
+                  <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Buraq xizmat haqi (10%)</span>
+                  <span className="font-medium">¥{calculateServiceFee().toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between pt-1.5 border-t border-primary/20">
+                  <span className="font-semibold">Jami to'lov</span>
+                  <span className="text-xl font-bold text-primary">¥{calculateTotal().toLocaleString()}</span>
+                </div>
               </div>
             </div>
 
