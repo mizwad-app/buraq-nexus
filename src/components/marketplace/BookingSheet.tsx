@@ -624,20 +624,36 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                 </span>
                 <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">
+              <div className="flex justify-between items-center">
+                <span className="text-muted-foreground inline-flex items-center gap-1.5">
                   Buraq xizmat haqi (10%)
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <button
+                        type="button"
+                        aria-label="Xizmat haqi haqida"
+                        className="inline-flex items-center justify-center w-4 h-4 rounded-full text-muted-foreground hover:text-foreground transition-colors"
+                      >
+                        <Info className="w-3.5 h-3.5" />
+                      </button>
+                    </PopoverTrigger>
+                    <PopoverContent side="top" align="center" className="w-64 p-3">
+                      <p className="font-semibold text-sm text-foreground mb-1">
+                        Buraq xizmat haqi
+                      </p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        10% xizmat haqi platform xavfsizligi va qo'llab-quvvatlash uchun olinadi. Tarjimon o'z narxini to'liq oladi.
+                      </p>
+                    </PopoverContent>
+                  </Popover>
                 </span>
                 <span className="font-medium">¥{calculateServiceFee().toLocaleString()}</span>
               </div>
               <div className="h-px bg-border my-2" />
-              <div className="flex justify-between text-lg font-bold">
-                <span>Jami to'lov</span>
-                <span className="text-primary">¥{total.toLocaleString()}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-base font-bold text-foreground">Jami to'lov</span>
+                <span className="text-2xl font-bold text-primary">¥{total.toLocaleString()}</span>
               </div>
-              <p className="text-[11px] text-muted-foreground pt-1">
-                Tarjimon to'liq narxini oladi. 10% Buraq platformasi xizmat haqi.
-              </p>
             </div>
 
             {/* Wallet Balance */}
