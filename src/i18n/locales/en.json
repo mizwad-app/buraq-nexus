@@ -63,7 +63,17 @@
     "translatorsDesc": "Find verified translators",
     "services": "Services",
     "servicesDesc": "Inspection & booking",
-    "transport": "Transport"
+    "transport": "Transport",
+    "nextPrayer": "Next prayer",
+    "timeRemaining": "remaining",
+    "approximate": "Approximate",
+    "todayInfo": "Today's info",
+    "exchangeRates": "Exchange rates",
+    "updatedToday": "Updated: today",
+    "exchangeInfo": {
+      "title": "About exchange rates",
+      "body": "Real-time rates coming soon. Current values are approximate."
+    }
   },
   "business": {
     "title": "B2B Hub",
@@ -336,7 +346,10 @@
     "delete": "Delete",
     "edit": "Edit",
     "address": "Address",
-    "sending": "Sending..."
+    "sending": "Sending...",
+    "hourShort": "h",
+    "minuteShort": "min",
+    "tomorrow": "tomorrow"
   },
   "cargo": {
     "title": "Cargo Tracking",
@@ -692,5 +705,12 @@
     "travel": "Travel",
     "businessDesc": "For entrepreneurs",
     "travelDesc": "For travelers"
+  },
+  "prayers": {
+    "fajr": "Fajr",
+    "dhuhr": "Dhuhr",
+    "asr": "Asr",
+    "maghrib": "Maghrib",
+    "isha": "Isha"
   }
 }

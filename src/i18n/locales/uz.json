@@ -63,7 +63,17 @@
     "translatorsDesc": "Tasdiqlangan tarjimonlar",
     "services": "Xizmatlar",
     "servicesDesc": "Tekshiruv va bron qilish",
-    "transport": "Transport"
+    "transport": "Transport",
+    "nextPrayer": "Keyingi namoz",
+    "timeRemaining": "qoldi",
+    "approximate": "Taxminiy",
+    "todayInfo": "Bugungi ma'lumotlar",
+    "exchangeRates": "Valyuta kursi",
+    "updatedToday": "Yangilangan: bugun",
+    "exchangeInfo": {
+      "title": "Valyuta kursi haqida",
+      "body": "Real-time kurslar tez orada qo'shiladi. Hozirgi qiymatlar taxminiy."
+    }
   },
   "business": {
     "title": "B2B Sourcing Hub",
@@ -336,7 +346,10 @@
     "delete": "O'chirish",
     "edit": "Tahrirlash",
     "address": "Manzil",
-    "sending": "Yuborilmoqda..."
+    "sending": "Yuborilmoqda...",
+    "hourShort": "soat",
+    "minuteShort": "daqiqa",
+    "tomorrow": "ertaga"
   },
   "cargo": {
     "title": "Yuk Kuzatuvi",
@@ -741,5 +754,12 @@
     "travel": "Sayohat",
     "businessDesc": "Tadbirkorlar uchun",
     "travelDesc": "Sayohatchilar uchun"
+  },
+  "prayers": {
+    "fajr": "Bomdod",
+    "dhuhr": "Peshin",
+    "asr": "Asr",
+    "maghrib": "Shom",
+    "isha": "Xufton"
   }
 }

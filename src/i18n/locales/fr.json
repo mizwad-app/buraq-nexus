@@ -63,7 +63,17 @@
     "translatorsDesc": "Traducteurs vérifiés",
     "services": "Services",
     "servicesDesc": "Inspection et réservation",
-    "transport": "Transport"
+    "transport": "Transport",
+    "nextPrayer": "Prochaine prière",
+    "timeRemaining": "restant",
+    "approximate": "Approximatif",
+    "todayInfo": "Infos du jour",
+    "exchangeRates": "Taux de change",
+    "updatedToday": "Mis à jour: aujourd'hui",
+    "exchangeInfo": {
+      "title": "À propos des taux",
+      "body": "Les taux en temps réel arrivent bientôt. Les valeurs actuelles sont approximatives."
+    }
   },
   "business": {
     "title": "Centre B2B Sourcing",
@@ -336,7 +346,10 @@
     "delete": "Supprimer",
     "edit": "Modifier",
     "address": "Adresse",
-    "sending": "Envoi..."
+    "sending": "Envoi...",
+    "hourShort": "h",
+    "minuteShort": "min",
+    "tomorrow": "demain"
   },
   "cargo": {
     "title": "Suivi des cargaisons",
@@ -666,5 +679,12 @@
     "requestDescription": "Saisissez les détails ci-dessous. Notre équipe vous contactera sous peu.",
     "requestPlaceholder": "Comment pouvons-nous aider?",
     "submit": "Envoyer"
+  },
+  "prayers": {
+    "fajr": "Fajr",
+    "dhuhr": "Dhuhr",
+    "asr": "Asr",
+    "maghrib": "Maghrib",
+    "isha": "Isha"
   }
 }

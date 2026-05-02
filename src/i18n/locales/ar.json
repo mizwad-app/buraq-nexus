@@ -63,7 +63,17 @@
     "translatorsDesc": "مترجمون موثقون",
     "services": "الخدمات",
     "servicesDesc": "التفتيش والحجز",
-    "transport": "النقل"
+    "transport": "النقل",
+    "nextPrayer": "الصلاة التالية",
+    "timeRemaining": "متبقي",
+    "approximate": "تقريبي",
+    "todayInfo": "معلومات اليوم",
+    "exchangeRates": "أسعار العملات",
+    "updatedToday": "تم التحديث: اليوم",
+    "exchangeInfo": {
+      "title": "حول أسعار الصرف",
+      "body": "الأسعار الفورية قريبا. القيم الحالية تقريبية."
+    }
   },
   "business": {
     "title": "مركز الأعمال",
@@ -336,7 +346,10 @@
     "delete": "حذف",
     "edit": "تعديل",
     "address": "العنوان",
-    "sending": "جارٍ الإرسال..."
+    "sending": "جارٍ الإرسال...",
+    "hourShort": "س",
+    "minuteShort": "د",
+    "tomorrow": "غدا"
   },
   "cargo": {
     "title": "تتبع الشحنات",
@@ -646,5 +659,12 @@
     "travel": "سفر",
     "businessDesc": "لرجال الأعمال",
     "travelDesc": "للمسافرين"
+  },
+  "prayers": {
+    "fajr": "الفجر",
+    "dhuhr": "الظهر",
+    "asr": "العصر",
+    "maghrib": "المغرب",
+    "isha": "العشاء"
   }
 }
