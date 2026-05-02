@@ -264,8 +264,8 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       
       for (const date of selectedDates) {
         const perDayTranslatorAmount = serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice);
-        const perDayServiceFee = Math.round(perDayTranslatorAmount * SERVICE_FEE_RATE * 100) / 100;
-        const perDayTotal = perDayTranslatorAmount + perDayServiceFee;
+        const perDayServiceFee = Math.round(perDayTranslatorAmount * SERVICE_FEE_RATE);
+        const perDayTotal = Math.round(perDayTranslatorAmount + perDayServiceFee);
 
         const { data: rpcResult, error: rpcError } = await supabase.rpc(
           'process_booking_payment',
