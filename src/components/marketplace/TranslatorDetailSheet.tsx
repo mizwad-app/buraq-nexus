@@ -472,14 +472,26 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             </div>
 
             {/* Bio */}
-            {getField(translator, 'bio') && (
-              <div className="px-5 mb-4">
-                <h4 className="text-sm font-semibold text-foreground mb-2">Haqida</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {getField(translator, 'bio')}
-                </p>
-              </div>
-            )}
+            {getField(translator, 'bio') && (() => {
+              const currentLangBio = (translator as Record<string, unknown>)[`bio_${i18n.language}`];
+              const isFallback = !currentLangBio || typeof currentLangBio !== 'string' || !currentLangBio.trim();
+              return (
+                <div className="px-5 mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h4 className="text-sm font-semibold text-foreground">Haqida</h4>
+                    {isFallback && (
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-secondary/60 border border-border text-[10px] text-muted-foreground">
+                        <Languages className="w-2.5 h-2.5" />
+                        Tarjima qilinmoqda
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {getField(translator, 'bio')}
+                  </p>
+                </div>
+              );
+            })()}
 
             {/* Resume Timeline Section */}
             {renderResumeSection()}
