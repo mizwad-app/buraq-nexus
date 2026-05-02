@@ -172,10 +172,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
     }
   };
 
-  const calculateServiceFee = () => Math.round(calculateTranslatorAmount() * SERVICE_FEE_RATE * 100) / 100;
+  const calculateServiceFee = () => Math.round(calculateTranslatorAmount() * SERVICE_FEE_RATE);
 
   // What the user pays (translator amount + 10% Buraq fee)
-  const calculateTotal = () => calculateTranslatorAmount() + calculateServiceFee();
+  const calculateTotal = () => Math.round(calculateTranslatorAmount() + calculateServiceFee());
 
   const calculateHours = () => {
     const start = parseInt(startTime.split(':')[0]);
