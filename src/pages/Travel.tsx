@@ -200,8 +200,8 @@ const GUIDE_ITEMS: GuideItem[] = [
     titleKey: "guide.exchange.title",
     descriptionKey: "guide.exchange.description",
     icon: Banknote,
-    color: "text-amber-500",
-    bgColor: "bg-amber-500/10",
+    color: "text-gold",
+    bgColor: "bg-gold/10",
     tips: ["guide.exchange.tip1", "guide.exchange.tip2", "guide.exchange.tip3"],
   },
   {
@@ -571,7 +571,7 @@ const Travel = () => {
                             </div>
                             <div className="flex items-center gap-2 ml-2 flex-shrink-0">
                               {mall.rating && (
-                                <div className="flex items-center gap-1 text-amber-500">
+                                <div className="flex items-center gap-1 text-gold">
                                   <Star className="w-4 h-4 fill-current" />
                                   <span className="text-sm font-medium">{mall.rating}</span>
                                 </div>
@@ -589,7 +589,7 @@ const Travel = () => {
                           )}
                           <div className="flex items-center justify-between">
                             {mall.has_halal_food && (
-                              <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-emerald-500/10 text-emerald-600">
+                              <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
                                 <Check className="w-3 h-3" />
                                 {t("travel.hasHalalFood")}
                               </span>
@@ -766,9 +766,9 @@ const Travel = () => {
                       </ul>
                     </div>
                     {item.id === "exchange" && (
-                      <div className="flex items-start gap-2 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                        <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
-                        <p className="text-xs text-amber-600 dark:text-amber-400">{t("guide.exchange.warning")}</p>
+                      <div className="flex items-start gap-2 p-3 rounded-lg bg-gold/10 border border-gold/20">
+                        <AlertTriangle className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
+                        <p className="text-xs text-gold dark:text-gold">{t("guide.exchange.warning")}</p>
                       </div>
                     )}
                   </CardContent>

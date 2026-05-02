@@ -70,7 +70,7 @@ export const ImageCard = ({
       <div className={cn(
         "absolute inset-0 rounded-[20px] border transition-colors duration-300",
         isPremium 
-          ? "border-amber-500/30 group-hover:border-amber-400/50" 
+          ? "border-gold/30 group-hover:border-amber-400/50" 
           : "border-white/10 group-hover:border-primary/30"
       )} />
     </button>

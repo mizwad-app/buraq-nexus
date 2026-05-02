@@ -123,7 +123,7 @@ export const CityInsightCard = ({
               </div>
             </div>
             <div className="flex items-center gap-2 bg-background/50 rounded-lg p-2">
-              <Train className="w-4 h-4 text-emerald-500" />
+              <Train className="w-4 h-4 text-primary" />
               <div>
                 <p className="text-[10px] text-muted-foreground">{t("sourcing.trainFromGZ")}</p>
                 <p className="text-xs font-medium text-foreground">{city.trainInfo}</p>
@@ -134,9 +134,9 @@ export const CityInsightCard = ({
 
         {/* Wholesale Markets */}
         {city.markets.length > 0 && (
-          <div className="bg-amber-500/10 rounded-xl p-3 border border-amber-500/20">
+          <div className="bg-gold/10 rounded-xl p-3 border border-gold/20">
             <p className="text-xs font-medium text-foreground mb-2 flex items-center gap-1.5">
-              <Store className="w-3.5 h-3.5 text-amber-500" />
+              <Store className="w-3.5 h-3.5 text-gold" />
               {t("sourcing.wholesaleMarkets")}
             </p>
             <div className="space-y-2">
@@ -151,12 +151,12 @@ export const CityInsightCard = ({
                   {market.address && (
                     <button
                       onClick={() => copyToClipboard(market.address!)}
-                      className="p-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 transition-colors ml-2"
+                      className="p-1.5 rounded-lg bg-gold/10 hover:bg-gold/20 transition-colors ml-2"
                     >
                       {copied ? (
-                        <Check className="w-3 h-3 text-emerald-500" />
+                        <Check className="w-3 h-3 text-primary" />
                       ) : (
-                        <Copy className="w-3 h-3 text-amber-500" />
+                        <Copy className="w-3 h-3 text-gold" />
                       )}
                     </button>
                   )}

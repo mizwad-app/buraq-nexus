@@ -358,12 +358,12 @@ const AdminLocations = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     {(editState.latitude && editState.longitude) ? (
-                      <div className="w-8 h-8 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                        <MapPin className="w-4 h-4 text-emerald-500" />
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-primary" />
                       </div>
                     ) : entityType !== "translators" && (
-                      <div className="w-8 h-8 rounded-lg bg-amber-500/10 flex items-center justify-center">
-                        <MapPin className="w-4 h-4 text-amber-500" />
+                      <div className="w-8 h-8 rounded-lg bg-gold/10 flex items-center justify-center">
+                        <MapPin className="w-4 h-4 text-gold" />
                       </div>
                     )}
                     <ChevronDown
@@ -474,7 +474,7 @@ const AdminLocations = () => {
                               className={cn(
                                 "w-full h-10 rounded-lg flex items-center justify-center gap-2 transition-all",
                                 editState.is_verified
-                                  ? "bg-emerald-500/20 text-emerald-500"
+                                  ? "bg-primary/20 text-primary"
                                   : "bg-secondary text-muted-foreground"
                               )}
                             >

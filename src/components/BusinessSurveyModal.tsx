@@ -274,8 +274,8 @@ export const BusinessSurveyModal = ({ open, onOpenChange }: BusinessSurveyModalP
 
             {/* Skip Warning */}
             {showSkipWarning && (
-              <div className="mt-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-start gap-2">
-                <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+              <div className="mt-4 p-3 rounded-lg bg-gold/10 border border-gold/30 flex items-start gap-2">
+                <AlertTriangle className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
                 <p className="text-xs text-amber-200">
                   Sohangizni tanlamasangiz, muhim ko'rgazmalarni o'tkazib yuborishingiz mumkin.
                 </p>
@@ -337,8 +337,8 @@ export const BusinessSurveyModal = ({ open, onOpenChange }: BusinessSurveyModalP
 
                 {/* Skip Warning */}
                 {showSkipWarning && (
-                  <div className="mb-4 p-3 rounded-lg bg-amber-500/10 border border-amber-500/30 flex items-start gap-2">
-                    <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 flex-shrink-0" />
+                  <div className="mb-4 p-3 rounded-lg bg-gold/10 border border-gold/30 flex items-start gap-2">
+                    <AlertTriangle className="w-4 h-4 text-gold mt-0.5 flex-shrink-0" />
                     <p className="text-xs text-amber-200">
                       Sohangizni tanlamasangiz, muhim ko'rgazmalarni o'tkazib yuborishingiz mumkin.
                     </p>

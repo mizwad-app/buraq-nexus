@@ -102,8 +102,8 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
             <div className="absolute top-4 right-4">
               <div className={cn(
                 "rounded-xl p-1.5 shadow-lg backdrop-blur-sm",
-                status === 'certified' && "bg-emerald-500/90",
-                status === 'doubtful' && "bg-amber-500/90",
+                status === 'certified' && "bg-primary/90",
+                status === 'doubtful' && "bg-gold/90",
                 status === 'not_halal' && "bg-red-500/90"
               )}>
                 <HalalStatusBadge 
@@ -118,8 +118,8 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
             <div className="absolute bottom-4 left-5 right-5">
               <span className={cn(
                 "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg mb-2",
-                status === 'certified' && "bg-emerald-500 text-white",
-                status === 'doubtful' && "bg-amber-500 text-white",
+                status === 'certified' && "bg-primary text-white",
+                status === 'doubtful' && "bg-gold text-white",
                 status === 'not_halal' && "bg-red-500 text-white"
               )}>
                 {t(`halal.status.${status}`)}
@@ -141,8 +141,8 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
 
             {/* Overall Rating */}
             {restaurant.rating && (
-              <div className="flex items-center gap-3 mb-6 p-4 bg-amber-500/10 rounded-xl">
-                <div className="w-14 h-14 rounded-xl bg-amber-500 flex items-center justify-center">
+              <div className="flex items-center gap-3 mb-6 p-4 bg-gold/10 rounded-xl">
+                <div className="w-14 h-14 rounded-xl bg-gold flex items-center justify-center">
                   <Star className="w-7 h-7 text-white fill-current" />
                 </div>
                 <div>
@@ -158,8 +158,8 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
                 <h4 className="text-sm font-semibold text-foreground mb-3">{t("restaurant.detailedRatings")}</h4>
                 <div className="space-y-3 p-4 bg-card rounded-xl border border-border/50">
                   {renderRatingBar(restaurant.rating_service, t("restaurant.service"), "bg-blue-500")}
-                  {renderRatingBar(restaurant.rating_taste, t("restaurant.taste"), "bg-amber-500")}
-                  {renderRatingBar(restaurant.rating_cleanliness, t("restaurant.cleanliness"), "bg-emerald-500")}
+                  {renderRatingBar(restaurant.rating_taste, t("restaurant.taste"), "bg-gold")}
+                  {renderRatingBar(restaurant.rating_cleanliness, t("restaurant.cleanliness"), "bg-primary")}
                 </div>
               </div>
             )}
@@ -172,12 +172,12 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
                 <div className={cn(
                   "flex items-center gap-3 p-3 rounded-xl border",
                   restaurant.has_prayer_room 
-                    ? "bg-emerald-500/10 border-emerald-500/30" 
+                    ? "bg-primary/10 border-primary/30" 
                     : "bg-muted/30 border-border/30"
                 )}>
                   <Landmark className={cn(
                     "w-5 h-5",
-                    restaurant.has_prayer_room ? "text-emerald-500" : "text-muted-foreground"
+                    restaurant.has_prayer_room ? "text-primary" : "text-muted-foreground"
                   )} />
                   <div>
                     <p className="text-xs font-medium text-foreground">{t("restaurant.prayerRoom")}</p>
@@ -191,12 +191,12 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
                 <div className={cn(
                   "flex items-center gap-3 p-3 rounded-xl border",
                   restaurant.has_currency_exchange_nearby 
-                    ? "bg-amber-500/10 border-amber-500/30" 
+                    ? "bg-gold/10 border-gold/30" 
                     : "bg-muted/30 border-border/30"
                 )}>
                   <Banknote className={cn(
                     "w-5 h-5",
-                    restaurant.has_currency_exchange_nearby ? "text-amber-500" : "text-muted-foreground"
+                    restaurant.has_currency_exchange_nearby ? "text-gold" : "text-muted-foreground"
                   )} />
                   <div>
                     <p className="text-xs font-medium text-foreground">{t("restaurant.currencyExchange")}</p>
@@ -231,8 +231,8 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
             {getField(restaurant, 'halal_status_note') && (
               <div className={cn(
                 "mb-6 p-4 rounded-xl border",
-                status === 'certified' && "bg-emerald-500/10 border-emerald-500/30",
-                status === 'doubtful' && "bg-amber-500/10 border-amber-500/30",
+                status === 'certified' && "bg-primary/10 border-primary/30",
+                status === 'doubtful' && "bg-gold/10 border-gold/30",
                 status === 'not_halal' && "bg-red-500/10 border-red-500/30"
               )}>
                 <p className="text-sm text-foreground">{getField(restaurant, 'halal_status_note')}</p>

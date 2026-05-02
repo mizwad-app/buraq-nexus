@@ -219,14 +219,14 @@ export const BulkImportMarkets = ({ onImportComplete }: { onImportComplete?: () 
 
           {/* Result */}
           {result && (
-            <div className={`rounded-xl p-4 ${result.success ? 'bg-emerald-500/10' : 'bg-destructive/10'}`}>
+            <div className={`rounded-xl p-4 ${result.success ? 'bg-primary/10' : 'bg-destructive/10'}`}>
               <div className="flex items-center gap-2 mb-2">
                 {result.success ? (
-                  <CheckCircle className="w-5 h-5 text-emerald-500" />
+                  <CheckCircle className="w-5 h-5 text-primary" />
                 ) : (
                   <AlertCircle className="w-5 h-5 text-destructive" />
                 )}
-                <p className={`font-medium ${result.success ? 'text-emerald-500' : 'text-destructive'}`}>
+                <p className={`font-medium ${result.success ? 'text-primary' : 'text-destructive'}`}>
                   {result.success ? `Imported ${result.imported} markets` : 'Import failed'}
                 </p>
               </div>

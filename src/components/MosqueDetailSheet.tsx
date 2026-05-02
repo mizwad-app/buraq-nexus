@@ -157,7 +157,7 @@ const ImageGallery = ({ images, mosqueName }: { images: string[]; mosqueName: st
     return (
       <div className="relative h-56 w-full rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
         <div className="text-center p-4">
-          <Moon className="w-16 h-16 text-emerald-500/50 mx-auto mb-2" />
+          <Moon className="w-16 h-16 text-primary/50 mx-auto mb-2" />
           <p className="text-sm text-muted-foreground">Rasm tez orada qo'shiladi</p>
         </div>
       </div>
@@ -241,7 +241,7 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
           <SheetHeader className="px-5 pb-4 border-b border-border/50">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
-                <Moon className="w-6 h-6 text-emerald-500" />
+                <Moon className="w-6 h-6 text-primary" />
               </div>
               <div className="flex-1 min-w-0">
                 <SheetTitle className="text-left text-lg leading-tight">
@@ -258,9 +258,9 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
 
             {/* Year Built Badge - at the top */}
             {historyData?.yearBuilt && (
-              <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl p-3 border border-emerald-500/20 flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
-                  <Clock className="w-5 h-5 text-emerald-500" />
+              <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl p-3 border border-primary/20 flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-xs text-muted-foreground">Qurilgan yili</p>
@@ -277,7 +277,7 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
                 5 mahal namoz
               </span>
               {mosque.has_friday_prayer && (
-                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-600 text-xs font-medium border border-emerald-500/20">
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
                   <Check className="w-3 h-3" />
                   {t("mosques.fridayPrayer")}
                 </span>
@@ -289,7 +289,7 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
                 </span>
               )}
               {historyKey && (
-                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-amber-500/10 text-amber-600 text-xs font-medium border border-amber-500/20">
+                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gold/10 text-gold text-xs font-medium border border-gold/20">
                   <Star className="w-3 h-3" />
                   Tarixiy masjid
                 </span>
@@ -308,13 +308,13 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
             </div>
 
             {/* Consolidated Mosque Information Card */}
-            <Card className="bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-green-500/5 border-emerald-500/20 overflow-hidden">
+            <Card className="bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-green-500/5 border-primary/20 overflow-hidden">
               <CardContent className="p-5 space-y-5">
                 {/* About Section */}
                 {translatedDescription && (
                   <div>
                     <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
-                      <Moon className="w-4 h-4 text-emerald-500" />
+                      <Moon className="w-4 h-4 text-primary" />
                       {t("mosque.about")}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{translatedDescription}</p>
@@ -325,7 +325,7 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
                 {historyData?.origin && (
                   <div className="pt-4 border-t border-border/30">
                     <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
-                      <ScrollText className="w-4 h-4 text-amber-500" />
+                      <ScrollText className="w-4 h-4 text-gold" />
                       {t("mosque.nameOrigin")}
                     </h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">{historyData.origin}</p>
@@ -350,7 +350,7 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
                     <ul className="space-y-2">
                       {historyData.features.map((feature, index) => (
                         <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                           {feature}
                         </li>
                       ))}
@@ -362,8 +362,8 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
                 {historyData?.poem && (
                   <div className="pt-4 border-t border-border/30">
                     <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                        <Moon className="w-4 h-4 text-emerald-500" />
+                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
+                        <Moon className="w-4 h-4 text-primary" />
                       </div>
                       <div>
                         <h3 className="font-bold text-foreground text-base">{historyData.poemTitle}</h3>

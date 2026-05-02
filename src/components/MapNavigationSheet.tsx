@@ -107,7 +107,7 @@ export const MapNavigationSheet = ({
       id: "gaode",
       name: "Gaode / Amap",
       icon: "🇨🇳",
-      color: "bg-emerald-500/10 text-emerald-600",
+      color: "bg-primary/10 text-primary",
       description: t("mapNav.gaodeDesc"),
       getUrl: (lat, lng, placeName) => {
         // Gaode/Amap uses GCJ-02 coordinates - converted for accuracy
@@ -248,14 +248,14 @@ export const MapNavigationSheet = ({
               onClick={handleCopyAddress}
               className={cn(
                 "w-full flex items-center gap-3 p-3 rounded-xl border border-border/50",
-                "bg-amber-500/10 hover:bg-amber-500/20 transition-all text-left"
+                "bg-gold/10 hover:bg-gold/20 transition-all text-left"
               )}
             >
-              <div className="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-lg bg-gold/20 flex items-center justify-center">
                 {copied ? (
-                  <Check className="w-5 h-5 text-emerald-600" />
+                  <Check className="w-5 h-5 text-primary" />
                 ) : (
-                  <Copy className="w-5 h-5 text-amber-600" />
+                  <Copy className="w-5 h-5 text-gold" />
                 )}
               </div>
               <div className="flex-1 min-w-0">

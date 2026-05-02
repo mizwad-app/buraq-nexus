@@ -207,8 +207,8 @@ const Ibadah = () => {
 
   const filterChips: { id: HalalFilter; labelKey: string; color: string }[] = [
     { id: 'all', labelKey: 'halal.filterAll', color: 'bg-secondary text-secondary-foreground' },
-    { id: 'certified', labelKey: 'halal.filterHalalOnly', color: 'bg-emerald-500 text-white' },
-    { id: 'doubtful', labelKey: 'halal.filterDoubtful', color: 'bg-amber-500 text-white' },
+    { id: 'certified', labelKey: 'halal.filterHalalOnly', color: 'bg-primary text-white' },
+    { id: 'doubtful', labelKey: 'halal.filterDoubtful', color: 'bg-gold text-white' },
     { id: 'not_halal', labelKey: 'halal.filterNotHalal', color: 'bg-red-500 text-white' },
   ];
 
@@ -355,10 +355,10 @@ const Ibadah = () => {
         <div className="flex gap-2">
           <button
             onClick={() => setActiveSection('restaurants')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
               activeSection === 'restaurants'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground'
+                ? 'bg-primary/15 text-primary border-primary/30'
+                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
             }`}
           >
             <Utensils className="w-4 h-4 inline-block mr-1" />
@@ -366,10 +366,10 @@ const Ibadah = () => {
           </button>
           <button
             onClick={() => setActiveSection('mosques')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
               activeSection === 'mosques'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground'
+                ? 'bg-primary/15 text-primary border-primary/30'
+                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
             }`}
           >
             <Moon className="w-4 h-4 inline-block mr-1" />
@@ -377,10 +377,10 @@ const Ibadah = () => {
           </button>
           <button
             onClick={() => setActiveSection('shops')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
               activeSection === 'shops'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground'
+                ? 'bg-primary/15 text-primary border-primary/30'
+                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
             }`}
           >
             <Store className="w-4 h-4 inline-block mr-1" />
@@ -467,8 +467,8 @@ const Ibadah = () => {
                       <div className="absolute top-3 right-3 z-10">
                         <div className={cn(
                           "rounded-xl p-1 shadow-lg backdrop-blur-sm",
-                          status === 'certified' && "bg-emerald-500/90",
-                          status === 'doubtful' && "bg-amber-500/90",
+                          status === 'certified' && "bg-primary/90",
+                          status === 'doubtful' && "bg-gold/90",
                           status === 'not_halal' && "bg-red-500/90"
                         )}>
                           <HalalStatusBadge 
@@ -484,7 +484,7 @@ const Ibadah = () => {
                       <div className="absolute top-3 left-3 z-10">
                         <span className={cn(
                           "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg",
-                          status === 'certified' && "bg-emerald-600 text-white",
+                          status === 'certified' && "bg-primary text-white",
                           status === 'doubtful' && "bg-amber-600 text-white",
                           status === 'not_halal' && "bg-red-600 text-white"
                         )}>
@@ -523,7 +523,7 @@ const Ibadah = () => {
                       <div className="flex items-center justify-between mt-3">
                         <div className="flex items-center gap-3">
                           {restaurant.rating && (
-                            <div className="flex items-center gap-1 text-amber-500">
+                            <div className="flex items-center gap-1 text-gold">
                               <Star className="w-3 h-3 fill-current" />
                               <span className="text-xs font-medium">{restaurant.rating}</span>
                             </div>
@@ -661,7 +661,7 @@ const Ibadah = () => {
                     {/* Historical badge for special mosques */}
                     {(mosque.name.toLowerCase().includes("huaisheng") || mosque.name.includes("怀圣")) && (
                       <div className="absolute top-3 right-3">
-                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-amber-500/90 text-white text-xs font-medium">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gold/90 text-white text-xs font-medium">
                           <ScrollText className="w-3 h-3" />
                           {t("mosque.history")}
                         </span>
@@ -684,7 +684,7 @@ const Ibadah = () => {
                     )}
                     <div className="flex items-center gap-3 mb-3">
                       {mosque.has_friday_prayer && (
-                        <div className="flex items-center gap-1 text-emerald-500">
+                        <div className="flex items-center gap-1 text-primary">
                           <Check className="w-3 h-3" />
                           <span className="text-xs font-medium">{t("mosques.fridayPrayer")}</span>
                         </div>
@@ -790,7 +790,7 @@ const Ibadah = () => {
                     {/* Verified Badge */}
                     {shop.is_verified && (
                       <div className="absolute top-3 right-3">
-                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-emerald-500/90 text-white text-xs font-medium">
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-primary/90 text-white text-xs font-medium">
                           <BadgeCheck className="w-3 h-3" />
                           {t("halal.verified")}
                         </span>

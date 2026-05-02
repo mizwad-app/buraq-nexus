@@ -167,7 +167,7 @@ export const ChatSheet = ({
           
           <div className="flex-1">
             <p className="font-semibold">{recipientName}</p>
-            <p className="text-xs text-emerald-500">Online</p>
+            <p className="text-xs text-primary">Online</p>
           </div>
           
           <button className="p-2 hover:bg-muted rounded-xl">

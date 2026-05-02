@@ -31,9 +31,9 @@ interface ServiceRequest {
 }
 
 const statusConfig = {
-  pending: { label: "Kutilmoqda", icon: Clock, color: "text-amber-400", bg: "bg-amber-400/10" },
+  pending: { label: "Kutilmoqda", icon: Clock, color: "text-gold", bg: "bg-gold/10" },
   in_progress: { label: "Jarayonda", icon: Briefcase, color: "text-blue-400", bg: "bg-blue-400/10" },
-  completed: { label: "Bajarildi", icon: CheckCircle2, color: "text-emerald-400", bg: "bg-emerald-400/10" },
+  completed: { label: "Bajarildi", icon: CheckCircle2, color: "text-primary", bg: "bg-primary/10" },
   cancelled: { label: "Bekor qilindi", icon: XCircle, color: "text-red-400", bg: "bg-red-400/10" },
 };
 

@@ -118,7 +118,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
         <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
           {t("translators.languages.uzbekNative")}
         </Badge>
-        <Badge variant="outline" className="bg-amber-500/10 text-amber-400 border-amber-500/30 text-xs">
+        <Badge variant="outline" className="bg-gold/10 text-gold border-gold/30 text-xs">
           {t("translators.languages.chinese")} (HSK {hskLevel})
         </Badge>
         <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
@@ -143,7 +143,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             <div className="flex items-center gap-2">
               <span className={cn(
                 "px-2.5 py-1 rounded-lg text-sm font-bold text-white",
-                (translator.self_declared_hsk || translator.hsk_level || 0) >= 5 ? "bg-amber-500" : 
+                (translator.self_declared_hsk || translator.hsk_level || 0) >= 5 ? "bg-gold" : 
                 (translator.self_declared_hsk || translator.hsk_level || 0) >= 3 ? "bg-blue-500" : "bg-gray-500"
               )}>
                 HSK {translator.self_declared_hsk || translator.hsk_level || "—"}

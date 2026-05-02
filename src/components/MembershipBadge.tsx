@@ -21,10 +21,10 @@ const tierConfig = {
     icon: Crown,
     titleKey: "loyalty.goldStatus",
     gradient: "from-amber-400 via-yellow-300 to-amber-500",
-    textColor: "text-amber-400",
+    textColor: "text-gold",
     bgColor: "bg-gradient-to-r from-amber-500/20 to-yellow-500/20",
-    borderColor: "border-amber-500/40",
-    iconColor: "text-amber-400",
+    borderColor: "border-gold/40",
+    iconColor: "text-gold",
   },
   silver: {
     icon: Award,

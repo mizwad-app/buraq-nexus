@@ -23,23 +23,23 @@ export const ExchangeRateCard = () => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="text-left w-full rounded-2xl p-3.5 min-h-[120px] bg-gold/10 border border-gold/30 transition-transform active:scale-[0.98]"
+        className="text-left w-full h-full rounded-2xl p-3 min-h-[120px] bg-gold/10 border border-gold/30 transition-transform active:scale-[0.98]"
       >
-        <div className="flex items-center justify-between mb-3 gap-2">
-          <div className="flex items-center gap-1.5 text-gold min-w-0">
-            <Coins className="w-4 h-4 shrink-0" />
-            <span className="text-xs font-medium truncate">{t("home.exchangeRates")}</span>
+        <div className="flex items-center justify-between mb-2 gap-1">
+          <div className="flex items-center gap-1 text-gold min-w-0">
+            <Coins className="w-3.5 h-3.5 shrink-0" />
+            <span className="text-[11px] font-medium truncate">{t("home.exchangeRates")}</span>
           </div>
-          <span className="text-[10px] text-gold/80 bg-gold/10 px-2 py-0.5 rounded-full shrink-0">
+          <span className="text-[9px] text-gold/80 shrink-0">
             {t("home.updatedToday")}
           </span>
         </div>
 
-        <div className="space-y-1.5">
+        <div className="space-y-1">
           {rates.map((r, i) => (
-            <div key={i} className="flex items-baseline justify-between gap-2 text-sm">
-              <span className="text-muted-foreground text-xs shrink-0">{r.left}</span>
-              <span className="font-mono font-semibold text-foreground text-[13px] truncate text-right">
+            <div key={i} className="flex items-baseline justify-between gap-1.5 text-xs">
+              <span className="text-muted-foreground text-[11px] shrink-0">{r.left}</span>
+              <span className="font-mono font-semibold text-foreground text-[11px] truncate text-right">
                 {r.right}
               </span>
             </div>
