@@ -276,7 +276,7 @@ const TravelChecklist = () => {
         <div className="bg-card rounded-2xl p-4 border border-border/50">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-foreground">
-              {t("checklist.progress")}
+              {t("checklist.progress", { checked: checkedCount, total: items.length })}
             </span>
             <span className="text-sm text-muted-foreground">
               {checkedCount} / {items.length}
