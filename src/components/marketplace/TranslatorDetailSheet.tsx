@@ -110,18 +110,18 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
     }
   };
 
-  // Language proficiency badges
+  // Language proficiency badges - all neutral, level shown by text only
   const renderLanguageBadges = () => {
     const hskLevel = translator.buraq_verified_hsk || translator.self_declared_hsk || translator.hsk_level || 0;
     return (
       <div className="flex flex-wrap gap-1.5 mt-2">
-        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
+        <Badge variant="outline" className="bg-secondary/60 text-foreground border-border text-xs">
           {t("translators.languages.uzbekNative")}
         </Badge>
-        <Badge variant="outline" className="bg-gold/10 text-gold border-gold/30 text-xs">
+        <Badge variant="outline" className="bg-secondary/60 text-foreground border-border text-xs">
           {t("translators.languages.chinese")} (HSK {hskLevel})
         </Badge>
-        <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
+        <Badge variant="outline" className="bg-secondary/60 text-foreground border-border text-xs">
           {t("translators.languages.english")} (B1)
         </Badge>
       </div>
