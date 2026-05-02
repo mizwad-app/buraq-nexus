@@ -156,7 +156,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
   const dailyPrice = translator.daily_rate || translator.price_per_day || 0;
   const hourlyPrice = translator.hourly_rate || Math.round(dailyPrice / 8);
 
-  const calculateTotal = () => {
+  const SERVICE_FEE_RATE = 0.10;
+
+  // What the translator earns (their advertised price × days/hours)
+  const calculateTranslatorAmount = () => {
     const numDays = selectedDates.length || 1;
     if (serviceType === 'daily') {
       return dailyPrice * numDays;
@@ -167,6 +170,11 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       return hours * hourlyPrice * numDays;
     }
   };
+
+  const calculateServiceFee = () => Math.round(calculateTranslatorAmount() * SERVICE_FEE_RATE * 100) / 100;
+
+  // What the user pays (translator amount + 10% Buraq fee)
+  const calculateTotal = () => calculateTranslatorAmount() + calculateServiceFee();
 
   const calculateHours = () => {
     const start = parseInt(startTime.split(':')[0]);
