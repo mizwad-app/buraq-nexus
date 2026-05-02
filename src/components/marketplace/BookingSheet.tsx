@@ -611,7 +611,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
             </div>
 
-            {/* Pricing Summary */}
+            {/* Pricing Summary with explicit fee breakdown */}
             <div className="bg-muted/50 rounded-xl p-4 space-y-2">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Kunlar soni</span>
@@ -619,17 +619,24 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  {serviceType === 'daily' ? 'Kunlik narx' : `Soatlik narx (${calculateHours()} soat)`}
+                  Tarjimon narxi {serviceType === 'hourly' && `(${calculateHours()} soat)`}
                 </span>
-                <span className="font-medium">
-                  ¥{serviceType === 'daily' ? dailyPrice : hourlyPrice * calculateHours()}
+                <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">
+                  Buraq xizmat haqi (10%)
                 </span>
+                <span className="font-medium">¥{calculateServiceFee().toLocaleString()}</span>
               </div>
               <div className="h-px bg-border my-2" />
               <div className="flex justify-between text-lg font-bold">
                 <span>Jami to'lov</span>
-                <span className="text-primary">¥{total}</span>
+                <span className="text-primary">¥{total.toLocaleString()}</span>
               </div>
+              <p className="text-[11px] text-muted-foreground pt-1">
+                Tarjimon to'liq narxini oladi. 10% Buraq platformasi xizmat haqi.
+              </p>
             </div>
 
             {/* Wallet Balance */}
