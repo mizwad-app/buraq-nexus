@@ -129,52 +129,43 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
   };
 
   const renderHSKSection = () => {
+    const selfHsk = translator.self_declared_hsk || translator.hsk_level || 0;
+    const verifiedHsk = translator.buraq_verified_hsk;
     return (
       <div className="bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl p-4 space-y-3">
         <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
           <Award className="w-4 h-4 text-primary" />
           HSK Darajasi
         </h4>
-        
-        <div className="grid grid-cols-2 gap-3">
-          {/* Self-declared */}
+
+        <div className={cn("grid gap-3", verifiedHsk ? "grid-cols-2" : "grid-cols-1")}>
+          {/* Self-declared - neutral styling */}
           <div className="bg-background/50 rounded-xl p-3">
             <p className="text-[10px] text-muted-foreground mb-1">O'zi e'lon qilgan</p>
             <div className="flex items-center gap-2">
-              <span className={cn(
-                "px-2.5 py-1 rounded-lg text-sm font-bold text-white",
-                (translator.self_declared_hsk || translator.hsk_level || 0) >= 5 ? "bg-gold" : 
-                (translator.self_declared_hsk || translator.hsk_level || 0) >= 3 ? "bg-blue-500" : "bg-gray-500"
-              )}>
-                HSK {translator.self_declared_hsk || translator.hsk_level || "—"}
+              <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-secondary text-foreground border border-border">
+                HSK {selfHsk || "—"}
               </span>
             </div>
           </div>
-          
-          {/* Buraq Verified */}
-          <div className={cn(
-            "rounded-xl p-3",
-            translator.buraq_verified_hsk 
-              ? "bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30" 
-              : "bg-background/50"
-          )}>
-            <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
-              <Shield className="w-3 h-3" />
-              Buraq tasdiqlagan
-            </p>
-            {translator.buraq_verified_hsk ? (
+
+          {/* Buraq Verified - only show when verified */}
+          {verifiedHsk && (
+            <div className="rounded-xl p-3 bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
+              <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
+                <Shield className="w-3 h-3" />
+                Buraq tasdiqlagan
+              </p>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-gradient-to-r from-primary to-accent text-white">
-                  HSK {translator.buraq_verified_hsk} ✓
+                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-gradient-to-r from-primary to-accent text-primary-foreground">
+                  HSK {verifiedHsk} ✓
                 </span>
               </div>
-            ) : (
-              <span className="text-xs text-muted-foreground">Tasdiqlanmagan</span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-        
-        {translator.buraq_verified_hsk && (
+
+        {verifiedHsk && (
           <p className="text-[10px] text-muted-foreground bg-primary/10 rounded-lg p-2">
             ✓ Video intervyu orqali tasdiqlangan ({translator.buraq_verified_at ? new Date(translator.buraq_verified_at as string).toLocaleDateString() : ''})
           </p>
