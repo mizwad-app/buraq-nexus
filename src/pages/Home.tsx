@@ -123,8 +123,8 @@ const Home = () => {
       </section>
 
       {/* Module Grid - 2 columns x 3 rows (compact) */}
-      <section className="px-5 pb-4">
-        <div className="grid grid-cols-2 gap-3">
+      <section className="px-5 pb-6">
+        <div className="grid grid-cols-2 gap-x-3 gap-y-4">
           {modules.map((module, index) => (
             <ImageCard
               key={module.id}

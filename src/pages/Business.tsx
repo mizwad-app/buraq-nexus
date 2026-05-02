@@ -30,7 +30,7 @@ import { SupportChat } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
 
 interface WholesaleMarket {
   id: string;
@@ -451,14 +451,14 @@ const Business = () => {
       {/* Product Filter Tags */}
       <section className="px-5 mb-3">
         <h3 className="font-semibold text-foreground mb-3 text-sm">{t("sourcing.productFilters")}</h3>
-        <ScrollArea className="w-full whitespace-nowrap">
-          <div className="flex gap-2 pb-2">
+        <div className="relative -mx-5">
+          <div className="flex gap-2 overflow-x-auto scrollbar-hide px-5 pb-1">
             {QUICK_FILTER_TAGS.map((tag) => (
               <button
                 key={tag.key}
                 onClick={() => handleQuickFilterTag(tag.key)}
                 className={cn(
-                  "flex items-center gap-1.5 px-3 py-2 rounded-full border text-sm font-medium transition-all whitespace-nowrap",
+                  "shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-full border text-sm font-medium transition-all whitespace-nowrap",
                   activeFilterTag === tag.key
                     ? "bg-primary/20 border-primary text-primary"
                     : "bg-card border-border/50 text-foreground hover:border-primary/30"
@@ -469,8 +469,8 @@ const Business = () => {
               </button>
             ))}
           </div>
-          <ScrollBar orientation="horizontal" />
-        </ScrollArea>
+          <div className="pointer-events-none absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-background to-transparent" />
+        </div>
       </section>
 
       {/* Search Bar */}
