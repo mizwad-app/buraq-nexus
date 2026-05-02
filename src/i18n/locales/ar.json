@@ -32,9 +32,9 @@
     "profile": "الملف"
   },
   "modules": {
-    "halal": "الطعام الحلال",
+    "halal": "دليل الحلال",
     "halalGuide": "رفيق الحلال",
-    "travel": "السفر والأسواق",
+    "travel": "السفر",
     "business": "الأعمال",
     "cargo": "تتبع الشحنات",
     "mosques": "المساجد",
@@ -44,9 +44,9 @@
     "translators": "المترجمون",
     "consulates": "القنصليات",
     "videoTips": "نصائح مفيدة",
-    "b2bHub": "مركز B2B",
+    "b2bHub": "B2B Sourcing Hub",
     "exhibitions": "المعارض التجارية",
-    "wallet": "محفظة براق",
+    "wallet": "محفظة Buraq",
     "transportVpn": "النقل و VPN",
     "attractions": "المعالم السياحية",
     "legalHelp": "القنصليات والمساعدة القانونية"
@@ -73,7 +73,10 @@
     "exchangeInfo": {
       "title": "حول أسعار الصرف",
       "body": "الأسعار الفورية قريبا. القيم الحالية تقريبية."
-    }
+    },
+    "checklistShort": "قائمة",
+    "mosquesShort": "المساجد",
+    "walletShort": "المحفظة"
   },
   "business": {
     "title": "مركز الأعمال",
@@ -316,7 +319,12 @@
     "notifications": "الإشعارات",
     "settings": "الإعدادات",
     "language": "اللغة",
-    "adminPanel": "لوحة الإدارة"
+    "adminPanel": "لوحة الإدارة",
+    "completeProfile": {
+      "title": "أكمل ملفك الشخصي",
+      "subtitle": "أخبرنا باهتماماتك حتى نجد ما تحتاجه",
+      "start": "ابدأ"
+    }
   },
   "booking": {
     "confirmed": "مؤكد",

@@ -32,11 +32,11 @@
     "profile": "Profil"
   },
   "modules": {
-    "halal": "Nourriture Halal",
+    "halal": "Guide Halal",
     "halalGuide": "Compagnon Halal",
-    "travel": "Voyage & Shopping",
+    "travel": "Voyage",
     "business": "Affaires",
-    "cargo": "Suivi des cargaisons",
+    "cargo": "Suivi du fret",
     "mosques": "Mosquées",
     "eco": "Projets écologiques",
     "guide": "Guide de voyage",
@@ -44,9 +44,9 @@
     "translators": "Traducteurs",
     "consulates": "Consulats",
     "videoTips": "Conseils utiles",
-    "b2bHub": "Centre B2B Sourcing",
+    "b2bHub": "B2B Sourcing Hub",
     "exhibitions": "Foires et expositions",
-    "wallet": "Portefeuille Buraq",
+    "wallet": "Buraq Wallet",
     "transportVpn": "Transport & VPN",
     "attractions": "Attractions",
     "legalHelp": "Consulats & Aide juridique"
@@ -73,7 +73,10 @@
     "exchangeInfo": {
       "title": "À propos des taux",
       "body": "Les taux en temps réel arrivent bientôt. Les valeurs actuelles sont approximatives."
-    }
+    },
+    "checklistShort": "Liste",
+    "mosquesShort": "Mosquées",
+    "walletShort": "Portefeuille"
   },
   "business": {
     "title": "Centre B2B Sourcing",
@@ -316,7 +319,12 @@
     "notifications": "Notifications",
     "settings": "Paramètres",
     "language": "Langue",
-    "adminPanel": "Panneau d'administration"
+    "adminPanel": "Panneau d'administration",
+    "completeProfile": {
+      "title": "Complétez votre profil",
+      "subtitle": "Dites-nous vos intérêts pour que nous trouvions ce dont vous avez besoin",
+      "start": "Commencer"
+    }
   },
   "booking": {
     "confirmed": "Confirmé",
