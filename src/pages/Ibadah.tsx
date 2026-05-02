@@ -355,10 +355,10 @@ const Ibadah = () => {
         <div className="flex gap-2">
           <button
             onClick={() => setActiveSection('restaurants')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
               activeSection === 'restaurants'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground'
+                ? 'bg-primary/15 text-primary border-primary/30'
+                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
             }`}
           >
             <Utensils className="w-4 h-4 inline-block mr-1" />
@@ -366,10 +366,10 @@ const Ibadah = () => {
           </button>
           <button
             onClick={() => setActiveSection('mosques')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
               activeSection === 'mosques'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground'
+                ? 'bg-primary/15 text-primary border-primary/30'
+                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
             }`}
           >
             <Moon className="w-4 h-4 inline-block mr-1" />
@@ -377,10 +377,10 @@ const Ibadah = () => {
           </button>
           <button
             onClick={() => setActiveSection('shops')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-all ${
+            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
               activeSection === 'shops'
-                ? 'bg-primary text-primary-foreground'
-                : 'bg-muted text-muted-foreground'
+                ? 'bg-primary/15 text-primary border-primary/30'
+                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
             }`}
           >
             <Store className="w-4 h-4 inline-block mr-1" />
