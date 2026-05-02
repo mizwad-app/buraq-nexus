@@ -59,32 +59,32 @@ export const PrayerTimeCard = () => {
   return (
     <button
       onClick={() => navigate("/ibadah?tab=mosques")}
-      className="text-left w-full rounded-2xl p-4 min-h-[120px] bg-emerald-900/40 border border-emerald-700/50 transition-transform active:scale-[0.98]"
+      className="text-left w-full rounded-2xl p-3.5 min-h-[120px] bg-primary/10 border border-primary/30 transition-transform active:scale-[0.98]"
     >
-      <div className="flex items-center justify-between mb-3">
-        <div className="flex items-center gap-2 text-emerald-200">
-          <Moon className="w-4 h-4" />
-          <span className="text-xs font-medium">{t("home.nextPrayer")}</span>
+      <div className="flex items-center justify-between mb-3 gap-2">
+        <div className="flex items-center gap-1.5 text-primary min-w-0">
+          <Moon className="w-4 h-4 shrink-0" />
+          <span className="text-xs font-medium truncate">{t("home.nextPrayer")}</span>
         </div>
-        <div className="flex items-center gap-1 text-xs text-emerald-200/80 bg-emerald-950/40 px-2 py-0.5 rounded-full">
+        <div className="flex items-center gap-1 text-[10px] text-primary/90 bg-primary/10 px-2 py-0.5 rounded-full shrink-0">
           <MapPin className="w-3 h-3" />
-          <span>{selectedCity}</span>
+          <span className="truncate max-w-[80px]">{selectedCity}</span>
         </div>
       </div>
 
       <div className="font-display text-2xl font-bold text-foreground">
         {t(`prayers.${prayerKey}`)}
       </div>
-      <div className="text-lg text-emerald-100/90 mt-0.5">{prayerTime}</div>
+      <div className="text-lg text-foreground/90 mt-0.5">{prayerTime}</div>
 
-      <div className="text-[13px] text-muted-foreground mt-1">
+      <div className="text-[12px] text-muted-foreground mt-1">
         {countdown.hours > 0 && `${countdown.hours} ${t("common.hourShort", "soat")} `}
         {countdown.mins} {t("common.minuteShort", "daqiqa")} {t("home.timeRemaining")}
         {isApprox && (
-          <span className="ml-2 text-amber-300/80">· {t("home.approximate")}</span>
+          <span className="ml-2 text-gold/90">· {t("home.approximate")}</span>
         )}
         {isTomorrow && (
-          <span className="ml-2 text-emerald-300/80">· {t("common.tomorrow", "ertaga")}</span>
+          <span className="ml-2 text-primary/90">· {t("common.tomorrow", "ertaga")}</span>
         )}
       </div>
     </button>

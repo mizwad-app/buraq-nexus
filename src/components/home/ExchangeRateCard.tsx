@@ -23,23 +23,25 @@ export const ExchangeRateCard = () => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="text-left w-full rounded-2xl p-4 min-h-[120px] bg-amber-900/30 border border-amber-700/40 transition-transform active:scale-[0.98]"
+        className="text-left w-full rounded-2xl p-3.5 min-h-[120px] bg-gold/10 border border-gold/30 transition-transform active:scale-[0.98]"
       >
-        <div className="flex items-center justify-between mb-3">
-          <div className="flex items-center gap-2 text-amber-200">
-            <Coins className="w-4 h-4" />
-            <span className="text-xs font-medium">{t("home.exchangeRates")}</span>
+        <div className="flex items-center justify-between mb-3 gap-2">
+          <div className="flex items-center gap-1.5 text-gold min-w-0">
+            <Coins className="w-4 h-4 shrink-0" />
+            <span className="text-xs font-medium truncate">{t("home.exchangeRates")}</span>
           </div>
-          <span className="text-[11px] text-amber-200/70 bg-amber-950/40 px-2 py-0.5 rounded-full">
+          <span className="text-[10px] text-gold/80 bg-gold/10 px-2 py-0.5 rounded-full shrink-0">
             {t("home.updatedToday")}
           </span>
         </div>
 
         <div className="space-y-1.5">
           {rates.map((r, i) => (
-            <div key={i} className="flex items-center justify-between gap-2 text-sm min-w-0">
-              <span className="text-muted-foreground whitespace-nowrap shrink-0">{r.left}</span>
-              <span className="font-mono font-semibold text-foreground whitespace-nowrap truncate text-right">{r.right}</span>
+            <div key={i} className="flex items-baseline justify-between gap-2 text-sm">
+              <span className="text-muted-foreground text-xs shrink-0">{r.left}</span>
+              <span className="font-mono font-semibold text-foreground text-[13px] truncate text-right">
+                {r.right}
+              </span>
             </div>
           ))}
         </div>
