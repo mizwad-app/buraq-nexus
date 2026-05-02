@@ -308,7 +308,16 @@
     "confirmed": "Tasdiqlangan",
     "pending": "Kutilmoqda",
     "completed": "Bajarildi",
-    "cancelled": "Bekor qilindi"
+    "cancelled": "Bekor qilindi",
+    "translatorPrice": "Tarjimon narxi",
+    "serviceFee": "Buraq xizmat haqi",
+    "serviceFeeRate": "10%",
+    "totalPayment": "Jami to'lov",
+    "feeInfo": {
+      "title": "Buraq xizmat haqi",
+      "body": "10% xizmat haqi platform xavfsizligi va qo'llab-quvvatlash uchun olinadi. Tarjimon o'z narxini to'liq oladi."
+    },
+    "insufficientBalance": "Hamyondagi mablag' yetarli emas. Kerak: ¥{{needed}}, balansda: ¥{{available}}"
   },
   "language": {
     "title": "Tilni tanlang",
