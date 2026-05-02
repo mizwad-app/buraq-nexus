@@ -192,11 +192,13 @@ export type Database = {
       }
       companies: {
         Row: {
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           contact_info: string | null
           country: string
           created_at: string
@@ -205,27 +207,32 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           id: string
           industry: string
           industry_ar: string | null
           industry_en: string | null
           industry_ru: string | null
           industry_uz: string | null
+          industry_zh: string | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           rating: number | null
           verified: boolean | null
           years_in_business: number | null
         }
         Insert: {
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
@@ -234,27 +241,32 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           industry: string
           industry_ar?: string | null
           industry_en?: string | null
           industry_ru?: string | null
           industry_uz?: string | null
+          industry_zh?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           rating?: number | null
           verified?: boolean | null
           years_in_business?: number | null
         }
         Update: {
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
@@ -263,17 +275,20 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           industry?: string
           industry_ar?: string | null
           industry_en?: string | null
           industry_ru?: string | null
           industry_uz?: string | null
+          industry_zh?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           rating?: number | null
           verified?: boolean | null
           years_in_business?: number | null
@@ -348,11 +363,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           country: string
           created_at: string
           email: string | null
@@ -366,6 +383,7 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           phone: string | null
           type: string
           website: string | null
@@ -374,6 +392,7 @@ export type Database = {
           working_hours_en: string | null
           working_hours_ru: string | null
           working_hours_uz: string | null
+          working_hours_zh: string | null
         }
         Insert: {
           address?: string | null
@@ -382,11 +401,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           email?: string | null
@@ -400,6 +421,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           phone?: string | null
           type?: string
           website?: string | null
@@ -408,6 +430,7 @@ export type Database = {
           working_hours_en?: string | null
           working_hours_ru?: string | null
           working_hours_uz?: string | null
+          working_hours_zh?: string | null
         }
         Update: {
           address?: string | null
@@ -416,11 +439,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           email?: string | null
@@ -434,6 +459,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           phone?: string | null
           type?: string
           website?: string | null
@@ -442,6 +468,7 @@ export type Database = {
           working_hours_en?: string | null
           working_hours_ru?: string | null
           working_hours_uz?: string | null
+          working_hours_zh?: string | null
         }
         Relationships: []
       }
@@ -452,11 +479,13 @@ export type Database = {
           category_en: string | null
           category_ru: string | null
           category_uz: string | null
+          category_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           country: string
           created_at: string
           description: string | null
@@ -464,6 +493,7 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           end_date: string
           id: string
           name: string
@@ -471,12 +501,14 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           start_date: string
           venue: string | null
           venue_ar: string | null
           venue_en: string | null
           venue_ru: string | null
           venue_uz: string | null
+          venue_zh: string | null
           website_url: string | null
         }
         Insert: {
@@ -485,11 +517,13 @@ export type Database = {
           category_en?: string | null
           category_ru?: string | null
           category_uz?: string | null
+          category_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -497,6 +531,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           end_date: string
           id?: string
           name: string
@@ -504,12 +539,14 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           start_date: string
           venue?: string | null
           venue_ar?: string | null
           venue_en?: string | null
           venue_ru?: string | null
           venue_uz?: string | null
+          venue_zh?: string | null
           website_url?: string | null
         }
         Update: {
@@ -518,11 +555,13 @@ export type Database = {
           category_en?: string | null
           category_ru?: string | null
           category_uz?: string | null
+          category_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -530,6 +569,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           end_date?: string
           id?: string
           name?: string
@@ -537,12 +577,14 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           start_date?: string
           venue?: string | null
           venue_ar?: string | null
           venue_en?: string | null
           venue_ru?: string | null
           venue_uz?: string | null
+          venue_zh?: string | null
           website_url?: string | null
         }
         Relationships: []
@@ -587,10 +629,12 @@ export type Database = {
           category: string | null
           created_at: string
           description: string | null
+          description_zh: string | null
           id: string
           image_url: string | null
           is_active: boolean | null
           name: string
+          name_zh: string | null
           points_required: number
           stock: number | null
         }
@@ -598,10 +642,12 @@ export type Database = {
           category?: string | null
           created_at?: string
           description?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
           name: string
+          name_zh?: string | null
           points_required: number
           stock?: number | null
         }
@@ -609,10 +655,12 @@ export type Database = {
           category?: string | null
           created_at?: string
           description?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean | null
           name?: string
+          name_zh?: string | null
           points_required?: number
           stock?: number | null
         }
@@ -626,11 +674,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           country: string
           created_at: string
           description: string | null
@@ -638,6 +688,7 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           id: string
           image_url: string | null
           is_verified: boolean | null
@@ -648,6 +699,7 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           phone: string | null
           rating: number | null
         }
@@ -658,11 +710,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -670,6 +724,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           is_verified?: boolean | null
@@ -680,6 +735,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           phone?: string | null
           rating?: number | null
         }
@@ -690,11 +746,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -702,6 +760,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           is_verified?: boolean | null
@@ -712,6 +771,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           phone?: string | null
           rating?: number | null
         }
@@ -761,11 +821,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           country: string
           created_at: string
           description: string | null
@@ -773,6 +835,7 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           email: string | null
           id: string
           name: string
@@ -780,12 +843,14 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           phone: string | null
           specialization: string
           specialization_ar: string | null
           specialization_en: string | null
           specialization_ru: string | null
           specialization_uz: string | null
+          specialization_zh: string | null
           verified: boolean | null
           website: string | null
         }
@@ -796,11 +861,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -808,6 +875,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           email?: string | null
           id?: string
           name: string
@@ -815,12 +883,14 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           phone?: string | null
           specialization: string
           specialization_ar?: string | null
           specialization_en?: string | null
           specialization_ru?: string | null
           specialization_uz?: string | null
+          specialization_zh?: string | null
           verified?: boolean | null
           website?: string | null
         }
@@ -831,11 +901,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -843,6 +915,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           email?: string | null
           id?: string
           name?: string
@@ -850,12 +923,14 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           phone?: string | null
           specialization?: string
           specialization_ar?: string | null
           specialization_en?: string | null
           specialization_ru?: string | null
           specialization_uz?: string | null
+          specialization_zh?: string | null
           verified?: boolean | null
           website?: string | null
         }
@@ -869,6 +944,7 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           file_url: string | null
           id: string
           languages: string[] | null
@@ -877,6 +953,7 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           template_type: string
         }
         Insert: {
@@ -886,6 +963,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           file_url?: string | null
           id?: string
           languages?: string[] | null
@@ -894,6 +972,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           template_type: string
         }
         Update: {
@@ -903,6 +982,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           file_url?: string | null
           id?: string
           languages?: string[] | null
@@ -911,6 +991,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           template_type?: string
         }
         Relationships: []
@@ -958,11 +1039,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           country: string
           created_at: string
           description: string | null
@@ -970,6 +1053,7 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           has_friday_prayer: boolean | null
           has_womens_section: boolean | null
           id: string
@@ -981,6 +1065,7 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
         }
         Insert: {
           address?: string | null
@@ -988,11 +1073,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1000,6 +1087,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
           id?: string
@@ -1011,6 +1099,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
         }
         Update: {
           address?: string | null
@@ -1018,11 +1107,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1030,6 +1121,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
           id?: string
@@ -1041,6 +1133,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
         }
         Relationships: []
       }
@@ -1051,11 +1144,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           country: string
           created_at: string
           description: string | null
@@ -1063,6 +1158,7 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           id: string
           image_url: string | null
           latitude: number | null
@@ -1072,6 +1168,7 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           park_type: string | null
         }
         Insert: {
@@ -1080,11 +1177,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1092,6 +1191,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           latitude?: number | null
@@ -1101,6 +1201,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           park_type?: string | null
         }
         Update: {
@@ -1109,11 +1210,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1121,6 +1224,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           image_url?: string | null
           latitude?: number | null
@@ -1130,6 +1234,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           park_type?: string | null
         }
         Relationships: []
@@ -1174,6 +1279,7 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           slug: string
         }
         Insert: {
@@ -1185,6 +1291,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           slug: string
         }
         Update: {
@@ -1196,6 +1303,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           slug?: string
         }
         Relationships: []
@@ -1208,11 +1316,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           country: string
           created_at: string
           description: string | null
@@ -1220,20 +1330,25 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           id: string
           industry: string
           industry_ar: string | null
           industry_en: string | null
           industry_ru: string | null
           industry_uz: string | null
+          industry_zh: string | null
           latitude: number | null
           longitude: number | null
+          name_zh: string | null
           specializations: string[] | null
+          specializations_zh: string[] | null
           travel_tips: string | null
           travel_tips_ar: string | null
           travel_tips_en: string | null
           travel_tips_ru: string | null
           travel_tips_uz: string | null
+          travel_tips_zh: string | null
         }
         Insert: {
           address?: string | null
@@ -1242,11 +1357,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1254,20 +1371,25 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           industry: string
           industry_ar?: string | null
           industry_en?: string | null
           industry_ru?: string | null
           industry_uz?: string | null
+          industry_zh?: string | null
           latitude?: number | null
           longitude?: number | null
+          name_zh?: string | null
           specializations?: string[] | null
+          specializations_zh?: string[] | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null
           travel_tips_ru?: string | null
           travel_tips_uz?: string | null
+          travel_tips_zh?: string | null
         }
         Update: {
           address?: string | null
@@ -1276,11 +1398,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1288,20 +1412,25 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           id?: string
           industry?: string
           industry_ar?: string | null
           industry_en?: string | null
           industry_ru?: string | null
           industry_uz?: string | null
+          industry_zh?: string | null
           latitude?: number | null
           longitude?: number | null
+          name_zh?: string | null
           specializations?: string[] | null
+          specializations_zh?: string[] | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null
           travel_tips_ru?: string | null
           travel_tips_uz?: string | null
+          travel_tips_zh?: string | null
         }
         Relationships: []
       }
@@ -1310,36 +1439,42 @@ export type Database = {
           barcode: string | null
           created_at: string
           description: string | null
+          description_zh: string | null
           halal_status: Database["public"]["Enums"]["halal_status"]
           id: string
           image_url: string | null
           ingredients: string[] | null
           manufacturer: string | null
           name: string
+          name_zh: string | null
           updated_at: string
         }
         Insert: {
           barcode?: string | null
           created_at?: string
           description?: string | null
+          description_zh?: string | null
           halal_status?: Database["public"]["Enums"]["halal_status"]
           id?: string
           image_url?: string | null
           ingredients?: string[] | null
           manufacturer?: string | null
           name: string
+          name_zh?: string | null
           updated_at?: string
         }
         Update: {
           barcode?: string | null
           created_at?: string
           description?: string | null
+          description_zh?: string | null
           halal_status?: Database["public"]["Enums"]["halal_status"]
           id?: string
           image_url?: string | null
           ingredients?: string[] | null
           manufacturer?: string | null
           name?: string
+          name_zh?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -1378,11 +1513,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           contact_info: string | null
           country: string
           created_at: string
@@ -1391,17 +1528,20 @@ export type Database = {
           cuisine_type_en: string | null
           cuisine_type_ru: string | null
           cuisine_type_uz: string | null
+          cuisine_type_zh: string | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           halal_status: string | null
           halal_status_note: string | null
           halal_status_note_ar: string | null
           halal_status_note_en: string | null
           halal_status_note_ru: string | null
           halal_status_note_uz: string | null
+          halal_status_note_zh: string | null
           has_currency_exchange_nearby: boolean | null
           has_prayer_room: boolean | null
           id: string
@@ -1414,11 +1554,13 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           nearest_metro: string | null
           nearest_metro_ar: string | null
           nearest_metro_en: string | null
           nearest_metro_ru: string | null
           nearest_metro_uz: string | null
+          nearest_metro_zh: string | null
           rating: number | null
           rating_cleanliness: number | null
           rating_service: number | null
@@ -1431,11 +1573,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
@@ -1444,17 +1588,20 @@ export type Database = {
           cuisine_type_en?: string | null
           cuisine_type_ru?: string | null
           cuisine_type_uz?: string | null
+          cuisine_type_zh?: string | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           halal_status?: string | null
           halal_status_note?: string | null
           halal_status_note_ar?: string | null
           halal_status_note_en?: string | null
           halal_status_note_ru?: string | null
           halal_status_note_uz?: string | null
+          halal_status_note_zh?: string | null
           has_currency_exchange_nearby?: boolean | null
           has_prayer_room?: boolean | null
           id?: string
@@ -1467,11 +1614,13 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           nearest_metro?: string | null
           nearest_metro_ar?: string | null
           nearest_metro_en?: string | null
           nearest_metro_ru?: string | null
           nearest_metro_uz?: string | null
+          nearest_metro_zh?: string | null
           rating?: number | null
           rating_cleanliness?: number | null
           rating_service?: number | null
@@ -1484,11 +1633,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
@@ -1497,17 +1648,20 @@ export type Database = {
           cuisine_type_en?: string | null
           cuisine_type_ru?: string | null
           cuisine_type_uz?: string | null
+          cuisine_type_zh?: string | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           halal_status?: string | null
           halal_status_note?: string | null
           halal_status_note_ar?: string | null
           halal_status_note_en?: string | null
           halal_status_note_ru?: string | null
           halal_status_note_uz?: string | null
+          halal_status_note_zh?: string | null
           has_currency_exchange_nearby?: boolean | null
           has_prayer_room?: boolean | null
           id?: string
@@ -1520,11 +1674,13 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           nearest_metro?: string | null
           nearest_metro_ar?: string | null
           nearest_metro_en?: string | null
           nearest_metro_ru?: string | null
           nearest_metro_uz?: string | null
+          nearest_metro_zh?: string | null
           rating?: number | null
           rating_cleanliness?: number | null
           rating_service?: number | null
@@ -1653,11 +1809,13 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
+          city_zh: string | null
           contact_info: string | null
           country: string
           created_at: string
@@ -1666,6 +1824,7 @@ export type Database = {
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          description_zh: string | null
           has_halal_food: boolean | null
           id: string
           image_url: string | null
@@ -1676,6 +1835,7 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
           rating: number | null
         }
         Insert: {
@@ -1684,11 +1844,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
@@ -1697,6 +1859,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           has_halal_food?: boolean | null
           id?: string
           image_url?: string | null
@@ -1707,6 +1870,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           rating?: number | null
         }
         Update: {
@@ -1715,11 +1879,13 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
+          city_zh?: string | null
           contact_info?: string | null
           country?: string
           created_at?: string
@@ -1728,6 +1894,7 @@ export type Database = {
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          description_zh?: string | null
           has_halal_food?: boolean | null
           id?: string
           image_url?: string | null
@@ -1738,6 +1905,7 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
           rating?: number | null
         }
         Relationships: []

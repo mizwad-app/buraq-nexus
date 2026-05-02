@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 
-type LanguageCode = 'uz' | 'en' | 'ru' | 'ar';
+type LanguageCode = 'uz' | 'en' | 'ru' | 'ar' | 'fr' | 'zh';
 
 // Generic interface for translatable items
 interface TranslatableItem {
@@ -19,27 +19,21 @@ export const useTranslatedField = () => {
     fieldName: string
   ): string => {
     const lang = i18n.language as LanguageCode;
-    const translatedKey = `${fieldName}_${lang}`;
-    const englishKey = `${fieldName}_en`;
-    
-    // Try to get translated value first
-    const translatedValue = item[translatedKey];
-    if (translatedValue && typeof translatedValue === 'string') {
-      return translatedValue;
+    // Fallback chain: current lang -> en -> uz -> base
+    const fallbackOrder: LanguageCode[] = [lang, 'en', 'uz'];
+    const seen = new Set<string>();
+
+    for (const code of fallbackOrder) {
+      const key = `${fieldName}_${code}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const value = item[key];
+      if (value && typeof value === 'string') return value;
     }
-    
-    // Fall back to English translation
-    const englishValue = item[englishKey];
-    if (englishValue && typeof englishValue === 'string') {
-      return englishValue;
-    }
-    
-    // Fall back to base field
+
     const baseValue = item[fieldName];
-    if (baseValue && typeof baseValue === 'string') {
-      return baseValue;
-    }
-    
+    if (baseValue && typeof baseValue === 'string') return baseValue;
+
     return '';
   };
 
