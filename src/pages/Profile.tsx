@@ -304,14 +304,20 @@ const Profile = () => {
                     {getStatusLabel(booking.status)}
                   </span>
                 </div>
-                <div className="flex items-center justify-between text-sm">
+                <div className="flex items-center justify-between text-sm mb-2">
                   <span className="text-muted-foreground">
                     {format(new Date(booking.booking_date), "dd.MM.yyyy")}
                   </span>
                   <span className="font-semibold text-primary">
-                    ¥{booking.total_amount}
+                    ¥{Number(booking.total_amount).toLocaleString()}
                   </span>
                 </div>
+                {(booking.service_fee ?? 0) > 0 && (
+                  <div className="text-[11px] text-muted-foreground flex justify-between border-t border-border/30 pt-2">
+                    <span>{t("booking.translatorPrice")}: ¥{Number(booking.translator_amount ?? 0).toLocaleString()}</span>
+                    <span>{t("booking.serviceFee")}: ¥{Number(booking.service_fee ?? 0).toLocaleString()}</span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
