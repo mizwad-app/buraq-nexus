@@ -851,9 +851,9 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                 Orqaga
               </Button>
             )}
-            <Button 
+            <Button
               onClick={step === 'confirm' ? handleConfirmBooking : handleNext}
-              disabled={loading || (step === 'payment' && insufficientBalance)}
+              disabled={loading || (step === 'payment' && walletBalance < calculateTotal())}
               className="flex-1"
             >
               {loading ? "Yuklanmoqda..." : getButtonText()}
