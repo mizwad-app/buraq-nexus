@@ -19,8 +19,8 @@ export const useTranslatedField = () => {
     fieldName: string
   ): string => {
     const lang = i18n.language as LanguageCode;
-    // Fallback chain: current lang -> en -> uz -> base
-    const fallbackOrder: LanguageCode[] = [lang, 'en', 'uz'];
+    // Fallback chain: current lang -> uz -> en -> ru -> ar -> fr -> zh -> base
+    const fallbackOrder: LanguageCode[] = [lang, 'uz', 'en', 'ru', 'ar', 'fr', 'zh'];
     const seen = new Set<string>();
 
     for (const code of fallbackOrder) {
