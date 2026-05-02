@@ -404,15 +404,7 @@ const Translators = () => {
       <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
         <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
           <SheetHeader className="pb-4 border-b border-border/50">
-            <div className="flex items-center justify-between">
-              <SheetTitle className="text-xl font-bold">Filtrlash</SheetTitle>
-              <button 
-                onClick={() => setFilterOpen(false)}
-                className="p-2 hover:bg-muted rounded-full"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            <SheetTitle className="text-xl font-bold text-left">Filtrlash</SheetTitle>
           </SheetHeader>
 
           <div className="py-6 space-y-6 overflow-y-auto h-[calc(100%-160px)]">
