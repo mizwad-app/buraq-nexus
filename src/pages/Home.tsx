@@ -82,16 +82,6 @@ const Home = () => {
         </div>
       </header>
 
-      {/* Mode Toggle */}
-      <section className="px-5 mb-5">
-        <div className="flex justify-center">
-          <ModeToggle mode={mode} onModeChange={setMode} />
-        </div>
-        <p className="text-center text-xs text-muted-foreground mt-2">
-          {mode === "business" ? t("modes.businessDesc") : t("modes.travelDesc")}
-        </p>
-      </section>
-
       {/* Guest Prompt */}
       {!user && (
         <section className="px-5 mb-5">
