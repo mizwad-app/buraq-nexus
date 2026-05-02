@@ -66,10 +66,11 @@ interface TranslatorDetailSheetProps {
 }
 
 export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, onChat }: TranslatorDetailSheetProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { getField } = useTranslatedField();
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [reviewsOpen, setReviewsOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   if (!translator) return null;
