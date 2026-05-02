@@ -156,7 +156,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
   const dailyPrice = translator.daily_rate || translator.price_per_day || 0;
   const hourlyPrice = translator.hourly_rate || Math.round(dailyPrice / 8);
 
-  const calculateTotal = () => {
+  const SERVICE_FEE_RATE = 0.10;
+
+  // What the translator earns (their advertised price × days/hours)
+  const calculateTranslatorAmount = () => {
     const numDays = selectedDates.length || 1;
     if (serviceType === 'daily') {
       return dailyPrice * numDays;
@@ -167,6 +170,11 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       return hours * hourlyPrice * numDays;
     }
   };
+
+  const calculateServiceFee = () => Math.round(calculateTranslatorAmount() * SERVICE_FEE_RATE * 100) / 100;
+
+  // What the user pays (translator amount + 10% Buraq fee)
+  const calculateTotal = () => calculateTranslatorAmount() + calculateServiceFee();
 
   const calculateHours = () => {
     const start = parseInt(startTime.split(':')[0]);
@@ -254,8 +262,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       const bookingResults: { success: boolean; booking_id?: string; new_balance?: number; error?: string }[] = [];
       
       for (const date of selectedDates) {
-        const perDayAmount = serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice);
-        
+        const perDayTranslatorAmount = serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice);
+        const perDayServiceFee = Math.round(perDayTranslatorAmount * SERVICE_FEE_RATE * 100) / 100;
+        const perDayTotal = perDayTranslatorAmount + perDayServiceFee;
+
         const { data: rpcResult, error: rpcError } = await supabase.rpc(
           'process_booking_payment',
           {
@@ -269,8 +279,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
             p_description: description || '',
             p_agreed_rate: serviceType === 'daily' ? dailyPrice : hourlyPrice,
             p_total_hours: serviceType === 'hourly' ? calculateHours() : null,
-            p_total_amount: perDayAmount
-          }
+            p_translator_amount: perDayTranslatorAmount,
+            p_service_fee: perDayServiceFee,
+            p_total_amount: perDayTotal,
+          } as never
         );
 
         if (rpcError) {
@@ -599,7 +611,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
             </div>
 
-            {/* Pricing Summary */}
+            {/* Pricing Summary with explicit fee breakdown */}
             <div className="bg-muted/50 rounded-xl p-4 space-y-2">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Kunlar soni</span>
@@ -607,17 +619,24 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  {serviceType === 'daily' ? 'Kunlik narx' : `Soatlik narx (${calculateHours()} soat)`}
+                  Tarjimon narxi {serviceType === 'hourly' && `(${calculateHours()} soat)`}
                 </span>
-                <span className="font-medium">
-                  ¥{serviceType === 'daily' ? dailyPrice : hourlyPrice * calculateHours()}
+                <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted-foreground">
+                  Buraq xizmat haqi (10%)
                 </span>
+                <span className="font-medium">¥{calculateServiceFee().toLocaleString()}</span>
               </div>
               <div className="h-px bg-border my-2" />
               <div className="flex justify-between text-lg font-bold">
                 <span>Jami to'lov</span>
-                <span className="text-primary">¥{total}</span>
+                <span className="text-primary">¥{total.toLocaleString()}</span>
               </div>
+              <p className="text-[11px] text-muted-foreground pt-1">
+                Tarjimon to'liq narxini oladi. 10% Buraq platformasi xizmat haqi.
+              </p>
             </div>
 
             {/* Wallet Balance */}
@@ -728,9 +747,19 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                 <span className="text-muted-foreground">Manzil</span>
                 <span className="font-medium text-right max-w-[60%]">{location}</span>
               </div>
-              <div className="flex justify-between py-3 bg-primary/5 rounded-xl px-3">
-                <span className="font-semibold">Jami to'lov</span>
-                <span className="text-xl font-bold text-primary">¥{calculateTotal()}</span>
+              <div className="py-3 bg-primary/5 rounded-xl px-3 space-y-1.5">
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Tarjimon narxi</span>
+                  <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-muted-foreground">Buraq xizmat haqi (10%)</span>
+                  <span className="font-medium">¥{calculateServiceFee().toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between pt-1.5 border-t border-primary/20">
+                  <span className="font-semibold">Jami to'lov</span>
+                  <span className="text-xl font-bold text-primary">¥{calculateTotal().toLocaleString()}</span>
+                </div>
               </div>
             </div>
 

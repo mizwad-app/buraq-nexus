@@ -1977,6 +1977,8 @@ export type Database = {
           end_time: string
           id: string
           location: string | null
+          service_fee: number
+          service_fee_rate: number
           service_type: string
           specialization: string | null
           start_time: string
@@ -1984,6 +1986,7 @@ export type Database = {
           status: Database["public"]["Enums"]["booking_status"] | null
           total_amount: number
           total_hours: number | null
+          translator_amount: number
           translator_id: string
           updated_at: string | null
         }
@@ -2002,6 +2005,8 @@ export type Database = {
           end_time: string
           id?: string
           location?: string | null
+          service_fee?: number
+          service_fee_rate?: number
           service_type: string
           specialization?: string | null
           start_time: string
@@ -2009,6 +2014,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_amount: number
           total_hours?: number | null
+          translator_amount: number
           translator_id: string
           updated_at?: string | null
         }
@@ -2027,6 +2033,8 @@ export type Database = {
           end_time?: string
           id?: string
           location?: string | null
+          service_fee?: number
+          service_fee_rate?: number
           service_type?: string
           specialization?: string | null
           start_time?: string
@@ -2034,6 +2042,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["booking_status"] | null
           total_amount?: number
           total_hours?: number | null
+          translator_amount?: number
           translator_id?: string
           updated_at?: string | null
         }
@@ -2737,22 +2746,41 @@ export type Database = {
         }
         Returns: boolean
       }
-      process_booking_payment: {
-        Args: {
-          p_agreed_rate: number
-          p_booking_date: string
-          p_description: string
-          p_end_time: string
-          p_location: string
-          p_service_type: string
-          p_specialization: string
-          p_start_time: string
-          p_total_amount: number
-          p_total_hours: number
-          p_translator_id: string
-        }
-        Returns: Json
-      }
+      process_booking_payment:
+        | {
+            Args: {
+              p_agreed_rate: number
+              p_booking_date: string
+              p_description: string
+              p_end_time: string
+              p_location: string
+              p_service_type: string
+              p_specialization: string
+              p_start_time: string
+              p_total_amount: number
+              p_total_hours: number
+              p_translator_id: string
+            }
+            Returns: Json
+          }
+        | {
+            Args: {
+              p_agreed_rate: number
+              p_booking_date: string
+              p_description: string
+              p_end_time: string
+              p_location: string
+              p_service_fee: number
+              p_service_type: string
+              p_specialization: string
+              p_start_time: string
+              p_total_amount: number
+              p_total_hours: number
+              p_translator_amount: number
+              p_translator_id: string
+            }
+            Returns: Json
+          }
       redeem_deep_check_points: {
         Args: { p_deep_check_id: string; p_points: number }
         Returns: Json
