@@ -166,24 +166,14 @@ const DeepCheckRequest = () => {
 
       {/* Pricing Info */}
       <section className="px-5 mb-6">
-        <div className="rounded-2xl bg-gradient-to-br from-amber-600/20 to-yellow-600/10 border border-gold/20 p-4">
-          <p className="text-sm text-foreground mb-3 font-medium">
+        <div className="rounded-2xl bg-primary/10 border border-primary/20 p-4">
+          <p className="text-sm text-foreground mb-2 font-medium">
             Chuqur tekshiruv narxi:
           </p>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Star className="w-5 h-5 text-gold" />
-              <span className="font-bold text-gold">{DEEP_CHECK_POINTS} ball</span>
-            </div>
-            <span className="text-muted-foreground">yoki</span>
-            <div className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-primary" />
-              <span className="font-bold text-primary">${DEEP_CHECK_PRICE}</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <CreditCard className="w-5 h-5 text-primary" />
+            <span className="font-bold text-primary text-lg">${DEEP_CHECK_PRICE}</span>
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            Sizda: <span className="text-gold font-bold">{userPoints}</span> ball
-          </p>
         </div>
       </section>
 
