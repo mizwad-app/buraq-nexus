@@ -2428,6 +2428,7 @@ export type Database = {
           currency: string | null
           description: string | null
           id: string
+          metadata: Json
           processed_at: string | null
           reference_id: string | null
           status: Database["public"]["Enums"]["payment_status"] | null
@@ -2441,6 +2442,7 @@ export type Database = {
           currency?: string | null
           description?: string | null
           id?: string
+          metadata?: Json
           processed_at?: string | null
           reference_id?: string | null
           status?: Database["public"]["Enums"]["payment_status"] | null
@@ -2454,6 +2456,7 @@ export type Database = {
           currency?: string | null
           description?: string | null
           id?: string
+          metadata?: Json
           processed_at?: string | null
           reference_id?: string | null
           status?: Database["public"]["Enums"]["payment_status"] | null

@@ -172,10 +172,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
     }
   };
 
-  const calculateServiceFee = () => Math.round(calculateTranslatorAmount() * SERVICE_FEE_RATE * 100) / 100;
+  const calculateServiceFee = () => Math.round(calculateTranslatorAmount() * SERVICE_FEE_RATE);
 
   // What the user pays (translator amount + 10% Buraq fee)
-  const calculateTotal = () => calculateTranslatorAmount() + calculateServiceFee();
+  const calculateTotal = () => Math.round(calculateTranslatorAmount() + calculateServiceFee());
 
   const calculateHours = () => {
     const start = parseInt(startTime.split(':')[0]);
@@ -264,8 +264,8 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       
       for (const date of selectedDates) {
         const perDayTranslatorAmount = serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice);
-        const perDayServiceFee = Math.round(perDayTranslatorAmount * SERVICE_FEE_RATE * 100) / 100;
-        const perDayTotal = perDayTranslatorAmount + perDayServiceFee;
+        const perDayServiceFee = Math.round(perDayTranslatorAmount * SERVICE_FEE_RATE);
+        const perDayTotal = Math.round(perDayTranslatorAmount + perDayServiceFee);
 
         const { data: rpcResult, error: rpcError } = await supabase.rpc(
           'process_booking_payment',
@@ -620,18 +620,18 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  Tarjimon narxi {serviceType === 'hourly' && `(${calculateHours()} soat)`}
+                  {t('booking.translatorPrice')} {serviceType === 'hourly' && `(${calculateHours()} soat)`}
                 </span>
                 <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground inline-flex items-center gap-1.5">
-                  Buraq xizmat haqi (10%)
+                  {t('booking.serviceFee')} ({t('booking.serviceFeeRate')})
                   <Popover>
                     <PopoverTrigger asChild>
                       <button
                         type="button"
-                        aria-label="Xizmat haqi haqida"
+                        aria-label={t('booking.feeInfo.title')}
                         className="inline-flex items-center justify-center w-4 h-4 rounded-full text-muted-foreground hover:text-foreground transition-colors"
                       >
                         <Info className="w-3.5 h-3.5" />
@@ -639,10 +639,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                     </PopoverTrigger>
                     <PopoverContent side="top" align="center" className="w-64 p-3">
                       <p className="font-semibold text-sm text-foreground mb-1">
-                        Buraq xizmat haqi
+                        {t('booking.feeInfo.title')}
                       </p>
                       <p className="text-xs text-muted-foreground leading-relaxed">
-                        10% xizmat haqi platform xavfsizligi va qo'llab-quvvatlash uchun olinadi. Tarjimon o'z narxini to'liq oladi.
+                        {t('booking.feeInfo.body')}
                       </p>
                     </PopoverContent>
                   </Popover>
@@ -651,7 +651,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               </div>
               <div className="h-px bg-border my-2" />
               <div className="flex justify-between items-center">
-                <span className="text-base font-bold text-foreground">Jami to'lov</span>
+                <span className="text-base font-bold text-foreground">{t('booking.totalPayment')}</span>
                 <span className="text-2xl font-bold text-primary">¥{total.toLocaleString()}</span>
               </div>
             </div>
@@ -680,22 +680,23 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               )}
             </div>
 
-            {/* Insufficient Balance Warning */}
-            {insufficientBalance && (
+            {/* Insufficient Balance Warning — based on TOTAL (translator + fee) */}
+            {!hasEnoughBalance && (
               <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-semibold text-destructive mb-1">Balans yetarli emas</p>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      Iltimos, avval hamyoningizni to'ldiring. Kerakli summa: ¥{(total - walletBalance).toLocaleString()}
+                  <div className="flex-1">
+                    <p className="text-sm text-destructive mb-3">
+                      {t('booking.insufficientBalance', {
+                        needed: total.toLocaleString(),
+                        available: walletBalance.toLocaleString(),
+                      })}
                     </p>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="outline"
                       className="gap-2 border-primary text-primary"
                       onClick={() => {
-                        // TODO: Navigate to top-up page
                         toast({ title: "Hamyonni to'ldirish", description: "Bu funksiya tez orada qo'shiladi" });
                       }}
                     >
@@ -850,9 +851,9 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                 Orqaga
               </Button>
             )}
-            <Button 
+            <Button
               onClick={step === 'confirm' ? handleConfirmBooking : handleNext}
-              disabled={loading || (step === 'payment' && insufficientBalance)}
+              disabled={loading || (step === 'payment' && walletBalance < calculateTotal())}
               className="flex-1"
             >
               {loading ? "Yuklanmoqda..." : getButtonText()}

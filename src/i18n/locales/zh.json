@@ -308,7 +308,16 @@
     "confirmed": "已确认",
     "pending": "待处理",
     "completed": "已完成",
-    "cancelled": "已取消"
+    "cancelled": "已取消",
+    "translatorPrice": "翻译员价格",
+    "serviceFee": "Buraq服务费",
+    "serviceFeeRate": "10%",
+    "totalPayment": "总支付",
+    "feeInfo": {
+      "title": "关于Buraq服务费",
+      "body": "10%的服务费用于平台安全和支持。翻译员获得全额价格。"
+    },
+    "insufficientBalance": "钱包余额不足。需要: ¥{{needed}}，可用: ¥{{available}}"
   },
   "language": {
     "title": "选择语言",

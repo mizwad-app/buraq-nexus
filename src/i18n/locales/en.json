@@ -308,7 +308,16 @@
     "confirmed": "Confirmed",
     "pending": "Pending",
     "completed": "Completed",
-    "cancelled": "Cancelled"
+    "cancelled": "Cancelled",
+    "translatorPrice": "Translator price",
+    "serviceFee": "Buraq service fee",
+    "serviceFeeRate": "10%",
+    "totalPayment": "Total payment",
+    "feeInfo": {
+      "title": "About Buraq service fee",
+      "body": "10% service fee covers platform safety and support. Translator receives their full price."
+    },
+    "insufficientBalance": "Insufficient wallet balance. Need: ¥{{needed}}, available: ¥{{available}}"
   },
   "language": {
     "title": "Select Language",
