@@ -63,7 +63,17 @@
     "translatorsDesc": "Проверенные переводчики",
     "services": "Услуги",
     "servicesDesc": "Инспекция и бронирование",
-    "transport": "Транспорт"
+    "transport": "Транспорт",
+    "nextPrayer": "Следующая молитва",
+    "timeRemaining": "осталось",
+    "approximate": "Примерно",
+    "todayInfo": "Сегодняшняя информация",
+    "exchangeRates": "Курс валют",
+    "updatedToday": "Обновлено: сегодня",
+    "exchangeInfo": {
+      "title": "О курсе валют",
+      "body": "Реальные курсы скоро будут добавлены. Текущие значения приблизительны."
+    }
   },
   "business": {
     "title": "B2B Хаб",
@@ -336,7 +346,10 @@
     "delete": "Удалить",
     "edit": "Редактировать",
     "address": "Адрес",
-    "sending": "Отправка..."
+    "sending": "Отправка...",
+    "hourShort": "ч",
+    "minuteShort": "мин",
+    "tomorrow": "завтра"
   },
   "cargo": {
     "title": "Отслеживание грузов",
@@ -666,5 +679,12 @@
     "travel": "Путешествие",
     "businessDesc": "Для предпринимателей",
     "travelDesc": "Для путешественников"
+  },
+  "prayers": {
+    "fajr": "Фаджр",
+    "dhuhr": "Зухр",
+    "asr": "Аср",
+    "maghrib": "Магриб",
+    "isha": "Иша"
   }
 }
