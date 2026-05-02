@@ -308,7 +308,16 @@
     "confirmed": "مؤكد",
     "pending": "قيد الانتظار",
     "completed": "مكتمل",
-    "cancelled": "ملغى"
+    "cancelled": "ملغى",
+    "translatorPrice": "سعر المترجم",
+    "serviceFee": "رسوم خدمة Buraq",
+    "serviceFeeRate": "10%",
+    "totalPayment": "إجمالي الدفع",
+    "feeInfo": {
+      "title": "عن رسوم خدمة Buraq",
+      "body": "تغطي رسوم الخدمة بنسبة 10% أمان المنصة والدعم. يحصل المترجم على سعره كاملاً."
+    },
+    "insufficientBalance": "رصيد المحفظة غير كافٍ. مطلوب: ¥{{needed}}، متوفر: ¥{{available}}"
   },
   "language": {
     "title": "اختر اللغة",
