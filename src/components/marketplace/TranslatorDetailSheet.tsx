@@ -444,10 +444,15 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                   <div className="font-bold text-primary text-lg mb-1">{translator.completed_bookings || 150}+</div>
                   <p className="text-[10px] text-muted-foreground">Xizmat ko'rsatilgan mijozlar</p>
                 </div>
-                <div className="bg-muted/50 rounded-xl p-3 text-center">
+                <button
+                  type="button"
+                  onClick={() => setReviewsOpen(true)}
+                  className="bg-muted/50 rounded-xl p-3 text-center hover:bg-muted/70 transition-colors flex flex-col items-center justify-center relative group"
+                >
+                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground absolute top-2 right-2 group-hover:translate-x-0.5 transition-transform" />
                   <div className="font-bold text-foreground text-lg mb-1">{translator.total_reviews}</div>
                   <p className="text-[10px] text-muted-foreground">Sharhlar</p>
-                </div>
+                </button>
               </div>
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
