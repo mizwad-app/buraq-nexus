@@ -480,16 +480,18 @@ const Ibadah = () => {
                   >
                     <div className="relative h-40 w-full">
                       <img
-                        src={restaurant.image_url || RESTAURANT_FALLBACK_IMAGE}
+                        src={restaurant.image_url || getRestaurantFallback(restaurant.cuisine_type)}
                         alt={getField(restaurant, 'name')}
                         className="w-full h-full object-cover"
                         onError={(e) => {
                           const target = e.target as HTMLImageElement;
-                          target.src = RESTAURANT_FALLBACK_IMAGE;
+                          target.src = getRestaurantFallback(restaurant.cuisine_type);
                         }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                      
+                      {/* Stronger gradient bottom for guaranteed text readability */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+
+                      {/* Halal status icon — top-right */}
                       <div className="absolute top-3 right-3 z-10">
                         <div className={cn(
                           "rounded-xl p-1 shadow-lg backdrop-blur-sm",
@@ -505,21 +507,33 @@ const Ibadah = () => {
                           />
                         </div>
                       </div>
-                      
-                      <div className="absolute bottom-12 left-3 z-10">
+
+                      {/* Status text badge — top-left, solid background so it doesn't blend */}
+                      <div className="absolute top-3 left-3 z-10">
                         <span className={cn(
-                          "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg",
-                          status === 'certified' && "bg-emerald-500 text-white",
-                          status === 'doubtful' && "bg-amber-500 text-white",
-                          status === 'not_halal' && "bg-red-500 text-white"
+                          "inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wide shadow-lg",
+                          status === 'certified' && "bg-emerald-600 text-white",
+                          status === 'doubtful' && "bg-amber-600 text-white",
+                          status === 'not_halal' && "bg-red-600 text-white"
                         )}>
                           {t(`halal.status.${status}`)}
                         </span>
                       </div>
-                      
+
+                      {/* Title — bottom, with strong text-shadow and clear gap from badge */}
                       <div className="absolute bottom-3 left-4 right-4">
-                        <h3 className="font-semibold text-white text-lg drop-shadow-lg">{getField(restaurant, 'name')}</h3>
-                        <p className="text-sm text-white/90">{getField(restaurant, 'cuisine_type')}</p>
+                        <h3
+                          className="font-semibold text-white text-lg leading-tight"
+                          style={{ textShadow: '0 2px 6px rgba(0,0,0,0.85), 0 1px 2px rgba(0,0,0,0.95)' }}
+                        >
+                          {getField(restaurant, 'name')}
+                        </h3>
+                        <p
+                          className="text-sm text-white/90"
+                          style={{ textShadow: '0 1px 4px rgba(0,0,0,0.85)' }}
+                        >
+                          {getField(restaurant, 'cuisine_type')}
+                        </p>
                       </div>
                     </div>
                     
