@@ -1,117 +1,57 @@
-import { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Home, Map, User, ScanLine } from "lucide-react";
+import { Home, Briefcase, Moon, Plane, User } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { AIScannerModal } from "./AIScannerModal";
 
 export const BottomNavigation = () => {
   const location = useLocation();
   const { t } = useTranslation();
-  const [scannerOpen, setScannerOpen] = useState(false);
 
   const navItems = [
     { path: "/", icon: Home, label: t("nav.home") },
-    { path: "/travel", icon: Map, label: t("nav.travel") },
-  ];
-
-  const rightNavItems = [
-    { path: "/mosques", icon: Map, label: t("nav.mosques") },
+    { path: "/business", icon: Briefcase, label: t("nav.business") },
+    { path: "/ibadah", icon: Moon, label: t("nav.halal") },
+    { path: "/travel", icon: Plane, label: t("nav.travel") },
     { path: "/profile", icon: User, label: t("nav.profile") },
   ];
 
   return (
-    <>
-      <nav className="fixed bottom-0 left-0 right-0 z-50">
-        <div className="max-w-lg mx-auto relative">
-          {/* FAB - AI Scanner */}
-          <div className="absolute left-1/2 -translate-x-1/2 -top-7 z-10">
-            <button 
-              onClick={() => setScannerOpen(true)}
-              className="fab-button w-16 h-16 group"
-            >
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-accent to-primary animate-pulse-soft opacity-50 blur-md" />
-              <div className="relative flex flex-col items-center justify-center gap-0.5">
-                <ScanLine className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
-                <span className="text-[9px] font-bold text-primary-foreground uppercase tracking-wider">AI</span>
-              </div>
-            </button>
+    <nav className="fixed bottom-0 left-0 right-0 z-50">
+      <div className="max-w-lg mx-auto">
+        <div className="glass-effect border-t border-border/50 rounded-t-3xl">
+          <div className="flex items-stretch justify-between px-2 py-2">
+            {navItems.map((item) => {
+              const isActive = location.pathname === item.path;
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  className={cn(
+                    "flex-1 min-h-[48px] flex flex-col items-center justify-center gap-1 rounded-xl py-2 transition-all",
+                    isActive
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  <Icon
+                    size={24}
+                    strokeWidth={isActive ? 2.5 : 2}
+                    className={cn(
+                      "transition-all",
+                      isActive && "drop-shadow-[0_0_8px_hsl(var(--primary)/0.5)]"
+                    )}
+                  />
+                  <span className="text-[11px] font-medium leading-none">
+                    {item.label}
+                  </span>
+                </NavLink>
+              );
+            })}
           </div>
-
-          {/* Navigation Bar */}
-          <div className="glass-effect border-t border-border/50 rounded-t-3xl">
-            <div className="flex items-center justify-between px-4 py-3">
-              {/* Left Nav Items */}
-              <div className="flex items-center gap-2">
-                {navItems.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  const Icon = item.icon;
-
-                  return (
-                    <NavLink
-                      key={item.path}
-                      to={item.path}
-                      className={cn(
-                        "nav-item",
-                        isActive ? "nav-item-active" : "nav-item-inactive"
-                      )}
-                    >
-                      <Icon
-                        className={cn(
-                          "w-5 h-5 transition-all",
-                          isActive && "drop-shadow-[0_0_8px_hsl(72_100%_50%/0.5)]"
-                        )}
-                        strokeWidth={isActive ? 2.5 : 2}
-                      />
-                      <span className="text-[10px] font-medium">
-                        {item.label}
-                      </span>
-                    </NavLink>
-                  );
-                })}
-              </div>
-
-              {/* Center spacer for FAB */}
-              <div className="w-20" />
-
-              {/* Right Nav Items */}
-              <div className="flex items-center gap-2">
-                {rightNavItems.map((item) => {
-                  const isActive = location.pathname === item.path;
-                  const Icon = item.icon;
-
-                  return (
-                    <NavLink
-                      key={item.path}
-                      to={item.path}
-                      className={cn(
-                        "nav-item",
-                        isActive ? "nav-item-active" : "nav-item-inactive"
-                      )}
-                    >
-                      <Icon
-                        className={cn(
-                          "w-5 h-5 transition-all",
-                          isActive && "drop-shadow-[0_0_8px_hsl(72_100%_50%/0.5)]"
-                        )}
-                        strokeWidth={isActive ? 2.5 : 2}
-                      />
-                      <span className="text-[10px] font-medium">
-                        {item.label}
-                      </span>
-                    </NavLink>
-                  );
-                })}
-              </div>
-            </div>
-            {/* Safe area padding for iOS */}
-            <div className="h-[env(safe-area-inset-bottom)]" />
-          </div>
+          <div className="h-[env(safe-area-inset-bottom)]" />
         </div>
-      </nav>
-
-      {/* AI Scanner Modal */}
-      <AIScannerModal open={scannerOpen} onOpenChange={setScannerOpen} />
-    </>
+      </div>
+    </nav>
   );
 };

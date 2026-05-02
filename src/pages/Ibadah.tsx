@@ -340,33 +340,15 @@ const Ibadah = () => {
         <GlobalCityFilter />
       </section>
 
-      {/* AI Scanner Card */}
-      <section className="px-5 mb-6">
-        <button
-          onClick={() => setScannerOpen(true)}
-          className="w-full text-left"
-        >
-          <div className="relative rounded-2xl overflow-hidden animate-scale-in">
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-accent/20 to-emerald-600/30" />
-            <div className="relative p-5">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg">
-                  <ScanLine className="w-7 h-7 text-primary-foreground" />
-                </div>
-                <div className="flex-1">
-                  <h2 className="font-display font-semibold text-foreground text-lg">
-                    {t("halal.aiScanner")}
-                  </h2>
-                  <p className="text-sm text-muted-foreground">
-                    {t("halal.scanProduct")}
-                  </p>
-                </div>
-                <ChevronRight className="w-5 h-5 text-muted-foreground" />
-              </div>
-            </div>
-          </div>
-        </button>
-      </section>
+      {/* AI Scanner FAB — floating bottom-right, above bottom nav */}
+      <button
+        onClick={() => setScannerOpen(true)}
+        aria-label={t("halal.aiScanner")}
+        className="fixed right-4 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all active:scale-95"
+        style={{ bottom: "calc(80px + env(safe-area-inset-bottom))" }}
+      >
+        <ScanLine className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
+      </button>
 
       {/* Section Toggle - 3 Tabs */}
       <section className="px-5 mb-4">

@@ -25,6 +25,8 @@
   },
   "nav": {
     "home": "Accueil",
+    "business": "Affaires",
+    "halal": "Halal",
     "travel": "Voyage",
     "mosques": "Mosquées",
     "profile": "Profil"
