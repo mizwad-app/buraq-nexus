@@ -32,11 +32,11 @@
     "profile": "Profile"
   },
   "modules": {
-    "halal": "Halal Food",
+    "halal": "Halal Guide",
     "halalGuide": "Halal Companion",
-    "travel": "Travel & Shopping",
+    "travel": "Travel",
     "business": "Business",
-    "cargo": "Cargo Tracking",
+    "cargo": "Cargo tracking",
     "mosques": "Mosques",
     "eco": "Eco Projects",
     "guide": "Travel Guide",
@@ -73,7 +73,10 @@
     "exchangeInfo": {
       "title": "About exchange rates",
       "body": "Real-time rates coming soon. Current values are approximate."
-    }
+    },
+    "checklistShort": "Checklist",
+    "mosquesShort": "Mosques",
+    "walletShort": "Wallet"
   },
   "business": {
     "title": "B2B Hub",
@@ -316,7 +319,12 @@
     "notifications": "Notifications",
     "settings": "Settings",
     "language": "Language",
-    "adminPanel": "Admin Panel"
+    "adminPanel": "Admin Panel",
+    "completeProfile": {
+      "title": "Complete your profile",
+      "subtitle": "Tell us your interests so we can find what you need",
+      "start": "Start"
+    }
   },
   "booking": {
     "confirmed": "Confirmed",

@@ -32,11 +32,11 @@
     "profile": "Профиль"
   },
   "modules": {
-    "halal": "Халяль Еда",
+    "halal": "Халяль гид",
     "halalGuide": "Халяль Спутник",
-    "travel": "Путешествия и Шоппинг",
+    "travel": "Путешествия",
     "business": "Бизнес",
-    "cargo": "Отслеживание Грузов",
+    "cargo": "Отслеживание груза",
     "mosques": "Мечети",
     "eco": "Эко Проекты",
     "guide": "Гид Путешественника",
@@ -46,7 +46,7 @@
     "videoTips": "Полезные Советы",
     "b2bHub": "B2B Sourcing Hub",
     "exhibitions": "Ярмарки и Выставки",
-    "wallet": "Кошелек Buraq",
+    "wallet": "Buraq Wallet",
     "transportVpn": "Транспорт и VPN",
     "attractions": "Достопримечательности",
     "legalHelp": "Консульства и Юрпомощь"
@@ -73,7 +73,10 @@
     "exchangeInfo": {
       "title": "О курсе валют",
       "body": "Реальные курсы скоро будут добавлены. Текущие значения приблизительны."
-    }
+    },
+    "checklistShort": "Чек-лист",
+    "mosquesShort": "Мечети",
+    "walletShort": "Кошелек"
   },
   "business": {
     "title": "B2B Хаб",
@@ -316,7 +319,12 @@
     "notifications": "Уведомления",
     "settings": "Настройки",
     "language": "Язык",
-    "adminPanel": "Панель администратора"
+    "adminPanel": "Панель администратора",
+    "completeProfile": {
+      "title": "Заполните профиль",
+      "subtitle": "Укажите ваши интересы, чтобы мы могли подобрать нужные товары",
+      "start": "Начать"
+    }
   },
   "booking": {
     "confirmed": "Подтверждено",

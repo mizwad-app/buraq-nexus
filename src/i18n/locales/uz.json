@@ -32,11 +32,11 @@
     "profile": "Profil"
   },
   "modules": {
-    "halal": "Halol Taomlar",
+    "halal": "Halol Yo'ldosh",
     "halalGuide": "Halol Yo'ldosh",
-    "travel": "Sayohat va Shopping",
+    "travel": "Sayohat",
     "business": "Biznes",
-    "cargo": "Yuk Kuzatuvi",
+    "cargo": "Yuk kuzatuv",
     "mosques": "Masjidlar",
     "eco": "Eko Loyihalar",
     "guide": "Sayohat Qo'llanmasi",
@@ -73,7 +73,10 @@
     "exchangeInfo": {
       "title": "Valyuta kursi haqida",
       "body": "Real-time kurslar tez orada qo'shiladi. Hozirgi qiymatlar taxminiy."
-    }
+    },
+    "checklistShort": "Check-list",
+    "mosquesShort": "Masjidlar",
+    "walletShort": "Wallet"
   },
   "business": {
     "title": "B2B Sourcing Hub",
@@ -316,7 +319,12 @@
     "notifications": "Bildirishnomalar",
     "settings": "Sozlamalar",
     "language": "Til",
-    "adminPanel": "Admin Panel"
+    "adminPanel": "Admin Panel",
+    "completeProfile": {
+      "title": "Profilingizni to'ldiring",
+      "subtitle": "Sizga kerakli mahsulotlarni topishimiz uchun qiziqishlaringizni belgilang",
+      "start": "Boshlash"
+    }
   },
   "booking": {
     "confirmed": "Tasdiqlangan",
