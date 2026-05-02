@@ -57,13 +57,17 @@ const App = () => (
                       <Route path="/business" element={<Business />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
-                      <Route path="/mosques" element={<Mosques />} />
-                      <Route path="/guide" element={<TravelGuide />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
                       <Route path="/translators" element={<Translators />} />
-                      <Route path="/marketplace" element={<TranslatorMarketplace />} />
-                      <Route path="/services" element={<Services />} />
                       <Route path="/transport" element={<Transport />} />
+
+                      {/* Backward-compatible redirects (Sprint 2B consolidation) */}
+                      <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />
+                      <Route path="/marketplace" element={<Navigate to="/translators" replace />} />
+                      <Route path="/translator-marketplace" element={<Navigate to="/translators" replace />} />
+                      <Route path="/guide" element={<Navigate to="/travel?tab=guide" replace />} />
+                      <Route path="/services" element={<Navigate to="/profile" replace />} />
+
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <BottomNavigation />
