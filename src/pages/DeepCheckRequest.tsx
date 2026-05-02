@@ -10,10 +10,8 @@ import { toast } from "sonner";
 import { 
   FileSearch, 
   Upload, 
-  Star, 
   CreditCard, 
   Loader2,
-  CheckCircle,
   X,
   Image as ImageIcon,
   Building2,
@@ -21,19 +19,16 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const DEEP_CHECK_POINTS = 500;
 const DEEP_CHECK_PRICE = 10;
 
 const DeepCheckRequest = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [userPoints, setUserPoints] = useState(0);
   const [productName, setProductName] = useState("");
   const [manufacturerName, setManufacturerName] = useState("");
   const [productImage, setProductImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [paymentType, setPaymentType] = useState<"points" | "payment">("points");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -41,24 +36,6 @@ const DeepCheckRequest = () => {
       setShowAuthModal(true);
     }
   }, [user, authLoading]);
-
-  useEffect(() => {
-    if (user) {
-      fetchUserPoints();
-    }
-  }, [user]);
-
-  const fetchUserPoints = async () => {
-    const { data } = await supabase
-      .from("user_points")
-      .select("total_points")
-      .eq("user_id", user?.id)
-      .maybeSingle();
-    
-    if (data) {
-      setUserPoints(data.total_points);
-    }
-  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
