@@ -340,12 +340,12 @@ const Ibadah = () => {
         <GlobalCityFilter />
       </section>
 
-      {/* AI Scanner FAB — floating bottom-right, above bottom nav */}
+      {/* AI Scanner FAB — floating bottom-left to avoid overlap with SupportChat FAB */}
       <button
         onClick={() => setScannerOpen(true)}
         aria-label={t("halal.aiScanner")}
-        className="fixed right-4 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all active:scale-95"
-        style={{ bottom: "calc(80px + env(safe-area-inset-bottom))" }}
+        className="fixed left-4 z-40 w-14 h-14 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-lg shadow-primary/30 hover:shadow-primary/50 transition-all active:scale-95"
+        style={{ bottom: "calc(96px + env(safe-area-inset-bottom))" }}
       >
         <ScanLine className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
       </button>
