@@ -31,6 +31,7 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
   const [isScanning, setIsScanning] = useState(false);
   const [scanResult, setScanResult] = useState<ScanResult>(null);
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showIngredients, setShowIngredients] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Localized result config
