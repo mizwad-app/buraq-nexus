@@ -11,11 +11,12 @@ import {
 import { cn } from "@/lib/utils";
 
 const languages = [
-  { code: "uz", label: "O'zbekcha", shortLabel: "UZ", flag: "🇺🇿" },
-  { code: "en", label: "English", shortLabel: "EN", flag: "🌐" },
+  { code: "uz", label: "O'zbek", shortLabel: "UZ", flag: "🇺🇿" },
   { code: "ru", label: "Русский", shortLabel: "RU", flag: "🇷🇺" },
-  { code: "fr", label: "Français", shortLabel: "FR", flag: "🇫🇷" },
+  { code: "en", label: "English", shortLabel: "EN", flag: "🇬🇧" },
   { code: "ar", label: "العربية", shortLabel: "AR", flag: "🇸🇦", rtl: true },
+  { code: "zh", label: "中文", shortLabel: "ZH", flag: "🇨🇳" },
+  { code: "fr", label: "Français", shortLabel: "FR", flag: "🇫🇷" },
 ];
 
 interface LanguageSelectorProps {
