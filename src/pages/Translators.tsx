@@ -748,6 +748,15 @@ const Translators = () => {
         open={bookingOpen}
         onOpenChange={setBookingOpen}
       />
+
+      {/* Chat Sheet */}
+      <ChatSheet
+        conversationId={conversationId}
+        recipientName={selectedTranslator ? getField(selectedTranslator, 'name') : ''}
+        recipientAvatar={selectedTranslator?.avatar_url}
+        open={chatOpen}
+        onOpenChange={setChatOpen}
+      />
     </div>
   );
 };
