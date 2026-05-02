@@ -360,10 +360,15 @@ const Travel = () => {
     }
     setSubmittingRequest(true);
     try {
+      const title =
+        serviceType === "visa_help"
+          ? (t("services.visaHelp.title") || "Vizа yordami so'rash")
+          : (t("services.hotelBooking.title") || "Mehmonxona bron qilish");
       const { error } = await supabase.from("service_requests").insert({
         user_id: user.id,
-        request_type: serviceType,
-        details: serviceMessage,
+        service_type: serviceType,
+        title,
+        description: serviceMessage,
         status: "pending",
       });
       if (error) throw error;
