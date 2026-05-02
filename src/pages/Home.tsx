@@ -2,12 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "@/contexts/AuthContext";
-import { useAppMode } from "@/contexts/AppModeContext";
 import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
 import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
-import { ModeToggle } from "@/components/ModeToggle";
 import { supabase } from "@/integrations/supabase/client";
 import { 
   Star, 
@@ -34,7 +32,6 @@ const Home = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const { user } = useAuth();
-  const { mode, setMode } = useAppMode();
   const [showSurvey, setShowSurvey] = useState(false);
 
   // Check if user has completed the business survey
@@ -58,8 +55,8 @@ const Home = () => {
     checkUserInterests();
   }, [user]);
 
-  // Business mode modules (6 cards)
-  const businessModules = [
+  // Unified modules grid (6 cards)
+  const activeModules = [
     { id: "b2bHub", title: t("modules.b2bHub"), image: b2bHub, route: "/business" },
     { id: "deepCheck", title: t("modules.deepCheck"), image: travelGuide, route: "/deep-check" },
     { id: "exhibitions", title: t("modules.exhibitions"), image: exhibitions, route: "/business" },
@@ -67,18 +64,6 @@ const Home = () => {
     { id: "wallet", title: t("modules.wallet"), image: wallet, route: "/profile" },
     { id: "transportVpn", title: t("modules.transportVpn"), image: cargo, route: "/transport" },
   ];
-
-  // Travel mode modules (6 cards)
-  const travelModules = [
-    { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah" },
-    { id: "attractions", title: t("modules.attractions"), image: attractions, route: "/travel" },
-    { id: "guide", title: t("modules.guide"), image: mosque, route: "/travel?tab=guide" },
-    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators" },
-    { id: "legalHelp", title: t("modules.legalHelp"), image: legalHelp, route: "/travel?tab=guide" },
-    { id: "transportVpn", title: t("modules.transportVpn"), image: cargo, route: "/transport" },
-  ];
-
-  const activeModules = mode === "business" ? businessModules : travelModules;
 
   return (
     <div className="min-h-screen bg-background safe-bottom">
