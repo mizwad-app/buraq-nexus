@@ -6,6 +6,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
 import { PrayerTimeCard } from "@/components/home/PrayerTimeCard";
 import { ExchangeRateCard } from "@/components/home/ExchangeRateCard";
+import { cn } from "@/lib/utils";
 import {
   Star,
   ChevronRight,
