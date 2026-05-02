@@ -275,6 +275,55 @@ export const AIScannerModal = ({ open, onOpenChange }: AIScannerModalProps) => {
               </div>
             </div>
           )}
+
+          {/* Ingredients to Avoid — educational reference */}
+          <div className="border border-border/50 rounded-2xl overflow-hidden bg-secondary/30">
+            <button
+              type="button"
+              onClick={() => setShowIngredients(v => !v)}
+              className="w-full flex items-center justify-between gap-3 p-4 hover:bg-secondary/50 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-amber-500" />
+                <span className="text-sm font-medium text-foreground">
+                  {t("halal.ingredientsToAvoid")}
+                </span>
+              </div>
+              <ChevronDown className={`w-4 h-4 text-muted-foreground transition-transform ${showIngredients ? "rotate-180" : ""}`} />
+            </button>
+            {showIngredients && (
+              <div className="px-3 pb-3 space-y-2">
+                {HARMFUL_INGREDIENTS.map((ingredient) => (
+                  <div
+                    key={ingredient.name}
+                    className="flex items-center gap-3 p-2.5 rounded-xl bg-card border border-border/50"
+                  >
+                    <div
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center ${
+                        ingredient.category === "haram" ? "bg-red-500/20" : "bg-amber-500/20"
+                      }`}
+                    >
+                      {ingredient.category === "haram" ? (
+                        <XCircle className="w-3.5 h-3.5 text-red-500" />
+                      ) : (
+                        <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-xs font-medium text-foreground">{ingredient.name}</p>
+                      <p
+                        className={`text-[10px] ${
+                          ingredient.category === "haram" ? "text-red-500" : "text-amber-500"
+                        }`}
+                      >
+                        {t(`halal.${ingredient.category}`)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Auth Modal for Deep Check */}
