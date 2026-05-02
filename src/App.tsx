@@ -17,7 +17,6 @@ import AdminDeepChecks from "./pages/AdminDeepChecks";
 import AdminLocations from "./pages/AdminLocations";
 import TravelChecklist from "./pages/TravelChecklist";
 import Translators from "./pages/Translators";
-import Transport from "./pages/Transport";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./layouts/AdminLayout";
@@ -58,14 +57,17 @@ const App = () => (
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
                       <Route path="/translators" element={<Translators />} />
-                      <Route path="/transport" element={<Transport />} />
 
-                      {/* Backward-compatible redirects (Sprint 2B consolidation) */}
+                      {/* Backward-compatible redirects */}
                       <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />
                       <Route path="/marketplace" element={<Navigate to="/translators" replace />} />
                       <Route path="/translator-marketplace" element={<Navigate to="/translators" replace />} />
                       <Route path="/guide" element={<Navigate to="/travel?tab=guide" replace />} />
                       <Route path="/services" element={<Navigate to="/profile" replace />} />
+                      <Route path="/transport" element={<Navigate to="/" replace />} />
+                      <Route path="/cargo" element={<Navigate to="/" replace />} />
+                      <Route path="/rewards" element={<Navigate to="/" replace />} />
+                      <Route path="/eco" element={<Navigate to="/" replace />} />
 
                       <Route path="*" element={<NotFound />} />
                     </Routes>

@@ -22,7 +22,6 @@ import travelNature from "@/assets/travel-nature.jpg";
 import translatorsImg from "@/assets/translators.jpg";
 import b2bHub from "@/assets/b2b-hub.jpg";
 import wallet from "@/assets/wallet.jpg";
-import cargo from "@/assets/cargo.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -35,7 +34,6 @@ const Home = () => {
     { id: "halal", title: t("modules.halal"), image: mosque, route: "/ibadah" },
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel" },
     { id: "wallet", title: t("modules.wallet"), image: wallet, route: "/profile" },
-    { id: "cargo", title: t("modules.cargo"), image: cargo, route: "/transport" },
   ];
 
   const quickPills: { icon: LucideIcon; label: string; route: string }[] = [
