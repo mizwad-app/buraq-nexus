@@ -38,7 +38,6 @@ const statusConfig = {
 };
 
 const serviceTypeLabels: Record<string, string> = {
-  cargo_inspection: "Yuk tekshiruvi",
   flight_booking: "Aviabilet buyurtma",
   train_booking: "Poyezd bileti",
   vpn_setup: "VPN o'rnatish",

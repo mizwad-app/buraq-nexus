@@ -18,7 +18,6 @@
     "travel": "旅行",
     "business": "商业",
     "mosques": "清真寺",
-    "eco": "生态项目",
     "guide": "旅行手册",
     "deepCheck": "工厂与公司核查",
     "translators": "翻译员",
@@ -156,7 +155,6 @@
     "noFactoriesFound": "未找到该类别的工厂",
     "noMarketsFound": "未找到该类别的市场",
     "noExhibitionsFound": "未找到该类别的展会",
-    "logistics": "物流",
     "cityInfo": "城市信息",
     "productFilters": "产品筛选",
     "searchExhibition": "搜索展会...",
@@ -589,10 +587,6 @@
     "title": "服务",
     "subtitle": "核查与预订服务",
     "description": "商务旅行所需的服务",
-    "cargoInspection": {
-      "title": "货物检验",
-      "desc": "工厂质量管控"
-    },
     "flightBooking": {
       "title": "机票",
       "desc": "预订航班机票"

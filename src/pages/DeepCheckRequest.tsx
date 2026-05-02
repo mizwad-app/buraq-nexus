@@ -89,7 +89,6 @@ const DeepCheckRequest = () => {
           manufacturer_name: manufacturerName.trim(),
           product_image_url: imageUrl,
           payment_type: "payment",
-          points_spent: 0,
           amount_paid: DEEP_CHECK_PRICE,
         });
 
