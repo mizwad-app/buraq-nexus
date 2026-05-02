@@ -30,7 +30,7 @@ import { SupportChat } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+
 
 interface WholesaleMarket {
   id: string;
