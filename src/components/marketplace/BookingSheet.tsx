@@ -262,8 +262,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
       const bookingResults: { success: boolean; booking_id?: string; new_balance?: number; error?: string }[] = [];
       
       for (const date of selectedDates) {
-        const perDayAmount = serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice);
-        
+        const perDayTranslatorAmount = serviceType === 'daily' ? dailyPrice : (calculateHours() * hourlyPrice);
+        const perDayServiceFee = Math.round(perDayTranslatorAmount * SERVICE_FEE_RATE * 100) / 100;
+        const perDayTotal = perDayTranslatorAmount + perDayServiceFee;
+
         const { data: rpcResult, error: rpcError } = await supabase.rpc(
           'process_booking_payment',
           {
@@ -277,8 +279,10 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
             p_description: description || '',
             p_agreed_rate: serviceType === 'daily' ? dailyPrice : hourlyPrice,
             p_total_hours: serviceType === 'hourly' ? calculateHours() : null,
-            p_total_amount: perDayAmount
-          }
+            p_translator_amount: perDayTranslatorAmount,
+            p_service_fee: perDayServiceFee,
+            p_total_amount: perDayTotal,
+          } as never
         );
 
         if (rpcError) {
