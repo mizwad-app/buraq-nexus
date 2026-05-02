@@ -6,6 +6,7 @@ import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
 import { PrayerTimeCard } from "@/components/home/PrayerTimeCard";
 import { ExchangeRateCard } from "@/components/home/ExchangeRateCard";
+import { cn } from "@/lib/utils";
 import {
   Star,
   ChevronRight,
@@ -22,7 +23,6 @@ import travelNature from "@/assets/travel-nature.jpg";
 import translatorsImg from "@/assets/translators.jpg";
 import b2bHub from "@/assets/b2b-hub.jpg";
 import wallet from "@/assets/wallet.jpg";
-import cargo from "@/assets/cargo.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -35,7 +35,6 @@ const Home = () => {
     { id: "halal", title: t("modules.halal"), image: mosque, route: "/ibadah" },
     { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel" },
     { id: "wallet", title: t("modules.wallet"), image: wallet, route: "/profile" },
-    { id: "cargo", title: t("modules.cargo"), image: cargo, route: "/transport" },
   ];
 
   const quickPills: { icon: LucideIcon; label: string; route: string }[] = [
@@ -130,7 +129,10 @@ const Home = () => {
               delay={index * 60}
               isPremium={module.id === "wallet"}
               isCompact
-              className="aspect-[4/3]"
+              className={cn(
+                "aspect-[4/3]",
+                index === modules.length - 1 && modules.length % 2 === 1 && "col-span-2 aspect-[16/7]"
+              )}
             />
           ))}
         </div>

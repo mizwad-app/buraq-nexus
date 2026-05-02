@@ -1,23 +1,4 @@
 {
-  "loyalty": {
-    "roadmapTitle": "Parcours des récompenses",
-    "currentVolume": "Volume actuel",
-    "backpackTitle": "Sac à dos Buraq",
-    "backpackDesc": "Sac à dos premium en cadeau pour 100 mètres cubes",
-    "ticketTitle": "Billet d'avion gratuit vers la Chine",
-    "ticketDesc": "Billet aller-retour en cadeau pour 800 mètres cubes",
-    "umraTitle": "Pèlerinage Omra",
-    "umraDesc": "Grand prix pour 1200 mètres cubes - Voyage sacré Omra!",
-    "progress": "Progrès",
-    "claimed": "Réclamé ✓",
-    "nextGoalMessage": "Expédiez encore {volume} mètres cubes pour gagner {reward}!",
-    "goldStatus": "Statut Or",
-    "silverStatus": "Statut Argent",
-    "standardStatus": "Membre standard",
-    "membershipStatus": "Statut d'adhésion",
-    "annualVolume": "Volume annuel",
-    "nextTierMessage": "Encore {volume} mètres cubes pour atteindre {tier}"
-  },
   "app": {
     "name": "Écosystème Buraq",
     "welcome": "Bienvenue",
@@ -36,7 +17,6 @@
     "halalGuide": "Compagnon Halal",
     "travel": "Voyage",
     "business": "Affaires",
-    "cargo": "Suivi du fret",
     "mosques": "Mosquées",
     "eco": "Projets écologiques",
     "guide": "Guide de voyage",
@@ -359,54 +339,6 @@
     "minuteShort": "min",
     "tomorrow": "demain"
   },
-  "cargo": {
-    "title": "Suivi des cargaisons",
-    "subtitle": "Suivez vos commandes",
-    "enterTracking": "Entrez le numéro de suivi",
-    "track": "Suivre",
-    "save": "Enregistrer",
-    "savedTrackings": "Suivis enregistrés",
-    "loginRequired": "Connexion requise",
-    "noSavedTrackings": "Pas encore de suivis enregistrés",
-    "viewSavedPrompt": "Connectez-vous pour voir les suivis enregistrés",
-    "login": "Connexion",
-    "volume": "Volume",
-    "currentlyHere": "Actuellement ici",
-    "enterTrackingError": "Veuillez entrer un numéro de suivi",
-    "savedSuccess": "Enregistré! +{{points}} points ajoutés",
-    "trackingDesc": "Suivi de cargaison: {{number}}",
-    "error": "Une erreur s'est produite",
-    "savePrompt": "Connectez-vous pour enregistrer le numéro de suivi",
-    "unknown": "Inconnu",
-    "status": {
-      "factory_departed": "Expédié de l'usine",
-      "china_warehouse": "Entrepôt Chine",
-      "in_transit": "En transit",
-      "customs": "Douanes",
-      "tashkent_warehouse": "Entrepôt Tachkent",
-      "delivered": "Livré"
-    }
-  },
-  "rewards": {
-    "title": "Récompenses",
-    "subtitle": "Échangez vos points contre des cadeaux",
-    "viewPrompt": "Connectez-vous pour voir les récompenses",
-    "signInUp": "Connexion / Inscription",
-    "mainReward": "Récompense principale",
-    "umraTrip": "Voyage Omra",
-    "umraDesc": "Voyage gratuit vers le pèlerinage sacré",
-    "inProgress": "En cours",
-    "pointsLabel": "points",
-    "needMore": "Besoin de {{points}} points supplémentaires",
-    "gifts": "Cadeaux",
-    "viewAll": "Voir tout",
-    "redeem": "Échanger",
-    "notEnough": "Insuffisant",
-    "notEnoughPoints": "Vous n'avez pas assez de points",
-    "redeemSuccess": "{{name}} échangé avec succès!",
-    "error": "Une erreur s'est produite",
-    "exchangeDesc": "Échangé contre {{name}}"
-  },
   "travel": {
     "title": "Voyage et détente",
     "subtitle": "Voyage",
@@ -434,32 +366,6 @@
     },
     "documentsDescription": "Documents nécessaires pour voyager",
     "documentsComingSoon": "Bientôt disponible."
-  },
-  "eco": {
-    "title": "Votre contribution écologique",
-    "subtitle": "Projets écologiques",
-    "desc": "Nous plantons des arbres par l'expédition de cargaisons",
-    "treesPlanted": "Arbres que vous avez plantés",
-    "treesCount": "arbres",
-    "totalVolume": "Volume total",
-    "co2Reduction": "Réduction CO₂",
-    "howItWorks": "Comment ça marche?",
-    "formula": "2 arbres sont plantés pour chaque 1 m³ de cargaison",
-    "currentProjects": "Projets en cours",
-    "projectsCount": "{{count}} projets",
-    "planted": "plantés",
-    "target": "Objectif",
-    "comingSoon": "Bientôt",
-    "projects": {
-      "fergana": "Vallée de Fergana",
-      "ferganaDesc": "Projet de plantation d'arbres fruitiers",
-      "karakalpakstan": "Karakalpakstan",
-      "karakalpakstanDesc": "Restauration de la zone de la mer d'Aral",
-      "tashkent": "Région de Tachkent",
-      "tashkentDesc": "Verdissement urbain",
-      "samarkand": "Région de Samarcande",
-      "samarkandDesc": "Jardins des zones historiques"
-    }
   },
   "guide": {
     "title": "Guide de voyage",
@@ -656,16 +562,6 @@
     "noRequests": "Pas encore de demandes",
     "viewReport": "Voir le rapport",
     "downloadReport": "Télécharger le rapport"
-  },
-  "transport": {
-    "title": "Transport & VPN",
-    "subtitle": "Conseils de voyage et outils numériques",
-    "vpnSection": "Outils VPN",
-    "vpnDesc": "Restez connecté avec des services VPN fiables",
-    "transportSection": "Transport",
-    "transportDesc": "Options de transport local",
-    "downloadVpn": "Télécharger VPN",
-    "recommended": "Recommandé"
   },
   "modes": {
     "business": "Affaires",

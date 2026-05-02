@@ -10,30 +10,24 @@ import { toast } from "sonner";
 import { 
   FileSearch, 
   Upload, 
-  Star, 
   CreditCard, 
   Loader2,
-  CheckCircle,
   X,
   Image as ImageIcon,
   Building2,
   Package
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 
-const DEEP_CHECK_POINTS = 500;
 const DEEP_CHECK_PRICE = 10;
 
 const DeepCheckRequest = () => {
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
-  const [userPoints, setUserPoints] = useState(0);
   const [productName, setProductName] = useState("");
   const [manufacturerName, setManufacturerName] = useState("");
   const [productImage, setProductImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
-  const [paymentType, setPaymentType] = useState<"points" | "payment">("points");
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -41,24 +35,6 @@ const DeepCheckRequest = () => {
       setShowAuthModal(true);
     }
   }, [user, authLoading]);
-
-  useEffect(() => {
-    if (user) {
-      fetchUserPoints();
-    }
-  }, [user]);
-
-  const fetchUserPoints = async () => {
-    const { data } = await supabase
-      .from("user_points")
-      .select("total_points")
-      .eq("user_id", user?.id)
-      .maybeSingle();
-    
-    if (data) {
-      setUserPoints(data.total_points);
-    }
-  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -83,17 +59,11 @@ const DeepCheckRequest = () => {
       return;
     }
 
-    if (paymentType === "points" && userPoints < DEEP_CHECK_POINTS) {
-      toast.error(`Ballaringiz yetarli emas. Kerak: ${DEEP_CHECK_POINTS} ball`);
-      return;
-    }
-
     setSubmitting(true);
 
     try {
       let imageUrl = null;
 
-      // Upload image if provided
       if (productImage) {
         const fileExt = productImage.name.split('.').pop();
         const fileName = `${user.id}/${Date.now()}.${fileExt}`;
@@ -104,15 +74,13 @@ const DeepCheckRequest = () => {
 
         if (uploadError) throw uploadError;
 
-        // Use signed URL (bucket is now private for security)
         const { data: signedUrlData } = await supabase.storage
           .from("deep-checks")
-          .createSignedUrl(fileName, 60 * 60 * 24 * 365); // 1 year expiry for stored reference
+          .createSignedUrl(fileName, 60 * 60 * 24 * 365);
 
         imageUrl = signedUrlData?.signedUrl || null;
       }
 
-      // Create deep check request
       const { error: insertError } = await supabase
         .from("deep_checks")
         .insert({
@@ -120,40 +88,12 @@ const DeepCheckRequest = () => {
           product_name: productName.trim(),
           manufacturer_name: manufacturerName.trim(),
           product_image_url: imageUrl,
-          payment_type: paymentType,
-          points_spent: paymentType === "points" ? DEEP_CHECK_POINTS : 0,
-          amount_paid: paymentType === "payment" ? DEEP_CHECK_PRICE : 0,
+          payment_type: "payment",
+          points_spent: 0,
+          amount_paid: DEEP_CHECK_PRICE,
         });
 
       if (insertError) throw insertError;
-
-      // Deduct points if paid with points using atomic RPC function
-      if (paymentType === "points") {
-        // Get the deep check ID from the insert
-        const { data: deepCheckData } = await supabase
-          .from("deep_checks")
-          .select("id")
-          .eq("user_id", user.id)
-          .eq("product_name", productName.trim())
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .single();
-
-        if (deepCheckData) {
-          const { data: rpcResult, error: rpcError } = await supabase.rpc(
-            "redeem_deep_check_points",
-            {
-              p_deep_check_id: deepCheckData.id,
-              p_points: DEEP_CHECK_POINTS,
-            }
-          );
-
-          const result = rpcResult as { success?: boolean; error?: string } | null;
-          if (rpcError || (result && !result.success)) {
-            throw new Error(result?.error || rpcError?.message || "Points deduction failed");
-          }
-        }
-      }
 
       toast.success("So'rov muvaffaqiyatli yuborildi!");
       navigate("/profile");
@@ -164,8 +104,6 @@ const DeepCheckRequest = () => {
       setSubmitting(false);
     }
   };
-
-  const canPayWithPoints = userPoints >= DEEP_CHECK_POINTS;
 
   if (authLoading) {
     return (
@@ -227,24 +165,14 @@ const DeepCheckRequest = () => {
 
       {/* Pricing Info */}
       <section className="px-5 mb-6">
-        <div className="rounded-2xl bg-gradient-to-br from-amber-600/20 to-yellow-600/10 border border-gold/20 p-4">
-          <p className="text-sm text-foreground mb-3 font-medium">
+        <div className="rounded-2xl bg-primary/10 border border-primary/20 p-4">
+          <p className="text-sm text-foreground mb-2 font-medium">
             Chuqur tekshiruv narxi:
           </p>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Star className="w-5 h-5 text-gold" />
-              <span className="font-bold text-gold">{DEEP_CHECK_POINTS} ball</span>
-            </div>
-            <span className="text-muted-foreground">yoki</span>
-            <div className="flex items-center gap-2">
-              <CreditCard className="w-5 h-5 text-primary" />
-              <span className="font-bold text-primary">${DEEP_CHECK_PRICE}</span>
-            </div>
+          <div className="flex items-center gap-2">
+            <CreditCard className="w-5 h-5 text-primary" />
+            <span className="font-bold text-primary text-lg">${DEEP_CHECK_PRICE}</span>
           </div>
-          <p className="text-xs text-muted-foreground mt-2">
-            Sizda: <span className="text-gold font-bold">{userPoints}</span> ball
-          </p>
         </div>
       </section>
 
@@ -320,53 +248,12 @@ const DeepCheckRequest = () => {
           )}
         </div>
 
-        {/* Payment Type */}
-        <div className="space-y-3">
-          <Label className="text-sm text-foreground/80">To'lov usuli</Label>
-          
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              onClick={() => setPaymentType("points")}
-              disabled={!canPayWithPoints}
-              className={cn(
-                "p-4 rounded-xl border-2 transition-all text-left",
-                paymentType === "points" && canPayWithPoints
-                  ? "border-amber-500 bg-gold/10"
-                  : canPayWithPoints
-                  ? "border-border/50 bg-card hover:border-amber-500/50"
-                  : "border-border/30 bg-card/30 opacity-50 cursor-not-allowed"
-              )}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <Star className="w-5 h-5 text-gold" />
-                <span className="font-semibold text-foreground">{DEEP_CHECK_POINTS} ball</span>
-              </div>
-              {paymentType === "points" && canPayWithPoints && (
-                <CheckCircle className="w-4 h-4 text-gold" />
-              )}
-              {!canPayWithPoints && (
-                <p className="text-xs text-destructive">Yetarli emas</p>
-              )}
-            </button>
-
-            <button
-              onClick={() => setPaymentType("payment")}
-              className={cn(
-                "p-4 rounded-xl border-2 transition-all text-left",
-                paymentType === "payment"
-                  ? "border-emerald-500 bg-primary/10"
-                  : "border-border/50 bg-card hover:border-emerald-500/50"
-              )}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <CreditCard className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-foreground">${DEEP_CHECK_PRICE}</span>
-              </div>
-              {paymentType === "payment" && (
-                <CheckCircle className="w-4 h-4 text-primary" />
-              )}
-            </button>
-          </div>
+        {/* Payment notice */}
+        <div className="rounded-xl border border-border/50 bg-card p-4 flex items-center gap-3">
+          <CreditCard className="w-5 h-5 text-primary" />
+          <span className="text-sm text-foreground">
+            To'lov: <span className="font-semibold text-primary">${DEEP_CHECK_PRICE}</span> (naqd)
+          </span>
         </div>
 
         {/* Submit Button */}
