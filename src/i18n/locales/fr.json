@@ -335,7 +335,8 @@
     "submit": "Envoyer",
     "delete": "Supprimer",
     "edit": "Modifier",
-    "address": "Adresse"
+    "address": "Adresse",
+    "sending": "Envoi..."
   },
   "cargo": {
     "title": "Suivi des cargaisons",
@@ -403,7 +404,15 @@
     "mall": "Centre commercial",
     "placesFound": "lieux trouvés",
     "tryDifferentFilters": "Essayez d'autres filtres",
-    "hasHalalFood": "Propose de la nourriture halal"
+    "hasHalalFood": "Propose de la nourriture halal",
+    "tabs": {
+      "places": "Lieux",
+      "guide": "Guide",
+      "videos": "Conseils vidéo",
+      "documents": "Documents"
+    },
+    "documentsDescription": "Documents nécessaires pour voyager",
+    "documentsComingSoon": "Bientôt disponible."
   },
   "eco": {
     "title": "Votre contribution écologique",
@@ -642,5 +651,20 @@
     "travel": "Voyage",
     "businessDesc": "Pour les entrepreneurs",
     "travelDesc": "Pour les voyageurs"
+  },
+  "services": {
+    "visaHelp": {
+      "title": "Demander de l'aide pour le visa"
+    },
+    "hotelBooking": {
+      "title": "Réserver un hôtel"
+    },
+    "requestSubmitted": "Votre demande a été envoyée",
+    "requestError": "Une erreur s'est produite",
+    "loginRequired": "Veuillez d'abord vous connecter",
+    "messageRequired": "Veuillez saisir les détails",
+    "requestDescription": "Saisissez les détails ci-dessous. Notre équipe vous contactera sous peu.",
+    "requestPlaceholder": "Comment pouvons-nous aider?",
+    "submit": "Envoyer"
   }
 }

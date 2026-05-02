@@ -12,7 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
+import type { MarketplaceTranslator } from "@/types/marketplace";
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 const VIDEO_POSTER_PLACEHOLDER = "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=80";

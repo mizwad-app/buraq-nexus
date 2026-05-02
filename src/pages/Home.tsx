@@ -72,9 +72,9 @@ const Home = () => {
   const travelModules = [
     { id: "halol", title: t("modules.halalGuide"), image: halalFood, route: "/ibadah" },
     { id: "attractions", title: t("modules.attractions"), image: attractions, route: "/travel" },
-    { id: "guide", title: t("modules.guide"), image: mosque, route: "/guide" },
+    { id: "guide", title: t("modules.guide"), image: mosque, route: "/travel?tab=guide" },
     { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators" },
-    { id: "legalHelp", title: t("modules.legalHelp"), image: legalHelp, route: "/guide" },
+    { id: "legalHelp", title: t("modules.legalHelp"), image: legalHelp, route: "/travel?tab=guide" },
     { id: "transportVpn", title: t("modules.transportVpn"), image: cargo, route: "/transport" },
   ];
 

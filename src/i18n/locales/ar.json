@@ -335,7 +335,8 @@
     "submit": "إرسال",
     "delete": "حذف",
     "edit": "تعديل",
-    "address": "العنوان"
+    "address": "العنوان",
+    "sending": "جارٍ الإرسال..."
   },
   "cargo": {
     "title": "تتبع الشحنات",
@@ -403,7 +404,15 @@
     "mall": "مول",
     "placesFound": "أماكن موجودة",
     "tryDifferentFilters": "جرب فلاتر مختلفة",
-    "hasHalalFood": "يوجد طعام حلال"
+    "hasHalalFood": "يوجد طعام حلال",
+    "tabs": {
+      "places": "الأماكن",
+      "guide": "الدليل",
+      "videos": "نصائح فيديو",
+      "documents": "المستندات"
+    },
+    "documentsDescription": "المستندات اللازمة للسفر",
+    "documentsComingSoon": "قريباً."
   },
   "eco": {
     "title": "مساهمتك البيئية",
@@ -583,7 +592,20 @@
     "detailsPlaceholder": "صف طلبك بالتفصيل...",
     "contactVia": "كيف تريد أن نتواصل معك؟",
     "instantResponse": "استجابة فورية",
-    "defaultMessage": "أحتاج مساعدة"
+    "defaultMessage": "أحتاج مساعدة",
+    "visaHelp": {
+      "title": "طلب مساعدة في التأشيرة"
+    },
+    "hotelBooking": {
+      "title": "حجز فندق"
+    },
+    "requestSubmitted": "تم إرسال طلبك",
+    "requestError": "حدث خطأ",
+    "loginRequired": "يرجى تسجيل الدخول أولاً",
+    "messageRequired": "يرجى إدخال التفاصيل",
+    "requestDescription": "أدخل التفاصيل أدناه. سيتواصل معك فريقنا قريبًا.",
+    "requestPlaceholder": "كيف يمكننا المساعدة؟",
+    "submit": "إرسال"
   },
   "transport": {
     "title": "النقل والتذاكر",

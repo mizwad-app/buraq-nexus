@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CityProvider } from "@/contexts/CityContext";
@@ -15,12 +15,8 @@ import Profile from "./pages/Profile";
 import DeepCheckRequest from "./pages/DeepCheckRequest";
 import AdminDeepChecks from "./pages/AdminDeepChecks";
 import AdminLocations from "./pages/AdminLocations";
-import Mosques from "./pages/Mosques";
-import TravelGuide from "./pages/TravelGuide";
 import TravelChecklist from "./pages/TravelChecklist";
 import Translators from "./pages/Translators";
-import TranslatorMarketplace from "./pages/TranslatorMarketplace";
-import Services from "./pages/Services";
 import Transport from "./pages/Transport";
 import NotFound from "./pages/NotFound";
 import AdminLogin from "./pages/AdminLogin";
@@ -61,13 +57,17 @@ const App = () => (
                       <Route path="/business" element={<Business />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
-                      <Route path="/mosques" element={<Mosques />} />
-                      <Route path="/guide" element={<TravelGuide />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
                       <Route path="/translators" element={<Translators />} />
-                      <Route path="/marketplace" element={<TranslatorMarketplace />} />
-                      <Route path="/services" element={<Services />} />
                       <Route path="/transport" element={<Transport />} />
+
+                      {/* Backward-compatible redirects (Sprint 2B consolidation) */}
+                      <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />
+                      <Route path="/marketplace" element={<Navigate to="/translators" replace />} />
+                      <Route path="/translator-marketplace" element={<Navigate to="/translators" replace />} />
+                      <Route path="/guide" element={<Navigate to="/travel?tab=guide" replace />} />
+                      <Route path="/services" element={<Navigate to="/profile" replace />} />
+
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                     <BottomNavigation />

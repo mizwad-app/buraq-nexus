@@ -25,9 +25,12 @@ import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { cn } from "@/lib/utils";
-import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
+import type { MarketplaceTranslator } from "@/types/marketplace";
 import { BookingSheet } from "@/components/marketplace/BookingSheet";
 import { TranslatorDetailSheet } from "@/components/marketplace/TranslatorDetailSheet";
+import { ChatSheet } from "@/components/marketplace/ChatSheet";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 import {
   Sheet,
   SheetContent,
@@ -114,6 +117,8 @@ const Translators = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { getField } = useTranslatedField();
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [translators, setTranslators] = useState<Translator[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -131,6 +136,8 @@ const Translators = () => {
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [conversationId, setConversationId] = useState<string | null>(null);
 
   // Count active filters
   const activeFilterCount = useMemo(() => {
@@ -258,9 +265,39 @@ const Translators = () => {
     return result;
   }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
 
-  // Open chat for selected translator - navigate to marketplace with translator selected
-  const openChat = (translator: Translator) => {
-    navigate('/translator-marketplace', { state: { selectedTranslatorId: translator.id } });
+  // Open chat for selected translator - inline chat sheet
+  const openChat = async (translator: Translator) => {
+    if (!user) {
+      toast({ title: "Iltimos, avval tizimga kiring", variant: "destructive" });
+      return;
+    }
+    try {
+      const { data: existing } = await supabase
+        .from('chat_conversations')
+        .select('id')
+        .eq('client_id', user.id)
+        .eq('translator_id', translator.id)
+        .limit(1)
+        .single();
+
+      if (existing) {
+        setConversationId(existing.id);
+      } else {
+        const { data: newConv, error } = await supabase
+          .from('chat_conversations')
+          .insert({ client_id: user.id, translator_id: translator.id })
+          .select()
+          .single();
+        if (error) throw error;
+        setConversationId(newConv.id);
+      }
+      setSelectedTranslator(translator);
+      setDetailOpen(false);
+      setChatOpen(true);
+    } catch (error) {
+      console.error("Error starting chat:", error);
+      toast({ title: "Chat ochishda xatolik", variant: "destructive" });
+    }
   };
 
   const renderHSKBadge = (level: number | null) => {
@@ -710,6 +747,15 @@ const Translators = () => {
         translator={bookableTranslator}
         open={bookingOpen}
         onOpenChange={setBookingOpen}
+      />
+
+      {/* Chat Sheet */}
+      <ChatSheet
+        conversationId={conversationId}
+        recipientName={selectedTranslator ? getField(selectedTranslator, 'name') : ''}
+        recipientAvatar={selectedTranslator?.avatar_url}
+        open={chatOpen}
+        onOpenChange={setChatOpen}
       />
     </div>
   );

@@ -4,7 +4,7 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import type { MarketplaceTranslator } from "@/pages/TranslatorMarketplace";
+import type { MarketplaceTranslator } from "@/types/marketplace";
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
 

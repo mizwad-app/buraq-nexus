@@ -335,7 +335,8 @@
     "submit": "Yuborish",
     "delete": "O'chirish",
     "edit": "Tahrirlash",
-    "address": "Manzil"
+    "address": "Manzil",
+    "sending": "Yuborilmoqda..."
   },
   "cargo": {
     "title": "Yuk Kuzatuvi",
@@ -403,7 +404,15 @@
     "mall": "Savdo markazi",
     "placesFound": "ta joy topildi",
     "tryDifferentFilters": "Boshqa filterlarni sinab ko'ring",
-    "hasHalalFood": "Halol taom mavjud"
+    "hasHalalFood": "Halol taom mavjud",
+    "tabs": {
+      "places": "Joylar",
+      "guide": "Yo'riqnoma",
+      "videos": "Video maslahatlar",
+      "documents": "Hujjatlar"
+    },
+    "documentsDescription": "Sayohat uchun kerakli hujjatlar",
+    "documentsComingSoon": "Tez orada qo'shiladi."
   },
   "eco": {
     "title": "Ekologik hissangiz",
@@ -678,7 +687,20 @@
     "detailsPlaceholder": "So'rovingiz haqida batafsil yozing...",
     "contactVia": "Qaysi orqali bog'lanmoqchisiz?",
     "instantResponse": "Tezkor javob",
-    "defaultMessage": "Menga yordam kerak"
+    "defaultMessage": "Menga yordam kerak",
+    "visaHelp": {
+      "title": "Vizа yordami so'rash"
+    },
+    "hotelBooking": {
+      "title": "Mehmonxona bron qilish"
+    },
+    "requestSubmitted": "So'rovingiz yuborildi",
+    "requestError": "Xatolik yuz berdi",
+    "loginRequired": "Iltimos, avval tizimga kiring",
+    "messageRequired": "Iltimos, batafsil ma'lumot kiriting",
+    "requestDescription": "Quyidagi maydonga batafsil ma'lumot kiriting. Operatorlarimiz tez orada bog'lanadi.",
+    "requestPlaceholder": "Sizga qanday yordam kerak?",
+    "submit": "Yuborish"
   },
   "transport": {
     "title": "Transport va Biletlar",
