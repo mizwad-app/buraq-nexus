@@ -680,22 +680,23 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
               )}
             </div>
 
-            {/* Insufficient Balance Warning */}
-            {insufficientBalance && (
+            {/* Insufficient Balance Warning — based on TOTAL (translator + fee) */}
+            {!hasEnoughBalance && (
               <div className="bg-destructive/10 border border-destructive/30 rounded-xl p-4">
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="font-semibold text-destructive mb-1">Balans yetarli emas</p>
-                    <p className="text-sm text-muted-foreground mb-3">
-                      Iltimos, avval hamyoningizni to'ldiring. Kerakli summa: ¥{(total - walletBalance).toLocaleString()}
+                  <div className="flex-1">
+                    <p className="text-sm text-destructive mb-3">
+                      {t('booking.insufficientBalance', {
+                        needed: total.toLocaleString(),
+                        available: walletBalance.toLocaleString(),
+                      })}
                     </p>
-                    <Button 
-                      size="sm" 
+                    <Button
+                      size="sm"
                       variant="outline"
                       className="gap-2 border-primary text-primary"
                       onClick={() => {
-                        // TODO: Navigate to top-up page
                         toast({ title: "Hamyonni to'ldirish", description: "Bu funksiya tez orada qo'shiladi" });
                       }}
                     >
