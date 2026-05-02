@@ -249,53 +249,12 @@ const DeepCheckRequest = () => {
           )}
         </div>
 
-        {/* Payment Type */}
-        <div className="space-y-3">
-          <Label className="text-sm text-foreground/80">To'lov usuli</Label>
-          
-          <div className="grid grid-cols-2 gap-3">
-            <button
-              onClick={() => setPaymentType("points")}
-              disabled={!canPayWithPoints}
-              className={cn(
-                "p-4 rounded-xl border-2 transition-all text-left",
-                paymentType === "points" && canPayWithPoints
-                  ? "border-amber-500 bg-gold/10"
-                  : canPayWithPoints
-                  ? "border-border/50 bg-card hover:border-amber-500/50"
-                  : "border-border/30 bg-card/30 opacity-50 cursor-not-allowed"
-              )}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <Star className="w-5 h-5 text-gold" />
-                <span className="font-semibold text-foreground">{DEEP_CHECK_POINTS} ball</span>
-              </div>
-              {paymentType === "points" && canPayWithPoints && (
-                <CheckCircle className="w-4 h-4 text-gold" />
-              )}
-              {!canPayWithPoints && (
-                <p className="text-xs text-destructive">Yetarli emas</p>
-              )}
-            </button>
-
-            <button
-              onClick={() => setPaymentType("payment")}
-              className={cn(
-                "p-4 rounded-xl border-2 transition-all text-left",
-                paymentType === "payment"
-                  ? "border-emerald-500 bg-primary/10"
-                  : "border-border/50 bg-card hover:border-emerald-500/50"
-              )}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <CreditCard className="w-5 h-5 text-primary" />
-                <span className="font-semibold text-foreground">${DEEP_CHECK_PRICE}</span>
-              </div>
-              {paymentType === "payment" && (
-                <CheckCircle className="w-4 h-4 text-primary" />
-              )}
-            </button>
-          </div>
+        {/* Payment notice */}
+        <div className="rounded-xl border border-border/50 bg-card p-4 flex items-center gap-3">
+          <CreditCard className="w-5 h-5 text-primary" />
+          <span className="text-sm text-foreground">
+            To'lov: <span className="font-semibold text-primary">${DEEP_CHECK_PRICE}</span> (naqd)
+          </span>
         </div>
 
         {/* Submit Button */}
