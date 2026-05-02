@@ -99,7 +99,16 @@ const TravelChecklist = () => {
       if (error) throw error;
 
       if (data && data.length > 0) {
-        setItems(data);
+        // Filter out legacy default items not in current 10-item TZ, and dedupe by item_name
+        const allowedDefaults = new Set(DEFAULT_ITEMS.map(i => i.name));
+        const seen = new Set<string>();
+        const cleaned = data.filter((it: ChecklistItem) => {
+          if (it.is_default && !allowedDefaults.has(it.item_name)) return false;
+          if (seen.has(it.item_name)) return false;
+          seen.add(it.item_name);
+          return true;
+        });
+        setItems(cleaned);
       } else {
         // Initialize with default items for new users
         await initializeDefaultItems();
