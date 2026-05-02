@@ -18,7 +18,6 @@
     "travel": "السفر",
     "business": "الأعمال",
     "mosques": "المساجد",
-    "eco": "مشاريع بيئية",
     "guide": "دليل السفر",
     "deepCheck": "فحص المصانع والشركات",
     "translators": "المترجمون",
@@ -156,7 +155,6 @@
     "noFactoriesFound": "لا توجد مصانع لهذه الفئة",
     "noMarketsFound": "لا توجد أسواق لهذه الفئة",
     "noExhibitionsFound": "لا توجد معارض لهذه الفئة",
-    "logistics": "اللوجستيات",
     "cityInfo": "معلومات المدينة",
     "productFilters": "فلاتر المنتجات",
     "searchExhibition": "البحث في المعارض...",
@@ -492,10 +490,6 @@
     "title": "الخدمات",
     "subtitle": "خدمات الأعمال",
     "description": "خدمات أساسية لرحلة عملك",
-    "cargoInspection": {
-      "title": "تفتيش الشحنات",
-      "desc": "مراقبة الجودة في المصنع"
-    },
     "flightBooking": {
       "title": "تذاكر الطيران",
       "desc": "حجز رحلات الطيران"
