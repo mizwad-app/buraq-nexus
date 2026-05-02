@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard, ChevronRight, Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
