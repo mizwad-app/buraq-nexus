@@ -448,7 +448,12 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                       textDecoration: 'line-through'
                     }
                   }}
-                  className="w-full"
+                  classNames={{
+                    day_today: "border-2 border-primary text-foreground bg-transparent",
+                    day_selected:
+                      "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground",
+                  }}
+                  className="w-full pointer-events-auto"
                 />
               </div>
               

@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard } from "lucide-react";
+import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard, ChevronRight, Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -66,10 +66,11 @@ interface TranslatorDetailSheetProps {
 }
 
 export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, onChat }: TranslatorDetailSheetProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { getField } = useTranslatedField();
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
+  const [reviewsOpen, setReviewsOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   if (!translator) return null;
@@ -110,18 +111,18 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
     }
   };
 
-  // Language proficiency badges
+  // Language proficiency badges - all neutral, level shown by text only
   const renderLanguageBadges = () => {
     const hskLevel = translator.buraq_verified_hsk || translator.self_declared_hsk || translator.hsk_level || 0;
     return (
       <div className="flex flex-wrap gap-1.5 mt-2">
-        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30 text-xs">
+        <Badge variant="outline" className="bg-secondary/60 text-foreground border-border text-xs">
           {t("translators.languages.uzbekNative")}
         </Badge>
-        <Badge variant="outline" className="bg-gold/10 text-gold border-gold/30 text-xs">
+        <Badge variant="outline" className="bg-secondary/60 text-foreground border-border text-xs">
           {t("translators.languages.chinese")} (HSK {hskLevel})
         </Badge>
-        <Badge variant="outline" className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs">
+        <Badge variant="outline" className="bg-secondary/60 text-foreground border-border text-xs">
           {t("translators.languages.english")} (B1)
         </Badge>
       </div>
@@ -129,52 +130,43 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
   };
 
   const renderHSKSection = () => {
+    const selfHsk = translator.self_declared_hsk || translator.hsk_level || 0;
+    const verifiedHsk = translator.buraq_verified_hsk;
     return (
       <div className="bg-gradient-to-br from-muted/50 to-muted/30 rounded-2xl p-4 space-y-3">
         <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
           <Award className="w-4 h-4 text-primary" />
           HSK Darajasi
         </h4>
-        
-        <div className="grid grid-cols-2 gap-3">
-          {/* Self-declared */}
+
+        <div className={cn("grid gap-3", verifiedHsk ? "grid-cols-2" : "grid-cols-1")}>
+          {/* Self-declared - neutral styling */}
           <div className="bg-background/50 rounded-xl p-3">
             <p className="text-[10px] text-muted-foreground mb-1">O'zi e'lon qilgan</p>
             <div className="flex items-center gap-2">
-              <span className={cn(
-                "px-2.5 py-1 rounded-lg text-sm font-bold text-white",
-                (translator.self_declared_hsk || translator.hsk_level || 0) >= 5 ? "bg-gold" : 
-                (translator.self_declared_hsk || translator.hsk_level || 0) >= 3 ? "bg-blue-500" : "bg-gray-500"
-              )}>
-                HSK {translator.self_declared_hsk || translator.hsk_level || "—"}
+              <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-secondary text-foreground border border-border">
+                HSK {selfHsk || "—"}
               </span>
             </div>
           </div>
-          
-          {/* Buraq Verified */}
-          <div className={cn(
-            "rounded-xl p-3",
-            translator.buraq_verified_hsk 
-              ? "bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30" 
-              : "bg-background/50"
-          )}>
-            <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
-              <Shield className="w-3 h-3" />
-              Buraq tasdiqlagan
-            </p>
-            {translator.buraq_verified_hsk ? (
+
+          {/* Buraq Verified - only show when verified */}
+          {verifiedHsk && (
+            <div className="rounded-xl p-3 bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
+              <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
+                <Shield className="w-3 h-3" />
+                Buraq tasdiqlagan
+              </p>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-gradient-to-r from-primary to-accent text-white">
-                  HSK {translator.buraq_verified_hsk} ✓
+                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-gradient-to-r from-primary to-accent text-primary-foreground">
+                  HSK {verifiedHsk} ✓
                 </span>
               </div>
-            ) : (
-              <span className="text-xs text-muted-foreground">Tasdiqlanmagan</span>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-        
-        {translator.buraq_verified_hsk && (
+
+        {verifiedHsk && (
           <p className="text-[10px] text-muted-foreground bg-primary/10 rounded-lg p-2">
             ✓ Video intervyu orqali tasdiqlangan ({translator.buraq_verified_at ? new Date(translator.buraq_verified_at as string).toLocaleDateString() : ''})
           </p>
@@ -452,10 +444,15 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                   <div className="font-bold text-primary text-lg mb-1">{translator.completed_bookings || 150}+</div>
                   <p className="text-[10px] text-muted-foreground">Xizmat ko'rsatilgan mijozlar</p>
                 </div>
-                <div className="bg-muted/50 rounded-xl p-3 text-center">
+                <button
+                  type="button"
+                  onClick={() => setReviewsOpen(true)}
+                  className="bg-muted/50 rounded-xl p-3 text-center hover:bg-muted/70 transition-colors flex flex-col items-center justify-center relative group"
+                >
+                  <ChevronRight className="w-3.5 h-3.5 text-muted-foreground absolute top-2 right-2 group-hover:translate-x-0.5 transition-transform" />
                   <div className="font-bold text-foreground text-lg mb-1">{translator.total_reviews}</div>
                   <p className="text-[10px] text-muted-foreground">Sharhlar</p>
-                </div>
+                </button>
               </div>
               <div className="grid grid-cols-2 gap-2 mt-2">
                 <div className="bg-muted/50 rounded-xl p-3 text-center">
@@ -475,14 +472,26 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             </div>
 
             {/* Bio */}
-            {getField(translator, 'bio') && (
-              <div className="px-5 mb-4">
-                <h4 className="text-sm font-semibold text-foreground mb-2">Haqida</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {getField(translator, 'bio')}
-                </p>
-              </div>
-            )}
+            {getField(translator, 'bio') && (() => {
+              const currentLangBio = (translator as Record<string, unknown>)[`bio_${i18n.language}`];
+              const isFallback = !currentLangBio || typeof currentLangBio !== 'string' || !currentLangBio.trim();
+              return (
+                <div className="px-5 mb-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <h4 className="text-sm font-semibold text-foreground">Haqida</h4>
+                    {isFallback && (
+                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-secondary/60 border border-border text-[10px] text-muted-foreground">
+                        <Languages className="w-2.5 h-2.5" />
+                        Tarjima qilinmoqda
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {getField(translator, 'bio')}
+                  </p>
+                </div>
+              );
+            })()}
 
             {/* Resume Timeline Section */}
             {renderResumeSection()}
@@ -551,6 +560,23 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
           </div>
         </div>
       </SheetContent>
+
+      {/* Reviews Placeholder Sheet */}
+      <Sheet open={reviewsOpen} onOpenChange={setReviewsOpen}>
+        <SheetContent side="bottom" className="h-[60vh] rounded-t-3xl">
+          <SheetHeader>
+            <SheetTitle className="text-left">Sharhlar ({translator.total_reviews || 0})</SheetTitle>
+          </SheetHeader>
+          <div className="flex flex-col items-center justify-center h-full -mt-12 text-center px-6">
+            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+              <Star className="w-8 h-8 text-muted-foreground" />
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Sharhlar tez orada qo'shiladi
+            </p>
+          </div>
+        </SheetContent>
+      </Sheet>
     </Sheet>
   );
 };

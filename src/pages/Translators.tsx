@@ -85,9 +85,9 @@ interface Translator {
 const LANGUAGE_PAIRS = [
   { id: "all", label: "Barcha tillar" },
   { id: "uz-zh", label: "Xitoy-O'zbek" },
-  { id: "ru-zh", label: "Rus-Xitoy" },
-  { id: "en-zh", label: "Ingliz-Xitoy" },
-  { id: "es-zh", label: "Ispan-Xitoy" },
+  { id: "ru-zh", label: "Xitoy-Rus" },
+  { id: "en-zh", label: "Xitoy-Ingliz" },
+  { id: "ar-zh", label: "Xitoy-Arabcha" },
 ];
 
 const PRICE_RANGES = [
@@ -100,7 +100,7 @@ const PRICE_RANGES = [
 const TRANSPORT_OPTIONS = [
   { id: "all", label: "Hammasi" },
   { id: "has_car", label: "Faqat avtomobil borlar" },
-  { id: "has_license", label: "Faqat guvohnoma borlar" },
+  { id: "has_license", label: "Haydovchilik guvohnomasi bor" },
 ];
 
 const HSK_LEVELS = [
@@ -404,15 +404,7 @@ const Translators = () => {
       <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
         <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
           <SheetHeader className="pb-4 border-b border-border/50">
-            <div className="flex items-center justify-between">
-              <SheetTitle className="text-xl font-bold">Filtrlash</SheetTitle>
-              <button 
-                onClick={() => setFilterOpen(false)}
-                className="p-2 hover:bg-muted rounded-full"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
+            <SheetTitle className="text-xl font-bold text-left">Filtrlash</SheetTitle>
           </SheetHeader>
 
           <div className="py-6 space-y-6 overflow-y-auto h-[calc(100%-160px)]">
@@ -547,7 +539,7 @@ const Translators = () => {
               onClick={() => setFilterOpen(false)}
             >
               <Check className="w-4 h-4" />
-              Tasdiqlash ({filteredTranslators.length})
+              Tasdiqlash · {filteredTranslators.length} ta tarjimon
             </Button>
           </div>
         </SheetContent>
@@ -733,7 +725,7 @@ const Translators = () => {
         onOpenChange={setDetailOpen}
         onBook={() => {
           setDetailOpen(false);
-          setBookingOpen(true);
+          setTimeout(() => setBookingOpen(true), 250);
         }}
         onChat={() => {
           if (selectedTranslator) {
