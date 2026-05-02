@@ -117,6 +117,8 @@ const Translators = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { getField } = useTranslatedField();
+  const { user } = useAuth();
+  const { toast } = useToast();
   const [translators, setTranslators] = useState<Translator[]>([]);
   const [loading, setLoading] = useState(true);
   const [filterOpen, setFilterOpen] = useState(false);
@@ -134,6 +136,8 @@ const Translators = () => {
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [conversationId, setConversationId] = useState<string | null>(null);
 
   // Count active filters
   const activeFilterCount = useMemo(() => {
