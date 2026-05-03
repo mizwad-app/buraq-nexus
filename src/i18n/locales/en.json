@@ -4,6 +4,9 @@
     "welcome": "Welcome",
     "services": "Services"
   },
+  "brand": {
+    "tagline": "The Muslim traveler's digital provisions"
+  },
   "nav": {
     "home": "Home",
     "business": "Business",

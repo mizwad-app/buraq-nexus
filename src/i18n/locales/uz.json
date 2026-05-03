@@ -4,6 +4,9 @@
     "welcome": "Xush kelibsiz",
     "services": "Xizmatlar"
   },
+  "brand": {
+    "tagline": "Musulmon sayyohning raqamli karmoni"
+  },
   "nav": {
     "home": "Bosh",
     "business": "Biznes",

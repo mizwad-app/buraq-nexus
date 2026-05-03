@@ -4,6 +4,9 @@
     "welcome": "Bienvenue",
     "services": "Services"
   },
+  "brand": {
+    "tagline": "Le sac numérique du voyageur musulman"
+  },
   "nav": {
     "home": "Accueil",
     "business": "Affaires",

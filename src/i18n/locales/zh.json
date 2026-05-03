@@ -4,6 +4,9 @@
     "welcome": "欢迎",
     "services": "服务"
   },
+  "brand": {
+    "tagline": "穆斯林旅者的数字行囊"
+  },
   "nav": {
     "home": "主页",
     "business": "商业",
