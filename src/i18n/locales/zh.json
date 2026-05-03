@@ -378,7 +378,8 @@
       "places": "地点",
       "guide": "指南",
       "videos": "视频建议",
-      "documents": "文件"
+      "documents": "文件",
+      "tickets": "票务"
     },
     "documentsDescription": "旅行所需的文件",
     "documentsComingSoon": "即将推出。"
@@ -654,5 +655,60 @@
     "asr": "晡礼",
     "maghrib": "昏礼",
     "isha": "宵礼"
+  },
+  "tickets": {
+    "heroTitle": "需要票务？Buraq帮您",
+    "heroSubtitle": "我们帮您查找和预订机票和火车票。即使语言不通——我们的代理会处理一切。",
+    "flight": "机票",
+    "flightSubtitle": "国内和国际航班",
+    "train": "火车票",
+    "trainSubtitle": "高铁和普通列车",
+    "quickChat": "通过快速聊天询问",
+    "howItWorks": "如何运作？",
+    "howItWorksStep1": "填写表格",
+    "howItWorksStep2": "Buraq查找并推荐",
+    "howItWorksStep3": "您确认并支付",
+    "trustUzbek": "乌兹别克语",
+    "trustReliable": "可靠",
+    "trustBestPrice": "最优价格",
+    "form": {
+      "tripType": "行程类型",
+      "oneWay": "单程",
+      "roundTrip": "往返",
+      "origin": "出发地",
+      "destination": "目的地",
+      "departureDate": "出发日期",
+      "returnDate": "返回日期",
+      "passengers": "乘客",
+      "adults": "成人",
+      "children": "儿童",
+      "infants": "婴儿",
+      "class": "舱位",
+      "economy": "经济舱",
+      "business": "商务舱",
+      "first": "头等舱",
+      "notes": "其他请求或特殊要求",
+      "phone": "您的电话号码",
+      "submit": "提交请求",
+      "success": "已收到请求。Buraq代理将在2小时内联系您。",
+      "timePreference": "时间偏好",
+      "timeMorning": "早晨",
+      "timeBeforeNoon": "中午前",
+      "timeAfterNoon": "中午后",
+      "timeEvening": "晚上",
+      "timeAny": "任意时间",
+      "trainType": "列车类型",
+      "trainHighSpeed": "高铁（G/D）",
+      "trainRegular": "普通（T/K/Z）",
+      "seatFirst": "一等座",
+      "seatSecond": "二等座",
+      "seatSleeper": "卧铺",
+      "phoneInvalid": "电话号码无效（必须以 +998 或 +86 开头）",
+      "required": "必填"
+    },
+    "admin": {
+      "flightLabel": "机票",
+      "trainLabel": "火车票"
+    }
   }
 }

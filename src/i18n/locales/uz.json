@@ -378,7 +378,8 @@
       "places": "Joylar",
       "guide": "Yo'riqnoma",
       "videos": "Video maslahatlar",
-      "documents": "Hujjatlar"
+      "documents": "Hujjatlar",
+      "tickets": "Biletlar"
     },
     "documentsDescription": "Sayohat uchun kerakli hujjatlar",
     "documentsComingSoon": "Tez orada qo'shiladi."
@@ -653,5 +654,60 @@
     "asr": "Asr",
     "maghrib": "Shom",
     "isha": "Xufton"
+  },
+  "tickets": {
+    "heroTitle": "Bilet kerakmi? Buraq yordam beradi",
+    "heroSubtitle": "Aviabilet va Train biletlarini topish va bron qilishda yordamlashamiz. Tilni bilmasangiz ham — Buraq agentlari ishlab beradi.",
+    "flight": "Aviabilet",
+    "flightSubtitle": "Xitoy ichida va xalqaro reyslar",
+    "train": "Train bilet",
+    "trainSubtitle": "Yuqori tezlikdagi va oddiy poyezdlar",
+    "quickChat": "Tezkor chat orqali so'rang",
+    "howItWorks": "Qanday ishlaydi?",
+    "howItWorksStep1": "Forma to'ldiring",
+    "howItWorksStep2": "Buraq topadi va taklif qiladi",
+    "howItWorksStep3": "Tasdiqlab to'lov qilasiz",
+    "trustUzbek": "O'zbek tilida",
+    "trustReliable": "Ishonchli",
+    "trustBestPrice": "Eng yaxshi narx",
+    "form": {
+      "tripType": "Sayohat turi",
+      "oneWay": "Bir tomonlama",
+      "roundTrip": "Borish-kelish",
+      "origin": "Qayerdan",
+      "destination": "Qayerga",
+      "departureDate": "Borish sanasi",
+      "returnDate": "Qaytish sanasi",
+      "passengers": "Yo'lovchilar",
+      "adults": "Kattalar",
+      "children": "Bolalar",
+      "infants": "Chaqaloqlar",
+      "class": "Klass",
+      "economy": "Iqtisod",
+      "business": "Biznes",
+      "first": "Birinchi",
+      "notes": "Qo'shimcha so'rov yoki maxsus talablar",
+      "phone": "Telefon raqamingiz",
+      "submit": "So'rov yuborish",
+      "success": "So'rovingiz qabul qilindi. Buraq agenti 2 soat ichida bog'lanadi.",
+      "timePreference": "Vaqt afzalligi",
+      "timeMorning": "Ertalab",
+      "timeBeforeNoon": "Tushdan oldin",
+      "timeAfterNoon": "Tushdan keyin",
+      "timeEvening": "Kechqurun",
+      "timeAny": "Farqi yo'q",
+      "trainType": "Poyezd turi",
+      "trainHighSpeed": "Yuqori tezlikda (G/D)",
+      "trainRegular": "Oddiy (T/K/Z)",
+      "seatFirst": "Birinchi klass",
+      "seatSecond": "Ikkinchi klass",
+      "seatSleeper": "Yotoqli (Pinwo)",
+      "phoneInvalid": "Telefon raqami noto'g'ri (+998 yoki +86 bilan boshlanishi kerak)",
+      "required": "Majburiy"
+    },
+    "admin": {
+      "flightLabel": "Aviabilet",
+      "trainLabel": "Train bilet"
+    }
   }
 }
