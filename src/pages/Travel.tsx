@@ -124,8 +124,12 @@ interface ShoppingMall {
   [key: string]: unknown;
 }
 
-type CategoryFilter = "all" | "parks" | "malls";
-type SelectedItem = { type: "park"; data: Park } | { type: "mall"; data: ShoppingMall };
+type CategoryFilter = "all" | "parks" | "malls" | "historical" | "markets";
+type SelectedItem =
+  | { type: "park"; data: Park }
+  | { type: "mall"; data: ShoppingMall }
+  | { type: "historical"; data: PlaceData }
+  | { type: "market"; data: PlaceData };
 
 interface EmbassyInfo {
   id: string;
