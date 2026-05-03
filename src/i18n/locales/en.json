@@ -378,7 +378,8 @@
       "places": "Places",
       "guide": "Guide",
       "videos": "Video tips",
-      "documents": "Documents"
+      "documents": "Documents",
+      "tickets": "Tickets"
     },
     "documentsDescription": "Documents needed for travel",
     "documentsComingSoon": "Coming soon."
@@ -604,5 +605,60 @@
     "asr": "Asr",
     "maghrib": "Maghrib",
     "isha": "Isha"
+  },
+  "tickets": {
+    "heroTitle": "Need tickets? Buraq helps",
+    "heroSubtitle": "We help find and book flight and train tickets. Even without language skills — our agents handle it.",
+    "flight": "Flight ticket",
+    "flightSubtitle": "Domestic and international flights",
+    "train": "Train ticket",
+    "trainSubtitle": "High-speed and regular trains",
+    "quickChat": "Ask via quick chat",
+    "howItWorks": "How does it work?",
+    "howItWorksStep1": "Fill the form",
+    "howItWorksStep2": "Buraq finds and offers",
+    "howItWorksStep3": "You confirm and pay",
+    "trustUzbek": "In Uzbek",
+    "trustReliable": "Reliable",
+    "trustBestPrice": "Best price",
+    "form": {
+      "tripType": "Trip type",
+      "oneWay": "One way",
+      "roundTrip": "Round trip",
+      "origin": "From",
+      "destination": "To",
+      "departureDate": "Departure date",
+      "returnDate": "Return date",
+      "passengers": "Passengers",
+      "adults": "Adults",
+      "children": "Children",
+      "infants": "Infants",
+      "class": "Class",
+      "economy": "Economy",
+      "business": "Business",
+      "first": "First",
+      "notes": "Additional requests or special requirements",
+      "phone": "Your phone number",
+      "submit": "Submit request",
+      "success": "Request received. Buraq agent will contact you within 2 hours.",
+      "timePreference": "Time preference",
+      "timeMorning": "Morning",
+      "timeBeforeNoon": "Before noon",
+      "timeAfterNoon": "After noon",
+      "timeEvening": "Evening",
+      "timeAny": "Any time",
+      "trainType": "Train type",
+      "trainHighSpeed": "High-speed (G/D)",
+      "trainRegular": "Regular (T/K/Z)",
+      "seatFirst": "First class",
+      "seatSecond": "Second class",
+      "seatSleeper": "Sleeper (Pinwo)",
+      "phoneInvalid": "Invalid phone (must start with +998 or +86)",
+      "required": "Required"
+    },
+    "admin": {
+      "flightLabel": "Flight ticket",
+      "trainLabel": "Train ticket"
+    }
   }
 }

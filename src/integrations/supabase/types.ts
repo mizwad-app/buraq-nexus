@@ -1772,6 +1772,7 @@ export type Database = {
           id: string
           service_type: string
           status: string | null
+          ticket_details: Json | null
           title: string
           updated_at: string
           user_id: string
@@ -1784,6 +1785,7 @@ export type Database = {
           id?: string
           service_type: string
           status?: string | null
+          ticket_details?: Json | null
           title: string
           updated_at?: string
           user_id: string
@@ -1796,6 +1798,7 @@ export type Database = {
           id?: string
           service_type?: string
           status?: string | null
+          ticket_details?: Json | null
           title?: string
           updated_at?: string
           user_id?: string

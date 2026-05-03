@@ -382,7 +382,8 @@
       "places": "الأماكن",
       "guide": "الدليل",
       "videos": "نصائح فيديو",
-      "documents": "المستندات"
+      "documents": "المستندات",
+      "tickets": "التذاكر"
     },
     "documentsDescription": "المستندات اللازمة للسفر",
     "documentsComingSoon": "قريباً."
@@ -562,5 +563,60 @@
     "asr": "العصر",
     "maghrib": "المغرب",
     "isha": "العشاء"
+  },
+  "tickets": {
+    "heroTitle": "تحتاج تذكرة؟ Buraq يساعدك",
+    "heroSubtitle": "نساعدك في العثور وحجز تذاكر الطيران والقطارات. حتى لو لم تعرف اللغة — وكلاؤنا يتولون الأمر.",
+    "flight": "تذكرة طيران",
+    "flightSubtitle": "الرحلات المحلية والدولية",
+    "train": "تذكرة قطار",
+    "trainSubtitle": "القطارات السريعة والعادية",
+    "quickChat": "اسأل عبر الدردشة السريعة",
+    "howItWorks": "كيف يعمل؟",
+    "howItWorksStep1": "املأ النموذج",
+    "howItWorksStep2": "Buraq يجد ويعرض",
+    "howItWorksStep3": "تؤكد وتدفع",
+    "trustUzbek": "بالأوزبكية",
+    "trustReliable": "موثوق",
+    "trustBestPrice": "أفضل سعر",
+    "form": {
+      "tripType": "نوع الرحلة",
+      "oneWay": "ذهاب فقط",
+      "roundTrip": "ذهاب وإياب",
+      "origin": "من",
+      "destination": "إلى",
+      "departureDate": "تاريخ المغادرة",
+      "returnDate": "تاريخ العودة",
+      "passengers": "المسافرون",
+      "adults": "البالغون",
+      "children": "الأطفال",
+      "infants": "الرضع",
+      "class": "الدرجة",
+      "economy": "اقتصادية",
+      "business": "رجال الأعمال",
+      "first": "الأولى",
+      "notes": "طلبات إضافية أو متطلبات خاصة",
+      "phone": "رقم هاتفك",
+      "submit": "إرسال الطلب",
+      "success": "تم استلام الطلب. سيتصل وكيل Buraq خلال ساعتين.",
+      "timePreference": "تفضيل الوقت",
+      "timeMorning": "صباحاً",
+      "timeBeforeNoon": "قبل الظهر",
+      "timeAfterNoon": "بعد الظهر",
+      "timeEvening": "مساءً",
+      "timeAny": "أي وقت",
+      "trainType": "نوع القطار",
+      "trainHighSpeed": "السريع (G/D)",
+      "trainRegular": "عادي (T/K/Z)",
+      "seatFirst": "الدرجة الأولى",
+      "seatSecond": "الدرجة الثانية",
+      "seatSleeper": "النوم (Pinwo)",
+      "phoneInvalid": "رقم غير صالح (يجب أن يبدأ بـ +998 أو +86)",
+      "required": "مطلوب"
+    },
+    "admin": {
+      "flightLabel": "تذكرة طيران",
+      "trainLabel": "تذكرة قطار"
+    }
   }
 }

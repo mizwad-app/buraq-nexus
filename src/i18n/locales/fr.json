@@ -378,7 +378,8 @@
       "places": "Lieux",
       "guide": "Guide",
       "videos": "Conseils vidéo",
-      "documents": "Documents"
+      "documents": "Documents",
+      "tickets": "Billets"
     },
     "documentsDescription": "Documents nécessaires pour voyager",
     "documentsComingSoon": "Bientôt disponible."
@@ -602,5 +603,60 @@
     "asr": "Asr",
     "maghrib": "Maghrib",
     "isha": "Isha"
+  },
+  "tickets": {
+    "heroTitle": "Besoin de billets? Buraq aide",
+    "heroSubtitle": "Nous aidons à trouver et réserver des billets d'avion et de train. Même sans connaître la langue — nos agents s'en occupent.",
+    "flight": "Billet d'avion",
+    "flightSubtitle": "Vols intérieurs et internationaux",
+    "train": "Billet de train",
+    "trainSubtitle": "Trains à grande vitesse et réguliers",
+    "quickChat": "Demandez par chat rapide",
+    "howItWorks": "Comment ça marche?",
+    "howItWorksStep1": "Remplissez le formulaire",
+    "howItWorksStep2": "Buraq trouve et propose",
+    "howItWorksStep3": "Vous confirmez et payez",
+    "trustUzbek": "En ouzbek",
+    "trustReliable": "Fiable",
+    "trustBestPrice": "Meilleur prix",
+    "form": {
+      "tripType": "Type de voyage",
+      "oneWay": "Aller simple",
+      "roundTrip": "Aller-retour",
+      "origin": "De",
+      "destination": "Vers",
+      "departureDate": "Date de départ",
+      "returnDate": "Date de retour",
+      "passengers": "Passagers",
+      "adults": "Adultes",
+      "children": "Enfants",
+      "infants": "Bébés",
+      "class": "Classe",
+      "economy": "Économique",
+      "business": "Affaires",
+      "first": "Première",
+      "notes": "Demandes supplémentaires ou exigences particulières",
+      "phone": "Votre numéro de téléphone",
+      "submit": "Soumettre la demande",
+      "success": "Demande reçue. L'agent Buraq vous contactera dans 2 heures.",
+      "timePreference": "Préférence horaire",
+      "timeMorning": "Matin",
+      "timeBeforeNoon": "Avant midi",
+      "timeAfterNoon": "Après-midi",
+      "timeEvening": "Soirée",
+      "timeAny": "Peu importe",
+      "trainType": "Type de train",
+      "trainHighSpeed": "Grande vitesse (G/D)",
+      "trainRegular": "Régulier (T/K/Z)",
+      "seatFirst": "Première classe",
+      "seatSecond": "Deuxième classe",
+      "seatSleeper": "Couchette (Pinwo)",
+      "phoneInvalid": "Numéro invalide (doit commencer par +998 ou +86)",
+      "required": "Requis"
+    },
+    "admin": {
+      "flightLabel": "Billet d'avion",
+      "trainLabel": "Billet de train"
+    }
   }
 }

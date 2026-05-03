@@ -380,7 +380,8 @@
       "places": "Места",
       "guide": "Гид",
       "videos": "Видео советы",
-      "documents": "Документы"
+      "documents": "Документы",
+      "tickets": "Билеты"
     },
     "documentsDescription": "Документы, необходимые для путешествия",
     "documentsComingSoon": "Скоро будет добавлено."
@@ -580,5 +581,60 @@
     "asr": "Аср",
     "maghrib": "Магриб",
     "isha": "Иша"
+  },
+  "tickets": {
+    "heroTitle": "Нужен билет? Buraq поможет",
+    "heroSubtitle": "Поможем найти и забронировать авиа и ж/д билеты. Даже если не знаете язык — наши агенты сделают всё.",
+    "flight": "Авиабилет",
+    "flightSubtitle": "По Китаю и международные",
+    "train": "Ж/д билет",
+    "trainSubtitle": "Скоростные и обычные поезда",
+    "quickChat": "Спросите через быстрый чат",
+    "howItWorks": "Как это работает?",
+    "howItWorksStep1": "Заполните форму",
+    "howItWorksStep2": "Buraq найдёт и предложит",
+    "howItWorksStep3": "Подтверждаете и оплачиваете",
+    "trustUzbek": "На узбекском",
+    "trustReliable": "Надёжно",
+    "trustBestPrice": "Лучшая цена",
+    "form": {
+      "tripType": "Тип поездки",
+      "oneWay": "В одну сторону",
+      "roundTrip": "Туда-обратно",
+      "origin": "Откуда",
+      "destination": "Куда",
+      "departureDate": "Дата вылета",
+      "returnDate": "Дата возврата",
+      "passengers": "Пассажиры",
+      "adults": "Взрослые",
+      "children": "Дети",
+      "infants": "Младенцы",
+      "class": "Класс",
+      "economy": "Эконом",
+      "business": "Бизнес",
+      "first": "Первый",
+      "notes": "Дополнительные пожелания или особые требования",
+      "phone": "Ваш номер телефона",
+      "submit": "Отправить запрос",
+      "success": "Запрос принят. Агент Buraq свяжется в течение 2 часов.",
+      "timePreference": "Предпочтительное время",
+      "timeMorning": "Утром",
+      "timeBeforeNoon": "До полудня",
+      "timeAfterNoon": "После полудня",
+      "timeEvening": "Вечером",
+      "timeAny": "Без разницы",
+      "trainType": "Тип поезда",
+      "trainHighSpeed": "Скоростной (G/D)",
+      "trainRegular": "Обычный (T/K/Z)",
+      "seatFirst": "Первый класс",
+      "seatSecond": "Второй класс",
+      "seatSleeper": "Спальный (Pinwo)",
+      "phoneInvalid": "Неверный формат (должен начинаться с +998 или +86)",
+      "required": "Обязательно"
+    },
+    "admin": {
+      "flightLabel": "Авиабилет",
+      "trainLabel": "Ж/д билет"
+    }
   }
 }

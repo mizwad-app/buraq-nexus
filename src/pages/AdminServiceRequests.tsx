@@ -28,6 +28,7 @@ interface ServiceRequest {
   admin_notes: string | null;
   created_at: string;
   updated_at: string;
+  ticket_details?: any;
 }
 
 const statusConfig = {
@@ -40,6 +41,8 @@ const statusConfig = {
 const serviceTypeLabels: Record<string, string> = {
   flight_booking: "Aviabilet buyurtma",
   train_booking: "Poyezd bileti",
+  flight_ticket: "Aviabilet",
+  train_ticket: "Train bilet",
   vpn_setup: "VPN o'rnatish",
   concierge: "Konsyerj xizmati",
 };
@@ -231,6 +234,56 @@ const AdminServiceRequests = () => {
                 {/* Expanded Content */}
                 {isExpanded && editState && (
                   <div className="px-4 pb-4 space-y-4 border-t border-border/30 pt-4">
+                    {/* Ticket Details */}
+                    {request.ticket_details && (
+                      <div className="rounded-xl bg-primary/5 border border-primary/20 p-3 space-y-2">
+                        {(request.ticket_details.origin || request.ticket_details.destination) && (
+                          <p className="text-base font-semibold text-foreground">
+                            {request.ticket_details.origin} → {request.ticket_details.destination}
+                          </p>
+                        )}
+                        <div className="grid grid-cols-2 gap-2 text-xs text-muted-foreground">
+                          {request.ticket_details.departure_date && (
+                            <div><span className="font-medium">📅 </span>{request.ticket_details.departure_date}</div>
+                          )}
+                          {request.ticket_details.return_date && (
+                            <div><span className="font-medium">↩ </span>{request.ticket_details.return_date}</div>
+                          )}
+                          {request.ticket_details.trip_type && (
+                            <div>{request.ticket_details.trip_type}</div>
+                          )}
+                          {request.ticket_details.class && (
+                            <div>Klass: {request.ticket_details.class}</div>
+                          )}
+                          {request.ticket_details.seat_class && (
+                            <div>O'rindiq: {request.ticket_details.seat_class}</div>
+                          )}
+                          {request.ticket_details.train_type && (
+                            <div>Poyezd: {request.ticket_details.train_type}</div>
+                          )}
+                          {request.ticket_details.time_preference && (
+                            <div>Vaqt: {request.ticket_details.time_preference}</div>
+                          )}
+                          {request.ticket_details.passengers && (
+                            <div className="col-span-2">
+                              👥 {typeof request.ticket_details.passengers === "object"
+                                ? `${request.ticket_details.passengers.adults || 0} kat. / ${request.ticket_details.passengers.children || 0} bola / ${request.ticket_details.passengers.infants || 0} chaq.`
+                                : request.ticket_details.passengers}
+                            </div>
+                          )}
+                        </div>
+                        {request.ticket_details.phone && (
+                          <a
+                            href={`tel:${request.ticket_details.phone}`}
+                            className="inline-flex items-center gap-1.5 text-sm text-primary font-medium"
+                          >
+                            <MessageCircle className="w-3.5 h-3.5" />
+                            {request.ticket_details.phone}
+                          </a>
+                        )}
+                      </div>
+                    )}
+
                     {/* Description */}
                     {request.description && (
                       <div>
