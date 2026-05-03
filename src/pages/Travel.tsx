@@ -61,6 +61,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
+import { PlaceDetailSheet, type PlaceType, type PlaceData } from "@/components/travel/PlaceDetailSheet";
 
 interface Park {
   id: string;
