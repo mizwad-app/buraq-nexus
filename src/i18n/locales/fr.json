@@ -658,5 +658,62 @@
       "flightLabel": "Billet d'avion",
       "trainLabel": "Billet de train"
     }
+  },
+  "legal": {
+    "tabTitle": "Aide juridique",
+    "tabProducts": "Produits",
+    "heroTitle": "Avocats de confiance",
+    "heroSubtitle": "Besoin d'aide pour des contrats, litiges ou impôts en Chine? Contactez directement les avocats vérifiés par Buraq.",
+    "heroNote": "L'équipe Buraq vérifie personnellement chaque avocat. Nous ne prenons pas de commission — vous contactez directement.",
+    "verified": "Vérifié par Buraq",
+    "yearsExperience_one": "{{count}} an d'expérience",
+    "yearsExperience_other": "{{count}} ans d'expérience",
+    "contact": {
+      "wechat": "WeChat",
+      "phone": "Appeler",
+      "email": "Email",
+      "details": "Détails",
+      "wechatCopied": "ID WeChat copié: {{id}}"
+    },
+    "detail": {
+      "viewOnMap": "Voir sur la carte",
+      "disclaimer": "Buraq n'est pas responsable des informations fournies par l'avocat. La consultation se fait directement.",
+      "bio": "Biographie",
+      "specializations": "Spécialisations",
+      "languages": "Langues",
+      "office": "Adresse du bureau"
+    },
+    "filter": {
+      "title": "Filtres",
+      "city": "Ville",
+      "allCities": "Toutes les villes",
+      "languages": "Langues",
+      "specializations": "Spécialisation",
+      "verifiedOnly": "Vérifiés Buraq uniquement",
+      "confirm": "Appliquer · {{count}} avocats",
+      "button": "Filtrer · {{count}} avocats",
+      "clear": "Effacer"
+    },
+    "empty": {
+      "title": "Aucun avocat ne correspond à ces filtres",
+      "subtitle": "Essayez de modifier les filtres",
+      "clearFilters": "Effacer les filtres"
+    },
+    "specialization": {
+      "contracts": "Contrats",
+      "intellectual_property": "Propriété intellectuelle",
+      "tax": "Fiscalité",
+      "disputes": "Litiges",
+      "immigration": "Immigration",
+      "corporate": "Sociétés"
+    },
+    "language": {
+      "zh": "Chinois",
+      "en": "Anglais",
+      "ru": "Russe",
+      "ar": "Arabe",
+      "uz": "Ouzbek",
+      "fr": "Français"
+    }
   }
 }

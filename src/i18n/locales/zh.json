@@ -710,5 +710,62 @@
       "flightLabel": "机票",
       "trainLabel": "火车票"
     }
+  },
+  "legal": {
+    "tabTitle": "法律帮助",
+    "tabProducts": "产品",
+    "heroTitle": "可信律师",
+    "heroSubtitle": "在中国需要合同、纠纷或税务方面的帮助？直接联系Buraq认证的律师。",
+    "heroNote": "Buraq团队亲自审核每位律师。我们不收取佣金——您直接联系。",
+    "verified": "Buraq认证",
+    "yearsExperience_one": "{{count}} 年经验",
+    "yearsExperience_other": "{{count}} 年经验",
+    "contact": {
+      "wechat": "微信",
+      "phone": "致电",
+      "email": "邮箱",
+      "details": "详情",
+      "wechatCopied": "已复制微信ID：{{id}}"
+    },
+    "detail": {
+      "viewOnMap": "在地图上查看",
+      "disclaimer": "Buraq不对律师提供的信息负责。咨询直接进行。",
+      "bio": "简介",
+      "specializations": "专业",
+      "languages": "语言",
+      "office": "办公地址"
+    },
+    "filter": {
+      "title": "筛选",
+      "city": "城市",
+      "allCities": "所有城市",
+      "languages": "语言",
+      "specializations": "专业",
+      "verifiedOnly": "仅Buraq认证",
+      "confirm": "应用 · {{count}} 位律师",
+      "button": "筛选 · {{count}} 位律师",
+      "clear": "清除"
+    },
+    "empty": {
+      "title": "没有符合这些筛选条件的律师",
+      "subtitle": "尝试更改筛选",
+      "clearFilters": "清除筛选"
+    },
+    "specialization": {
+      "contracts": "合同",
+      "intellectual_property": "知识产权",
+      "tax": "税务",
+      "disputes": "纠纷",
+      "immigration": "移民",
+      "corporate": "公司法"
+    },
+    "language": {
+      "zh": "中文",
+      "en": "英语",
+      "ru": "俄语",
+      "ar": "阿拉伯语",
+      "uz": "乌兹别克语",
+      "fr": "法语"
+    }
   }
 }

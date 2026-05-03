@@ -709,5 +709,62 @@
       "flightLabel": "Aviabilet",
       "trainLabel": "Train bilet"
     }
+  },
+  "legal": {
+    "tabTitle": "Huquqiy yordam",
+    "tabProducts": "Mahsulotlar",
+    "heroTitle": "Ishonchli huquqshunoslar",
+    "heroSubtitle": "Xitoyda kontrakt, tortishuv yoki soliq bo'yicha yordam kerakmi? Buraq tasdiqlagan advokatlar bilan to'g'ridan-to'g'ri bog'laning.",
+    "heroNote": "Buraq jamoasi har bir advokatni shaxsan tekshiradi. Komissiya olmaymiz — to'g'ridan-to'g'ri bog'lanasiz.",
+    "verified": "Buraq tasdiqlagan",
+    "yearsExperience_one": "{{count}} yillik tajriba",
+    "yearsExperience_other": "{{count}} yillik tajriba",
+    "contact": {
+      "wechat": "WeChat",
+      "phone": "Qo'ng'iroq",
+      "email": "Email",
+      "details": "Batafsil",
+      "wechatCopied": "WeChat ID nusxalandi: {{id}}"
+    },
+    "detail": {
+      "viewOnMap": "Xaritada ko'rish",
+      "disclaimer": "Buraq advokatning aytgan ma'lumotlari uchun javobgar emas. Konsultatsiya to'g'ridan-to'g'ri amalga oshiriladi.",
+      "bio": "Tarjimai hol",
+      "specializations": "Ixtisosliklar",
+      "languages": "Tillar",
+      "office": "Ofis manzili"
+    },
+    "filter": {
+      "title": "Filtrlash",
+      "city": "Shahar",
+      "allCities": "Barcha shaharlar",
+      "languages": "Tillar",
+      "specializations": "Ixtisoslik",
+      "verifiedOnly": "Faqat Buraq tasdiqlagan",
+      "confirm": "Tasdiqlash · {{count}} ta advokat",
+      "button": "Filtrlash · {{count}} ta advokat",
+      "clear": "Tozalash"
+    },
+    "empty": {
+      "title": "Bu filtrlar bo'yicha advokat topilmadi",
+      "subtitle": "Filtrlarni o'zgartirib ko'ring",
+      "clearFilters": "Filtrlarni tozalash"
+    },
+    "specialization": {
+      "contracts": "Kontrakt",
+      "intellectual_property": "Intellektual mulk",
+      "tax": "Soliq",
+      "disputes": "Tortishuvlar",
+      "immigration": "Immigratsiya",
+      "corporate": "Korporativ"
+    },
+    "language": {
+      "zh": "Xitoy",
+      "en": "Ingliz",
+      "ru": "Rus",
+      "ar": "Arabcha",
+      "uz": "O'zbek",
+      "fr": "Fransuz"
+    }
   }
 }

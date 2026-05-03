@@ -618,5 +618,62 @@
       "flightLabel": "تذكرة طيران",
       "trainLabel": "تذكرة قطار"
     }
+  },
+  "legal": {
+    "tabTitle": "المساعدة القانونية",
+    "tabProducts": "المنتجات",
+    "heroTitle": "محامون موثوقون",
+    "heroSubtitle": "هل تحتاج إلى مساعدة في العقود أو النزاعات أو الضرائب في الصين؟ تواصل مباشرة مع المحامين المعتمدين من Buraq.",
+    "heroNote": "يقوم فريق Buraq بفحص كل محامٍ شخصياً. نحن لا نأخذ عمولة — أنت تتواصل مباشرة.",
+    "verified": "معتمد من Buraq",
+    "yearsExperience_one": "{{count}} سنة خبرة",
+    "yearsExperience_other": "{{count}} سنوات خبرة",
+    "contact": {
+      "wechat": "WeChat",
+      "phone": "اتصال",
+      "email": "البريد",
+      "details": "التفاصيل",
+      "wechatCopied": "تم نسخ معرف WeChat: {{id}}"
+    },
+    "detail": {
+      "viewOnMap": "عرض على الخريطة",
+      "disclaimer": "Buraq غير مسؤول عن المعلومات المقدمة من المحامي. الاستشارة تتم مباشرة.",
+      "bio": "السيرة",
+      "specializations": "التخصصات",
+      "languages": "اللغات",
+      "office": "عنوان المكتب"
+    },
+    "filter": {
+      "title": "تصفية",
+      "city": "المدينة",
+      "allCities": "كل المدن",
+      "languages": "اللغات",
+      "specializations": "التخصص",
+      "verifiedOnly": "معتمد من Buraq فقط",
+      "confirm": "تطبيق · {{count}} محامي",
+      "button": "تصفية · {{count}} محامي",
+      "clear": "مسح"
+    },
+    "empty": {
+      "title": "لم يتم العثور على محامين بهذه المرشحات",
+      "subtitle": "حاول تغيير المرشحات",
+      "clearFilters": "مسح المرشحات"
+    },
+    "specialization": {
+      "contracts": "العقود",
+      "intellectual_property": "الملكية الفكرية",
+      "tax": "الضرائب",
+      "disputes": "النزاعات",
+      "immigration": "الهجرة",
+      "corporate": "الشركات"
+    },
+    "language": {
+      "zh": "الصينية",
+      "en": "الإنجليزية",
+      "ru": "الروسية",
+      "ar": "العربية",
+      "uz": "الأوزبكية",
+      "fr": "الفرنسية"
+    }
   }
 }
