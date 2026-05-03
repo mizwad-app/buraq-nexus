@@ -4,6 +4,9 @@
     "welcome": "مرحبا",
     "services": "الخدمات"
   },
+  "brand": {
+    "tagline": "جيب المسافر المسلم الرقمي"
+  },
   "nav": {
     "home": "الرئيسية",
     "business": "الأعمال",
@@ -25,7 +28,7 @@
     "videoTips": "نصائح مفيدة",
     "b2bHub": "تجارة",
     "exhibitions": "المعارض التجارية",
-    "wallet": "محفظة Buraq",
+    "wallet": "محفظة Mizwad",
     "transportVpn": "النقل و VPN",
     "attractions": "المعالم السياحية",
     "legalHelp": "القنصليات والمساعدة القانونية",
@@ -318,11 +321,11 @@
     "completed": "مكتمل",
     "cancelled": "ملغى",
     "translatorPrice": "سعر المترجم",
-    "serviceFee": "رسوم خدمة Buraq",
+    "serviceFee": "رسوم خدمة Mizwad",
     "serviceFeeRate": "10%",
     "totalPayment": "إجمالي الدفع",
     "feeInfo": {
-      "title": "عن رسوم خدمة Buraq",
+      "title": "عن رسوم خدمة Mizwad",
       "body": "تغطي رسوم الخدمة بنسبة 10% أمان المنصة والدعم. يحصل المترجم على سعره كاملاً."
     },
     "insufficientBalance": "رصيد المحفظة غير كافٍ. مطلوب: ¥{{needed}}، متوفر: ¥{{available}}",
@@ -470,7 +473,7 @@
     "subtitle": "اختر تطبيق المراسلة المفضل لديك",
     "whatsappDesc": "رد سريع، استفسارات تجارية",
     "telegramDesc": "رسائل سريعة، مشاركة الملفات",
-    "defaultMessage": "مرحباً! أحتاج مساعدة في Buraq Ecosystem.",
+    "defaultMessage": "مرحباً! أحتاج مساعدة في Mizwad.",
     "askAgent": "اسأل الوكيل",
     "marketInquiry": "مرحباً! أود الاستفسار عن {{market}}. هل يمكنكم المساعدة؟",
     "inquiryAbout": "استفسار عن"
@@ -511,7 +514,7 @@
     "pricePerDay": "في اليوم",
     "available": "متاح",
     "busy": "مشغول",
-    "verified": "موثق من Buraq",
+    "verified": "موثق من Mizwad",
     "specializations": "التخصصات",
     "contact": "اتصال",
     "noTranslators": "لم يتم العثور على مترجمين",
@@ -573,7 +576,7 @@
     "isha": "العشاء"
   },
   "tickets": {
-    "heroTitle": "تحتاج تذكرة؟ Buraq يساعدك",
+    "heroTitle": "تحتاج تذكرة؟ Mizwad يساعدك",
     "heroSubtitle": "نساعدك في العثور وحجز تذاكر الطيران والقطارات. حتى لو لم تعرف اللغة — وكلاؤنا يتولون الأمر.",
     "flight": "تذكرة طيران",
     "flightSubtitle": "الرحلات المحلية والدولية",
@@ -582,7 +585,7 @@
     "quickChat": "اسأل عبر الدردشة السريعة",
     "howItWorks": "كيف يعمل؟",
     "howItWorksStep1": "املأ النموذج",
-    "howItWorksStep2": "Buraq يجد ويعرض",
+    "howItWorksStep2": "Mizwad يجد ويعرض",
     "howItWorksStep3": "تؤكد وتدفع",
     "trustUzbek": "بالأوزبكية",
     "trustReliable": "موثوق",
@@ -606,7 +609,7 @@
       "notes": "طلبات إضافية أو متطلبات خاصة",
       "phone": "رقم هاتفك",
       "submit": "إرسال الطلب",
-      "success": "تم استلام الطلب. سيتصل وكيل Buraq خلال ساعتين.",
+      "success": "تم استلام الطلب. سيتصل وكيل Mizwad خلال ساعتين.",
       "timePreference": "تفضيل الوقت",
       "timeMorning": "صباحاً",
       "timeBeforeNoon": "قبل الظهر",
@@ -631,9 +634,9 @@
     "tabTitle": "المساعدة القانونية",
     "tabProducts": "المنتجات",
     "heroTitle": "محامون موثوقون",
-    "heroSubtitle": "هل تحتاج إلى مساعدة في العقود أو النزاعات أو الضرائب في الصين؟ تواصل مباشرة مع المحامين المعتمدين من Buraq.",
-    "heroNote": "يقوم فريق Buraq بفحص كل محامٍ شخصياً. نحن لا نأخذ عمولة — أنت تتواصل مباشرة.",
-    "verified": "معتمد من Buraq",
+    "heroSubtitle": "هل تحتاج إلى مساعدة في العقود أو النزاعات أو الضرائب في الصين؟ تواصل مباشرة مع المحامين المعتمدين من Mizwad.",
+    "heroNote": "يقوم فريق Mizwad بفحص كل محامٍ شخصياً. نحن لا نأخذ عمولة — أنت تتواصل مباشرة.",
+    "verified": "معتمد من Mizwad",
     "yearsExperience_one": "{{count}} سنة خبرة",
     "yearsExperience_other": "{{count}} سنوات خبرة",
     "contact": {
@@ -645,7 +648,7 @@
     },
     "detail": {
       "viewOnMap": "عرض على الخريطة",
-      "disclaimer": "Buraq غير مسؤول عن المعلومات المقدمة من المحامي. الاستشارة تتم مباشرة.",
+      "disclaimer": "Mizwad غير مسؤول عن المعلومات المقدمة من المحامي. الاستشارة تتم مباشرة.",
       "bio": "السيرة",
       "specializations": "التخصصات",
       "languages": "اللغات",
@@ -657,7 +660,7 @@
       "allCities": "كل المدن",
       "languages": "اللغات",
       "specializations": "التخصص",
-      "verifiedOnly": "معتمد من Buraq فقط",
+      "verifiedOnly": "معتمد من Mizwad فقط",
       "confirm": "تطبيق · {{count}} محامي",
       "button": "تصفية · {{count}} محامي",
       "clear": "مسح"
@@ -701,7 +704,7 @@
       "features": "المميزات",
       "transport": "كيفية الوصول",
       "gallery": "الصور",
-      "buraqTip": "نصيحة Buraq"
+      "buraqTip": "نصيحة Mizwad"
     },
     "action": {
       "directions": "الاتجاهات",

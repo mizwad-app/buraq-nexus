@@ -1,8 +1,11 @@
 {
   "app": {
-    "name": "Écosystème Buraq",
+    "name": "Mizwad",
     "welcome": "Bienvenue",
     "services": "Services"
+  },
+  "brand": {
+    "tagline": "Le sac numérique du voyageur musulman"
   },
   "nav": {
     "home": "Accueil",
@@ -25,7 +28,7 @@
     "videoTips": "Conseils utiles",
     "b2bHub": "Pour les affaires",
     "exhibitions": "Foires et expositions",
-    "wallet": "Portefeuille Buraq",
+    "wallet": "Portefeuille Mizwad",
     "transportVpn": "Transport & VPN",
     "attractions": "Attractions",
     "legalHelp": "Consulats & Aide juridique",
@@ -318,7 +321,7 @@
     "completed": "Terminé",
     "cancelled": "Annulé",
     "translatorPrice": "Prix du traducteur",
-    "serviceFee": "Frais de service Buraq",
+    "serviceFee": "Frais de service Mizwad",
     "serviceFeeRate": "10%",
     "totalPayment": "Paiement total",
     "feeInfo": {
@@ -492,7 +495,7 @@
     "subtitle": "Choisissez votre application de messagerie préférée",
     "whatsappDesc": "Réponse rapide, demandes commerciales",
     "telegramDesc": "Messagerie rapide, partage de fichiers",
-    "defaultMessage": "Bonjour! J'ai besoin d'aide avec l'écosystème Buraq.",
+    "defaultMessage": "Bonjour! J'ai besoin d'aide avec l'Mizwad.",
     "askAgent": "Demander à l'agent",
     "marketInquiry": "Bonjour! Je voudrais me renseigner sur {{market}}. Pouvez-vous m'aider?",
     "inquiryAbout": "Demande concernant"
@@ -613,7 +616,7 @@
     "isha": "Isha"
   },
   "tickets": {
-    "heroTitle": "Besoin de billets? Buraq aide",
+    "heroTitle": "Besoin de billets? Mizwad aide",
     "heroSubtitle": "Nous aidons à trouver et réserver des billets d'avion et de train. Même sans connaître la langue — nos agents s'en occupent.",
     "flight": "Billet d'avion",
     "flightSubtitle": "Vols intérieurs et internationaux",
@@ -622,7 +625,7 @@
     "quickChat": "Demandez par chat rapide",
     "howItWorks": "Comment ça marche?",
     "howItWorksStep1": "Remplissez le formulaire",
-    "howItWorksStep2": "Buraq trouve et propose",
+    "howItWorksStep2": "Mizwad trouve et propose",
     "howItWorksStep3": "Vous confirmez et payez",
     "trustUzbek": "En ouzbek",
     "trustReliable": "Fiable",
@@ -646,7 +649,7 @@
       "notes": "Demandes supplémentaires ou exigences particulières",
       "phone": "Votre numéro de téléphone",
       "submit": "Soumettre la demande",
-      "success": "Demande reçue. L'agent Buraq vous contactera dans 2 heures.",
+      "success": "Demande reçue. L'agent Mizwad vous contactera dans 2 heures.",
       "timePreference": "Préférence horaire",
       "timeMorning": "Matin",
       "timeBeforeNoon": "Avant midi",
@@ -671,9 +674,9 @@
     "tabTitle": "Aide juridique",
     "tabProducts": "Produits",
     "heroTitle": "Avocats de confiance",
-    "heroSubtitle": "Besoin d'aide pour des contrats, litiges ou impôts en Chine? Contactez directement les avocats vérifiés par Buraq.",
-    "heroNote": "L'équipe Buraq vérifie personnellement chaque avocat. Nous ne prenons pas de commission — vous contactez directement.",
-    "verified": "Vérifié par Buraq",
+    "heroSubtitle": "Besoin d'aide pour des contrats, litiges ou impôts en Chine? Contactez directement les avocats vérifiés par Mizwad.",
+    "heroNote": "L'équipe Mizwad vérifie personnellement chaque avocat. Nous ne prenons pas de commission — vous contactez directement.",
+    "verified": "Vérifié par Mizwad",
     "yearsExperience_one": "{{count}} an d'expérience",
     "yearsExperience_other": "{{count}} ans d'expérience",
     "contact": {
@@ -685,7 +688,7 @@
     },
     "detail": {
       "viewOnMap": "Voir sur la carte",
-      "disclaimer": "Buraq n'est pas responsable des informations fournies par l'avocat. La consultation se fait directement.",
+      "disclaimer": "Mizwad n'est pas responsable des informations fournies par l'avocat. La consultation se fait directement.",
       "bio": "Biographie",
       "specializations": "Spécialisations",
       "languages": "Langues",
@@ -697,7 +700,7 @@
       "allCities": "Toutes les villes",
       "languages": "Langues",
       "specializations": "Spécialisation",
-      "verifiedOnly": "Vérifiés Buraq uniquement",
+      "verifiedOnly": "Vérifiés Mizwad uniquement",
       "confirm": "Appliquer · {{count}} avocats",
       "button": "Filtrer · {{count}} avocats",
       "clear": "Effacer"
@@ -741,7 +744,7 @@
       "features": "Caractéristiques",
       "transport": "Comment s'y rendre",
       "gallery": "Photos",
-      "buraqTip": "Conseil de Buraq"
+      "buraqTip": "Conseil de Mizwad"
     },
     "action": {
       "directions": "Itinéraire",

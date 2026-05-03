@@ -242,10 +242,10 @@ export default function AdminPlaces() {
               </div>
             )}
 
-            <div><Label>Buraq tavsiyasi (UZ)</Label><Textarea value={draft.buraq_recommendation_uz || draft.buraq_recommendation || ""} onChange={e => setDraft({ ...draft, buraq_recommendation_uz: e.target.value, buraq_recommendation: e.target.value })} /></div>
+            <div><Label>Mizwad tavsiyasi (UZ)</Label><Textarea value={draft.buraq_recommendation_uz || draft.buraq_recommendation || ""} onChange={e => setDraft({ ...draft, buraq_recommendation_uz: e.target.value, buraq_recommendation: e.target.value })} /></div>
             <div className="grid grid-cols-2 gap-3">
               {(["ru", "en", "ar", "fr", "zh"] as const).map(l => (
-                <div key={l}><Label>Buraq ({l.toUpperCase()})</Label>
+                <div key={l}><Label>Mizwad ({l.toUpperCase()})</Label>
                   <Textarea value={(draft as any)[`buraq_recommendation_${l}`] || ""} onChange={e => setDraft({ ...draft, [`buraq_recommendation_${l}`]: e.target.value } as PlaceRow)} />
                 </div>
               ))}

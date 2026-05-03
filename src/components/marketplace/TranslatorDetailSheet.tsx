@@ -150,12 +150,12 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             </div>
           </div>
 
-          {/* Buraq Verified - only show when verified */}
+          {/* Mizwad Verified - only show when verified */}
           {verifiedHsk && (
             <div className="rounded-xl p-3 bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
               <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
                 <Shield className="w-3 h-3" />
-                Buraq tasdiqlagan
+                Mizwad tasdiqlagan
               </p>
               <div className="flex items-center gap-2">
                 <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-gradient-to-r from-primary to-accent text-primary-foreground">
@@ -381,7 +381,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                       <div className="mt-2">
                         <Badge className="bg-primary/20 text-primary border-primary/30 gap-1">
                           <BadgeCheck className="w-3 h-3" />
-                          Buraq Verified
+                          Mizwad Verified
                         </Badge>
                       </div>
                     )}

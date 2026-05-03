@@ -1,8 +1,11 @@
 {
   "app": {
-    "name": "Buraq Ecosystem",
+    "name": "Mizwad",
     "welcome": "Welcome",
     "services": "Services"
+  },
+  "brand": {
+    "tagline": "The Muslim traveler's digital provisions"
   },
   "nav": {
     "home": "Home",
@@ -25,7 +28,7 @@
     "videoTips": "Useful Tips",
     "b2bHub": "For Business",
     "exhibitions": "Trade Fairs & Exhibitions",
-    "wallet": "Buraq Wallet",
+    "wallet": "Mizwad Wallet",
     "transportVpn": "Transport & VPN",
     "attractions": "Attractions",
     "legalHelp": "Consulates & Legal Help",
@@ -318,11 +321,11 @@
     "completed": "Completed",
     "cancelled": "Cancelled",
     "translatorPrice": "Translator price",
-    "serviceFee": "Buraq service fee",
+    "serviceFee": "Mizwad service fee",
     "serviceFeeRate": "10%",
     "totalPayment": "Total payment",
     "feeInfo": {
-      "title": "About Buraq service fee",
+      "title": "About Mizwad service fee",
       "body": "10% service fee covers platform safety and support. Translator receives their full price."
     },
     "insufficientBalance": "Insufficient wallet balance. Need: ¥{{needed}}, available: ¥{{available}}",
@@ -492,7 +495,7 @@
     "subtitle": "Choose your preferred messaging app",
     "whatsappDesc": "Quick response, business inquiries",
     "telegramDesc": "Fast messaging, file sharing",
-    "defaultMessage": "Hello! I need help with Buraq Ecosystem.",
+    "defaultMessage": "Hello! I need help with Mizwad.",
     "askAgent": "Ask Agent",
     "marketInquiry": "Hello! I'd like to ask about {{market}}. Can you help me?",
     "inquiryAbout": "Inquiry about"
@@ -533,7 +536,7 @@
     "pricePerDay": "per day",
     "available": "Available",
     "busy": "Busy",
-    "verified": "Verified by Buraq",
+    "verified": "Verified by Mizwad",
     "specializations": "Specializations",
     "contact": "Contact",
     "noTranslators": "No translators found",
@@ -615,7 +618,7 @@
     "isha": "Isha"
   },
   "tickets": {
-    "heroTitle": "Need tickets? Buraq helps",
+    "heroTitle": "Need tickets? Mizwad helps",
     "heroSubtitle": "We help find and book flight and train tickets. Even without language skills — our agents handle it.",
     "flight": "Flight ticket",
     "flightSubtitle": "Domestic and international flights",
@@ -624,7 +627,7 @@
     "quickChat": "Ask via quick chat",
     "howItWorks": "How does it work?",
     "howItWorksStep1": "Fill the form",
-    "howItWorksStep2": "Buraq finds and offers",
+    "howItWorksStep2": "Mizwad finds and offers",
     "howItWorksStep3": "You confirm and pay",
     "trustUzbek": "In Uzbek",
     "trustReliable": "Reliable",
@@ -648,7 +651,7 @@
       "notes": "Additional requests or special requirements",
       "phone": "Your phone number",
       "submit": "Submit request",
-      "success": "Request received. Buraq agent will contact you within 2 hours.",
+      "success": "Request received. Mizwad agent will contact you within 2 hours.",
       "timePreference": "Time preference",
       "timeMorning": "Morning",
       "timeBeforeNoon": "Before noon",
@@ -673,9 +676,9 @@
     "tabTitle": "Legal help",
     "tabProducts": "Products",
     "heroTitle": "Trusted lawyers",
-    "heroSubtitle": "Need help with contracts, disputes, or taxes in China? Connect directly with Buraq-verified lawyers.",
-    "heroNote": "The Buraq team personally vets each lawyer. We don't take commission — you connect directly.",
-    "verified": "Buraq verified",
+    "heroSubtitle": "Need help with contracts, disputes, or taxes in China? Connect directly with Mizwad-verified lawyers.",
+    "heroNote": "The Mizwad team personally vets each lawyer. We don't take commission — you connect directly.",
+    "verified": "Mizwad verified",
     "yearsExperience_one": "{{count}} year experience",
     "yearsExperience_other": "{{count}} years experience",
     "contact": {
@@ -687,7 +690,7 @@
     },
     "detail": {
       "viewOnMap": "View on map",
-      "disclaimer": "Buraq is not responsible for information provided by the lawyer. Consultation happens directly.",
+      "disclaimer": "Mizwad is not responsible for information provided by the lawyer. Consultation happens directly.",
       "bio": "Bio",
       "specializations": "Specializations",
       "languages": "Languages",
@@ -699,7 +702,7 @@
       "allCities": "All cities",
       "languages": "Languages",
       "specializations": "Specialization",
-      "verifiedOnly": "Buraq verified only",
+      "verifiedOnly": "Mizwad verified only",
       "confirm": "Apply · {{count}} lawyers",
       "button": "Filter · {{count}} lawyers",
       "clear": "Clear"
@@ -743,7 +746,7 @@
       "features": "Features",
       "transport": "How to get there",
       "gallery": "Photos",
-      "buraqTip": "Buraq's tip"
+      "buraqTip": "Mizwad's tip"
     },
     "action": {
       "directions": "Directions",

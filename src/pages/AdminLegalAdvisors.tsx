@@ -300,7 +300,7 @@ const AdminLegalAdvisors = () => {
                 </div>
               </div>
               <div className="flex items-center justify-between bg-secondary/40 rounded-lg p-3">
-                <Label>Buraq verified</Label>
+                <Label>Mizwad verified</Label>
                 <Switch checked={!!editing.buraq_verified} onCheckedChange={(v) => setEditing({ ...editing, buraq_verified: v })} />
               </div>
               <div className="flex items-center justify-between bg-secondary/40 rounded-lg p-3">

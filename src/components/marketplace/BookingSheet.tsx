@@ -624,7 +624,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                   <Shield className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-1">Buraq Wallet Escrow</h4>
+                  <h4 className="font-semibold text-foreground mb-1">Mizwad Wallet Escrow</h4>
                   <p className="text-sm text-muted-foreground">
                     Pulingiz xavfsiz saqlanadi. Xizmat muvaffaqiyatli tugagandan keyingina tarjimonga o'tkaziladi.
                   </p>
@@ -685,7 +685,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
             )}>
               <Wallet className={cn("w-6 h-6", hasEnoughBalance ? "text-primary" : "text-destructive")} />
               <div className="flex-1">
-                <p className="font-semibold">Buraq Wallet</p>
+                <p className="font-semibold">Mizwad Wallet</p>
                 <p className={cn(
                   "text-sm",
                   hasEnoughBalance ? "text-muted-foreground" : "text-destructive"
@@ -791,7 +791,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                   <span className="font-medium">¥{calculateTranslatorAmount().toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-muted-foreground">Buraq xizmat haqi (10%)</span>
+                  <span className="text-muted-foreground">Mizwad xizmat haqi (10%)</span>
                   <span className="font-medium">¥{calculateServiceFee().toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between pt-1.5 border-t border-primary/20">

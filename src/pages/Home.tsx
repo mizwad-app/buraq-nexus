@@ -49,11 +49,11 @@ const Home = () => {
       <header className="px-5 pt-12 pb-4">
         <div className="flex items-center justify-between animate-fade-in">
           <div>
-            <h1 className="text-2xl font-display font-bold text-foreground">
+            <h1 className="text-3xl font-display font-extrabold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
               {t("app.name")}
             </h1>
             <p className="text-sm text-muted-foreground mt-1">
-              {user ? `${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!` : t("home.tagline")}
+              {user ? `${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!` : t("brand.tagline")}
             </p>
           </div>
           <LanguageSelector />
