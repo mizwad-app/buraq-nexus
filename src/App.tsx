@@ -87,6 +87,7 @@ const App = () => (
         </TooltipProvider>
       </CityProvider>
     </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
