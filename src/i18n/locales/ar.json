@@ -317,7 +317,20 @@
       "title": "عن رسوم خدمة Buraq",
       "body": "تغطي رسوم الخدمة بنسبة 10% أمان المنصة والدعم. يحصل المترجم على سعره كاملاً."
     },
-    "insufficientBalance": "رصيد المحفظة غير كافٍ. مطلوب: ¥{{needed}}، متوفر: ¥{{available}}"
+    "insufficientBalance": "رصيد المحفظة غير كافٍ. مطلوب: ¥{{needed}}، متوفر: ¥{{available}}",
+    "selectDates": "اختر التواريخ",
+    "noDaysSelected": "لم يتم اختيار أيام",
+    "daysSelected_zero": "لم يتم اختيار أيام",
+    "daysSelected_one": "تم اختيار يوم واحد",
+    "daysSelected_two": "تم اختيار يومين",
+    "daysSelected_few": "تم اختيار {{count}} أيام",
+    "daysSelected_many": "تم اختيار {{count}} يومًا",
+    "daysSelected_other": "تم اختيار {{count}} يوم",
+    "translatorPriceLabel": "سعر المترجم",
+    "estimatedTotal": "الإجمالي التقريبي",
+    "hourlyRateLabel": "السعر بالساعة",
+    "hoursLater": "الساعات الدقيقة في الخطوة التالية",
+    "daysCount": "محدد: {{count}} يوم"
   },
   "language": {
     "title": "اختر اللغة",

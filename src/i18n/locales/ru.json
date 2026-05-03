@@ -317,7 +317,18 @@
       "title": "О сервисном сборе Buraq",
       "body": "10% сервисный сбор покрывает безопасность платформы и поддержку. Переводчик получает свою цену полностью."
     },
-    "insufficientBalance": "Недостаточно средств в кошельке. Нужно: ¥{{needed}}, доступно: ¥{{available}}"
+    "insufficientBalance": "Недостаточно средств в кошельке. Нужно: ¥{{needed}}, доступно: ¥{{available}}",
+    "selectDates": "Выберите дни",
+    "noDaysSelected": "0 дней выбрано",
+    "daysSelected_one": "{{count}} день выбран",
+    "daysSelected_few": "{{count}} дня выбрано",
+    "daysSelected_many": "{{count}} дней выбрано",
+    "daysSelected_other": "{{count}} дней выбрано",
+    "translatorPriceLabel": "Стоимость переводчика",
+    "estimatedTotal": "Примерно итого",
+    "hourlyRateLabel": "Цена за час",
+    "hoursLater": "Точные часы на следующем шаге",
+    "daysCount": "Выбрано: {{count}} дн."
   },
   "language": {
     "title": "Выберите язык",

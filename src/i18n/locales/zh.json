@@ -317,7 +317,15 @@
       "title": "关于Buraq服务费",
       "body": "10%的服务费用于平台安全和支持。翻译员获得全额价格。"
     },
-    "insufficientBalance": "钱包余额不足。需要: ¥{{needed}}，可用: ¥{{available}}"
+    "insufficientBalance": "钱包余额不足。需要: ¥{{needed}}，可用: ¥{{available}}",
+    "selectDates": "选择日期",
+    "noDaysSelected": "未选择日期",
+    "daysSelected_other": "已选择 {{count}} 天",
+    "translatorPriceLabel": "翻译员价格",
+    "estimatedTotal": "预计总额",
+    "hourlyRateLabel": "小时费率",
+    "hoursLater": "具体小时数下一步确定",
+    "daysCount": "已选: {{count}} 天"
   },
   "language": {
     "title": "选择语言",
