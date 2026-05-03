@@ -47,6 +47,12 @@ const Profile = () => {
   const [bookingsLoading, setBookingsLoading] = useState(false);
   const [hasInterests, setHasInterests] = useState<boolean | null>(null);
   const [showSurvey, setShowSurvey] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const themeOptions: { value: ThemeMode; label: string; icon: typeof Sun }[] = [
+    { value: "light", label: t("profile.theme.light"), icon: Sun },
+    { value: "dark", label: t("profile.theme.dark"), icon: Moon },
+    { value: "auto", label: t("profile.theme.auto"), icon: Monitor },
+  ];
 
   useEffect(() => {
     if (!loading && !user) {
@@ -332,6 +338,39 @@ const Profile = () => {
           {/* Language Selector */}
           <LanguageSelector variant="menu-item" />
           
+          {/* Theme Toggle */}
+          <div className="border-b border-border/30 p-4">
+            <div className="flex items-center gap-4 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-secondary/50 flex items-center justify-center">
+                <Sun className="w-5 h-5 text-muted-foreground" />
+              </div>
+              <span className="flex-1 text-left text-sm font-medium text-foreground">
+                {t("profile.theme.title")}
+              </span>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {themeOptions.map((opt) => {
+                const Icon = opt.icon;
+                const active = theme === opt.value;
+                return (
+                  <button
+                    key={opt.value}
+                    onClick={() => setTheme(opt.value)}
+                    className={cn(
+                      "flex flex-col items-center gap-1.5 py-2.5 rounded-lg border transition-all text-xs font-medium",
+                      active
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border/50 text-muted-foreground hover:bg-secondary/40"
+                    )}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {opt.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           {menuItems.map((item, index) => {
             const Icon = item.icon;
             return (
