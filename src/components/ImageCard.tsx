@@ -47,8 +47,8 @@ export const ImageCard = ({
       
       {/* Premium Badge */}
       {isPremium && (
-        <div className="absolute top-2 right-2 px-2 py-0.5 bg-gradient-to-r from-amber-500 to-yellow-500 rounded-full">
-          <span className="text-[10px] font-bold text-black uppercase tracking-wider">Premium</span>
+        <div className="absolute top-2 right-2 px-2 py-0.5 bg-gold rounded-full">
+          <span className="text-[10px] font-bold text-gold-foreground uppercase tracking-wider">Premium</span>
         </div>
       )}
       

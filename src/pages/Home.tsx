@@ -19,10 +19,10 @@ import {
 
 // Images
 import mosque from "@/assets/mosque.jpg";
-import travelNature from "@/assets/travel-nature.jpg";
-import translatorsImg from "@/assets/translators.jpg";
-import b2bHub from "@/assets/b2b-hub.jpg";
-import wallet from "@/assets/wallet.jpg";
+import tijoratImg from "@/assets/module-tijorat.jpg";
+import tarjimonlarImg from "@/assets/module-tarjimonlar.jpg";
+import sayohatImg from "@/assets/module-sayohat.jpg";
+import hamyonImg from "@/assets/module-hamyon.jpg";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -30,11 +30,11 @@ const Home = () => {
   const { user } = useAuth();
 
   const modules = [
-    { id: "b2bHub", title: t("modules.b2bHub"), image: b2bHub, route: "/business" },
-    { id: "translators", title: t("modules.translators"), image: translatorsImg, route: "/translators" },
+    { id: "b2bHub", title: t("modules.b2bHub"), image: tijoratImg, route: "/business" },
+    { id: "translators", title: t("modules.translators"), image: tarjimonlarImg, route: "/translators" },
     { id: "halal", title: t("modules.halal"), image: mosque, route: "/ibadah" },
-    { id: "travel", title: t("modules.travel"), image: travelNature, route: "/travel" },
-    { id: "wallet", title: t("modules.wallet"), image: wallet, route: "/profile" },
+    { id: "travel", title: t("modules.travel"), image: sayohatImg, route: "/travel" },
+    { id: "wallet", title: t("modules.wallet"), image: hamyonImg, route: "/profile" },
   ];
 
   const quickPills: { icon: LucideIcon; label: string; route: string }[] = [
