@@ -304,6 +304,12 @@
       "title": "Profilingizni to'ldiring",
       "subtitle": "Sizga kerakli mahsulotlarni topishimiz uchun qiziqishlaringizni belgilang",
       "start": "Boshlash"
+    },
+    "theme": {
+      "title": "Mavzu",
+      "dark": "Tungi",
+      "light": "Kunduzgi",
+      "auto": "Avto (Tizim)"
     }
   },
   "booking": {

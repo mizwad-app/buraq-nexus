@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CityProvider } from "@/contexts/CityContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 import Home from "./pages/Home";
 import Travel from "./pages/Travel";
@@ -29,6 +30,7 @@ const queryClient = new QueryClient();
 
 const App = () => (
 <QueryClientProvider client={queryClient}>
+    <ThemeProvider>
     <AuthProvider>
       <CityProvider>
         <TooltipProvider>
@@ -85,6 +87,7 @@ const App = () => (
         </TooltipProvider>
       </CityProvider>
     </AuthProvider>
+    </ThemeProvider>
   </QueryClientProvider>
 );
 
