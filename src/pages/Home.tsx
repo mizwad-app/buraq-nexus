@@ -46,33 +46,24 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background safe-bottom">
       {/* Header */}
-      <header className="px-5 pt-12 pb-2">
-        <div className="flex items-center justify-between animate-fade-in">
-          <h1 className="text-xl font-display font-extrabold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-            {t("app.name")}
-          </h1>
+      <header className="px-5 pt-12 pb-4">
+        <div className="flex items-start justify-between gap-3 animate-fade-in">
+          <div className="min-w-0">
+            <h1 className="text-2xl font-display font-extrabold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              {t("app.name")}
+            </h1>
+            <p className="text-xs text-muted-foreground mt-0.5 truncate">
+              {t("brand.tagline")}
+            </p>
+            {user && (
+              <p className="text-sm text-foreground mt-2">
+                {`${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!`}
+              </p>
+            )}
+          </div>
           <LanguageSelector />
         </div>
       </header>
-
-      {/* Hero Section */}
-      <section className="relative px-5 py-10 text-center overflow-hidden">
-        <div
-          aria-hidden
-          className="absolute inset-0 -z-10 bg-gradient-to-b from-primary/10 via-primary/5 to-transparent"
-        />
-        <h1 className="text-5xl sm:text-6xl font-display font-bold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-          {t("app.name")}
-        </h1>
-        <p className="mt-3 text-base sm:text-lg text-muted-foreground max-w-sm mx-auto">
-          {t("brand.tagline")}
-        </p>
-        {user && (
-          <p className="mt-6 text-sm text-muted-foreground">
-            {`${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!`}
-          </p>
-        )}
-      </section>
 
       {/* Smart Info Cards */}
       <section className="px-5 mb-5">
