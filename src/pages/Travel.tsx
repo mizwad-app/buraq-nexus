@@ -297,13 +297,17 @@ const Travel = () => {
 
   const fetchData = async () => {
     try {
-      const [parksRes, mallsRes] = await Promise.all([
+      const [parksRes, mallsRes, histRes, marketsRes] = await Promise.all([
         supabase.from("parks").select("*"),
         supabase.from("shopping_malls").select("*").order("rating", { ascending: false }),
+        supabase.from("historical_sites").select("*").eq("is_active", true),
+        supabase.from("markets").select("*").eq("is_active", true),
       ]);
 
       if (parksRes.data) setParks(parksRes.data as Park[]);
       if (mallsRes.data) setMalls(mallsRes.data as ShoppingMall[]);
+      if (histRes.data) setHistoricalSites(histRes.data as PlaceData[]);
+      if (marketsRes.data) setMarkets(marketsRes.data as PlaceData[]);
     } catch (error) {
       console.error("Error fetching travel data:", error);
     } finally {
