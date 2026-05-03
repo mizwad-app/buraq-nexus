@@ -777,6 +777,189 @@ export type Database = {
         }
         Relationships: []
       }
+      historical_sites: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_en: string | null
+          address_fr: string | null
+          address_local: string | null
+          address_ru: string | null
+          address_uz: string | null
+          address_zh: string | null
+          amenities: string[] | null
+          buraq_recommendation: string | null
+          buraq_recommendation_ar: string | null
+          buraq_recommendation_en: string | null
+          buraq_recommendation_fr: string | null
+          buraq_recommendation_ru: string | null
+          buraq_recommendation_uz: string | null
+          buraq_recommendation_zh: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_fr: string | null
+          city_ru: string | null
+          city_uz: string | null
+          city_zh: string | null
+          coordinates: Json | null
+          country: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_fr: string | null
+          description_ru: string | null
+          description_uz: string | null
+          description_zh: string | null
+          entry_fee: string | null
+          features: string[] | null
+          gallery_images: string[] | null
+          has_halal_food: boolean | null
+          has_prayer_room: boolean | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          latitude: number | null
+          longitude: number | null
+          mall_brands: string[] | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_fr: string | null
+          name_ru: string | null
+          name_uz: string | null
+          name_zh: string | null
+          opening_hours: Json | null
+          phone: string | null
+          price_range: string | null
+          rating: number | null
+          transport_info: Json | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_fr?: string | null
+          address_local?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_fr?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          city_zh?: string | null
+          coordinates?: Json | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_fr?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
+          has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          mall_brands?: string[] | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_fr?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          name_zh?: string | null
+          opening_hours?: Json | null
+          phone?: string | null
+          price_range?: string | null
+          rating?: number | null
+          transport_info?: Json | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_fr?: string | null
+          address_local?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_fr?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          city_zh?: string | null
+          coordinates?: Json | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_fr?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
+          has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          mall_brands?: string[] | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_fr?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          name_zh?: string | null
+          opening_hours?: Json | null
+          phone?: string | null
+          price_range?: string | null
+          rating?: number | null
+          transport_info?: Json | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       hub_product_categories: {
         Row: {
           category_id: string
@@ -1116,6 +1299,189 @@ export type Database = {
           },
         ]
       }
+      markets: {
+        Row: {
+          address: string | null
+          address_ar: string | null
+          address_en: string | null
+          address_fr: string | null
+          address_local: string | null
+          address_ru: string | null
+          address_uz: string | null
+          address_zh: string | null
+          amenities: string[] | null
+          buraq_recommendation: string | null
+          buraq_recommendation_ar: string | null
+          buraq_recommendation_en: string | null
+          buraq_recommendation_fr: string | null
+          buraq_recommendation_ru: string | null
+          buraq_recommendation_uz: string | null
+          buraq_recommendation_zh: string | null
+          city: string
+          city_ar: string | null
+          city_en: string | null
+          city_fr: string | null
+          city_ru: string | null
+          city_uz: string | null
+          city_zh: string | null
+          coordinates: Json | null
+          country: string
+          created_at: string
+          description: string | null
+          description_ar: string | null
+          description_en: string | null
+          description_fr: string | null
+          description_ru: string | null
+          description_uz: string | null
+          description_zh: string | null
+          entry_fee: string | null
+          features: string[] | null
+          gallery_images: string[] | null
+          has_halal_food: boolean | null
+          has_prayer_room: boolean | null
+          id: string
+          image_url: string | null
+          is_active: boolean | null
+          latitude: number | null
+          longitude: number | null
+          mall_brands: string[] | null
+          name: string
+          name_ar: string | null
+          name_en: string | null
+          name_fr: string | null
+          name_ru: string | null
+          name_uz: string | null
+          name_zh: string | null
+          opening_hours: Json | null
+          phone: string | null
+          price_range: string | null
+          rating: number | null
+          transport_info: Json | null
+          updated_at: string
+          website: string | null
+        }
+        Insert: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_fr?: string | null
+          address_local?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
+          city: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_fr?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          city_zh?: string | null
+          coordinates?: Json | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_fr?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
+          has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          mall_brands?: string[] | null
+          name: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_fr?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          name_zh?: string | null
+          opening_hours?: Json | null
+          phone?: string | null
+          price_range?: string | null
+          rating?: number | null
+          transport_info?: Json | null
+          updated_at?: string
+          website?: string | null
+        }
+        Update: {
+          address?: string | null
+          address_ar?: string | null
+          address_en?: string | null
+          address_fr?: string | null
+          address_local?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
+          city?: string
+          city_ar?: string | null
+          city_en?: string | null
+          city_fr?: string | null
+          city_ru?: string | null
+          city_uz?: string | null
+          city_zh?: string | null
+          coordinates?: Json | null
+          country?: string
+          created_at?: string
+          description?: string | null
+          description_ar?: string | null
+          description_en?: string | null
+          description_fr?: string | null
+          description_ru?: string | null
+          description_uz?: string | null
+          description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
+          has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
+          id?: string
+          image_url?: string | null
+          is_active?: boolean | null
+          latitude?: number | null
+          longitude?: number | null
+          mall_brands?: string[] | null
+          name?: string
+          name_ar?: string | null
+          name_en?: string | null
+          name_fr?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          name_zh?: string | null
+          opening_hours?: Json | null
+          phone?: string | null
+          price_range?: string | null
+          rating?: number | null
+          transport_info?: Json | null
+          updated_at?: string
+          website?: string | null
+        }
+        Relationships: []
+      }
       mosques: {
         Row: {
           address: string | null
@@ -1226,15 +1592,25 @@ export type Database = {
           address: string | null
           address_ar: string | null
           address_en: string | null
+          address_local: string | null
           address_ru: string | null
           address_uz: string | null
           address_zh: string | null
+          amenities: string[] | null
+          buraq_recommendation: string | null
+          buraq_recommendation_ar: string | null
+          buraq_recommendation_en: string | null
+          buraq_recommendation_fr: string | null
+          buraq_recommendation_ru: string | null
+          buraq_recommendation_uz: string | null
+          buraq_recommendation_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
           city_zh: string | null
+          coordinates: Json | null
           country: string
           created_at: string
           description: string | null
@@ -1243,31 +1619,53 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          entry_fee: string | null
+          features: string[] | null
+          gallery_images: string[] | null
+          has_halal_food: boolean | null
+          has_prayer_room: boolean | null
           id: string
           image_url: string | null
+          is_active: boolean | null
           latitude: number | null
           longitude: number | null
+          mall_brands: string[] | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          opening_hours: Json | null
           park_type: string | null
+          phone: string | null
+          price_range: string | null
+          transport_info: Json | null
+          website: string | null
         }
         Insert: {
           address?: string | null
           address_ar?: string | null
           address_en?: string | null
+          address_local?: string | null
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
           city_zh?: string | null
+          coordinates?: Json | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1276,31 +1674,53 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
+          has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
+          is_active?: boolean | null
           latitude?: number | null
           longitude?: number | null
+          mall_brands?: string[] | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          opening_hours?: Json | null
           park_type?: string | null
+          phone?: string | null
+          price_range?: string | null
+          transport_info?: Json | null
+          website?: string | null
         }
         Update: {
           address?: string | null
           address_ar?: string | null
           address_en?: string | null
+          address_local?: string | null
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
           city_zh?: string | null
+          coordinates?: Json | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1309,17 +1729,29 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
+          has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
+          is_active?: boolean | null
           latitude?: number | null
           longitude?: number | null
+          mall_brands?: string[] | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          opening_hours?: Json | null
           park_type?: string | null
+          phone?: string | null
+          price_range?: string | null
+          transport_info?: Json | null
+          website?: string | null
         }
         Relationships: []
       }
@@ -1894,9 +2326,18 @@ export type Database = {
           address: string | null
           address_ar: string | null
           address_en: string | null
+          address_local: string | null
           address_ru: string | null
           address_uz: string | null
           address_zh: string | null
+          amenities: string[] | null
+          buraq_recommendation: string | null
+          buraq_recommendation_ar: string | null
+          buraq_recommendation_en: string | null
+          buraq_recommendation_fr: string | null
+          buraq_recommendation_ru: string | null
+          buraq_recommendation_uz: string | null
+          buraq_recommendation_zh: string | null
           city: string
           city_ar: string | null
           city_en: string | null
@@ -1904,6 +2345,7 @@ export type Database = {
           city_uz: string | null
           city_zh: string | null
           contact_info: string | null
+          coordinates: Json | null
           country: string
           created_at: string
           description: string | null
@@ -1912,26 +2354,46 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          entry_fee: string | null
+          features: string[] | null
+          gallery_images: string[] | null
           has_halal_food: boolean | null
+          has_prayer_room: boolean | null
           id: string
           image_url: string | null
+          is_active: boolean | null
           latitude: number | null
           longitude: number | null
+          mall_brands: string[] | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          opening_hours: Json | null
+          phone: string | null
+          price_range: string | null
           rating: number | null
+          transport_info: Json | null
+          website: string | null
         }
         Insert: {
           address?: string | null
           address_ar?: string | null
           address_en?: string | null
+          address_local?: string | null
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
           city: string
           city_ar?: string | null
           city_en?: string | null
@@ -1939,6 +2401,7 @@ export type Database = {
           city_uz?: string | null
           city_zh?: string | null
           contact_info?: string | null
+          coordinates?: Json | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1947,26 +2410,46 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
           has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
+          is_active?: boolean | null
           latitude?: number | null
           longitude?: number | null
+          mall_brands?: string[] | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          opening_hours?: Json | null
+          phone?: string | null
+          price_range?: string | null
           rating?: number | null
+          transport_info?: Json | null
+          website?: string | null
         }
         Update: {
           address?: string | null
           address_ar?: string | null
           address_en?: string | null
+          address_local?: string | null
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          amenities?: string[] | null
+          buraq_recommendation?: string | null
+          buraq_recommendation_ar?: string | null
+          buraq_recommendation_en?: string | null
+          buraq_recommendation_fr?: string | null
+          buraq_recommendation_ru?: string | null
+          buraq_recommendation_uz?: string | null
+          buraq_recommendation_zh?: string | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
@@ -1974,6 +2457,7 @@ export type Database = {
           city_uz?: string | null
           city_zh?: string | null
           contact_info?: string | null
+          coordinates?: Json | null
           country?: string
           created_at?: string
           description?: string | null
@@ -1982,18 +2466,29 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          entry_fee?: string | null
+          features?: string[] | null
+          gallery_images?: string[] | null
           has_halal_food?: boolean | null
+          has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
+          is_active?: boolean | null
           latitude?: number | null
           longitude?: number | null
+          mall_brands?: string[] | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          opening_hours?: Json | null
+          phone?: string | null
+          price_range?: string | null
           rating?: number | null
+          transport_info?: Json | null
+          website?: string | null
         }
         Relationships: []
       }
