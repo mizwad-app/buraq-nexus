@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   Store,
   Utensils,
+  Scale,
 } from "lucide-react";
 
 interface NavItemProps {
@@ -58,6 +59,7 @@ export const AdminSidebar = () => {
     { to: "/admin/locations", icon: MapPin, label: "Joylashuvlar" },
     { to: "/admin/deep-checks", icon: FileSearch, label: "Deep Checks" },
     { to: "/admin/service-requests", icon: Briefcase, label: "Xizmat so'rovlari" },
+    { to: "/admin/legal-advisors", icon: Scale, label: "Huquqshunoslar" },
   ];
 
   return (
