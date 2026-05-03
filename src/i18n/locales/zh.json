@@ -535,7 +535,7 @@
     "available": "可预约",
     "busy": "忙碌",
     "verified": "Mizwad 认证",
-    "verifiedByMizwad": "Mizwad 已认证",
+    "verifiedByBuraq": "Mizwad 已认证",
     "specializations": "专长",
     "contact": "联系",
     "noTranslators": "未找到翻译员",
@@ -605,7 +605,7 @@
     "female": "女",
     "priceRange": "价格区间 (¥/天)",
     "minRating": "最低评分",
-    "MizwadVerified": "Mizwad 认证 HSK",
+    "buraqVerified": "Mizwad 认证 HSK",
     "verifiedDesc": "通过视频面试认证",
     "applyFilters": "应用"
   },
@@ -793,7 +793,7 @@
       "features": "特色",
       "transport": "如何到达",
       "gallery": "照片",
-      "MizwadTip": "Mizwad建议"
+      "buraqTip": "Mizwad建议"
     },
     "action": {
       "directions": "路线",

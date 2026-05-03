@@ -534,7 +534,7 @@
     "available": "Mavjud",
     "busy": "Band",
     "verified": "Mizwad tomonidan tasdiqlangan",
-    "verifiedByMizwad": "Mizwad tasdiqlagan",
+    "verifiedByBuraq": "Mizwad tasdiqlagan",
     "specializations": "Mutaxassisliklar",
     "contact": "Aloqa",
     "noTranslators": "Tarjimonlar topilmadi",
@@ -604,7 +604,7 @@
     "female": "Ayol",
     "priceRange": "Narx oralig'i (¥/kun)",
     "minRating": "Minimal reyting",
-    "MizwadVerified": "Mizwad tasdiqlagan HSK",
+    "buraqVerified": "Mizwad tasdiqlagan HSK",
     "verifiedDesc": "Video intervyu orqali tasdiqlangan",
     "applyFilters": "Qo'llash"
   },
@@ -792,7 +792,7 @@
       "features": "Xususiyatlar",
       "transport": "Qanday borish",
       "gallery": "Fotolar",
-      "MizwadTip": "Mizwad tavsiyasi"
+      "buraqTip": "Mizwad tavsiyasi"
     },
     "action": {
       "directions": "Marshrut",
