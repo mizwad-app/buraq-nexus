@@ -30,11 +30,6 @@ interface ServiceRequest {
   updated_at: string;
   ticket_details?: any;
 }
-  status: string | null;
-  admin_notes: string | null;
-  created_at: string;
-  updated_at: string;
-}
 
 const statusConfig = {
   pending: { label: "Kutilmoqda", icon: Clock, color: "text-gold", bg: "bg-gold/10" },
@@ -46,6 +41,8 @@ const statusConfig = {
 const serviceTypeLabels: Record<string, string> = {
   flight_booking: "Aviabilet buyurtma",
   train_booking: "Poyezd bileti",
+  flight_ticket: "Aviabilet",
+  train_ticket: "Train bilet",
   vpn_setup: "VPN o'rnatish",
   concierge: "Konsyerj xizmati",
 };
