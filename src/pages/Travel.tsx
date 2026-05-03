@@ -238,6 +238,12 @@ const Travel = () => {
   const [serviceMessage, setServiceMessage] = useState("");
   const [submittingRequest, setSubmittingRequest] = useState(false);
 
+  // Tickets state
+  const [flightSheetOpen, setFlightSheetOpen] = useState(false);
+  const [trainSheetOpen, setTrainSheetOpen] = useState(false);
+  const [howItWorksOpen, setHowItWorksOpen] = useState(false);
+  const [ticketsChatOpen, setTicketsChatOpen] = useState(false);
+
   // Enable swipe back gesture
   useSwipeBack();
 
