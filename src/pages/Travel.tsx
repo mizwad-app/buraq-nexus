@@ -29,7 +29,6 @@ import {
   MessageSquare,
 } from "lucide-react";
 import { FlightTicketSheet, TrainTicketSheet, HowItWorksSheet } from "@/components/tickets/TicketSheets";
-import { SupportChat } from "@/components/SupportChat";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
