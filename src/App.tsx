@@ -23,6 +23,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminServiceRequests from "./pages/AdminServiceRequests";
 import AdminLegalAdvisors from "./pages/AdminLegalAdvisors";
+import AdminPlaces from "./pages/AdminPlaces";
 
 const queryClient = new QueryClient();
 
