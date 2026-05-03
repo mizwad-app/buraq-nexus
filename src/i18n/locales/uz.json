@@ -23,12 +23,13 @@
     "translators": "Tarjimonlar",
     "consulates": "Konsulliklar",
     "videoTips": "Foydali Maslahatlar",
-    "b2bHub": "B2B Sourcing Hub",
+    "b2bHub": "Tijorat Markazi",
     "exhibitions": "Yarmarka va Ko'rgazmalar",
-    "wallet": "Buraq Wallet",
+    "wallet": "Buraq Hamyon",
     "transportVpn": "Transport & VPN",
     "attractions": "Diqqatga sazovor joylar",
-    "legalHelp": "Konsulliklar & Yuridik yordam"
+    "legalHelp": "Konsulliklar & Yuridik yordam",
+    "premium": "PREMIUM"
   },
   "home": {
     "guestPrompt": "Xizmatlardan foydalaning",
@@ -58,7 +59,7 @@
     "walletShort": "Wallet"
   },
   "business": {
-    "title": "B2B Sourcing Hub",
+    "title": "Tijorat Markazi",
     "subtitle": "Biznes markazi",
     "deepCheck": "Chuqur Tekshiruv",
     "deepCheckDesc": "Mahsulot yoki kompaniyani to'liq tahlil qiling",
@@ -118,7 +119,8 @@
       "retail": "Chakana",
       "copyAddress": "Manzilni nusxalash",
       "moreMarketsSoon": "Boshqa bozorlar tez orada qo'shiladi"
-    }
+    },
+    "pageSubtitle": "Xitoydan mahsulot topish va sotib olish"
   },
   "sourcing": {
     "strategicPlanner": "Strategik Sayohat Rejalashtirish",

@@ -23,12 +23,13 @@
     "translators": "Переводчики",
     "consulates": "Консульства",
     "videoTips": "Полезные Советы",
-    "b2bHub": "B2B Sourcing Hub",
+    "b2bHub": "Торговый центр",
     "exhibitions": "Ярмарки и Выставки",
-    "wallet": "Buraq Wallet",
+    "wallet": "Buraq Кошелёк",
     "transportVpn": "Транспорт и VPN",
     "attractions": "Достопримечательности",
-    "legalHelp": "Консульства и Юрпомощь"
+    "legalHelp": "Консульства и Юрпомощь",
+    "premium": "ПРЕМИУМ"
   },
   "home": {
     "guestPrompt": "Используйте наши услуги",
@@ -58,7 +59,7 @@
     "walletShort": "Кошелек"
   },
   "business": {
-    "title": "B2B Хаб",
+    "title": "Торговый центр",
     "subtitle": "Бизнес центр",
     "deepCheck": "Глубокая Проверка",
     "deepCheckDesc": "Полный анализ продукта или компании",
@@ -118,7 +119,8 @@
       "retail": "Розница",
       "copyAddress": "Копировать адрес",
       "moreMarketsSoon": "Другие рынки скоро появятся"
-    }
+    },
+    "pageSubtitle": "Поиск и закупка товаров из Китая"
   },
   "sourcing": {
     "strategicPlanner": "Стратегическое планирование поездки",

@@ -23,12 +23,13 @@
     "translators": "المترجمون",
     "consulates": "القنصليات",
     "videoTips": "نصائح مفيدة",
-    "b2bHub": "B2B Sourcing Hub",
+    "b2bHub": "مركز التجارة",
     "exhibitions": "المعارض التجارية",
     "wallet": "محفظة Buraq",
     "transportVpn": "النقل و VPN",
     "attractions": "المعالم السياحية",
-    "legalHelp": "القنصليات والمساعدة القانونية"
+    "legalHelp": "القنصليات والمساعدة القانونية",
+    "premium": "بريميوم"
   },
   "home": {
     "guestPrompt": "استخدم خدماتنا",
@@ -58,7 +59,7 @@
     "walletShort": "المحفظة"
   },
   "business": {
-    "title": "مركز الأعمال",
+    "title": "مركز التجارة",
     "subtitle": "مركز B2B",
     "deepCheck": "الفحص العميق",
     "deepCheckDesc": "تحليل كامل للمنتج أو الشركة",
@@ -118,7 +119,8 @@
       "retail": "تجزئة",
       "copyAddress": "نسخ العنوان",
       "moreMarketsSoon": "المزيد من الأسواق قريباً"
-    }
+    },
+    "pageSubtitle": "البحث عن المنتجات وشرائها من الصين"
   },
   "sourcing": {
     "strategicPlanner": "التخطيط الاستراتيجي للرحلة",

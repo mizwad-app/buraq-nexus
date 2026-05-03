@@ -23,12 +23,13 @@
     "translators": "Traducteurs",
     "consulates": "Consulats",
     "videoTips": "Conseils utiles",
-    "b2bHub": "B2B Sourcing Hub",
+    "b2bHub": "Centre commercial",
     "exhibitions": "Foires et expositions",
-    "wallet": "Buraq Wallet",
+    "wallet": "Portefeuille Buraq",
     "transportVpn": "Transport & VPN",
     "attractions": "Attractions",
-    "legalHelp": "Consulats & Aide juridique"
+    "legalHelp": "Consulats & Aide juridique",
+    "premium": "PREMIUM"
   },
   "home": {
     "guestPrompt": "Utilisez nos services",
@@ -58,7 +59,7 @@
     "walletShort": "Portefeuille"
   },
   "business": {
-    "title": "Centre B2B Sourcing",
+    "title": "Centre commercial",
     "subtitle": "Centre d'affaires",
     "deepCheck": "Vérification approfondie",
     "deepCheckDesc": "Analyse complète du produit ou de l'entreprise",
@@ -118,7 +119,8 @@
       "retail": "Détail",
       "copyAddress": "Copier l'adresse",
       "moreMarketsSoon": "Plus de marchés bientôt"
-    }
+    },
+    "pageSubtitle": "Trouver et acheter des produits de Chine"
   },
   "sourcing": {
     "strategicPlanner": "Planification stratégique de voyage",

@@ -23,12 +23,13 @@
     "translators": "翻译员",
     "consulates": "领事馆",
     "videoTips": "实用建议",
-    "b2bHub": "B2B 采购中心",
+    "b2bHub": "贸易中心",
     "exhibitions": "展会与博览",
-    "wallet": "Buraq 钱包",
+    "wallet": "Buraq钱包",
     "transportVpn": "交通与 VPN",
     "attractions": "景点",
-    "legalHelp": "领事馆与法律援助"
+    "legalHelp": "领事馆与法律援助",
+    "premium": "高级版"
   },
   "home": {
     "guestPrompt": "使用我们的服务",
@@ -58,7 +59,7 @@
     "walletShort": "钱包"
   },
   "business": {
-    "title": "B2B 采购中心",
+    "title": "贸易中心",
     "subtitle": "商业中心",
     "deepCheck": "深度核查",
     "deepCheckDesc": "全面分析产品或公司",
@@ -118,7 +119,8 @@
       "retail": "零售",
       "copyAddress": "复制地址",
       "moreMarketsSoon": "更多市场即将上线"
-    }
+    },
+    "pageSubtitle": "从中国寻找和采购产品"
   },
   "sourcing": {
     "strategicPlanner": "战略行程规划",
