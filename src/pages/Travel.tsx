@@ -353,24 +353,6 @@ const Travel = () => {
     return results;
   }, [parks, malls, historicalSites, markets, selectedCity, categoryFilter]);
 
-  const unifiedResults = useMemo(() => {
-    type ResultItem = { type: "park"; data: Park } | { type: "mall"; data: ShoppingMall };
-    const results: ResultItem[] = [];
-
-    if (categoryFilter === "all" || categoryFilter === "parks") {
-      parks
-        .filter((p) => selectedCity === "all" || p.city === selectedCity)
-        .forEach((park) => results.push({ type: "park", data: park }));
-    }
-
-    if (categoryFilter === "all" || categoryFilter === "malls") {
-      malls
-        .filter((m) => selectedCity === "all" || m.city === selectedCity)
-        .forEach((mall) => results.push({ type: "mall", data: mall }));
-    }
-
-    return results;
-  }, [parks, malls, selectedCity, categoryFilter]);
 
   const selectedCityTranslated = useMemo(() => {
     if (selectedCity === "all") return t("travel.allLocations");
