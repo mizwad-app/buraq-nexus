@@ -879,9 +879,6 @@ const Travel = () => {
       <FlightTicketSheet open={flightSheetOpen} onOpenChange={setFlightSheetOpen} />
       <TrainTicketSheet open={trainSheetOpen} onOpenChange={setTrainSheetOpen} />
       <HowItWorksSheet open={howItWorksOpen} onOpenChange={setHowItWorksOpen} />
-      {ticketsChatOpen && (
-        <SupportChat contextMessage={t("tickets.heroTitle")} />
-      )}
 
       {/* Map Navigation Sheet */}
       {selectedItem && selectedItem.data.latitude && selectedItem.data.longitude && (
