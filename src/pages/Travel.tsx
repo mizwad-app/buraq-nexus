@@ -424,18 +424,21 @@ const Travel = () => {
       {/* Tabs */}
       <section className="px-5">
         <Tabs value={activeTab} onValueChange={handleTabChange} className="w-full">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="places" className="text-xs">
+          <TabsList className="grid w-full grid-cols-5">
+            <TabsTrigger value="places" className="text-[10px] px-1">
               {t("travel.tabs.places")}
             </TabsTrigger>
-            <TabsTrigger value="guide" className="text-xs">
+            <TabsTrigger value="guide" className="text-[10px] px-1">
               {t("travel.tabs.guide")}
             </TabsTrigger>
-            <TabsTrigger value="videos" className="text-xs">
+            <TabsTrigger value="videos" className="text-[10px] px-1">
               {t("travel.tabs.videos")}
             </TabsTrigger>
-            <TabsTrigger value="documents" className="text-xs">
+            <TabsTrigger value="documents" className="text-[10px] px-1">
               {t("travel.tabs.documents")}
+            </TabsTrigger>
+            <TabsTrigger value="tickets" className="text-[10px] px-1">
+              {t("travel.tabs.tickets")}
             </TabsTrigger>
           </TabsList>
 
