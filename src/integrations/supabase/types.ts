@@ -936,6 +936,90 @@ export type Database = {
         }
         Relationships: []
       }
+      legal_advisors: {
+        Row: {
+          avatar_url: string | null
+          bio: string | null
+          bio_ar: string | null
+          bio_en: string | null
+          bio_fr: string | null
+          bio_ru: string | null
+          bio_uz: string | null
+          bio_zh: string | null
+          buraq_verified: boolean
+          city: string
+          created_at: string
+          display_order: number
+          email: string | null
+          firm_logo_url: string | null
+          firm_name: string
+          id: string
+          is_active: boolean
+          languages: string[]
+          name: string
+          office_address: string | null
+          phone: string | null
+          specializations: string[]
+          updated_at: string
+          wechat_id: string | null
+          years_experience: number
+        }
+        Insert: {
+          avatar_url?: string | null
+          bio?: string | null
+          bio_ar?: string | null
+          bio_en?: string | null
+          bio_fr?: string | null
+          bio_ru?: string | null
+          bio_uz?: string | null
+          bio_zh?: string | null
+          buraq_verified?: boolean
+          city: string
+          created_at?: string
+          display_order?: number
+          email?: string | null
+          firm_logo_url?: string | null
+          firm_name: string
+          id?: string
+          is_active?: boolean
+          languages?: string[]
+          name: string
+          office_address?: string | null
+          phone?: string | null
+          specializations?: string[]
+          updated_at?: string
+          wechat_id?: string | null
+          years_experience?: number
+        }
+        Update: {
+          avatar_url?: string | null
+          bio?: string | null
+          bio_ar?: string | null
+          bio_en?: string | null
+          bio_fr?: string | null
+          bio_ru?: string | null
+          bio_uz?: string | null
+          bio_zh?: string | null
+          buraq_verified?: boolean
+          city?: string
+          created_at?: string
+          display_order?: number
+          email?: string | null
+          firm_logo_url?: string | null
+          firm_name?: string
+          id?: string
+          is_active?: boolean
+          languages?: string[]
+          name?: string
+          office_address?: string | null
+          phone?: string | null
+          specializations?: string[]
+          updated_at?: string
+          wechat_id?: string | null
+          years_experience?: number
+        }
+        Relationships: []
+      }
       legal_templates: {
         Row: {
           created_at: string

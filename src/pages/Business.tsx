@@ -28,6 +28,9 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { SupportChat } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { LegalAdvisorsList } from "@/components/business/LegalAdvisorsList";
+import { Scale } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
@@ -871,30 +874,51 @@ const Business = () => {
         </div>
       </div>
 
-      {/* How It Works Info (only on product step) */}
-      {step === "product" && (
-        <section className="px-5 mb-4">
-          <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
-                <Compass className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h3 className="font-semibold text-foreground text-sm">
-                  {t("sourcing.howItWorks")}
-                </h3>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {t("sourcing.howItWorksDesc")}
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-      )}
+      <Tabs defaultValue="products" className="w-full">
+        <div className="px-5 mb-4">
+          <TabsList className="grid grid-cols-2 w-full">
+            <TabsTrigger value="products" className="gap-1.5">
+              <Package className="w-4 h-4" />
+              {t("legal.tabProducts")}
+            </TabsTrigger>
+            <TabsTrigger value="legal" className="gap-1.5">
+              <Scale className="w-4 h-4" />
+              {t("legal.tabTitle")}
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
-      {/* Step Content */}
-      {step === "product" && renderProductStep()}
-      {step === "goal" && renderGoalStep()}
+        <TabsContent value="products">
+          {/* How It Works Info (only on product step) */}
+          {step === "product" && (
+            <section className="px-5 mb-4">
+              <div className="bg-gradient-to-br from-primary/10 to-accent/10 rounded-2xl p-4 border border-primary/20">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center flex-shrink-0">
+                    <Compass className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-foreground text-sm">
+                      {t("sourcing.howItWorks")}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {t("sourcing.howItWorksDesc")}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </section>
+          )}
+
+          {/* Step Content */}
+          {step === "product" && renderProductStep()}
+          {step === "goal" && renderGoalStep()}
+        </TabsContent>
+
+        <TabsContent value="legal">
+          <LegalAdvisorsList />
+        </TabsContent>
+      </Tabs>
 
       {/* Support Chat FAB */}
       <SupportChat />

@@ -636,5 +636,62 @@
       "flightLabel": "Авиабилет",
       "trainLabel": "Ж/д билет"
     }
+  },
+  "legal": {
+    "tabTitle": "Юридическая помощь",
+    "tabProducts": "Товары",
+    "heroTitle": "Надёжные юристы",
+    "heroSubtitle": "Нужна помощь по контрактам, спорам или налогам в Китае? Свяжитесь напрямую с проверенными Buraq юристами.",
+    "heroNote": "Команда Buraq лично проверяет каждого юриста. Мы не берём комиссию — вы связываетесь напрямую.",
+    "verified": "Проверено Buraq",
+    "yearsExperience_one": "{{count}} год опыта",
+    "yearsExperience_other": "{{count}} лет опыта",
+    "contact": {
+      "wechat": "WeChat",
+      "phone": "Позвонить",
+      "email": "Email",
+      "details": "Подробнее",
+      "wechatCopied": "WeChat ID скопирован: {{id}}"
+    },
+    "detail": {
+      "viewOnMap": "Показать на карте",
+      "disclaimer": "Buraq не несёт ответственности за информацию, предоставленную юристом. Консультация осуществляется напрямую.",
+      "bio": "Биография",
+      "specializations": "Специализации",
+      "languages": "Языки",
+      "office": "Адрес офиса"
+    },
+    "filter": {
+      "title": "Фильтры",
+      "city": "Город",
+      "allCities": "Все города",
+      "languages": "Языки",
+      "specializations": "Специализация",
+      "verifiedOnly": "Только проверенные Buraq",
+      "confirm": "Применить · {{count}} юристов",
+      "button": "Фильтры · {{count}} юристов",
+      "clear": "Очистить"
+    },
+    "empty": {
+      "title": "По этим фильтрам юристы не найдены",
+      "subtitle": "Попробуйте изменить фильтры",
+      "clearFilters": "Очистить фильтры"
+    },
+    "specialization": {
+      "contracts": "Контракты",
+      "intellectual_property": "Интеллектуальная собственность",
+      "tax": "Налоги",
+      "disputes": "Споры",
+      "immigration": "Иммиграция",
+      "corporate": "Корпоративное"
+    },
+    "language": {
+      "zh": "Китайский",
+      "en": "Английский",
+      "ru": "Русский",
+      "ar": "Арабский",
+      "uz": "Узбекский",
+      "fr": "Французский"
+    }
   }
 }

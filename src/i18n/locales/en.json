@@ -660,5 +660,62 @@
       "flightLabel": "Flight ticket",
       "trainLabel": "Train ticket"
     }
+  },
+  "legal": {
+    "tabTitle": "Legal help",
+    "tabProducts": "Products",
+    "heroTitle": "Trusted lawyers",
+    "heroSubtitle": "Need help with contracts, disputes, or taxes in China? Connect directly with Buraq-verified lawyers.",
+    "heroNote": "The Buraq team personally vets each lawyer. We don't take commission — you connect directly.",
+    "verified": "Buraq verified",
+    "yearsExperience_one": "{{count}} year experience",
+    "yearsExperience_other": "{{count}} years experience",
+    "contact": {
+      "wechat": "WeChat",
+      "phone": "Call",
+      "email": "Email",
+      "details": "Details",
+      "wechatCopied": "WeChat ID copied: {{id}}"
+    },
+    "detail": {
+      "viewOnMap": "View on map",
+      "disclaimer": "Buraq is not responsible for information provided by the lawyer. Consultation happens directly.",
+      "bio": "Bio",
+      "specializations": "Specializations",
+      "languages": "Languages",
+      "office": "Office address"
+    },
+    "filter": {
+      "title": "Filters",
+      "city": "City",
+      "allCities": "All cities",
+      "languages": "Languages",
+      "specializations": "Specialization",
+      "verifiedOnly": "Buraq verified only",
+      "confirm": "Apply · {{count}} lawyers",
+      "button": "Filter · {{count}} lawyers",
+      "clear": "Clear"
+    },
+    "empty": {
+      "title": "No lawyers match these filters",
+      "subtitle": "Try changing the filters",
+      "clearFilters": "Clear filters"
+    },
+    "specialization": {
+      "contracts": "Contracts",
+      "intellectual_property": "Intellectual property",
+      "tax": "Tax",
+      "disputes": "Disputes",
+      "immigration": "Immigration",
+      "corporate": "Corporate"
+    },
+    "language": {
+      "zh": "Chinese",
+      "en": "English",
+      "ru": "Russian",
+      "ar": "Arabic",
+      "uz": "Uzbek",
+      "fr": "French"
+    }
   }
 }
