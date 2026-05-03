@@ -57,6 +57,7 @@ export const AdminSidebar = () => {
   const navItems = [
     { to: "/admin/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { to: "/admin/locations", icon: MapPin, label: "Joylashuvlar" },
+    { to: "/admin/places", icon: Store, label: "Joylar" },
     { to: "/admin/deep-checks", icon: FileSearch, label: "Deep Checks" },
     { to: "/admin/service-requests", icon: Briefcase, label: "Xizmat so'rovlari" },
     { to: "/admin/legal-advisors", icon: Scale, label: "Huquqshunoslar" },
