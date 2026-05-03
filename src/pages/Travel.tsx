@@ -233,8 +233,14 @@ const Travel = () => {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [parks, setParks] = useState<Park[]>([]);
   const [malls, setMalls] = useState<ShoppingMall[]>([]);
+  const [historicalSites, setHistoricalSites] = useState<PlaceData[]>([]);
+  const [markets, setMarkets] = useState<PlaceData[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<string>(searchParams.get("tab") || "places");
+
+  // Place detail sheet
+  const [placeDetailOpen, setPlaceDetailOpen] = useState(false);
+  const [placeDetail, setPlaceDetail] = useState<{ type: PlaceType; data: PlaceData } | null>(null);
 
   // Service request modal state
   const [serviceModalOpen, setServiceModalOpen] = useState(false);
