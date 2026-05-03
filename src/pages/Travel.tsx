@@ -540,9 +540,10 @@ const Travel = () => {
                     }
                   })();
                   const Icon = meta.Icon;
-                  const openDetail = () =>
-                    setPlaceDetail({ type: item.type as PlaceType, data }) ||
+                  const openDetail = () => {
+                    setPlaceDetail({ type: item.type as PlaceType, data });
                     setPlaceDetailOpen(true);
+                  };
                   return (
                     <button
                       key={`${item.type}-${data.id}`}
