@@ -768,5 +768,69 @@
       "uz": "O'zbek",
       "fr": "Fransuz"
     }
+  },
+  "place": {
+    "detail": {
+      "about": "Haqida",
+      "address": "Manzil",
+      "localAddress": "Mahalliy tilda",
+      "addressCopied": "Manzil nusxalandi",
+      "hours": "Ish vaqti",
+      "openNow": "Hozir ochiq",
+      "closedNow": "Yopiq",
+      "entry": "Kirish",
+      "free": "Bepul",
+      "brands": "Brendlar",
+      "moreBrands": "Yana {{count}} ta brend",
+      "amenities": "Xizmatlar",
+      "features": "Xususiyatlar",
+      "transport": "Qanday borish",
+      "gallery": "Fotolar",
+      "buraqTip": "Buraq tavsiyasi"
+    },
+    "action": {
+      "directions": "Marshrut",
+      "call": "Qo'ng'iroq",
+      "website": "Veb-sayt",
+      "noLocation": "Lokatsiya kiritilmagan"
+    },
+    "amenity": {
+      "prayer_room": "Namoz xonasi",
+      "halal_food": "Halol oziq-ovqat",
+      "kids_area": "Bolalar maydoni",
+      "wifi": "Wi-Fi",
+      "parking": "Parking",
+      "atm": "Bankomat",
+      "currency_exchange": "Valyuta almashinuvi",
+      "wheelchair_accessible": "Nogironlar uchun qulay"
+    },
+    "feature": {
+      "lake": "Ko'l",
+      "garden": "Bog'",
+      "playground": "O'yin maydoni",
+      "viewpoint": "Manzara nuqtasi",
+      "wholesale": "Optom savdo",
+      "retail": "Chakana savdo",
+      "food_court": "Oziq-ovqat zonasi",
+      "museum": "Muzey",
+      "guided_tour": "Yo'lboshchi bilan",
+      "audio_guide": "Audio yo'lboshchi"
+    },
+    "priceRange": {
+      "budget": "Arzon narxlar",
+      "midrange": "O'rtacha narxlar",
+      "premium": "Premium narxlar"
+    },
+    "transport": {
+      "metro": "Metro",
+      "bus": "Avtobus",
+      "taxiFriendly": "Taxi qulay"
+    },
+    "type": {
+      "mall": "Savdo markazi",
+      "park": "Park",
+      "historical": "Tarixiy joy",
+      "market": "Bozor"
+    }
   }
 }

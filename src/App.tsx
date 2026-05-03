@@ -23,6 +23,7 @@ import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminServiceRequests from "./pages/AdminServiceRequests";
 import AdminLegalAdvisors from "./pages/AdminLegalAdvisors";
+import AdminPlaces from "./pages/AdminPlaces";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
                 <Route path="deep-checks" element={<AdminDeepChecks />} />
                 <Route path="service-requests" element={<AdminServiceRequests />} />
                 <Route path="legal-advisors" element={<AdminLegalAdvisors />} />
+                <Route path="places" element={<AdminPlaces />} />
               </Route>
 
               {/* Main App Routes - With bottom navigation */}

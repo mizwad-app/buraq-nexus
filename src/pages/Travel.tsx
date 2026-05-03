@@ -61,6 +61,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
+import { PlaceDetailSheet, type PlaceType, type PlaceData } from "@/components/travel/PlaceDetailSheet";
 
 interface Park {
   id: string;
@@ -123,8 +124,12 @@ interface ShoppingMall {
   [key: string]: unknown;
 }
 
-type CategoryFilter = "all" | "parks" | "malls";
-type SelectedItem = { type: "park"; data: Park } | { type: "mall"; data: ShoppingMall };
+type CategoryFilter = "all" | "parks" | "malls" | "historical" | "markets";
+type SelectedItem =
+  | { type: "park"; data: Park }
+  | { type: "mall"; data: ShoppingMall }
+  | { type: "historical"; data: PlaceData }
+  | { type: "market"; data: PlaceData };
 
 interface EmbassyInfo {
   id: string;
@@ -228,8 +233,14 @@ const Travel = () => {
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>("all");
   const [parks, setParks] = useState<Park[]>([]);
   const [malls, setMalls] = useState<ShoppingMall[]>([]);
+  const [historicalSites, setHistoricalSites] = useState<PlaceData[]>([]);
+  const [markets, setMarkets] = useState<PlaceData[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<string>(searchParams.get("tab") || "places");
+
+  // Place detail sheet
+  const [placeDetailOpen, setPlaceDetailOpen] = useState(false);
+  const [placeDetail, setPlaceDetail] = useState<{ type: PlaceType; data: PlaceData } | null>(null);
 
   // Service request modal state
   const [serviceModalOpen, setServiceModalOpen] = useState(false);
@@ -256,8 +267,10 @@ const Travel = () => {
 
   const categoryChips = [
     { id: "all" as const, label: t("travel.allCategories"), icon: Compass },
-    { id: "parks" as const, label: t("travel.parks"), icon: TreePine },
-    { id: "malls" as const, label: t("travel.shoppingMalls"), icon: ShoppingBag },
+    { id: "parks" as const, label: t("place.type.park"), icon: TreePine },
+    { id: "malls" as const, label: t("place.type.mall"), icon: ShoppingBag },
+    { id: "historical" as const, label: t("place.type.historical"), icon: Building2 },
+    { id: "markets" as const, label: t("place.type.market"), icon: ShoppingBag },
   ];
 
   useEffect(() => {
@@ -284,13 +297,17 @@ const Travel = () => {
 
   const fetchData = async () => {
     try {
-      const [parksRes, mallsRes] = await Promise.all([
+      const [parksRes, mallsRes, histRes, marketsRes] = await Promise.all([
         supabase.from("parks").select("*"),
         supabase.from("shopping_malls").select("*").order("rating", { ascending: false }),
+        supabase.from("historical_sites").select("*").eq("is_active", true),
+        supabase.from("markets").select("*").eq("is_active", true),
       ]);
 
       if (parksRes.data) setParks(parksRes.data as Park[]);
       if (mallsRes.data) setMalls(mallsRes.data as ShoppingMall[]);
+      if (histRes.data) setHistoricalSites(histRes.data as unknown as PlaceData[]);
+      if (marketsRes.data) setMarkets(marketsRes.data as unknown as PlaceData[]);
     } catch (error) {
       console.error("Error fetching travel data:", error);
     } finally {
@@ -311,27 +328,31 @@ const Travel = () => {
     };
     parks.forEach(addCity);
     malls.forEach(addCity);
+    historicalSites.forEach((h) => addCity(h as unknown as { city: string }));
+    markets.forEach((m) => addCity(m as unknown as { city: string }));
     return Array.from(citiesMap.values()).sort((a, b) => a.translated.localeCompare(b.translated));
-  }, [parks, malls, currentLanguage]);
+  }, [parks, malls, historicalSites, markets, currentLanguage]);
 
   const unifiedResults = useMemo(() => {
-    type ResultItem = { type: "park"; data: Park } | { type: "mall"; data: ShoppingMall };
-    const results: ResultItem[] = [];
+    const results: SelectedItem[] = [];
+    const matchCity = (c: string) => selectedCity === "all" || c === selectedCity;
 
     if (categoryFilter === "all" || categoryFilter === "parks") {
-      parks
-        .filter((p) => selectedCity === "all" || p.city === selectedCity)
-        .forEach((park) => results.push({ type: "park", data: park }));
+      parks.filter((p) => matchCity(p.city)).forEach((park) => results.push({ type: "park", data: park }));
     }
-
     if (categoryFilter === "all" || categoryFilter === "malls") {
-      malls
-        .filter((m) => selectedCity === "all" || m.city === selectedCity)
-        .forEach((mall) => results.push({ type: "mall", data: mall }));
+      malls.filter((m) => matchCity(m.city)).forEach((mall) => results.push({ type: "mall", data: mall }));
+    }
+    if (categoryFilter === "all" || categoryFilter === "historical") {
+      historicalSites.filter((h) => matchCity(h.city)).forEach((h) => results.push({ type: "historical", data: h }));
+    }
+    if (categoryFilter === "all" || categoryFilter === "markets") {
+      markets.filter((m) => matchCity(m.city)).forEach((m) => results.push({ type: "market", data: m }));
     }
 
     return results;
-  }, [parks, malls, selectedCity, categoryFilter]);
+  }, [parks, malls, historicalSites, markets, selectedCity, categoryFilter]);
+
 
   const selectedCityTranslated = useMemo(() => {
     if (selectedCity === "all") return t("travel.allLocations");
@@ -509,121 +530,80 @@ const Travel = () => {
             ) : unifiedResults.length > 0 ? (
               <div className="space-y-3">
                 {unifiedResults.map((item, index) => {
-                  if (item.type === "park") {
-                    const park = item.data;
-                    const hasLocation = park.latitude && park.longitude;
-                    return (
-                      <div
-                        key={`park-${park.id}`}
-                        className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
-                        style={{ animationDelay: `${index * 40}ms` }}
-                      >
-                        <div className="h-36 overflow-hidden bg-muted">
-                          {park.image_url ? (
-                            <img src={park.image_url} alt={getField(park, 'name')} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <TreePine className="w-12 h-12 text-muted-foreground/30" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="p-4">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-foreground truncate">{getField(park, 'name')}</h3>
-                              <p className="text-sm text-muted-foreground flex items-center gap-1">
-                                <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-                                {getTranslatedCity(park)}
-                              </p>
-                            </div>
-                            <Badge variant="secondary" className="ml-2 flex-shrink-0 bg-eco-mint/20 text-eco-forest border-0">
-                              <TreePine className="w-3 h-3 mr-1" />
-                              {park.park_type?.replace('_', ' ') || t("travel.park")}
+                  const data = item.data as PlaceData;
+                  const meta = (() => {
+                    switch (item.type) {
+                      case "park": return { Icon: TreePine, badgeBg: "bg-eco-mint/20 text-eco-forest" };
+                      case "mall": return { Icon: ShoppingBag, badgeBg: "bg-blue-500/10 text-blue-600" };
+                      case "historical": return { Icon: Building2, badgeBg: "bg-amber-500/10 text-amber-600" };
+                      case "market": return { Icon: ShoppingBag, badgeBg: "bg-orange-500/10 text-orange-600" };
+                    }
+                  })();
+                  const Icon = meta.Icon;
+                  const openDetail = () => {
+                    setPlaceDetail({ type: item.type as PlaceType, data });
+                    setPlaceDetailOpen(true);
+                  };
+                  return (
+                    <button
+                      key={`${item.type}-${data.id}`}
+                      onClick={openDetail}
+                      className="w-full text-left bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in hover:border-primary/40 transition-all"
+                      style={{ animationDelay: `${index * 40}ms` }}
+                    >
+                      <div className="h-36 overflow-hidden bg-muted">
+                        {data.image_url ? (
+                          <img src={data.image_url} alt={getField(data, 'name')} className="w-full h-full object-cover" />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center">
+                            <Icon className="w-12 h-12 text-muted-foreground/30" />
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4">
+                        <div className="flex items-start justify-between mb-2">
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-foreground truncate">{getField(data, 'name')}</h3>
+                            <p className="text-sm text-muted-foreground flex items-center gap-1">
+                              <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                              {getTranslatedCity(data as { city: string })}
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-2 ml-2 flex-shrink-0">
+                            {data.rating != null && (
+                              <div className="flex items-center gap-1 text-gold">
+                                <Star className="w-4 h-4 fill-current" />
+                                <span className="text-sm font-medium">{data.rating}</span>
+                              </div>
+                            )}
+                            <Badge variant="secondary" className={cn("border-0", meta.badgeBg)}>
+                              <Icon className="w-3 h-3 mr-1" />
+                              {t(`place.type.${item.type}`)}
                             </Badge>
                           </div>
-                          {park.description && (
-                            <p className="text-sm text-muted-foreground line-clamp-2 mb-3">
-                              {getField(park, 'description')}
-                            </p>
+                        </div>
+                        {data.description && (
+                          <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
+                            {getField(data, 'description')}
+                          </p>
+                        )}
+                        <div className="flex items-center justify-between flex-wrap gap-2">
+                          {data.has_halal_food && (
+                            <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
+                              <Check className="w-3 h-3" />
+                              {t("place.amenity.halal_food")}
+                            </span>
                           )}
-                          {hasLocation && (
-                            <button
-                              onClick={() => handleOpenMapNavigation(item)}
-                              className="flex items-center gap-2 px-3 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors"
-                            >
-                              <Navigation className="w-4 h-4" />
-                              {t("mosques.directions")}
-                            </button>
+                          {data.has_prayer_room && (
+                            <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
+                              <Check className="w-3 h-3" />
+                              {t("place.amenity.prayer_room")}
+                            </span>
                           )}
                         </div>
                       </div>
-                    );
-                  } else {
-                    const mall = item.data;
-                    const hasLocation = mall.latitude && mall.longitude;
-                    return (
-                      <div
-                        key={`mall-${mall.id}`}
-                        className="bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in"
-                        style={{ animationDelay: `${index * 40}ms` }}
-                      >
-                        <div className="h-36 overflow-hidden bg-muted">
-                          {mall.image_url ? (
-                            <img src={mall.image_url} alt={getField(mall, 'name')} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <ShoppingBag className="w-12 h-12 text-muted-foreground/30" />
-                            </div>
-                          )}
-                        </div>
-                        <div className="p-4">
-                          <div className="flex items-start justify-between mb-2">
-                            <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-foreground truncate">{getField(mall, 'name')}</h3>
-                              <p className="text-sm text-muted-foreground flex items-center gap-1">
-                                <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-                                {getTranslatedCity(mall)}
-                              </p>
-                            </div>
-                            <div className="flex items-center gap-2 ml-2 flex-shrink-0">
-                              {mall.rating && (
-                                <div className="flex items-center gap-1 text-gold">
-                                  <Star className="w-4 h-4 fill-current" />
-                                  <span className="text-sm font-medium">{mall.rating}</span>
-                                </div>
-                              )}
-                              <Badge variant="secondary" className="bg-blue-500/10 text-blue-600 border-0">
-                                <ShoppingBag className="w-3 h-3 mr-1" />
-                                {t("travel.mall")}
-                              </Badge>
-                            </div>
-                          </div>
-                          {mall.description && (
-                            <p className="text-sm text-muted-foreground line-clamp-2 mb-2">
-                              {getField(mall, 'description')}
-                            </p>
-                          )}
-                          <div className="flex items-center justify-between">
-                            {mall.has_halal_food && (
-                              <span className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">
-                                <Check className="w-3 h-3" />
-                                {t("travel.hasHalalFood")}
-                              </span>
-                            )}
-                            {hasLocation && (
-                              <button
-                                onClick={() => handleOpenMapNavigation(item)}
-                                className="flex items-center gap-2 px-3 py-2 rounded-xl bg-primary/10 text-primary text-sm font-medium hover:bg-primary/20 transition-colors ml-auto"
-                              >
-                                <Navigation className="w-4 h-4" />
-                                {t("mosques.directions")}
-                              </button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  }
+                    </button>
+                  );
                 })}
               </div>
             ) : (
@@ -896,6 +876,13 @@ const Travel = () => {
           addressChinese={selectedItem.data.address}
         />
       )}
+
+      <PlaceDetailSheet
+        open={placeDetailOpen}
+        onOpenChange={setPlaceDetailOpen}
+        place={placeDetail?.data ?? null}
+        type={placeDetail?.type ?? "mall"}
+      />
 
       {/* Service Request Modal */}
       <Sheet open={serviceModalOpen} onOpenChange={setServiceModalOpen}>

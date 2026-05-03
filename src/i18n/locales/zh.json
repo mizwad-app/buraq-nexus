@@ -769,5 +769,69 @@
       "uz": "乌兹别克语",
       "fr": "法语"
     }
+  },
+  "place": {
+    "detail": {
+      "about": "关于",
+      "address": "地址",
+      "localAddress": "当地语言",
+      "addressCopied": "地址已复制",
+      "hours": "营业时间",
+      "openNow": "现在营业",
+      "closedNow": "已关闭",
+      "entry": "入场",
+      "free": "免费",
+      "brands": "品牌",
+      "moreBrands": "更多 {{count}} 个品牌",
+      "amenities": "设施",
+      "features": "特色",
+      "transport": "如何到达",
+      "gallery": "照片",
+      "buraqTip": "Buraq建议"
+    },
+    "action": {
+      "directions": "路线",
+      "call": "致电",
+      "website": "网站",
+      "noLocation": "未设置位置"
+    },
+    "amenity": {
+      "prayer_room": "祈祷室",
+      "halal_food": "清真食品",
+      "kids_area": "儿童区",
+      "wifi": "无线网络",
+      "parking": "停车场",
+      "atm": "自动取款机",
+      "currency_exchange": "货币兑换",
+      "wheelchair_accessible": "无障碍通道"
+    },
+    "feature": {
+      "lake": "湖泊",
+      "garden": "花园",
+      "playground": "游乐场",
+      "viewpoint": "观景点",
+      "wholesale": "批发",
+      "retail": "零售",
+      "food_court": "美食广场",
+      "museum": "博物馆",
+      "guided_tour": "导游",
+      "audio_guide": "语音导览"
+    },
+    "priceRange": {
+      "budget": "经济",
+      "midrange": "中档",
+      "premium": "高端"
+    },
+    "transport": {
+      "metro": "地铁",
+      "bus": "公交",
+      "taxiFriendly": "出租车便利"
+    },
+    "type": {
+      "mall": "购物中心",
+      "park": "公园",
+      "historical": "历史遗址",
+      "market": "市场"
+    }
   }
 }

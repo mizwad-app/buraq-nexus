@@ -719,5 +719,69 @@
       "uz": "Uzbek",
       "fr": "French"
     }
+  },
+  "place": {
+    "detail": {
+      "about": "About",
+      "address": "Address",
+      "localAddress": "Local language",
+      "addressCopied": "Address copied",
+      "hours": "Opening hours",
+      "openNow": "Open now",
+      "closedNow": "Closed",
+      "entry": "Entry",
+      "free": "Free",
+      "brands": "Brands",
+      "moreBrands": "{{count}} more brands",
+      "amenities": "Amenities",
+      "features": "Features",
+      "transport": "How to get there",
+      "gallery": "Photos",
+      "buraqTip": "Buraq's tip"
+    },
+    "action": {
+      "directions": "Directions",
+      "call": "Call",
+      "website": "Website",
+      "noLocation": "Location not set"
+    },
+    "amenity": {
+      "prayer_room": "Prayer room",
+      "halal_food": "Halal food",
+      "kids_area": "Kids area",
+      "wifi": "Wi-Fi",
+      "parking": "Parking",
+      "atm": "ATM",
+      "currency_exchange": "Currency exchange",
+      "wheelchair_accessible": "Wheelchair accessible"
+    },
+    "feature": {
+      "lake": "Lake",
+      "garden": "Garden",
+      "playground": "Playground",
+      "viewpoint": "Viewpoint",
+      "wholesale": "Wholesale",
+      "retail": "Retail",
+      "food_court": "Food court",
+      "museum": "Museum",
+      "guided_tour": "Guided tour",
+      "audio_guide": "Audio guide"
+    },
+    "priceRange": {
+      "budget": "Budget",
+      "midrange": "Midrange",
+      "premium": "Premium"
+    },
+    "transport": {
+      "metro": "Metro",
+      "bus": "Bus",
+      "taxiFriendly": "Taxi friendly"
+    },
+    "type": {
+      "mall": "Mall",
+      "park": "Park",
+      "historical": "Historical site",
+      "market": "Market"
+    }
   }
 }

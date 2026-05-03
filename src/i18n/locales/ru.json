@@ -695,5 +695,69 @@
       "uz": "Узбекский",
       "fr": "Французский"
     }
+  },
+  "place": {
+    "detail": {
+      "about": "О месте",
+      "address": "Адрес",
+      "localAddress": "На местном языке",
+      "addressCopied": "Адрес скопирован",
+      "hours": "Часы работы",
+      "openNow": "Сейчас открыто",
+      "closedNow": "Закрыто",
+      "entry": "Вход",
+      "free": "Бесплатно",
+      "brands": "Бренды",
+      "moreBrands": "Ещё {{count}} брендов",
+      "amenities": "Удобства",
+      "features": "Особенности",
+      "transport": "Как добраться",
+      "gallery": "Фото",
+      "buraqTip": "Совет от Buraq"
+    },
+    "action": {
+      "directions": "Маршрут",
+      "call": "Позвонить",
+      "website": "Веб-сайт",
+      "noLocation": "Локация не указана"
+    },
+    "amenity": {
+      "prayer_room": "Молельная комната",
+      "halal_food": "Халяль еда",
+      "kids_area": "Детская зона",
+      "wifi": "Wi-Fi",
+      "parking": "Парковка",
+      "atm": "Банкомат",
+      "currency_exchange": "Обмен валют",
+      "wheelchair_accessible": "Доступно для инвалидов"
+    },
+    "feature": {
+      "lake": "Озеро",
+      "garden": "Сад",
+      "playground": "Игровая площадка",
+      "viewpoint": "Смотровая площадка",
+      "wholesale": "Оптовая торговля",
+      "retail": "Розничная торговля",
+      "food_court": "Фуд-корт",
+      "museum": "Музей",
+      "guided_tour": "С гидом",
+      "audio_guide": "Аудиогид"
+    },
+    "priceRange": {
+      "budget": "Низкие цены",
+      "midrange": "Средние цены",
+      "premium": "Премиум цены"
+    },
+    "transport": {
+      "metro": "Метро",
+      "bus": "Автобус",
+      "taxiFriendly": "Удобно на такси"
+    },
+    "type": {
+      "mall": "Торговый центр",
+      "park": "Парк",
+      "historical": "Историческое место",
+      "market": "Рынок"
+    }
   }
 }
