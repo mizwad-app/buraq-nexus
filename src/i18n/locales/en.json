@@ -23,12 +23,13 @@
     "translators": "Translators",
     "consulates": "Consulates",
     "videoTips": "Useful Tips",
-    "b2bHub": "B2B Sourcing Hub",
+    "b2bHub": "Trade Center",
     "exhibitions": "Trade Fairs & Exhibitions",
     "wallet": "Buraq Wallet",
     "transportVpn": "Transport & VPN",
     "attractions": "Attractions",
-    "legalHelp": "Consulates & Legal Help"
+    "legalHelp": "Consulates & Legal Help",
+    "premium": "PREMIUM"
   },
   "home": {
     "guestPrompt": "Use our services",
@@ -58,7 +59,7 @@
     "walletShort": "Wallet"
   },
   "business": {
-    "title": "B2B Hub",
+    "title": "Trade Center",
     "subtitle": "Business center",
     "deepCheck": "Deep Check",
     "deepCheckDesc": "Full analysis of product or company",
@@ -118,7 +119,8 @@
       "retail": "Retail",
       "copyAddress": "Copy Address",
       "moreMarketsSoon": "More markets coming soon"
-    }
+    },
+    "pageSubtitle": "Find and source products from China"
   },
   "sourcing": {
     "strategicPlanner": "Strategic Travel Planning",
