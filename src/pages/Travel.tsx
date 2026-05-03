@@ -306,8 +306,8 @@ const Travel = () => {
 
       if (parksRes.data) setParks(parksRes.data as Park[]);
       if (mallsRes.data) setMalls(mallsRes.data as ShoppingMall[]);
-      if (histRes.data) setHistoricalSites(histRes.data as PlaceData[]);
-      if (marketsRes.data) setMarkets(marketsRes.data as PlaceData[]);
+      if (histRes.data) setHistoricalSites(histRes.data as unknown as PlaceData[]);
+      if (marketsRes.data) setMarkets(marketsRes.data as unknown as PlaceData[]);
     } catch (error) {
       console.error("Error fetching travel data:", error);
     } finally {
