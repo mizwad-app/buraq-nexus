@@ -877,6 +877,13 @@ const Travel = () => {
         />
       )}
 
+      <PlaceDetailSheet
+        open={placeDetailOpen}
+        onOpenChange={setPlaceDetailOpen}
+        place={placeDetail?.data ?? null}
+        type={placeDetail?.type ?? "mall"}
+      />
+
       {/* Service Request Modal */}
       <Sheet open={serviceModalOpen} onOpenChange={setServiceModalOpen}>
         <SheetContent side="bottom" className="rounded-t-3xl">
