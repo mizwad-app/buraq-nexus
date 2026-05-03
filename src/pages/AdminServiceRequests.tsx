@@ -28,6 +28,12 @@ interface ServiceRequest {
   admin_notes: string | null;
   created_at: string;
   updated_at: string;
+  ticket_details?: any;
+}
+  status: string | null;
+  admin_notes: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 const statusConfig = {
