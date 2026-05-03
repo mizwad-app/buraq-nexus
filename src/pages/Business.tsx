@@ -28,6 +28,9 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { SupportChat } from "@/components/SupportChat";
 import { MarketDetailSheet } from "@/components/MarketDetailSheet";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { LegalAdvisorsList } from "@/components/business/LegalAdvisorsList";
+import { Scale } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
