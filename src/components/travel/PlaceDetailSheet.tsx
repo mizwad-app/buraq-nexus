@@ -125,6 +125,14 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
   const [showAllBrands, setShowAllBrands] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
 
+  const gallery = useMemo(() => {
+    if (!place) return [];
+    const arr = (place.gallery_images && place.gallery_images.length > 0)
+      ? place.gallery_images
+      : (place.image_url ? [place.image_url] : []);
+    return arr;
+  }, [place]);
+
   if (!place) return null;
 
   const lat = place.latitude ?? place.coordinates?.lat ?? null;
@@ -136,13 +144,6 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
   const localAddress = place.address_local;
   const latinAddress = getField(place, "address") || place.address;
   const cityLabel = getField(place, "city") || place.city;
-
-  const gallery = useMemo(() => {
-    const arr = (place.gallery_images && place.gallery_images.length > 0)
-      ? place.gallery_images
-      : (place.image_url ? [place.image_url] : []);
-    return arr;
-  }, [place]);
 
   const TypeIcon = TYPE_META[type].icon;
   const openStatus = isOpenNow(place.opening_hours);
