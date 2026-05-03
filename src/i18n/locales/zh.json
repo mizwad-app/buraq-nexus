@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Buraq 生态系统",
+    "name": "Mizwad",
     "welcome": "欢迎",
     "services": "服务"
   },
@@ -25,7 +25,7 @@
     "videoTips": "实用建议",
     "b2bHub": "商务",
     "exhibitions": "展会与博览",
-    "wallet": "Buraq钱包",
+    "wallet": "Mizwad 钱包",
     "transportVpn": "交通与 VPN",
     "attractions": "景点",
     "legalHelp": "领事馆与法律援助",
@@ -318,11 +318,11 @@
     "completed": "已完成",
     "cancelled": "已取消",
     "translatorPrice": "翻译员价格",
-    "serviceFee": "Buraq服务费",
+    "serviceFee": "Mizwad服务费",
     "serviceFeeRate": "10%",
     "totalPayment": "总支付",
     "feeInfo": {
-      "title": "关于Buraq服务费",
+      "title": "关于Mizwad服务费",
       "body": "10%的服务费用于平台安全和支持。翻译员获得全额价格。"
     },
     "insufficientBalance": "钱包余额不足。需要: ¥{{needed}}，可用: ¥{{available}}",
@@ -493,7 +493,7 @@
     "subtitle": "选择您喜欢的通讯软件",
     "whatsappDesc": "快速回复,商务咨询",
     "telegramDesc": "快速消息,文件共享",
-    "defaultMessage": "您好!我需要 Buraq 生态系统的帮助。",
+    "defaultMessage": "您好!我需要 Mizwad的帮助。",
     "askAgent": "向客服提问",
     "marketInquiry": "您好!我想咨询关于 {{market}}。您能帮忙吗?",
     "inquiryAbout": "咨询"
@@ -534,8 +534,8 @@
     "pricePerDay": "每天",
     "available": "可预约",
     "busy": "忙碌",
-    "verified": "Buraq 认证",
-    "verifiedByBuraq": "Buraq 已认证",
+    "verified": "Mizwad 认证",
+    "verifiedByMizwad": "Mizwad 已认证",
     "specializations": "专长",
     "contact": "联系",
     "noTranslators": "未找到翻译员",
@@ -544,7 +544,7 @@
     "allCities": "所有城市",
     "about": "关于",
     "perDay": "每日",
-    "contactMessage": "您好!我想通过 Buraq 联系 {{name}}。",
+    "contactMessage": "您好!我想通过 Mizwad 联系 {{name}}。",
     "contactVia": "通过 {{method}} 联系",
     "myResume": "我的简历",
     "translator": "翻译员",
@@ -605,7 +605,7 @@
     "female": "女",
     "priceRange": "价格区间 (¥/天)",
     "minRating": "最低评分",
-    "buraqVerified": "Buraq 认证 HSK",
+    "MizwadVerified": "Mizwad 认证 HSK",
     "verifiedDesc": "通过视频面试认证",
     "applyFilters": "应用"
   },
@@ -665,7 +665,7 @@
     "isha": "宵礼"
   },
   "tickets": {
-    "heroTitle": "需要票务？Buraq帮您",
+    "heroTitle": "需要票务？Mizwad帮您",
     "heroSubtitle": "我们帮您查找和预订机票和火车票。即使语言不通——我们的代理会处理一切。",
     "flight": "机票",
     "flightSubtitle": "国内和国际航班",
@@ -674,7 +674,7 @@
     "quickChat": "通过快速聊天询问",
     "howItWorks": "如何运作？",
     "howItWorksStep1": "填写表格",
-    "howItWorksStep2": "Buraq查找并推荐",
+    "howItWorksStep2": "Mizwad查找并推荐",
     "howItWorksStep3": "您确认并支付",
     "trustUzbek": "乌兹别克语",
     "trustReliable": "可靠",
@@ -698,7 +698,7 @@
       "notes": "其他请求或特殊要求",
       "phone": "您的电话号码",
       "submit": "提交请求",
-      "success": "已收到请求。Buraq代理将在2小时内联系您。",
+      "success": "已收到请求。Mizwad代理将在2小时内联系您。",
       "timePreference": "时间偏好",
       "timeMorning": "早晨",
       "timeBeforeNoon": "中午前",
@@ -723,9 +723,9 @@
     "tabTitle": "法律帮助",
     "tabProducts": "产品",
     "heroTitle": "可信律师",
-    "heroSubtitle": "在中国需要合同、纠纷或税务方面的帮助？直接联系Buraq认证的律师。",
-    "heroNote": "Buraq团队亲自审核每位律师。我们不收取佣金——您直接联系。",
-    "verified": "Buraq认证",
+    "heroSubtitle": "在中国需要合同、纠纷或税务方面的帮助？直接联系Mizwad认证的律师。",
+    "heroNote": "Mizwad团队亲自审核每位律师。我们不收取佣金——您直接联系。",
+    "verified": "Mizwad认证",
     "yearsExperience_one": "{{count}} 年经验",
     "yearsExperience_other": "{{count}} 年经验",
     "contact": {
@@ -737,7 +737,7 @@
     },
     "detail": {
       "viewOnMap": "在地图上查看",
-      "disclaimer": "Buraq不对律师提供的信息负责。咨询直接进行。",
+      "disclaimer": "Mizwad不对律师提供的信息负责。咨询直接进行。",
       "bio": "简介",
       "specializations": "专业",
       "languages": "语言",
@@ -749,7 +749,7 @@
       "allCities": "所有城市",
       "languages": "语言",
       "specializations": "专业",
-      "verifiedOnly": "仅Buraq认证",
+      "verifiedOnly": "仅Mizwad认证",
       "confirm": "应用 · {{count}} 位律师",
       "button": "筛选 · {{count}} 位律师",
       "clear": "清除"
@@ -793,7 +793,7 @@
       "features": "特色",
       "transport": "如何到达",
       "gallery": "照片",
-      "buraqTip": "Buraq建议"
+      "MizwadTip": "Mizwad建议"
     },
     "action": {
       "directions": "路线",

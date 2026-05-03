@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Buraq Ekotizimi",
+    "name": "Mizwad",
     "welcome": "Xush kelibsiz",
     "services": "Xizmatlar"
   },
@@ -25,7 +25,7 @@
     "videoTips": "Foydali Maslahatlar",
     "b2bHub": "Tijorat Markazi",
     "exhibitions": "Yarmarka va Ko'rgazmalar",
-    "wallet": "Buraq Hamyon",
+    "wallet": "Mizwad Wallet",
     "transportVpn": "Transport & VPN",
     "attractions": "Diqqatga sazovor joylar",
     "legalHelp": "Konsulliklar & Yuridik yordam",
@@ -318,11 +318,11 @@
     "completed": "Bajarildi",
     "cancelled": "Bekor qilindi",
     "translatorPrice": "Tarjimon narxi",
-    "serviceFee": "Buraq xizmat haqi",
+    "serviceFee": "Mizwad xizmat haqi",
     "serviceFeeRate": "10%",
     "totalPayment": "Jami to'lov",
     "feeInfo": {
-      "title": "Buraq xizmat haqi",
+      "title": "Mizwad xizmat haqi",
       "body": "10% xizmat haqi platform xavfsizligi va qo'llab-quvvatlash uchun olinadi. Tarjimon o'z narxini to'liq oladi."
     },
     "insufficientBalance": "Hamyondagi mablag' yetarli emas. Kerak: ¥{{needed}}, balansda: ¥{{available}}",
@@ -492,7 +492,7 @@
     "subtitle": "O'zingizga qulay messenjer tanlang",
     "whatsappDesc": "Tez javob, biznes so'rovlar",
     "telegramDesc": "Tez xabar, fayl almashish",
-    "defaultMessage": "Salom! Menga Buraq Ecosystem bo'yicha yordam kerak.",
+    "defaultMessage": "Salom! Menga Mizwad bo'yicha yordam kerak.",
     "askAgent": "Agentga savol",
     "marketInquiry": "Salom! Men {{market}} haqida so'ramoqchi edim. Yordam bera olasizmi?",
     "inquiryAbout": "So'rov"
@@ -533,8 +533,8 @@
     "pricePerDay": "kuniga",
     "available": "Mavjud",
     "busy": "Band",
-    "verified": "Buraq tomonidan tasdiqlangan",
-    "verifiedByBuraq": "Buraq tasdiqlagan",
+    "verified": "Mizwad tomonidan tasdiqlangan",
+    "verifiedByMizwad": "Mizwad tasdiqlagan",
     "specializations": "Mutaxassisliklar",
     "contact": "Aloqa",
     "noTranslators": "Tarjimonlar topilmadi",
@@ -543,7 +543,7 @@
     "allCities": "Barcha shaharlar",
     "about": "Haqida",
     "perDay": "Kunlik",
-    "contactMessage": "Salom! Men Buraq orqali {{name}} bilan bog'lanmoqchiman.",
+    "contactMessage": "Salom! Men Mizwad orqali {{name}} bilan bog'lanmoqchiman.",
     "contactVia": "{{method}} orqali bog'lanish",
     "myResume": "Mening rezyumem",
     "translator": "Tarjimon",
@@ -604,7 +604,7 @@
     "female": "Ayol",
     "priceRange": "Narx oralig'i (¥/kun)",
     "minRating": "Minimal reyting",
-    "buraqVerified": "Buraq tasdiqlagan HSK",
+    "MizwadVerified": "Mizwad tasdiqlagan HSK",
     "verifiedDesc": "Video intervyu orqali tasdiqlangan",
     "applyFilters": "Qo'llash"
   },
@@ -664,8 +664,8 @@
     "isha": "Xufton"
   },
   "tickets": {
-    "heroTitle": "Bilet kerakmi? Buraq yordam beradi",
-    "heroSubtitle": "Aviabilet va Train biletlarini topish va bron qilishda yordamlashamiz. Tilni bilmasangiz ham — Buraq agentlari ishlab beradi.",
+    "heroTitle": "Bilet kerakmi? Mizwad yordam beradi",
+    "heroSubtitle": "Aviabilet va Train biletlarini topish va bron qilishda yordamlashamiz. Tilni bilmasangiz ham — Mizwad agentlari ishlab beradi.",
     "flight": "Aviabilet",
     "flightSubtitle": "Xitoy ichida va xalqaro reyslar",
     "train": "Train bilet",
@@ -673,7 +673,7 @@
     "quickChat": "Tezkor chat orqali so'rang",
     "howItWorks": "Qanday ishlaydi?",
     "howItWorksStep1": "Forma to'ldiring",
-    "howItWorksStep2": "Buraq topadi va taklif qiladi",
+    "howItWorksStep2": "Mizwad topadi va taklif qiladi",
     "howItWorksStep3": "Tasdiqlab to'lov qilasiz",
     "trustUzbek": "O'zbek tilida",
     "trustReliable": "Ishonchli",
@@ -697,7 +697,7 @@
       "notes": "Qo'shimcha so'rov yoki maxsus talablar",
       "phone": "Telefon raqamingiz",
       "submit": "So'rov yuborish",
-      "success": "So'rovingiz qabul qilindi. Buraq agenti 2 soat ichida bog'lanadi.",
+      "success": "So'rovingiz qabul qilindi. Mizwad agenti 2 soat ichida bog'lanadi.",
       "timePreference": "Vaqt afzalligi",
       "timeMorning": "Ertalab",
       "timeBeforeNoon": "Tushdan oldin",
@@ -722,9 +722,9 @@
     "tabTitle": "Huquqiy yordam",
     "tabProducts": "Mahsulotlar",
     "heroTitle": "Ishonchli huquqshunoslar",
-    "heroSubtitle": "Xitoyda kontrakt, tortishuv yoki soliq bo'yicha yordam kerakmi? Buraq tasdiqlagan advokatlar bilan to'g'ridan-to'g'ri bog'laning.",
-    "heroNote": "Buraq jamoasi har bir advokatni shaxsan tekshiradi. Komissiya olmaymiz — to'g'ridan-to'g'ri bog'lanasiz.",
-    "verified": "Buraq tasdiqlagan",
+    "heroSubtitle": "Xitoyda kontrakt, tortishuv yoki soliq bo'yicha yordam kerakmi? Mizwad tasdiqlagan advokatlar bilan to'g'ridan-to'g'ri bog'laning.",
+    "heroNote": "Mizwad jamoasi har bir advokatni shaxsan tekshiradi. Komissiya olmaymiz — to'g'ridan-to'g'ri bog'lanasiz.",
+    "verified": "Mizwad tasdiqlagan",
     "yearsExperience_one": "{{count}} yillik tajriba",
     "yearsExperience_other": "{{count}} yillik tajriba",
     "contact": {
@@ -736,7 +736,7 @@
     },
     "detail": {
       "viewOnMap": "Xaritada ko'rish",
-      "disclaimer": "Buraq advokatning aytgan ma'lumotlari uchun javobgar emas. Konsultatsiya to'g'ridan-to'g'ri amalga oshiriladi.",
+      "disclaimer": "Mizwad advokatning aytgan ma'lumotlari uchun javobgar emas. Konsultatsiya to'g'ridan-to'g'ri amalga oshiriladi.",
       "bio": "Tarjimai hol",
       "specializations": "Ixtisosliklar",
       "languages": "Tillar",
@@ -748,7 +748,7 @@
       "allCities": "Barcha shaharlar",
       "languages": "Tillar",
       "specializations": "Ixtisoslik",
-      "verifiedOnly": "Faqat Buraq tasdiqlagan",
+      "verifiedOnly": "Faqat Mizwad tasdiqlagan",
       "confirm": "Tasdiqlash · {{count}} ta advokat",
       "button": "Filtrlash · {{count}} ta advokat",
       "clear": "Tozalash"
@@ -792,7 +792,7 @@
       "features": "Xususiyatlar",
       "transport": "Qanday borish",
       "gallery": "Fotolar",
-      "buraqTip": "Buraq tavsiyasi"
+      "MizwadTip": "Mizwad tavsiyasi"
     },
     "action": {
       "directions": "Marshrut",
