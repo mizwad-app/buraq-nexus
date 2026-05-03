@@ -49,7 +49,7 @@ async function geocodeAddress(address: string): Promise<{ lat: number; lng: numb
       `https://nominatim.openstreetmap.org/search?format=json&q=${encodedAddress}&limit=1&countrycodes=cn`,
       {
         headers: {
-          "User-Agent": "BuraqNexus/1.0 (admin@buraq.app)",
+          "User-Agent": "Mizwad/1.0 (admin@mizwad.app)",
         },
       }
     );
