@@ -6,6 +6,8 @@ import { AuthModal } from "@/components/AuthModal";
 import { BusinessSurveyModal } from "@/components/BusinessSurveyModal";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { Button } from "@/components/ui/button";
+import { useTheme, ThemeMode } from "@/contexts/ThemeContext";
+import { Moon, Sun, Monitor } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 import { 
