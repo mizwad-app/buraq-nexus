@@ -858,7 +858,7 @@ const Travel = () => {
             {/* Quick actions */}
             <div className="space-y-2">
               <Button
-                onClick={() => setTicketsChatOpen(true)}
+                onClick={openTicketsChat}
                 className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
                 size="lg"
               >
