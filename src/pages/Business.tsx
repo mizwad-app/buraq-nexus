@@ -846,10 +846,10 @@ const Business = () => {
             </div>
             <div className="flex-1">
               <span className="text-sm font-medium text-muted-foreground">
-                {t("sourcing.strategicPlanner")}
+                {t("business.pageSubtitle")}
               </span>
               <h1 className="text-2xl font-display font-bold text-foreground">
-                {t("business.title")}
+                {t("modules.b2bHub")}
               </h1>
             </div>
           </div>
