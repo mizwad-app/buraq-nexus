@@ -317,7 +317,16 @@
       "title": "About Buraq service fee",
       "body": "10% service fee covers platform safety and support. Translator receives their full price."
     },
-    "insufficientBalance": "Insufficient wallet balance. Need: ¥{{needed}}, available: ¥{{available}}"
+    "insufficientBalance": "Insufficient wallet balance. Need: ¥{{needed}}, available: ¥{{available}}",
+    "selectDates": "Select dates",
+    "noDaysSelected": "0 days selected",
+    "daysSelected_one": "{{count}} day selected",
+    "daysSelected_other": "{{count}} days selected",
+    "translatorPriceLabel": "Translator price",
+    "estimatedTotal": "Estimated total",
+    "hourlyRateLabel": "Hourly rate",
+    "hoursLater": "Exact hours in next step",
+    "daysCount": "Selected: {{count}} days"
   },
   "language": {
     "title": "Select Language",

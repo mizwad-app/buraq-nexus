@@ -317,7 +317,16 @@
       "title": "À propos des frais de service",
       "body": "Les frais de service de 10% couvrent la sécurité de la plateforme et le support. Le traducteur reçoit son prix complet."
     },
-    "insufficientBalance": "Solde du portefeuille insuffisant. Nécessaire: ¥{{needed}}, disponible: ¥{{available}}"
+    "insufficientBalance": "Solde du portefeuille insuffisant. Nécessaire: ¥{{needed}}, disponible: ¥{{available}}",
+    "selectDates": "Sélectionnez les dates",
+    "noDaysSelected": "0 jour sélectionné",
+    "daysSelected_one": "{{count}} jour sélectionné",
+    "daysSelected_other": "{{count}} jours sélectionnés",
+    "translatorPriceLabel": "Prix du traducteur",
+    "estimatedTotal": "Total estimé",
+    "hourlyRateLabel": "Tarif horaire",
+    "hoursLater": "Heures exactes à l'étape suivante",
+    "daysCount": "Sélectionné: {{count}} jours"
   },
   "language": {
     "title": "Sélectionner la langue",

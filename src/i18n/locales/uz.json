@@ -317,7 +317,16 @@
       "title": "Buraq xizmat haqi",
       "body": "10% xizmat haqi platform xavfsizligi va qo'llab-quvvatlash uchun olinadi. Tarjimon o'z narxini to'liq oladi."
     },
-    "insufficientBalance": "Hamyondagi mablag' yetarli emas. Kerak: ¥{{needed}}, balansda: ¥{{available}}"
+    "insufficientBalance": "Hamyondagi mablag' yetarli emas. Kerak: ¥{{needed}}, balansda: ¥{{available}}",
+    "selectDates": "Kunlarni tanlang",
+    "noDaysSelected": "0 ta kun tanlangan",
+    "daysSelected_one": "{{count}} ta kun tanlangan",
+    "daysSelected_other": "{{count}} ta kun tanlangan",
+    "translatorPriceLabel": "Tarjimon narxi",
+    "estimatedTotal": "Taxminiy jami",
+    "hourlyRateLabel": "Soatlik narx",
+    "hoursLater": "Aniq soatlar keyingi qadamda",
+    "daysCount": "Tanlangan: {{count}} kun"
   },
   "language": {
     "title": "Tilni tanlang",

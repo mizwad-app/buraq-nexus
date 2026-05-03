@@ -408,7 +408,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
     switch (step) {
       case 'datetime':
         return (
-          <div className="flex-1 overflow-y-auto px-5 py-4 space-y-4">
+          <div className="flex-1 overflow-y-auto px-5 py-3 space-y-3">
             {/* Service Type */}
             <div>
               <label className="text-sm font-medium text-foreground mb-2 block">Xizmat turi</label>
@@ -442,9 +442,19 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
 
             {/* Multi-Day Calendar Selection */}
             <div>
-              <label className="text-sm font-medium text-foreground mb-2 block">
-                Kunlarni tanlang <span className="text-muted-foreground">({selectedDates.length} tanlangan)</span>
-              </label>
+              <div className="flex items-baseline justify-between mb-3 px-1">
+                <h3 className="text-base font-semibold text-foreground">{t('booking.selectDates')}</h3>
+                <span
+                  className={cn(
+                    "text-sm tabular-nums text-right",
+                    selectedDates.length > 0 ? "text-primary font-medium" : "text-muted-foreground"
+                  )}
+                >
+                  {selectedDates.length === 0
+                    ? t('booking.noDaysSelected')
+                    : t('booking.daysSelected', { count: selectedDates.length })}
+                </span>
+              </div>
               <div className="bg-muted/30 rounded-xl p-3 border border-border/50">
                 <Calendar
                   mode="multiple"
@@ -469,7 +479,43 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                   className="w-full pointer-events-auto"
                 />
               </div>
-              
+
+              {/* Cost preview */}
+              {selectedDates.length > 0 && (
+                <div className="bg-secondary/40 rounded-xl p-3 mt-2">
+                  {serviceType === 'daily' ? (
+                    <>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">
+                          {t('booking.daysCount', { count: selectedDates.length })}
+                        </span>
+                      </div>
+                      <div className="flex justify-between text-sm mt-1.5">
+                        <span className="text-muted-foreground">{t('booking.translatorPriceLabel')}</span>
+                        <span className="text-foreground tabular-nums">¥{(selectedDates.length * dailyPrice).toLocaleString()}</span>
+                      </div>
+                      <div className="border-t border-border/50 my-2" />
+                      <div className="flex justify-between items-baseline">
+                        <span className="text-sm font-semibold text-foreground">{t('booking.estimatedTotal')}</span>
+                        <span className="text-lg font-bold text-primary tabular-nums">
+                          ¥{(selectedDates.length * dailyPrice).toLocaleString()}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex justify-between text-sm">
+                        <span className="text-muted-foreground">{t('booking.hourlyRateLabel')}</span>
+                        <span className="text-foreground tabular-nums">¥{hourlyPrice.toLocaleString()}/h</span>
+                      </div>
+                      <div className="text-xs text-muted-foreground mt-1.5">
+                        {t('booking.hoursLater')}
+                      </div>
+                    </>
+                  )}
+                </div>
+              )}
+
               {/* Legend */}
               <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
                 <div className="flex items-center gap-1">
@@ -482,32 +528,6 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
                 </div>
               </div>
             </div>
-
-            {/* Selected Dates Summary */}
-            {selectedDates.length > 0 && (
-              <div className="bg-primary/5 rounded-xl p-4 border border-primary/20">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="font-medium">Tanlangan kunlar:</span>
-                  <span className="text-lg font-bold text-primary">{selectedDates.length} kun</span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {selectedDates.slice(0, 5).map((date, idx) => (
-                    <span key={idx} className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs font-medium">
-                      {format(date, 'dd.MM')}
-                    </span>
-                  ))}
-                  {selectedDates.length > 5 && (
-                    <span className="px-2 py-1 bg-muted text-muted-foreground rounded-md text-xs">
-                      +{selectedDates.length - 5} kun
-                    </span>
-                  )}
-                </div>
-                <div className="mt-3 pt-3 border-t border-primary/20 flex justify-between items-center">
-                  <span className="text-muted-foreground">Jami summa:</span>
-                  <span className="text-xl font-bold text-primary">¥{calculateTotal()}</span>
-                </div>
-              </div>
-            )}
 
             {/* Time Selection (for hourly) */}
             {serviceType === 'hourly' && (
