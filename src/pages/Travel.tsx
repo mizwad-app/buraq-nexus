@@ -328,8 +328,30 @@ const Travel = () => {
     };
     parks.forEach(addCity);
     malls.forEach(addCity);
+    historicalSites.forEach((h) => addCity(h as unknown as { city: string }));
+    markets.forEach((m) => addCity(m as unknown as { city: string }));
     return Array.from(citiesMap.values()).sort((a, b) => a.translated.localeCompare(b.translated));
-  }, [parks, malls, currentLanguage]);
+  }, [parks, malls, historicalSites, markets, currentLanguage]);
+
+  const unifiedResults = useMemo(() => {
+    const results: SelectedItem[] = [];
+    const matchCity = (c: string) => selectedCity === "all" || c === selectedCity;
+
+    if (categoryFilter === "all" || categoryFilter === "parks") {
+      parks.filter((p) => matchCity(p.city)).forEach((park) => results.push({ type: "park", data: park }));
+    }
+    if (categoryFilter === "all" || categoryFilter === "malls") {
+      malls.filter((m) => matchCity(m.city)).forEach((mall) => results.push({ type: "mall", data: mall }));
+    }
+    if (categoryFilter === "all" || categoryFilter === "historical") {
+      historicalSites.filter((h) => matchCity(h.city)).forEach((h) => results.push({ type: "historical", data: h }));
+    }
+    if (categoryFilter === "all" || categoryFilter === "markets") {
+      markets.filter((m) => matchCity(m.city)).forEach((m) => results.push({ type: "market", data: m }));
+    }
+
+    return results;
+  }, [parks, malls, historicalSites, markets, selectedCity, categoryFilter]);
 
   const unifiedResults = useMemo(() => {
     type ResultItem = { type: "park"; data: Park } | { type: "mall"; data: ShoppingMall };
