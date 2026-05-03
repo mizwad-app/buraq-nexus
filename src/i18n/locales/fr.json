@@ -304,6 +304,12 @@
       "title": "Complétez votre profil",
       "subtitle": "Dites-nous vos intérêts pour que nous trouvions ce dont vous avez besoin",
       "start": "Commencer"
+    },
+    "theme": {
+      "title": "Thème",
+      "dark": "Sombre",
+      "light": "Clair",
+      "auto": "Auto (Système)"
     }
   },
   "booking": {
