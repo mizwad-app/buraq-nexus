@@ -267,8 +267,10 @@ const Travel = () => {
 
   const categoryChips = [
     { id: "all" as const, label: t("travel.allCategories"), icon: Compass },
-    { id: "parks" as const, label: t("travel.parks"), icon: TreePine },
-    { id: "malls" as const, label: t("travel.shoppingMalls"), icon: ShoppingBag },
+    { id: "parks" as const, label: t("place.type.park"), icon: TreePine },
+    { id: "malls" as const, label: t("place.type.mall"), icon: ShoppingBag },
+    { id: "historical" as const, label: t("place.type.historical"), icon: Building2 },
+    { id: "markets" as const, label: t("place.type.market"), icon: ShoppingBag },
   ];
 
   useEffect(() => {
