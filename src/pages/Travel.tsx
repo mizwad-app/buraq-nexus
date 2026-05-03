@@ -241,7 +241,11 @@ const Travel = () => {
   const [flightSheetOpen, setFlightSheetOpen] = useState(false);
   const [trainSheetOpen, setTrainSheetOpen] = useState(false);
   const [howItWorksOpen, setHowItWorksOpen] = useState(false);
-  const [ticketsChatOpen, setTicketsChatOpen] = useState(false);
+
+  const openTicketsChat = () => {
+    const message = encodeURIComponent(t("tickets.heroTitle"));
+    window.open(`https://wa.me/8613800138000?text=${message}`, "_blank");
+  };
 
   // Enable swipe back gesture
   useSwipeBack();
