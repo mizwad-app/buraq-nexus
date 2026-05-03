@@ -677,5 +677,69 @@
       "uz": "الأوزبكية",
       "fr": "الفرنسية"
     }
+  },
+  "place": {
+    "detail": {
+      "about": "حول المكان",
+      "address": "العنوان",
+      "localAddress": "باللغة المحلية",
+      "addressCopied": "تم نسخ العنوان",
+      "hours": "ساعات العمل",
+      "openNow": "مفتوح الآن",
+      "closedNow": "مغلق",
+      "entry": "الدخول",
+      "free": "مجاناً",
+      "brands": "العلامات التجارية",
+      "moreBrands": "{{count}} علامة تجارية أخرى",
+      "amenities": "المرافق",
+      "features": "المميزات",
+      "transport": "كيفية الوصول",
+      "gallery": "الصور",
+      "buraqTip": "نصيحة Buraq"
+    },
+    "action": {
+      "directions": "الاتجاهات",
+      "call": "اتصال",
+      "website": "الموقع",
+      "noLocation": "الموقع غير محدد"
+    },
+    "amenity": {
+      "prayer_room": "غرفة الصلاة",
+      "halal_food": "طعام حلال",
+      "kids_area": "منطقة الأطفال",
+      "wifi": "Wi-Fi",
+      "parking": "موقف السيارات",
+      "atm": "صراف آلي",
+      "currency_exchange": "صرف العملات",
+      "wheelchair_accessible": "مناسب للكراسي المتحركة"
+    },
+    "feature": {
+      "lake": "بحيرة",
+      "garden": "حديقة",
+      "playground": "ملعب",
+      "viewpoint": "نقطة المراقبة",
+      "wholesale": "بيع بالجملة",
+      "retail": "بيع بالتجزئة",
+      "food_court": "ساحة الطعام",
+      "museum": "متحف",
+      "guided_tour": "جولة مع مرشد",
+      "audio_guide": "دليل صوتي"
+    },
+    "priceRange": {
+      "budget": "أسعار منخفضة",
+      "midrange": "أسعار متوسطة",
+      "premium": "أسعار فاخرة"
+    },
+    "transport": {
+      "metro": "المترو",
+      "bus": "الحافلة",
+      "taxiFriendly": "مناسب لسيارات الأجرة"
+    },
+    "type": {
+      "mall": "مركز تسوق",
+      "park": "حديقة",
+      "historical": "موقع تاريخي",
+      "market": "السوق"
+    }
   }
 }

@@ -717,5 +717,69 @@
       "uz": "Ouzbek",
       "fr": "Français"
     }
+  },
+  "place": {
+    "detail": {
+      "about": "À propos",
+      "address": "Adresse",
+      "localAddress": "En langue locale",
+      "addressCopied": "Adresse copiée",
+      "hours": "Heures d'ouverture",
+      "openNow": "Ouvert maintenant",
+      "closedNow": "Fermé",
+      "entry": "Entrée",
+      "free": "Gratuit",
+      "brands": "Marques",
+      "moreBrands": "{{count}} marques de plus",
+      "amenities": "Équipements",
+      "features": "Caractéristiques",
+      "transport": "Comment s'y rendre",
+      "gallery": "Photos",
+      "buraqTip": "Conseil de Buraq"
+    },
+    "action": {
+      "directions": "Itinéraire",
+      "call": "Appeler",
+      "website": "Site web",
+      "noLocation": "Emplacement non défini"
+    },
+    "amenity": {
+      "prayer_room": "Salle de prière",
+      "halal_food": "Nourriture halal",
+      "kids_area": "Espace enfants",
+      "wifi": "Wi-Fi",
+      "parking": "Parking",
+      "atm": "Distributeur",
+      "currency_exchange": "Change de devises",
+      "wheelchair_accessible": "Accessible aux fauteuils roulants"
+    },
+    "feature": {
+      "lake": "Lac",
+      "garden": "Jardin",
+      "playground": "Aire de jeux",
+      "viewpoint": "Point de vue",
+      "wholesale": "Vente en gros",
+      "retail": "Vente au détail",
+      "food_court": "Aire de restauration",
+      "museum": "Musée",
+      "guided_tour": "Visite guidée",
+      "audio_guide": "Audioguide"
+    },
+    "priceRange": {
+      "budget": "Économique",
+      "midrange": "Moyen",
+      "premium": "Premium"
+    },
+    "transport": {
+      "metro": "Métro",
+      "bus": "Bus",
+      "taxiFriendly": "Accessible en taxi"
+    },
+    "type": {
+      "mall": "Centre commercial",
+      "park": "Parc",
+      "historical": "Site historique",
+      "market": "Marché"
+    }
   }
 }
