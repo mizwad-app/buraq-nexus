@@ -154,6 +154,21 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
               <span>{getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}</span>
             </div>
 
+            {/* Contact / Verification / Sources */}
+            <div className="mb-4">
+              <PlaceContactInfo
+                phone={restaurant.phone}
+                phone_secondary={restaurant.phone_secondary}
+                email={restaurant.email}
+                website={restaurant.website}
+                working_hours={restaurant.working_hours_uz || restaurant.working_hours_en || restaurant.working_hours}
+                district={restaurant.district}
+                district_zh={restaurant.district_zh}
+                verification_status={restaurant.verification_status}
+                data_sources={restaurant.data_sources}
+              />
+            </div>
+
             {/* Overall Rating */}
             {restaurant.rating && (
               <div className="flex items-center gap-3 mb-6 p-4 bg-gold/10 rounded-xl">
