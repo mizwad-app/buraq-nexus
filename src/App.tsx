@@ -25,6 +25,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import AdminServiceRequests from "./pages/AdminServiceRequests";
 import AdminLegalAdvisors from "./pages/AdminLegalAdvisors";
 import AdminPlaces from "./pages/AdminPlaces";
+import { OnboardingFlow } from "@/components/onboarding/OnboardingFlow";
 
 const queryClient = new QueryClient();
 
@@ -63,6 +64,7 @@ const App = () => (
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
                       <Route path="/translators" element={<Translators />} />
+                      <Route path="/onboarding" element={<OnboardingFlow />} />
 
                       {/* Backward-compatible redirects */}
                       <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />
