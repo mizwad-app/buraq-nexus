@@ -59,7 +59,9 @@
     },
     "checklistShort": "Checklist",
     "mosquesShort": "Mosques",
-    "walletShort": "Wallet"
+    "walletShort": "Wallet",
+    "my_consulate": "My consulate",
+    "emergency_contact": "Emergency contact"
   },
   "business": {
     "title": "Trade Center",
@@ -313,7 +315,11 @@
       "dark": "Dark",
       "light": "Light",
       "auto": "Auto (System)"
-    }
+    },
+    "my_consulate": "My country's consulate",
+    "consulate_subtitle": "Useful in emergencies or for document matters",
+    "country_not_set": "You haven't set your country",
+    "set_country": "Set country"
   },
   "booking": {
     "confirmed": "Confirmed",
@@ -364,7 +370,9 @@
     "sending": "Sending...",
     "hourShort": "h",
     "minuteShort": "min",
-    "tomorrow": "tomorrow"
+    "tomorrow": "tomorrow",
+    "verified": "Verified",
+    "unverified": "Unverified"
   },
   "travel": {
     "title": "Travel & Relaxation",
@@ -893,5 +901,25 @@
         "export": "Export your data (coming soon)"
       }
     }
+  },
+  "consulate": {
+    "title": "My country's consulate",
+    "subtitle": "Useful in emergencies or for document matters",
+    "page_title": "Consulate information",
+    "types": {
+      "embassy": "Embassy",
+      "consulate_general": "Consulate-General",
+      "consulate": "Consulate",
+      "honorary_consulate": "Honorary Consulate"
+    },
+    "main_phone": "Main phone",
+    "consular_phone": "Consular section",
+    "emergency": "Emergency (24/7)",
+    "website": "Website",
+    "services": "Services",
+    "directions": "Directions (map)",
+    "no_data": "No data yet",
+    "no_data_subtitle": "Information about your country's consulate hasn't been added yet.",
+    "unverified_warning": "This data isn't verified yet — please confirm via official sources before calling."
   }
 }

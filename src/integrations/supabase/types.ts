@@ -334,6 +334,155 @@ export type Database = {
         }
         Relationships: []
       }
+      consulates: {
+        Row: {
+          address_ar: string | null
+          address_en: string | null
+          address_ru: string | null
+          address_uz: string | null
+          address_zh: string | null
+          city: string
+          country_code: string
+          created_at: string | null
+          data_sources: Json | null
+          email_consular: string | null
+          email_main: string | null
+          fax: string | null
+          id: string
+          is_active: boolean | null
+          last_verified_at: string | null
+          latitude: number | null
+          longitude: number | null
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string | null
+          name_zh: string | null
+          notes_ar: string | null
+          notes_en: string | null
+          notes_ru: string | null
+          notes_uz: string | null
+          notes_zh: string | null
+          phone_consular: string | null
+          phone_emergency: string | null
+          phone_main: string | null
+          services_ar: string[] | null
+          services_en: string[] | null
+          services_ru: string[] | null
+          services_uz: string[] | null
+          services_zh: string[] | null
+          type: string
+          updated_at: string | null
+          verification_status: string | null
+          website: string | null
+          working_hours_ar: string | null
+          working_hours_en: string | null
+          working_hours_ru: string | null
+          working_hours_uz: string | null
+          working_hours_zh: string | null
+        }
+        Insert: {
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          address_zh?: string | null
+          city: string
+          country_code: string
+          created_at?: string | null
+          data_sources?: Json | null
+          email_consular?: string | null
+          email_main?: string | null
+          fax?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_verified_at?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          name_zh?: string | null
+          notes_ar?: string | null
+          notes_en?: string | null
+          notes_ru?: string | null
+          notes_uz?: string | null
+          notes_zh?: string | null
+          phone_consular?: string | null
+          phone_emergency?: string | null
+          phone_main?: string | null
+          services_ar?: string[] | null
+          services_en?: string[] | null
+          services_ru?: string[] | null
+          services_uz?: string[] | null
+          services_zh?: string[] | null
+          type: string
+          updated_at?: string | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours_ar?: string | null
+          working_hours_en?: string | null
+          working_hours_ru?: string | null
+          working_hours_uz?: string | null
+          working_hours_zh?: string | null
+        }
+        Update: {
+          address_ar?: string | null
+          address_en?: string | null
+          address_ru?: string | null
+          address_uz?: string | null
+          address_zh?: string | null
+          city?: string
+          country_code?: string
+          created_at?: string | null
+          data_sources?: Json | null
+          email_consular?: string | null
+          email_main?: string | null
+          fax?: string | null
+          id?: string
+          is_active?: boolean | null
+          last_verified_at?: string | null
+          latitude?: number | null
+          longitude?: number | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string | null
+          name_zh?: string | null
+          notes_ar?: string | null
+          notes_en?: string | null
+          notes_ru?: string | null
+          notes_uz?: string | null
+          notes_zh?: string | null
+          phone_consular?: string | null
+          phone_emergency?: string | null
+          phone_main?: string | null
+          services_ar?: string[] | null
+          services_en?: string[] | null
+          services_ru?: string[] | null
+          services_uz?: string[] | null
+          services_zh?: string[] | null
+          type?: string
+          updated_at?: string | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours_ar?: string | null
+          working_hours_en?: string | null
+          working_hours_ru?: string | null
+          working_hours_uz?: string | null
+          working_hours_zh?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "consulates_country_code_fkey"
+            columns: ["country_code"]
+            isOneToOne: false
+            referencedRelation: "countries_ref"
+            referencedColumns: ["code"]
+          },
+        ]
+      }
       countries_ref: {
         Row: {
           code: string

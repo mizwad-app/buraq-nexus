@@ -59,7 +59,9 @@
     },
     "checklistShort": "قائمة",
     "mosquesShort": "المساجد",
-    "walletShort": "المحفظة"
+    "walletShort": "المحفظة",
+    "my_consulate": "قنصليتي",
+    "emergency_contact": "اتصال طارئ"
   },
   "business": {
     "title": "مركز التجارة",
@@ -313,7 +315,11 @@
       "dark": "داكن",
       "light": "فاتح",
       "auto": "تلقائي (النظام)"
-    }
+    },
+    "my_consulate": "قنصلية بلدي",
+    "consulate_subtitle": "مفيدة في حالات الطوارئ أو شؤون الوثائق",
+    "country_not_set": "لم تحدد بلدك",
+    "set_country": "تحديد البلد"
   },
   "booking": {
     "confirmed": "مؤكد",
@@ -368,7 +374,9 @@
     "sending": "جارٍ الإرسال...",
     "hourShort": "س",
     "minuteShort": "د",
-    "tomorrow": "غدا"
+    "tomorrow": "غدا",
+    "verified": "مُتحقق",
+    "unverified": "غير مُتحقق"
   },
   "travel": {
     "title": "السفر والاستجمام",
@@ -851,5 +859,25 @@
         "export": "تصدير البيانات (قريبًا)"
       }
     }
+  },
+  "consulate": {
+    "title": "قنصلية بلدي",
+    "subtitle": "مفيدة في حالات الطوارئ أو شؤون الوثائق",
+    "page_title": "معلومات القنصلية",
+    "types": {
+      "embassy": "السفارة",
+      "consulate_general": "القنصلية العامة",
+      "consulate": "القنصلية",
+      "honorary_consulate": "القنصلية الفخرية"
+    },
+    "main_phone": "الهاتف الرئيسي",
+    "consular_phone": "القسم القنصلي",
+    "emergency": "الطوارئ (24/7)",
+    "website": "الموقع الإلكتروني",
+    "services": "الخدمات",
+    "directions": "الاتجاهات (خريطة)",
+    "no_data": "لا توجد بيانات بعد",
+    "no_data_subtitle": "لم تُضَف معلومات قنصلية بلدك بعد.",
+    "unverified_warning": "هذه المعلومات غير مؤكدة — يُرجى التحقق من المصادر الرسمية قبل الاتصال."
   }
 }

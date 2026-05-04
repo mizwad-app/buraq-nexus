@@ -59,7 +59,9 @@
     },
     "checklistShort": "Check-list",
     "mosquesShort": "Masjidlar",
-    "walletShort": "Wallet"
+    "walletShort": "Wallet",
+    "my_consulate": "Mening konsulligim",
+    "emergency_contact": "Favqulodda yordam"
   },
   "business": {
     "title": "Tijorat Markazi",
@@ -313,7 +315,11 @@
       "dark": "Tungi",
       "light": "Kunduzgi",
       "auto": "Avto (Tizim)"
-    }
+    },
+    "my_consulate": "Mamlakatim konsulligi",
+    "consulate_subtitle": "Favqulodda holatda yoki hujjat masalalarida foydali",
+    "country_not_set": "Mamlakatingizni belgilamadingiz",
+    "set_country": "Mamlakatni belgilash"
   },
   "booking": {
     "confirmed": "Tasdiqlangan",
@@ -350,7 +356,7 @@
   "common": {
     "search": "Qidirish",
     "loading": "Yuklanmoqda...",
-    "more": "Batafsil",
+    "more": "Koʻproq",
     "all": "Barchasi",
     "close": "Yopish",
     "available": "Mavjud",
@@ -364,7 +370,9 @@
     "sending": "Yuborilmoqda...",
     "hourShort": "soat",
     "minuteShort": "daqiqa",
-    "tomorrow": "ertaga"
+    "tomorrow": "ertaga",
+    "verified": "Tasdiqlangan",
+    "unverified": "Tasdiqlanmagan"
   },
   "travel": {
     "title": "Sayohat va dam olish",
@@ -942,5 +950,25 @@
         "export": "Maʼlumotni eksport qilish (kelajakda)"
       }
     }
+  },
+  "consulate": {
+    "title": "Mamlakatim konsulligi",
+    "subtitle": "Favqulodda holatda yoki hujjat masalalarida foydali",
+    "page_title": "Konsullik maʼlumotlari",
+    "types": {
+      "embassy": "Elchixona",
+      "consulate_general": "Bosh konsullik",
+      "consulate": "Konsullik",
+      "honorary_consulate": "Faxriy konsullik"
+    },
+    "main_phone": "Asosiy telefon",
+    "consular_phone": "Konsullik boʻlimi",
+    "emergency": "Favqulodda holatlar (24/7)",
+    "website": "Veb-sayt",
+    "services": "Xizmatlar",
+    "directions": "Yoʻnalish (xarita)",
+    "no_data": "Maʼlumot mavjud emas",
+    "no_data_subtitle": "Mamlakatingiz konsulligi haqida hali maʼlumot qoʻshilmagan.",
+    "unverified_warning": "Bu maʼlumot hali tasdiqlanmagan — qoʻngʻiroq qilishdan oldin rasmiy manbadan tekshiring."
   }
 }

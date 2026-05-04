@@ -47,6 +47,7 @@ const Profile = () => {
   const [bookingsLoading, setBookingsLoading] = useState(false);
   const [hasInterests, setHasInterests] = useState<boolean | null>(null);
   const [showSurvey, setShowSurvey] = useState(false);
+  const [userCountry, setUserCountry] = useState<{ code: string; name: string; flag: string } | null>(null);
   const { theme, setTheme } = useTheme();
   const themeOptions: { value: ThemeMode; label: string; icon: typeof Sun }[] = [
     { value: "light", label: t("profile.theme.light"), icon: Sun },
@@ -84,6 +85,27 @@ const Profile = () => {
       .eq("user_id", user?.id)
       .maybeSingle();
     setHasInterests(!!interestsData);
+
+    // Fetch user country (from onboarding)
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("country_code, country_name")
+      .eq("user_id", user?.id)
+      .maybeSingle();
+    if (profileData?.country_code) {
+      const { data: country } = await supabase
+        .from("countries_ref")
+        .select("flag_emoji, name_en, name_uz")
+        .eq("code", profileData.country_code)
+        .maybeSingle();
+      setUserCountry({
+        code: profileData.country_code,
+        name: profileData.country_name || country?.name_en || country?.name_uz || profileData.country_code,
+        flag: country?.flag_emoji || "🏛️",
+      });
+    } else {
+      setUserCountry(null);
+    }
 
     // Fetch translator bookings
     setBookingsLoading(true);
@@ -211,6 +233,45 @@ const Profile = () => {
             </div>
           </div>
         </div>
+      </section>
+
+      {/* My Country Consulate */}
+      <section className="px-5 mb-4">
+        {userCountry ? (
+          <button
+            onClick={() => navigate("/consulate")}
+            className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-primary/15 to-accent/10 border border-primary/20 hover:border-primary/40 transition-all"
+          >
+            <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-xl">
+              {userCountry.flag}
+            </div>
+            <div className="flex-1 text-left min-w-0">
+              <p className="text-sm font-semibold text-foreground truncate">
+                {t("profile.my_consulate")}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {userCountry.name} · {t("profile.consulate_subtitle")}
+              </p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0" />
+          </button>
+        ) : (
+          <div className="rounded-xl border border-dashed border-border p-4">
+            <p className="text-sm text-foreground font-medium mb-1">
+              {t("profile.country_not_set")}
+            </p>
+            <p className="text-xs text-muted-foreground mb-3">
+              {t("profile.consulate_subtitle")}
+            </p>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => navigate("/onboarding")}
+            >
+              {t("profile.set_country")}
+            </Button>
+          </div>
+        )}
       </section>
 
       {/* Admin Access */}

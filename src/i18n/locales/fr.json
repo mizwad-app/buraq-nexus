@@ -59,7 +59,9 @@
     },
     "checklistShort": "Liste",
     "mosquesShort": "Mosquées",
-    "walletShort": "Portefeuille"
+    "walletShort": "Portefeuille",
+    "my_consulate": "Mon consulat",
+    "emergency_contact": "Contact d'urgence"
   },
   "business": {
     "title": "Centre commercial",
@@ -313,7 +315,11 @@
       "dark": "Sombre",
       "light": "Clair",
       "auto": "Auto (Système)"
-    }
+    },
+    "my_consulate": "Consulat de mon pays",
+    "consulate_subtitle": "Utile en cas d'urgence ou pour les documents",
+    "country_not_set": "Vous n'avez pas indiqué votre pays",
+    "set_country": "Indiquer le pays"
   },
   "booking": {
     "confirmed": "Confirmé",
@@ -364,7 +370,9 @@
     "sending": "Envoi...",
     "hourShort": "h",
     "minuteShort": "min",
-    "tomorrow": "demain"
+    "tomorrow": "demain",
+    "verified": "Vérifié",
+    "unverified": "Non vérifié"
   },
   "travel": {
     "title": "Voyage et détente",
@@ -891,5 +899,25 @@
         "export": "Exporter (bientôt disponible)"
       }
     }
+  },
+  "consulate": {
+    "title": "Consulat de mon pays",
+    "subtitle": "Utile en cas d'urgence ou pour les documents",
+    "page_title": "Informations du consulat",
+    "types": {
+      "embassy": "Ambassade",
+      "consulate_general": "Consulat général",
+      "consulate": "Consulat",
+      "honorary_consulate": "Consulat honoraire"
+    },
+    "main_phone": "Téléphone principal",
+    "consular_phone": "Section consulaire",
+    "emergency": "Urgence (24/7)",
+    "website": "Site web",
+    "services": "Services",
+    "directions": "Itinéraire (carte)",
+    "no_data": "Pas encore de données",
+    "no_data_subtitle": "Les informations sur le consulat de votre pays n'ont pas encore été ajoutées.",
+    "unverified_warning": "Ces informations ne sont pas vérifiées — veuillez confirmer auprès des sources officielles avant d'appeler."
   }
 }
