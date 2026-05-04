@@ -273,28 +273,38 @@ const Ibadah = () => {
     return t(`halal.status.${status}Desc`);
   };
 
-  // Filter by selected city and halal status
+  const q = searchQuery.trim().toLowerCase();
+  const matchesQuery = (obj: Record<string, unknown>, fields: string[]) => {
+    if (!q) return true;
+    return fields.some((f) => {
+      const v = getField(obj, f);
+      return typeof v === "string" && v.toLowerCase().includes(q);
+    });
+  };
+
+  // Filter by selected city, halal status, search
   const filteredRestaurants = useMemo(() => {
     let filtered = restaurants;
-    
-    if (selectedCity !== "all") {
-      filtered = filtered.filter(r => r.city === selectedCity);
-    }
-    
+    if (selectedCity !== "all") filtered = filtered.filter(r => r.city === selectedCity);
     if (halalFilter !== 'all') {
       filtered = filtered.filter(r => {
         const status = r.halal_status || (r.is_halal_certified ? 'certified' : 'not_halal');
         return status === halalFilter;
       });
     }
-    
+    if (q) filtered = filtered.filter(r => matchesQuery(r as unknown as Record<string, unknown>, ['name', 'cuisine_type', 'address', 'city']));
     return filtered;
-  }, [restaurants, selectedCity, halalFilter]);
+  }, [restaurants, selectedCity, halalFilter, q]);
 
   const filteredMosques = useMemo(() => {
-    if (selectedCity === "all") return mosques;
-    return mosques.filter(m => m.city === selectedCity);
-  }, [mosques, selectedCity]);
+    let filtered = mosques;
+    if (selectedCity !== "all") filtered = filtered.filter(m => m.city === selectedCity);
+    if (fridayPrayerOnly) filtered = filtered.filter(m => m.has_friday_prayer);
+    if (womensSectionOnly) filtered = filtered.filter(m => m.has_womens_section);
+    if (verifiedOnly) filtered = filtered.filter(m => (m as unknown as { verification_status?: string }).verification_status === 'admin_verified');
+    if (q) filtered = filtered.filter(m => matchesQuery(m as unknown as Record<string, unknown>, ['name', 'address', 'city']));
+    return filtered;
+  }, [mosques, selectedCity, fridayPrayerOnly, womensSectionOnly, verifiedOnly, q]);
 
   const filteredShops = useMemo(() => {
     if (selectedCity === "all") return halalShops;
