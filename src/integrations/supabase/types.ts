@@ -55,6 +55,42 @@ export type Database = {
           },
         ]
       }
+      business_industries_ref: {
+        Row: {
+          code: string
+          display_order: number | null
+          icon_emoji: string | null
+          is_active: boolean | null
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string
+          name_zh: string | null
+        }
+        Insert: {
+          code: string
+          display_order?: number | null
+          icon_emoji?: string | null
+          is_active?: boolean | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz: string
+          name_zh?: string | null
+        }
+        Update: {
+          code?: string
+          display_order?: number | null
+          icon_emoji?: string | null
+          is_active?: boolean | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string
+          name_zh?: string | null
+        }
+        Relationships: []
+      }
       cargo_trackings: {
         Row: {
           created_at: string
@@ -295,6 +331,45 @@ export type Database = {
           rating?: number | null
           verified?: boolean | null
           years_in_business?: number | null
+        }
+        Relationships: []
+      }
+      countries_ref: {
+        Row: {
+          code: string
+          display_order: number | null
+          flag_emoji: string | null
+          is_priority: boolean | null
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string
+          name_zh: string | null
+          phone_code: string | null
+        }
+        Insert: {
+          code: string
+          display_order?: number | null
+          flag_emoji?: string | null
+          is_priority?: boolean | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz: string
+          name_zh?: string | null
+          phone_code?: string | null
+        }
+        Update: {
+          code?: string
+          display_order?: number | null
+          flag_emoji?: string | null
+          is_priority?: boolean | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string
+          name_zh?: string | null
+          phone_code?: string | null
         }
         Relationships: []
       }
@@ -2058,27 +2133,57 @@ export type Database = {
       profiles: {
         Row: {
           avatar_url: string | null
+          business_industries: string[] | null
+          country_code: string | null
+          country_name: string | null
           created_at: string
           full_name: string | null
           id: string
+          onboarding_completed: boolean | null
+          onboarding_completed_at: string | null
+          onboarding_skipped: boolean | null
+          phone_country_code: string | null
+          tourism_interests: string[] | null
+          travel_purpose: string | null
           updated_at: string
           user_id: string
+          visit_frequency: string | null
         }
         Insert: {
           avatar_url?: string | null
+          business_industries?: string[] | null
+          country_code?: string | null
+          country_name?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          onboarding_completed?: boolean | null
+          onboarding_completed_at?: string | null
+          onboarding_skipped?: boolean | null
+          phone_country_code?: string | null
+          tourism_interests?: string[] | null
+          travel_purpose?: string | null
           updated_at?: string
           user_id: string
+          visit_frequency?: string | null
         }
         Update: {
           avatar_url?: string | null
+          business_industries?: string[] | null
+          country_code?: string | null
+          country_name?: string | null
           created_at?: string
           full_name?: string | null
           id?: string
+          onboarding_completed?: boolean | null
+          onboarding_completed_at?: string | null
+          onboarding_skipped?: boolean | null
+          phone_country_code?: string | null
+          tourism_interests?: string[] | null
+          travel_purpose?: string | null
           updated_at?: string
           user_id?: string
+          visit_frequency?: string | null
         }
         Relationships: []
       }
@@ -2552,6 +2657,42 @@ export type Database = {
           rating?: number | null
           transport_info?: Json | null
           website?: string | null
+        }
+        Relationships: []
+      }
+      tourism_interests_ref: {
+        Row: {
+          code: string
+          display_order: number | null
+          icon_emoji: string | null
+          is_active: boolean | null
+          name_ar: string | null
+          name_en: string | null
+          name_ru: string | null
+          name_uz: string
+          name_zh: string | null
+        }
+        Insert: {
+          code: string
+          display_order?: number | null
+          icon_emoji?: string | null
+          is_active?: boolean | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz: string
+          name_zh?: string | null
+        }
+        Update: {
+          code?: string
+          display_order?: number | null
+          icon_emoji?: string | null
+          is_active?: boolean | null
+          name_ar?: string | null
+          name_en?: string | null
+          name_ru?: string | null
+          name_uz?: string
+          name_zh?: string | null
         }
         Relationships: []
       }
