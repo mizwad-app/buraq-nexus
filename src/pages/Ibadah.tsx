@@ -25,6 +25,7 @@ import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
 import { cn } from "@/lib/utils";
+import { sortByQuality } from "@/lib/placeSorting";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { RestaurantDetailSheet } from "@/components/RestaurantDetailSheet";
 import { MosqueDetailSheet } from "@/components/MosqueDetailSheet";
@@ -254,9 +255,9 @@ const Ibadah = () => {
         supabase.from("halal_shops" as any).select("*").eq("is_active", true).order("name", { ascending: true }),
       ]);
 
-      if (restaurantsRes.data) setRestaurants(restaurantsRes.data as Restaurant[]);
-      if (mosquesRes.data) setMosques(mosquesRes.data as Mosque[]);
-      if (shopsRes.data) setHalalShops(shopsRes.data as unknown as HalalShop[]);
+      if (restaurantsRes.data) setRestaurants([...(restaurantsRes.data as Restaurant[])].sort(sortByQuality));
+      if (mosquesRes.data) setMosques([...(mosquesRes.data as Mosque[])].sort(sortByQuality));
+      if (shopsRes.data) setHalalShops([...(shopsRes.data as unknown as HalalShop[])].sort(sortByQuality));
     } catch (error) {
       console.error("Error fetching data:", error);
     } finally {
