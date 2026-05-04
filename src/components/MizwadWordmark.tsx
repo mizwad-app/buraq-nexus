@@ -41,11 +41,11 @@ export const MizwadWordmark = ({
       <span
         className={cn(
           sizeClasses[size],
-          "italic font-normal tracking-tight leading-none",
+          "italic font-medium tracking-tight leading-none",
           "bg-clip-text text-transparent",
           "bg-gradient-to-r from-[#27a87a] to-[#e0a52e]",
         )}
-        style={{ fontFamily: SERIF_STACK }}
+        style={{ fontFamily: SERIF_STACK, fontVariationSettings: '"opsz" 144' }}
       >
         Mizwad
       </span>
