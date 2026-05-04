@@ -258,6 +258,38 @@ const AdminDashboard = () => {
           </button>
         </div>
       </div>
+
+      {/* MVP scope summary */}
+      <div className="mb-8">
+        <h2 className="text-xl font-display font-semibold text-foreground mb-3">
+          MVP qamrovi (20 shahar)
+        </h2>
+        <div className="bg-card rounded-2xl p-5 border border-border/50 mb-4">
+          <p className="text-sm text-muted-foreground">
+            Faol joylar: <span className="text-foreground font-semibold">{stats?.totalActive ?? 0}</span>
+            {" · "}
+            Yashirilgan: <span className="text-foreground font-semibold">{stats?.totalInactive ?? 0}</span>
+            {" · "}
+            Jami: <span className="text-foreground font-semibold">{(stats?.totalActive ?? 0) + (stats?.totalInactive ?? 0)}</span>
+          </p>
+        </div>
+
+        {stats && stats.inactiveByCity.length > 0 && (
+          <div className="bg-card rounded-2xl p-5 border border-border/50">
+            <h3 className="font-medium text-foreground mb-3">
+              Yashirilgan shaharlar ({stats.inactiveByCity.length})
+            </h3>
+            <div className="space-y-1.5 text-sm">
+              {stats.inactiveByCity.map((row, i) => (
+                <div key={`${row.table}-${row.city}-${i}`} className="flex justify-between text-muted-foreground">
+                  <span>{row.city} <span className="opacity-60">({row.table})</span></span>
+                  <span className="text-foreground">{row.count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
