@@ -429,27 +429,30 @@ const Travel = () => {
     <div className="min-h-screen eco-gradient-soft safe-bottom pb-24">
       {/* Header */}
       <header className="px-5 pt-12 pb-4">
-        <div className="flex items-center gap-3 mb-4 animate-fade-in">
-          <button
-            onClick={() => navigate(-1)}
-            className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
-            aria-label="Go back"
-          >
-            <ChevronLeft className="w-5 h-5 text-foreground" />
-          </button>
-          <div className="flex-1">
-            <div className="flex items-center gap-2">
-              <div className="p-2 eco-gradient rounded-xl shadow-eco">
-                <Plane className="w-5 h-5 text-primary-foreground" />
+        <div className="flex items-start justify-between gap-3 animate-fade-in">
+          <div className="flex items-center gap-3 flex-1 min-w-0">
+            <button
+              onClick={() => navigate(-1)}
+              className="p-2 -ml-2 hover:bg-muted rounded-xl transition-all duration-200 active:scale-95"
+              aria-label="Go back"
+            >
+              <ChevronLeft className="w-5 h-5 text-foreground" />
+            </button>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-2">
+                <div className="p-2 eco-gradient rounded-xl shadow-eco">
+                  <Plane className="w-5 h-5 text-primary-foreground" />
+                </div>
+                <span className="text-sm font-medium text-muted-foreground truncate">
+                  {t("travel.subtitle")}
+                </span>
               </div>
-              <span className="text-sm font-medium text-muted-foreground">
-                {t("travel.subtitle")}
-              </span>
+              <h1 className="text-2xl font-display font-bold text-foreground mt-1">
+                {t("travel.title")}
+              </h1>
             </div>
-            <h1 className="text-2xl font-display font-bold text-foreground mt-1">
-              {t("travel.title")}
-            </h1>
           </div>
+          <HeaderAvatar />
         </div>
       </header>
 
