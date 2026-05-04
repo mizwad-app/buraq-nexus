@@ -255,6 +255,19 @@ export const MarketDetailSheet = ({ open, onOpenChange, market }: MarketDetailSh
               </div>
             )}
 
+            {/* Contact / Verification / Sources */}
+            <PlaceContactInfo
+              phone={market.phone}
+              phone_secondary={market.phone_secondary}
+              email={market.email}
+              website={market.website}
+              working_hours={(market.working_hours_uz as string) || (market.working_hours_en as string) || market.working_hours}
+              district={market.district}
+              district_zh={market.district_zh}
+              verification_status={market.verification_status}
+              data_sources={market.data_sources}
+            />
+
             {/* Full Travel Tips */}
             {translatedTravelTips && (
               <div className="bg-gradient-to-br from-accent/10 to-primary/10 rounded-2xl p-4 border border-accent/20">
