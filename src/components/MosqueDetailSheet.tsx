@@ -11,26 +11,19 @@ import {
   MapPin,
   Check,
   Users,
-  ScrollText,
   Star,
-  ChevronLeft,
-  ChevronRight,
   Clock,
+  ShieldCheck,
+  ShieldAlert,
+  ExternalLink,
 } from "lucide-react";
 import { useState } from "react";
 import { MapNavigationSheet } from "./MapNavigationSheet";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Import mosque images
-import huaisheng1 from "@/assets/mosques/huaisheng-1.jpg";
-import huaisheng2 from "@/assets/mosques/huaisheng-2.jpg";
-import huaisheng3 from "@/assets/mosques/huaisheng-3.jpg";
-import abiVaqqos1 from "@/assets/mosques/abi-vaqqos-1.jpg";
-import abiVaqqos2 from "@/assets/mosques/abi-vaqqos-2.jpg";
-import xiaodongying1 from "@/assets/mosques/xiaodongying-1.jpg";
-import xiaodongying2 from "@/assets/mosques/xiaodongying-2.jpg";
-import xiaodongying3 from "@/assets/mosques/xiaodongying-3.jpg";
+const MOSQUE_FALLBACK_IMAGE =
+  "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
 
 interface MosqueDetailSheetProps {
   open: boolean;
@@ -47,192 +40,118 @@ interface MosqueDetailSheetProps {
     latitude: number | null;
     longitude: number | null;
     image_url?: string | null;
-    name_uz?: string | null;
-    name_ru?: string | null;
-    name_en?: string | null;
-    name_ar?: string | null;
-    description_uz?: string | null;
-    description_ru?: string | null;
-    description_en?: string | null;
-    description_ar?: string | null;
-    city_uz?: string | null;
-    city_ru?: string | null;
-    city_en?: string | null;
-    city_ar?: string | null;
-    address_uz?: string | null;
-    address_ru?: string | null;
-    address_en?: string | null;
-    address_ar?: string | null;
+    built_year?: number | null;
+    friday_prayer_time?: string | null;
+    verification_status?: string | null;
+    notable_features?: unknown;
+    data_sources?: unknown;
     [key: string]: unknown;
   } | null;
 }
 
-const MOSQUE_FALLBACK_IMAGE = "https://images.unsplash.com/photo-1564769625905-50e93615e769?w=800&q=80";
+type LangCode = "uz" | "ru" | "en" | "ar" | "fr" | "zh";
 
-// Mosque image galleries
-const MOSQUE_GALLERIES: Record<string, string[]> = {
-  "huaisheng": [huaisheng1, huaisheng2, huaisheng3],
-  "abi_vaqqos": [abiVaqqos1, abiVaqqos2],
-  "xiaodongying": [xiaodongying1, xiaodongying2, xiaodongying3],
-  "haopan": [] // Placeholder - will use fallback
-};
-
-// Historical content for specific mosques
-const MOSQUE_HISTORY: Record<string, {
-  origin?: string;
-  history?: string;
-  features?: string[];
-  poem?: string;
-  poemTitle?: string;
-  yearBuilt?: string;
-}> = {
-  "huaisheng": {
-    yearBuilt: "627-yil (milodiy)",
-    origin: "\"Huai\" — sog'inish/xotirlash, \"Sheng\" — muqaddas/payg'ambar demakdir. Ya'ni, \"Payg'ambarimiz Muhammad (s.a.v)ni sog'inib qurilgan masjid\".",
-    history: "Bu masjid Xitoydagi eng qadimiy bino bo'lib, milodiy 627-yilda Arabistondan kelgan ilk musulmon da'vatchilar tomonidan qurilgan. Xitoyga kelgan dastlabki musulmon da'vatchilarini yodga oladi.",
-    features: [
-      "36 metrlik Nur minorasi qadimda kemalarga mayoq vazifasini bajargan",
-      "Xitoyning eng qadimiy masjidi",
-      "Sahoba Sa'd ibn Abu Vaqqos (r.a.) tomonidan ta'sis etilgan"
-    ],
-    poem: "Koinot yaralganda, Uning ismi samoviy kitobda yozilgan edi. Buyuk din da'vatchisi G'arbda (Arabistonda) dunyoga keldi. U osmon kitobini (Qur'onni) qabul qildi, o'ttiz pora bo'lib, butun insoniyatni hidoyatga boshladi. U barcha bandalarning rahnamosi, muqaddas zotlarning peshvosidir. Osmon saltanatiga ko'mak berib, xalqni o'z himoyasiga oldi. Besh vaqt namoz orqali tinchlik va omonlik so'raldi. Uning qalbi Allohda edi, fikri-zikri muhtojlarga yordam berishda. Qiyinchilikdan qutqaruvchi, zulmatdan nurga chiquvchidir. Ruhlarni poklovchi va gunohlardan xalos etuvchidir. Uning rahmati butun dunyoni qopladi, uning yo'li azaldan to abadgacha eng yuksakdir. Hamma unga taslim bo'ldi, uning dinining nomi — Islomdir. Muhammad (s.a.v) — eng oliyjanob Payg'ambardir!",
-    poemTitle: "Yuz so'zli madhiya — Imperator Xongvu (1368)"
-  },
-  "abi_vaqqos": {
-    yearBuilt: "627-yil (milodiy)",
-    origin: "Sahoba Sa'd ibn Abu Vaqqos (r.a.) sharafiga nomlangan. \"Xianxian\" — \"Donishmandlar va azizlar masjidi\" demakdir.",
-    history: "Bu joy sahoba Sa'd ibn Abu Vaqqos (r.a.)ning muborak qabri joylashgan tabarruk hudud hisoblanadi. Hududda juda qadimiy musulmonlar qabristoni va Guangzhou Islom Assotsiatsiyasi joylashgan. Xitoyga Islom dinini olib kelgan dastlabki da'vatchilardan biri sifatida u katta hurmatga sazovordir.",
-    features: [
-      "Sahoba Sa'd ibn Abu Vaqqos (r.a.) muborak qabri",
-      "Guangzhou Islom Assotsiatsiyasi markazi",
-      "Eng qadimiy musulmon qabristoni",
-      "Islom markazi va ta'lim muassasasi"
-    ]
-  },
-  "xiaodongying": {
-    yearBuilt: "1368-1644 yillar (Ming sulolasi)",
-    history: "Ming sulolasi (1368–1644) davrida musulmon askarlar tomonidan qurilgan. Bu masjid harbiy-islomiy tarixning noyob yodgorligi bo'lib, o'sha davrdagi musulmon jangchilarning imon va jasurligini aks ettiradi.",
-    features: [
-      "Ming sulolasi me'morchiligi",
-      "Harbiy-islomiy tarix yodgorligi",
-      "An'anaviy xitoy-islom uslubi",
-      "Mahalliy musulmonlar markazi"
-    ]
-  },
-  "haopan": {
-    yearBuilt: "1600-yillar (tahminiy)",
-    history: "Guangzhoudagi tarixiy masjidlardan biri bo'lib, mahalliy musulmonlar jamiyatiga xizmat qiladi. Bu masjid shahardagi musulmonlar uchun muhim ibodat va jamiyat markazi hisoblanadi.",
-    features: [
-      "Mahalliy musulmonlar markazi",
-      "Juma namozi o'qiladi",
-      "Ayollar bo'limi mavjud",
-      "Islomiy ta'lim dasturlari"
-    ]
+const pickLocalized = (
+  obj: Record<string, unknown> | null | undefined,
+  baseKey: string,
+  lang: string,
+): string => {
+  if (!obj) return "";
+  const order: LangCode[] = [lang as LangCode, "uz", "en", "ru", "ar", "fr", "zh"];
+  const seen = new Set<string>();
+  for (const code of order) {
+    const key = `${baseKey}_${code}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    const v = obj[key];
+    if (typeof v === "string" && v.trim()) return v;
   }
-};
-
-// Helper to detect mosque type based on name
-const getMosqueHistoryKey = (mosqueName: string): string | null => {
-  const lowerName = mosqueName.toLowerCase();
-  if (lowerName.includes("huaisheng") || lowerName.includes("怀圣")) return "huaisheng";
-  if (lowerName.includes("vaqqos") || lowerName.includes("先贤") || lowerName.includes("xianxian")) return "abi_vaqqos";
-  if (lowerName.includes("xiaodongying") || lowerName.includes("小东营")) return "xiaodongying";
-  if (lowerName.includes("haopan") || lowerName.includes("濠畔")) return "haopan";
-  return null;
-};
-
-// Image Gallery Carousel Component
-const ImageGallery = ({ images, mosqueName }: { images: string[]; mosqueName: string }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
-  };
-
-  if (images.length === 0) {
-    return (
-      <div className="relative h-56 w-full rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center">
-        <div className="text-center p-4">
-          <Moon className="w-16 h-16 text-primary/50 mx-auto mb-2" />
-          <p className="text-sm text-muted-foreground">Rasm tez orada qo'shiladi</p>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative h-56 w-full rounded-2xl overflow-hidden">
-      {/* Main Image */}
-      <img
-        src={images[currentIndex]}
-        alt={`${mosqueName} - ${currentIndex + 1}`}
-        className="w-full h-full object-cover transition-all duration-300"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-      {/* Navigation Arrows */}
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={handlePrev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <button
-            onClick={handleNext}
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/50 backdrop-blur-sm flex items-center justify-center text-white hover:bg-black/70 transition-colors"
-          >
-            <ChevronRight className="w-5 h-5" />
-          </button>
-        </>
-      )}
-
-      {/* Dot Indicators */}
-      {images.length > 1 && (
-        <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-          {images.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`w-2 h-2 rounded-full transition-all ${
-                idx === currentIndex
-                  ? "bg-white w-4"
-                  : "bg-white/50 hover:bg-white/70"
-              }`}
-            />
-          ))}
-        </div>
-      )}
-
-      {/* Image Counter */}
-      <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-black/50 backdrop-blur-sm text-white text-xs font-medium">
-        {currentIndex + 1} / {images.length}
-      </div>
-    </div>
-  );
+  const base = obj[baseKey];
+  return typeof base === "string" ? base : "";
 };
 
 export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSheetProps) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { getField } = useTranslatedField();
   const [mapSheetOpen, setMapSheetOpen] = useState(false);
 
   if (!mosque) return null;
 
-  const translatedName = getField(mosque, 'name');
-  const translatedDescription = getField(mosque, 'description');
-  const translatedAddress = getField(mosque, 'address');
-  const translatedCity = getField(mosque, 'city');
+  const lang = i18n.language;
+  const isUz = lang === "uz";
 
-  // Get historical content if available
-  const historyKey = getMosqueHistoryKey(mosque.name);
-  const historyData = historyKey ? MOSQUE_HISTORY[historyKey] : null;
-  const galleryImages = historyKey ? MOSQUE_GALLERIES[historyKey] || [] : [];
+  const translatedName = getField(mosque, "name");
+  const translatedDescription = getField(mosque, "description");
+  const translatedAddress = getField(mosque, "address");
+  const translatedCity = getField(mosque, "city");
+
+  const historicalFacts = pickLocalized(
+    mosque as Record<string, unknown>,
+    "historical_facts",
+    lang,
+  );
+  const historicalPeriod = pickLocalized(
+    mosque as Record<string, unknown>,
+    "historical_period",
+    lang,
+  );
+
+  // notable_features: JSONB array of { feature_uz, feature_en, ... }
+  const notableFeatures: string[] = (() => {
+    const raw = mosque.notable_features;
+    if (!Array.isArray(raw)) return [];
+    return raw
+      .map((item) => {
+        if (typeof item === "string") return item;
+        if (item && typeof item === "object") {
+          return pickLocalized(item as Record<string, unknown>, "feature", lang);
+        }
+        return "";
+      })
+      .filter((s) => s && s.trim().length > 0);
+  })();
+
+  // data_sources: JSONB array of { url?, citation?, type?, note? }
+  const dataSources: Array<{ url?: string; citation?: string; note?: string }> = (() => {
+    const raw = mosque.data_sources;
+    if (!Array.isArray(raw)) return [];
+    return raw.filter(
+      (s): s is { url?: string; citation?: string; note?: string } =>
+        !!s && typeof s === "object",
+    );
+  })();
+
+  const builtYearLabel = isUz ? "Qurilgan yili" : t("mosque.builtYear", "Built");
+  const sourcesLabel = isUz ? "Manbalar" : t("mosque.sources", "Sources");
+  const featuresLabel = isUz ? "O'ziga xos jihatlar" : t("mosque.features", "Features");
+  const historyLabel = isUz ? "Tarixi" : t("mosque.history", "History");
+
+  const verificationBadge = (() => {
+    switch (mosque.verification_status) {
+      case "admin_verified":
+        return {
+          icon: <ShieldCheck className="w-3 h-3" />,
+          label: isUz ? "Tasdiqlangan" : "Verified",
+          cls: "bg-emerald-500/10 text-emerald-600 border-emerald-500/30",
+        };
+      case "community_verified":
+        return {
+          icon: <ShieldCheck className="w-3 h-3" />,
+          label: isUz ? "Hamjamiyat tasdig'i" : "Community verified",
+          cls: "bg-blue-500/10 text-blue-600 border-blue-500/30",
+        };
+      case "unverified":
+        return {
+          icon: <ShieldAlert className="w-3 h-3" />,
+          label: isUz ? "Tasdiqlanmagan" : "Unverified",
+          cls: "bg-orange-500/10 text-orange-600 border-orange-500/30",
+        };
+      default:
+        return null;
+    }
+  })();
+
+  const heroImage = mosque.image_url || MOSQUE_FALLBACK_IMAGE;
 
   return (
     <>
@@ -253,33 +172,50 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
           </SheetHeader>
 
           <div className="overflow-y-auto h-full pb-20 px-5 pt-4 space-y-4">
-            {/* Image Gallery Carousel */}
-            <ImageGallery images={galleryImages} mosqueName={translatedName} />
+            {/* Hero image */}
+            <div className="relative h-56 w-full rounded-2xl overflow-hidden">
+              <img
+                src={heroImage}
+                alt={translatedName}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = MOSQUE_FALLBACK_IMAGE;
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            </div>
 
-            {/* Year Built Badge - at the top */}
-            {historyData?.yearBuilt && (
+            {/* Built year */}
+            {mosque.built_year && (
               <div className="bg-gradient-to-r from-emerald-500/10 to-teal-500/10 rounded-xl p-3 border border-primary/20 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-primary/20 flex items-center justify-center">
                   <Clock className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs text-muted-foreground">Qurilgan yili</p>
-                  <p className="font-bold text-foreground">{historyData.yearBuilt}</p>
+                  <p className="text-xs text-muted-foreground">{builtYearLabel}</p>
+                  <p className="font-bold text-foreground">
+                    {mosque.built_year}
+                    {historicalPeriod ? ` · ${historicalPeriod}` : ""}
+                  </p>
                 </div>
               </div>
             )}
 
-            {/* Feature Badges */}
+            {/* Badges */}
             <div className="flex flex-wrap gap-2">
-              {/* 5 mahal namoz badge - always show for historical mosques */}
-              <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-600 text-xs font-medium border border-blue-500/20">
-                <Moon className="w-3 h-3" />
-                5 mahal namoz
-              </span>
+              {verificationBadge && (
+                <span
+                  className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-xs font-medium border ${verificationBadge.cls}`}
+                >
+                  {verificationBadge.icon}
+                  {verificationBadge.label}
+                </span>
+              )}
               {mosque.has_friday_prayer && (
                 <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-primary/10 text-primary text-xs font-medium border border-primary/20">
                   <Check className="w-3 h-3" />
                   {t("mosques.fridayPrayer")}
+                  {mosque.friday_prayer_time ? ` · ${mosque.friday_prayer_time}` : ""}
                 </span>
               )}
               {mosque.has_womens_section && (
@@ -288,15 +224,9 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
                   {t("mosques.womensSection")}
                 </span>
               )}
-              {historyKey && (
-                <span className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-gold/10 text-gold text-xs font-medium border border-gold/20">
-                  <Star className="w-3 h-3" />
-                  Tarixiy masjid
-                </span>
-              )}
             </div>
 
-            {/* Location */}
+            {/* Address */}
             <div className="bg-card rounded-2xl p-4 border border-border/50">
               <h3 className="font-semibold text-foreground flex items-center gap-2 mb-2">
                 <MapPin className="w-4 h-4 text-primary" />
@@ -307,80 +237,87 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
               </p>
             </div>
 
-            {/* Consolidated Mosque Information Card */}
+            {/* Consolidated info card */}
             <Card className="bg-gradient-to-br from-emerald-500/5 via-teal-500/5 to-green-500/5 border-primary/20 overflow-hidden">
               <CardContent className="p-5 space-y-5">
-                {/* About Section */}
                 {translatedDescription && (
                   <div>
                     <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
                       <Moon className="w-4 h-4 text-primary" />
-                      {t("mosque.about")}
+                      {t("mosque.about", "About")}
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{translatedDescription}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                      {translatedDescription}
+                    </p>
                   </div>
                 )}
 
-                {/* Name Origin Section */}
-                {historyData?.origin && (
-                  <div className="pt-4 border-t border-border/30">
-                    <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
-                      <ScrollText className="w-4 h-4 text-gold" />
-                      {t("mosque.nameOrigin")}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{historyData.origin}</p>
-                  </div>
-                )}
-
-                {/* History Section */}
-                {historyData?.history && (
+                {historicalFacts && (
                   <div className="pt-4 border-t border-border/30">
                     <h3 className="font-bold text-foreground flex items-center gap-2 mb-2 text-base">
                       <Star className="w-4 h-4 text-blue-500" />
-                      {t("mosque.history")}
+                      {historyLabel}
                     </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">{historyData.history}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-wrap">
+                      {historicalFacts}
+                    </p>
                   </div>
                 )}
 
-                {/* Features Section */}
-                {historyData?.features && historyData.features.length > 0 && (
+                {notableFeatures.length > 0 && (
                   <div className="pt-4 border-t border-border/30">
-                    <h3 className="font-bold text-foreground mb-3 text-base">{t("mosque.features")}</h3>
+                    <h3 className="font-bold text-foreground mb-3 text-base">{featuresLabel}</h3>
                     <ul className="space-y-2">
-                      {historyData.features.map((feature, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      {notableFeatures.map((feature, index) => (
+                        <li
+                          key={index}
+                          className="flex items-start gap-2 text-sm text-muted-foreground"
+                        >
                           <span className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
-                          {feature}
+                          <span>{feature}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                {/* The Hundred-word Eulogy Poem */}
-                {historyData?.poem && (
+                {dataSources.length > 0 && (
                   <div className="pt-4 border-t border-border/30">
-                    <div className="flex items-center gap-2 mb-3">
-                      <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center">
-                        <Moon className="w-4 h-4 text-primary" />
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-foreground text-base">{historyData.poemTitle}</h3>
-                        <p className="text-xs text-muted-foreground">{t("mosque.poemSubtitle")}</p>
-                      </div>
-                    </div>
-                    <div className="bg-background/50 backdrop-blur-sm rounded-xl p-4 border border-emerald-500/10">
-                      <p className="text-sm text-foreground leading-relaxed whitespace-pre-wrap italic">
-                        "{historyData.poem}"
-                      </p>
-                    </div>
+                    <h3 className="font-bold text-foreground mb-3 text-base">{sourcesLabel}</h3>
+                    <ul className="space-y-2">
+                      {dataSources.map((src, index) => {
+                        const label = src.citation || src.url || "";
+                        if (!label && !src.url) return null;
+                        return (
+                          <li key={index} className="text-xs text-muted-foreground leading-relaxed">
+                            {src.url ? (
+                              <a
+                                href={src.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-start gap-1 text-primary hover:underline break-all"
+                              >
+                                <ExternalLink className="w-3 h-3 mt-0.5 flex-shrink-0" />
+                                <span>{src.citation || src.url}</span>
+                              </a>
+                            ) : (
+                              <span>{src.citation}</span>
+                            )}
+                            {src.note && (
+                              <span className="block text-muted-foreground/70 mt-0.5">
+                                {src.note}
+                              </span>
+                            )}
+                          </li>
+                        );
+                      })}
+                    </ul>
                   </div>
                 )}
               </CardContent>
             </Card>
 
-            {/* Navigate Button */}
+            {/* Navigate */}
             {mosque.latitude && mosque.longitude && (
               <button
                 onClick={() => setMapSheetOpen(true)}
@@ -394,7 +331,6 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
         </SheetContent>
       </Sheet>
 
-      {/* Map Navigation Sheet */}
       {mosque.latitude && mosque.longitude && (
         <MapNavigationSheet
           open={mapSheetOpen}
