@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
+import { MizwadWordmark } from "@/components/MizwadWordmark";
 import { PrayerTimeCard } from "@/components/home/PrayerTimeCard";
 import { ExchangeRateCard } from "@/components/home/ExchangeRateCard";
 import { cn } from "@/lib/utils";
@@ -49,12 +50,7 @@ const Home = () => {
       <header className="px-5 pt-12 pb-4">
         <div className="flex items-start justify-between gap-3 animate-fade-in">
           <div className="min-w-0">
-            <h1 className="text-2xl font-display font-extrabold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              {t("app.name")}
-            </h1>
-            <p className="text-xs text-muted-foreground mt-0.5 truncate">
-              {t("brand.tagline")}
-            </p>
+            <MizwadWordmark size="md" showTagline />
             {user && (
               <p className="text-sm text-foreground mt-2">
                 {`${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!`}
