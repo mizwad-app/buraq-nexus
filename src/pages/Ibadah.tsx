@@ -215,12 +215,32 @@ const Ibadah = () => {
   const [locationError, setLocationError] = useState<string | null>(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
 
+  // Search + filter sheet
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterSheetOpen, setFilterSheetOpen] = useState(false);
+  const [fridayPrayerOnly, setFridayPrayerOnly] = useState(false);
+  const [womensSectionOnly, setWomensSectionOnly] = useState(false);
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
+
   const filterChips: { id: HalalFilter; labelKey: string; color: string }[] = [
     { id: 'all', labelKey: 'halal.filterAll', color: 'bg-secondary text-secondary-foreground' },
     { id: 'certified', labelKey: 'halal.filterHalalOnly', color: 'bg-primary text-white' },
     { id: 'doubtful', labelKey: 'halal.filterDoubtful', color: 'bg-gold text-white' },
     { id: 'not_halal', labelKey: 'halal.filterNotHalal', color: 'bg-red-500 text-white' },
   ];
+
+  const activeFilterCount =
+    (fridayPrayerOnly ? 1 : 0) +
+    (womensSectionOnly ? 1 : 0) +
+    (verifiedOnly ? 1 : 0) +
+    (halalFilter !== 'all' ? 1 : 0);
+
+  const resetFilters = () => {
+    setFridayPrayerOnly(false);
+    setWomensSectionOnly(false);
+    setVerifiedOnly(false);
+    setHalalFilter('all');
+  };
 
   useEffect(() => {
     fetchData();
