@@ -27,6 +27,7 @@ import AdminLegalAdvisors from "./pages/AdminLegalAdvisors";
 import AdminPlaces from "./pages/AdminPlaces";
 import { OnboardingFlow } from "@/components/onboarding/OnboardingFlow";
 import { OnboardingGate } from "@/components/onboarding/OnboardingGate";
+import Consulate from "./pages/Consulate";
 
 const queryClient = new QueryClient();
 
@@ -67,6 +68,7 @@ const App = () => (
                       <Route path="/checklist" element={<TravelChecklist />} />
                       <Route path="/translators" element={<Translators />} />
                       <Route path="/onboarding" element={<OnboardingFlow />} />
+                      <Route path="/consulate" element={<Consulate />} />
 
                       {/* Backward-compatible redirects */}
                       <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />
