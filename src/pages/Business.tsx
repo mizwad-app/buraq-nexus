@@ -193,7 +193,7 @@ const Business = () => {
       ]);
 
       if (marketsRes.data) setMarkets([...(marketsRes.data as WholesaleMarket[])].sort(sortByQuality));
-      if (hubsRes.data) setHubs([...(hubsRes.data as ProductionHub[])].sort(sortByQuality));
+      if (hubsRes.data) setHubs([...(hubsRes.data as ProductionHub[])].sort(sortByQuality as (a: ProductionHub, b: ProductionHub) => number));
       if (exhibitionsRes.data) setExhibitions(exhibitionsRes.data as Exhibition[]);
       if (categoriesRes.data) setCategories(categoriesRes.data as ProductCategory[]);
     } catch (error) {
