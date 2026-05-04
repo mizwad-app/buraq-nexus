@@ -122,18 +122,21 @@ const AdminDashboard = () => {
     }
   };
 
+  const fmtPlace = (p?: PlaceCount) =>
+    p ? `${p.active} / ${p.total}` : "0 / 0";
+
   const statCards = [
     {
-      title: "Bozorlar",
-      value: stats?.markets || 0,
+      title: "Bozorlar (faol / jami)",
+      value: fmtPlace(stats?.markets),
       icon: Store,
       color: "text-blue-500",
       bgColor: "bg-blue-500/10",
       route: "/admin/locations",
     },
     {
-      title: "Restoranlar",
-      value: stats?.restaurants || 0,
+      title: "Restoranlar (faol / jami)",
+      value: fmtPlace(stats?.restaurants),
       icon: Utensils,
       color: "text-primary",
       bgColor: "bg-primary/10",
@@ -141,7 +144,7 @@ const AdminDashboard = () => {
     },
     {
       title: "Tarjimonlar",
-      value: stats?.translators || 0,
+      value: stats?.translators ?? 0,
       icon: Users,
       color: "text-purple-500",
       bgColor: "bg-purple-500/10",
