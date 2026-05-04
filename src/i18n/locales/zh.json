@@ -842,5 +842,106 @@
       "historical": "历史遗址",
       "market": "市场"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "欢迎使用 Mizwad！",
+      "subtitle": "几个简短问题帮我们定制您的体验",
+      "estimated_time": "约 1 分钟",
+      "benefits_title": "您将获得：",
+      "benefits": {
+        "tailored_content": "相关的展会和资讯",
+        "consulate_info": "您所在国家的领事馆信息",
+        "personalized_recommendations": "个性化推荐（清真寺、餐厅、翻译）"
+      },
+      "privacy_title": "隐私：",
+      "privacy_points": {
+        "no_sale": "您的数据从不出售",
+        "no_share": "不会展示给其他用户",
+        "editable": "可随时在个人资料中修改",
+        "deletable": "可随时删除"
+      }
+    },
+    "purpose": {
+      "question": "您来中国的目的？",
+      "business": "商务",
+      "business_sub": "贸易、批发、工厂参观",
+      "tourism": "旅游",
+      "tourism_sub": "文化、历史、自然",
+      "both": "两者",
+      "both_sub": "混合目的"
+    },
+    "frequency": {
+      "question": "您每年来中国几次？",
+      "first_time": "第一次",
+      "1_per_year": "每年 1 次",
+      "2_3_per_year": "每年 2-3 次",
+      "4_6_per_year": "每年 4-6 次",
+      "6_plus_per_year": "每年 6 次以上"
+    },
+    "industries": {
+      "question": "您对哪些产品类别感兴趣？",
+      "subtitle": "最多选 5 个",
+      "selected": "已选：{{count}}/{{max}}"
+    },
+    "interests": {
+      "question": "旅行中您喜欢什么？",
+      "subtitle": "可多选"
+    },
+    "country": {
+      "question": "您来自哪个国家？",
+      "search_placeholder": "搜索国家...",
+      "priority_countries": "推荐",
+      "all_countries": "所有国家"
+    },
+    "confirm": {
+      "title": "确认",
+      "subtitle": "请核对您的信息",
+      "complete": "完成",
+      "edit": "编辑"
+    },
+    "navigation": {
+      "back": "返回",
+      "next": "下一步",
+      "skip": "跳过"
+    },
+    "why": {
+      "purpose": "帮我们为您显示合适的服务（商务展会或旅游推荐）。",
+      "frequency": "常客可享受专属折扣和高级功能。",
+      "industries": "我们将通知您所选领域的新展会和贸易博览会。",
+      "industries_example": "选择\"家具\"→ 您将收到 2026 佛山家具展（3 月 15-18 日）通知。",
+      "interests": "我们将自动推荐您喜欢的清真寺、历史遗迹和清真餐厅。",
+      "country": "我们将显示您所在国家在北京、上海和广州的领事馆信息。",
+      "confirm": "您可以随时在个人资料中修改或删除这些信息。"
+    },
+    "privacy_link": "关于隐私",
+    "privacy": {
+      "title": "您的数据如何使用",
+      "what_we_do": "我们会做：",
+      "what_we_do_items": {
+        "personalize": "为您定制服务",
+        "notify": "推送通知（仅限您选择的主题）",
+        "anonymous_analytics": "匿名数据分析"
+      },
+      "what_we_dont_do": "我们不会做：",
+      "what_we_dont_do_items": {
+        "no_sell": "绝不出售给第三方",
+        "no_advertisers": "绝不提供给广告商",
+        "no_share_users": "绝不显示给其他用户",
+        "no_spam": "绝不用于垃圾信息"
+      },
+      "security": "安全：",
+      "security_items": {
+        "encrypted": "数据加密",
+        "limited_access": "仅授权员工可访问",
+        "gdpr": "符合 GDPR 标准"
+      },
+      "your_rights": "您的权利：",
+      "rights_items": {
+        "edit": "随时编辑：个人资料 → 设置",
+        "delete": "随时删除：个人资料 → 删除账户",
+        "export": "导出数据（即将推出）"
+      }
+    }
   }
 }

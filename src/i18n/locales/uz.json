@@ -841,5 +841,106 @@
       "historical": "Tarixiy joy",
       "market": "Bozor"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Mizwadʼga xush kelibsiz!",
+      "subtitle": "Sizga eng mos xizmatlarni koʻrsatish uchun bir nechta savol",
+      "estimated_time": "Taxminan 1 daqiqa",
+      "benefits_title": "Sizning foydangiz:",
+      "benefits": {
+        "tailored_content": "Sizga mos koʻrgazma va yangiliklar",
+        "consulate_info": "Mamlakatingiz konsulligi maʼlumoti",
+        "personalized_recommendations": "Shaxsiy tavsiyalar (masjid, restoran, tarjimon)"
+      },
+      "privacy_title": "Xavfsizlik:",
+      "privacy_points": {
+        "no_sale": "Maʼlumotingiz hech qachon sotilmaydi",
+        "no_share": "Maʼlumotingiz boshqa foydalanuvchilarga koʻrsatilmaydi",
+        "editable": "Istalgan vaqt Profil boʻlimidan oʻzgartirish mumkin",
+        "deletable": "Istalgan vaqt oʻchirish mumkin"
+      }
+    },
+    "purpose": {
+      "question": "Xitoyga tashrif maqsadingiz?",
+      "business": "Tijorat",
+      "business_sub": "Savdo, ulgurji, fabrika ziyorati",
+      "tourism": "Sayohat",
+      "tourism_sub": "Madaniyat, tarix, tabiat",
+      "both": "Ikkalasi",
+      "both_sub": "Aralash maqsad"
+    },
+    "frequency": {
+      "question": "Yilda Xitoyga necha marta borasiz?",
+      "first_time": "Birinchi marta",
+      "1_per_year": "Yiliga 1 marta",
+      "2_3_per_year": "Yiliga 2-3 marta",
+      "4_6_per_year": "Yiliga 4-6 marta",
+      "6_plus_per_year": "Yiliga 6+ marta"
+    },
+    "industries": {
+      "question": "Qaysi tovarlar sohasiga qiziqasiz?",
+      "subtitle": "Bir nechta tanlash mumkin (1-5 ta)",
+      "selected": "Tanlangan: {{count}}/{{max}}"
+    },
+    "interests": {
+      "question": "Sayohatda nima sizni qiziqtiradi?",
+      "subtitle": "Bir nechta tanlash mumkin"
+    },
+    "country": {
+      "question": "Qaysi davlatdan kelyapsiz?",
+      "search_placeholder": "Davlat qidirish...",
+      "priority_countries": "Tavsiya etilgan",
+      "all_countries": "Barcha davlatlar"
+    },
+    "confirm": {
+      "title": "Tasdiqlash",
+      "subtitle": "Maʼlumotlaringiz toʻgʻri ekanligiga ishonch hosil qiling",
+      "complete": "Tugatish",
+      "edit": "Oʻzgartirish"
+    },
+    "navigation": {
+      "back": "Orqaga",
+      "next": "Keyingi",
+      "skip": "Oʻtkazib yuborish"
+    },
+    "why": {
+      "purpose": "Bu sizga mos xizmatlar (tijorat koʻrgazmalari yoki sayohat tavsiyalari) koʻrsatishimizga yordam beradi.",
+      "frequency": "Tez-tez boruvchi mijozlarimizga maxsus chegirmalar va premium funksiyalar taklif qilamiz.",
+      "industries": "Tanlangan sohalardagi yangi koʻrgazmalar va savdo yarmarkalari haqida sizga xabar yuboramiz.",
+      "industries_example": "\"Mebel\" tanlasangiz — Foshan Furniture Fair 2026 (15-18 mart) haqida xabar olasiz.",
+      "interests": "Sizga yoqishi mumkin boʻlgan masjidlar, tarixiy joylar va halol restoranlarni avtomatik tavsiya qilamiz.",
+      "country": "Mamlakatingizning Pekin, Shanxay va Guangzhou'dagi konsulligi haqida maʼlumotni ilovada koʻrsatamiz.",
+      "confirm": "Bu maʼlumotlarni Profil boʻlimidan istalgan vaqt oʻzgartirish yoki oʻchirish mumkin."
+    },
+    "privacy_link": "Maxfiylik haqida",
+    "privacy": {
+      "title": "Sizning maʼlumotlaringiz qanday ishlatiladi",
+      "what_we_do": "NIMA QILINADI:",
+      "what_we_do_items": {
+        "personalize": "Sizga mos xizmatlar koʻrsatish",
+        "notify": "Push-bildirishnomalar yuborish (faqat siz tanlagan sohalar boʻyicha)",
+        "anonymous_analytics": "Statistika tahlili (anonim)"
+      },
+      "what_we_dont_do": "NIMA QILINMAYDI:",
+      "what_we_dont_do_items": {
+        "no_sell": "Uchinchi shaxslarga sotilmaydi",
+        "no_advertisers": "Reklamachilarga uzatilmaydi",
+        "no_share_users": "Boshqa foydalanuvchilarga koʻrsatilmaydi",
+        "no_spam": "Spam yuborish uchun ishlatilmaydi"
+      },
+      "security": "Xavfsizlik:",
+      "security_items": {
+        "encrypted": "Maʼlumotlar shifrlangan",
+        "limited_access": "Faqat ruxsat etilgan xodimlar koʻra oladi",
+        "gdpr": "GDPR talablariga mos"
+      },
+      "your_rights": "Sizning huquqlaringiz:",
+      "rights_items": {
+        "edit": "Istalgan vaqt oʻzgartirish: Profil → Sozlamalar",
+        "delete": "Istalgan vaqt oʻchirish: Profil → Hisobni oʻchirish",
+        "export": "Maʼlumotni eksport qilish (kelajakda)"
+      }
+    }
   }
 }

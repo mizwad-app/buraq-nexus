@@ -792,5 +792,106 @@
       "historical": "Historical site",
       "market": "Market"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Welcome to Mizwad!",
+      "subtitle": "A few quick questions to tailor your experience",
+      "estimated_time": "About 1 minute",
+      "benefits_title": "What you'll get:",
+      "benefits": {
+        "tailored_content": "Relevant exhibitions and news",
+        "consulate_info": "Your country's consulate info",
+        "personalized_recommendations": "Personalized picks (mosques, restaurants, translators)"
+      },
+      "privacy_title": "Privacy:",
+      "privacy_points": {
+        "no_sale": "Your data is never sold",
+        "no_share": "Not shown to other users",
+        "editable": "Editable anytime from Profile",
+        "deletable": "Deletable anytime"
+      }
+    },
+    "purpose": {
+      "question": "What brings you to China?",
+      "business": "Business",
+      "business_sub": "Trade, wholesale, factory visits",
+      "tourism": "Tourism",
+      "tourism_sub": "Culture, history, nature",
+      "both": "Both",
+      "both_sub": "A mix of both"
+    },
+    "frequency": {
+      "question": "How often do you visit China?",
+      "first_time": "First time",
+      "1_per_year": "Once a year",
+      "2_3_per_year": "2–3 times a year",
+      "4_6_per_year": "4–6 times a year",
+      "6_plus_per_year": "6+ times a year"
+    },
+    "industries": {
+      "question": "Which product categories interest you?",
+      "subtitle": "Pick up to 5",
+      "selected": "Selected: {{count}}/{{max}}"
+    },
+    "interests": {
+      "question": "What do you enjoy when traveling?",
+      "subtitle": "Pick as many as you like"
+    },
+    "country": {
+      "question": "Which country are you from?",
+      "search_placeholder": "Search country...",
+      "priority_countries": "Suggested",
+      "all_countries": "All countries"
+    },
+    "confirm": {
+      "title": "Confirm",
+      "subtitle": "Double-check your details",
+      "complete": "Finish",
+      "edit": "Edit"
+    },
+    "navigation": {
+      "back": "Back",
+      "next": "Next",
+      "skip": "Skip"
+    },
+    "why": {
+      "purpose": "Helps us show the right services (business expos vs. travel tips).",
+      "frequency": "Frequent travelers get special discounts and premium features.",
+      "industries": "We'll notify you about new expos and trade fairs in your chosen fields.",
+      "industries_example": "Pick \"Furniture\" → get notified about Foshan Furniture Fair 2026 (Mar 15–18).",
+      "interests": "We'll auto-suggest mosques, historical sites and halal restaurants you'll love.",
+      "country": "We'll surface your country's consulate info in Beijing, Shanghai and Guangzhou.",
+      "confirm": "You can change or delete this from your Profile anytime."
+    },
+    "privacy_link": "About privacy",
+    "privacy": {
+      "title": "How your data is used",
+      "what_we_do": "WHAT WE DO:",
+      "what_we_do_items": {
+        "personalize": "Personalize your experience",
+        "notify": "Send push notifications (only your chosen topics)",
+        "anonymous_analytics": "Anonymous analytics"
+      },
+      "what_we_dont_do": "WHAT WE DON'T DO:",
+      "what_we_dont_do_items": {
+        "no_sell": "Never sold to third parties",
+        "no_advertisers": "Never given to advertisers",
+        "no_share_users": "Never shown to other users",
+        "no_spam": "Never used for spam"
+      },
+      "security": "Security:",
+      "security_items": {
+        "encrypted": "Data is encrypted",
+        "limited_access": "Access limited to authorized staff",
+        "gdpr": "GDPR compliant"
+      },
+      "your_rights": "Your rights:",
+      "rights_items": {
+        "edit": "Edit anytime: Profile → Settings",
+        "delete": "Delete anytime: Profile → Delete account",
+        "export": "Export your data (coming soon)"
+      }
+    }
   }
 }
