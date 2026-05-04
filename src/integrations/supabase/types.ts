@@ -238,12 +238,15 @@ export type Database = {
           contact_info: string | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
           id: string
           industry: string
           industry_ar: string | null
@@ -252,14 +255,19 @@ export type Database = {
           industry_uz: string | null
           industry_zh: string | null
           is_active: boolean
+          last_verified_at: string | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          phone: string | null
           rating: number | null
+          verification_status: string | null
           verified: boolean | null
+          website: string | null
+          working_hours: string | null
           years_in_business: number | null
         }
         Insert: {
@@ -273,12 +281,15 @@ export type Database = {
           contact_info?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           id?: string
           industry: string
           industry_ar?: string | null
@@ -287,14 +298,19 @@ export type Database = {
           industry_uz?: string | null
           industry_zh?: string | null
           is_active?: boolean
+          last_verified_at?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          phone?: string | null
           rating?: number | null
+          verification_status?: string | null
           verified?: boolean | null
+          website?: string | null
+          working_hours?: string | null
           years_in_business?: number | null
         }
         Update: {
@@ -308,12 +324,15 @@ export type Database = {
           contact_info?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           id?: string
           industry?: string
           industry_ar?: string | null
@@ -322,14 +341,19 @@ export type Database = {
           industry_uz?: string | null
           industry_zh?: string | null
           is_active?: boolean
+          last_verified_at?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          phone?: string | null
           rating?: number | null
+          verification_status?: string | null
           verified?: boolean | null
+          website?: string | null
+          working_hours?: string | null
           years_in_business?: number | null
         }
         Relationships: []
@@ -715,21 +739,26 @@ export type Database = {
           city_zh: string | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
           end_date: string
           id: string
           is_active: boolean
+          last_verified_at: string | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          phone: string | null
           start_date: string
           venue: string | null
           venue_ar: string | null
@@ -737,7 +766,9 @@ export type Database = {
           venue_ru: string | null
           venue_uz: string | null
           venue_zh: string | null
+          verification_status: string | null
           website_url: string | null
+          working_hours: string | null
         }
         Insert: {
           category: string
@@ -754,21 +785,26 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           end_date: string
           id?: string
           is_active?: boolean
+          last_verified_at?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          phone?: string | null
           start_date: string
           venue?: string | null
           venue_ar?: string | null
@@ -776,7 +812,9 @@ export type Database = {
           venue_ru?: string | null
           venue_uz?: string | null
           venue_zh?: string | null
+          verification_status?: string | null
           website_url?: string | null
+          working_hours?: string | null
         }
         Update: {
           category?: string
@@ -793,21 +831,26 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           end_date?: string
           id?: string
           is_active?: boolean
+          last_verified_at?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          phone?: string | null
           start_date?: string
           venue?: string | null
           venue_ar?: string | null
@@ -815,7 +858,9 @@ export type Database = {
           venue_ru?: string | null
           venue_uz?: string | null
           venue_zh?: string | null
+          verification_status?: string | null
           website_url?: string | null
+          working_hours?: string | null
         }
         Relationships: []
       }
@@ -913,16 +958,21 @@ export type Database = {
           city_zh: string | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
+          email: string | null
           id: string
           image_url: string | null
           is_active: boolean
           is_verified: boolean | null
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           name: string
@@ -932,7 +982,11 @@ export type Database = {
           name_uz: string | null
           name_zh: string | null
           phone: string | null
+          phone_secondary: string | null
           rating: number | null
+          verification_status: string | null
+          website: string | null
+          working_hours: string | null
         }
         Insert: {
           address?: string | null
@@ -950,16 +1004,21 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
           is_verified?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -969,7 +1028,11 @@ export type Database = {
           name_uz?: string | null
           name_zh?: string | null
           phone?: string | null
+          phone_secondary?: string | null
           rating?: number | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours?: string | null
         }
         Update: {
           address?: string | null
@@ -987,16 +1050,21 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
           id?: string
           image_url?: string | null
           is_active?: boolean
           is_verified?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name?: string
@@ -1006,7 +1074,11 @@ export type Database = {
           name_uz?: string | null
           name_zh?: string | null
           phone?: string | null
+          phone_secondary?: string | null
           rating?: number | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours?: string | null
         }
         Relationships: []
       }
@@ -1038,6 +1110,7 @@ export type Database = {
           coordinates: Json | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
@@ -1045,6 +1118,8 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
           entry_fee: string | null
           features: string[] | null
           gallery_images: string[] | null
@@ -1053,6 +1128,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean | null
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
@@ -1069,6 +1145,7 @@ export type Database = {
           rating: number | null
           transport_info: Json | null
           updated_at: string
+          verification_status: string | null
           website: string | null
         }
         Insert: {
@@ -1098,6 +1175,7 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -1105,6 +1183,8 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -1113,6 +1193,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -1129,6 +1210,7 @@ export type Database = {
           rating?: number | null
           transport_info?: Json | null
           updated_at?: string
+          verification_status?: string | null
           website?: string | null
         }
         Update: {
@@ -1158,6 +1240,7 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -1165,6 +1248,8 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -1173,6 +1258,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -1189,6 +1275,7 @@ export type Database = {
           rating?: number | null
           transport_info?: Json | null
           updated_at?: string
+          verification_status?: string | null
           website?: string | null
         }
         Relationships: []
@@ -1560,6 +1647,7 @@ export type Database = {
           coordinates: Json | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
@@ -1567,6 +1655,8 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
           entry_fee: string | null
           features: string[] | null
           gallery_images: string[] | null
@@ -1575,6 +1665,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean | null
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
@@ -1591,6 +1682,7 @@ export type Database = {
           rating: number | null
           transport_info: Json | null
           updated_at: string
+          verification_status: string | null
           website: string | null
         }
         Insert: {
@@ -1620,6 +1712,7 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -1627,6 +1720,8 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -1635,6 +1730,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -1651,6 +1747,7 @@ export type Database = {
           rating?: number | null
           transport_info?: Json | null
           updated_at?: string
+          verification_status?: string | null
           website?: string | null
         }
         Update: {
@@ -1680,6 +1777,7 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -1687,6 +1785,8 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -1695,6 +1795,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -1711,6 +1812,7 @@ export type Database = {
           rating?: number | null
           transport_info?: Json | null
           updated_at?: string
+          verification_status?: string | null
           website?: string | null
         }
         Relationships: []
@@ -1739,6 +1841,8 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
           friday_prayer_time: string | null
           has_friday_prayer: boolean | null
           has_womens_section: boolean | null
@@ -1755,6 +1859,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           name: string
@@ -1764,7 +1869,9 @@ export type Database = {
           name_uz: string | null
           name_zh: string | null
           notable_features: Json | null
+          phone: string | null
           verification_status: string | null
+          working_hours: string | null
         }
         Insert: {
           address?: string | null
@@ -1789,6 +1896,8 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           friday_prayer_time?: string | null
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
@@ -1805,6 +1914,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -1814,7 +1924,9 @@ export type Database = {
           name_uz?: string | null
           name_zh?: string | null
           notable_features?: Json | null
+          phone?: string | null
           verification_status?: string | null
+          working_hours?: string | null
         }
         Update: {
           address?: string | null
@@ -1839,6 +1951,8 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           friday_prayer_time?: string | null
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
@@ -1855,6 +1969,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name?: string
@@ -1864,7 +1979,9 @@ export type Database = {
           name_uz?: string | null
           name_zh?: string | null
           notable_features?: Json | null
+          phone?: string | null
           verification_status?: string | null
+          working_hours?: string | null
         }
         Relationships: []
       }
@@ -1894,12 +2011,15 @@ export type Database = {
           coordinates: Json | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
           entry_fee: string | null
           features: string[] | null
           gallery_images: string[] | null
@@ -1908,6 +2028,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean | null
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
@@ -1922,6 +2043,7 @@ export type Database = {
           phone: string | null
           price_range: string | null
           transport_info: Json | null
+          verification_status: string | null
           website: string | null
         }
         Insert: {
@@ -1949,12 +2071,15 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -1963,6 +2088,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -1977,6 +2103,7 @@ export type Database = {
           phone?: string | null
           price_range?: string | null
           transport_info?: Json | null
+          verification_status?: string | null
           website?: string | null
         }
         Update: {
@@ -2004,12 +2131,15 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -2018,6 +2148,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -2032,6 +2163,7 @@ export type Database = {
           phone?: string | null
           price_range?: string | null
           transport_info?: Json | null
+          verification_status?: string | null
           website?: string | null
         }
         Relationships: []
@@ -2122,12 +2254,15 @@ export type Database = {
           city_zh: string | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
           id: string
           industry: string
           industry_ar: string | null
@@ -2136,9 +2271,11 @@ export type Database = {
           industry_uz: string | null
           industry_zh: string | null
           is_active: boolean
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           name_zh: string | null
+          phone: string | null
           specializations: string[] | null
           specializations_zh: string[] | null
           travel_tips: string | null
@@ -2147,6 +2284,9 @@ export type Database = {
           travel_tips_ru: string | null
           travel_tips_uz: string | null
           travel_tips_zh: string | null
+          verification_status: string | null
+          website: string | null
+          working_hours: string | null
         }
         Insert: {
           address?: string | null
@@ -2164,12 +2304,15 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           id?: string
           industry: string
           industry_ar?: string | null
@@ -2178,9 +2321,11 @@ export type Database = {
           industry_uz?: string | null
           industry_zh?: string | null
           is_active?: boolean
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name_zh?: string | null
+          phone?: string | null
           specializations?: string[] | null
           specializations_zh?: string[] | null
           travel_tips?: string | null
@@ -2189,6 +2334,9 @@ export type Database = {
           travel_tips_ru?: string | null
           travel_tips_uz?: string | null
           travel_tips_zh?: string | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours?: string | null
         }
         Update: {
           address?: string | null
@@ -2206,12 +2354,15 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
           id?: string
           industry?: string
           industry_ar?: string | null
@@ -2220,9 +2371,11 @@ export type Database = {
           industry_uz?: string | null
           industry_zh?: string | null
           is_active?: boolean
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name_zh?: string | null
+          phone?: string | null
           specializations?: string[] | null
           specializations_zh?: string[] | null
           travel_tips?: string | null
@@ -2231,6 +2384,9 @@ export type Database = {
           travel_tips_ru?: string | null
           travel_tips_uz?: string | null
           travel_tips_zh?: string | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours?: string | null
         }
         Relationships: []
       }
@@ -2359,12 +2515,18 @@ export type Database = {
           cuisine_type_ru: string | null
           cuisine_type_uz: string | null
           cuisine_type_zh: string | null
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
+          email: string | null
+          halal_certification_source: string | null
+          halal_certified: boolean | null
           halal_status: string | null
           halal_status_note: string | null
           halal_status_note_ar: string | null
@@ -2378,6 +2540,7 @@ export type Database = {
           image_url: string | null
           is_active: boolean
           is_halal_certified: boolean | null
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           name: string
@@ -2392,11 +2555,18 @@ export type Database = {
           nearest_metro_ru: string | null
           nearest_metro_uz: string | null
           nearest_metro_zh: string | null
+          phone: string | null
+          phone_secondary: string | null
           rating: number | null
           rating_cleanliness: number | null
           rating_service: number | null
           rating_taste: number | null
           serves_alcohol: boolean | null
+          verification_status: string | null
+          website: string | null
+          working_hours: string | null
+          working_hours_en: string | null
+          working_hours_uz: string | null
         }
         Insert: {
           address?: string | null
@@ -2420,12 +2590,18 @@ export type Database = {
           cuisine_type_ru?: string | null
           cuisine_type_uz?: string | null
           cuisine_type_zh?: string | null
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
+          halal_certification_source?: string | null
+          halal_certified?: boolean | null
           halal_status?: string | null
           halal_status_note?: string | null
           halal_status_note_ar?: string | null
@@ -2439,6 +2615,7 @@ export type Database = {
           image_url?: string | null
           is_active?: boolean
           is_halal_certified?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -2453,11 +2630,18 @@ export type Database = {
           nearest_metro_ru?: string | null
           nearest_metro_uz?: string | null
           nearest_metro_zh?: string | null
+          phone?: string | null
+          phone_secondary?: string | null
           rating?: number | null
           rating_cleanliness?: number | null
           rating_service?: number | null
           rating_taste?: number | null
           serves_alcohol?: boolean | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours?: string | null
+          working_hours_en?: string | null
+          working_hours_uz?: string | null
         }
         Update: {
           address?: string | null
@@ -2481,12 +2665,18 @@ export type Database = {
           cuisine_type_ru?: string | null
           cuisine_type_uz?: string | null
           cuisine_type_zh?: string | null
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
+          halal_certification_source?: string | null
+          halal_certified?: boolean | null
           halal_status?: string | null
           halal_status_note?: string | null
           halal_status_note_ar?: string | null
@@ -2500,6 +2690,7 @@ export type Database = {
           image_url?: string | null
           is_active?: boolean
           is_halal_certified?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           name?: string
@@ -2514,11 +2705,18 @@ export type Database = {
           nearest_metro_ru?: string | null
           nearest_metro_uz?: string | null
           nearest_metro_zh?: string | null
+          phone?: string | null
+          phone_secondary?: string | null
           rating?: number | null
           rating_cleanliness?: number | null
           rating_service?: number | null
           rating_taste?: number | null
           serves_alcohol?: boolean | null
+          verification_status?: string | null
+          website?: string | null
+          working_hours?: string | null
+          working_hours_en?: string | null
+          working_hours_uz?: string | null
         }
         Relationships: []
       }
@@ -2665,12 +2863,16 @@ export type Database = {
           coordinates: Json | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          district: string | null
+          district_zh: string | null
+          email: string | null
           entry_fee: string | null
           features: string[] | null
           gallery_images: string[] | null
@@ -2679,6 +2881,7 @@ export type Database = {
           id: string
           image_url: string | null
           is_active: boolean | null
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
@@ -2690,10 +2893,15 @@ export type Database = {
           name_zh: string | null
           opening_hours: Json | null
           phone: string | null
+          phone_secondary: string | null
           price_range: string | null
           rating: number | null
           transport_info: Json | null
+          verification_status: string | null
           website: string | null
+          working_hours: string | null
+          working_hours_en: string | null
+          working_hours_uz: string | null
         }
         Insert: {
           address?: string | null
@@ -2721,12 +2929,16 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -2735,6 +2947,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -2746,10 +2959,15 @@ export type Database = {
           name_zh?: string | null
           opening_hours?: Json | null
           phone?: string | null
+          phone_secondary?: string | null
           price_range?: string | null
           rating?: number | null
           transport_info?: Json | null
+          verification_status?: string | null
           website?: string | null
+          working_hours?: string | null
+          working_hours_en?: string | null
+          working_hours_uz?: string | null
         }
         Update: {
           address?: string | null
@@ -2777,12 +2995,16 @@ export type Database = {
           coordinates?: Json | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
           entry_fee?: string | null
           features?: string[] | null
           gallery_images?: string[] | null
@@ -2791,6 +3013,7 @@ export type Database = {
           id?: string
           image_url?: string | null
           is_active?: boolean | null
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
@@ -2802,10 +3025,15 @@ export type Database = {
           name_zh?: string | null
           opening_hours?: Json | null
           phone?: string | null
+          phone_secondary?: string | null
           price_range?: string | null
           rating?: number | null
           transport_info?: Json | null
+          verification_status?: string | null
           website?: string | null
+          working_hours?: string | null
+          working_hours_en?: string | null
+          working_hours_uz?: string | null
         }
         Relationships: []
       }
@@ -3429,13 +3657,18 @@ export type Database = {
           contact_info: string | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
+          district: string | null
+          district_zh: string | null
+          email: string | null
           id: string
           is_active: boolean
+          last_verified_at: string | null
           latitude: number | null
           longitude: number | null
           market_type: string | null
@@ -3444,12 +3677,18 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          phone: string | null
+          phone_secondary: string | null
           travel_tips: string | null
           travel_tips_ar: string | null
           travel_tips_en: string | null
           travel_tips_ru: string | null
           travel_tips_uz: string | null
+          verification_status: string | null
+          website: string | null
           working_hours: string | null
+          working_hours_en: string | null
+          working_hours_uz: string | null
         }
         Insert: {
           address?: string | null
@@ -3471,13 +3710,18 @@ export type Database = {
           contact_info?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
           id?: string
           is_active?: boolean
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           market_type?: string | null
@@ -3486,12 +3730,18 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          phone?: string | null
+          phone_secondary?: string | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null
           travel_tips_ru?: string | null
           travel_tips_uz?: string | null
+          verification_status?: string | null
+          website?: string | null
           working_hours?: string | null
+          working_hours_en?: string | null
+          working_hours_uz?: string | null
         }
         Update: {
           address?: string | null
@@ -3513,13 +3763,18 @@ export type Database = {
           contact_info?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
+          district?: string | null
+          district_zh?: string | null
+          email?: string | null
           id?: string
           is_active?: boolean
+          last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
           market_type?: string | null
@@ -3528,12 +3783,18 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          phone?: string | null
+          phone_secondary?: string | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null
           travel_tips_ru?: string | null
           travel_tips_uz?: string | null
+          verification_status?: string | null
+          website?: string | null
           working_hours?: string | null
+          working_hours_en?: string | null
+          working_hours_uz?: string | null
         }
         Relationships: []
       }
