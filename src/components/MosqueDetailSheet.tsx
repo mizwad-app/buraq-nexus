@@ -16,6 +16,7 @@ import {
   ShieldCheck,
   ShieldAlert,
   ExternalLink,
+  Phone,
 } from "lucide-react";
 import { useState } from "react";
 import { MapNavigationSheet } from "./MapNavigationSheet";
@@ -45,6 +46,10 @@ interface MosqueDetailSheetProps {
     verification_status?: string | null;
     notable_features?: unknown;
     data_sources?: unknown;
+    phone?: string | null;
+    working_hours?: string | null;
+    district?: string | null;
+    district_zh?: string | null;
     [key: string]: unknown;
   } | null;
 }
