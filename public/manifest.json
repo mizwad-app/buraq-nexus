@@ -1,0 +1,24 @@
+{
+  "name": "Mizwad — Musulmon sayyohning raqamli karmoni",
+  "short_name": "Mizwad",
+  "description": "Xitoyda musulmon savdogar va sayyoh uchun super-app",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#06120e",
+  "theme_color": "#27a87a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
