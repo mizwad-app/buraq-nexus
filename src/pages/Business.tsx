@@ -32,6 +32,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { LegalAdvisorsList } from "@/components/business/LegalAdvisorsList";
 import { Scale } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { sortByQuality } from "@/lib/placeSorting";
 import { toast } from "sonner";
 
 

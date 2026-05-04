@@ -63,6 +63,7 @@ import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { PlaceDetailSheet, type PlaceType, type PlaceData } from "@/components/travel/PlaceDetailSheet";
 import { MVP_CITIES } from "@/lib/mvpCities";
+import { sortByQuality } from "@/lib/placeSorting";
 
 interface Park {
   id: string;

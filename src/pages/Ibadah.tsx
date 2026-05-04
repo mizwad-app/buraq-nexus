@@ -25,6 +25,7 @@ import { GlobalCityFilter } from "@/components/GlobalCityFilter";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
 import { cn } from "@/lib/utils";
+import { sortByQuality } from "@/lib/placeSorting";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { RestaurantDetailSheet } from "@/components/RestaurantDetailSheet";
 import { MosqueDetailSheet } from "@/components/MosqueDetailSheet";
