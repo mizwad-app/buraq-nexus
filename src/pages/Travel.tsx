@@ -28,7 +28,7 @@ import {
   Train,
   MessageSquare,
 } from "lucide-react";
-import { FlightTicketSheet, TrainTicketSheet, HowItWorksSheet } from "@/components/tickets/TicketSheets";
+
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
@@ -44,7 +44,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import {
   Accordion,
   AccordionContent,
@@ -250,16 +250,6 @@ const Travel = () => {
   const [serviceType, setServiceType] = useState<string>("visa_help");
   const [serviceMessage, setServiceMessage] = useState("");
   const [submittingRequest, setSubmittingRequest] = useState(false);
-
-  // Tickets state
-  const [flightSheetOpen, setFlightSheetOpen] = useState(false);
-  const [trainSheetOpen, setTrainSheetOpen] = useState(false);
-  const [howItWorksOpen, setHowItWorksOpen] = useState(false);
-
-  const openTicketsChat = () => {
-    const message = encodeURIComponent(t("tickets.heroTitle"));
-    window.open(`https://wa.me/8613800138000?text=${message}`, "_blank");
-  };
 
   // Enable swipe back gesture
   useSwipeBack();
@@ -625,11 +615,6 @@ const Travel = () => {
             )}
           </div>
       </section>
-
-      {/* Ticket sheets */}
-      <FlightTicketSheet open={flightSheetOpen} onOpenChange={setFlightSheetOpen} />
-      <TrainTicketSheet open={trainSheetOpen} onOpenChange={setTrainSheetOpen} />
-      <HowItWorksSheet open={howItWorksOpen} onOpenChange={setHowItWorksOpen} />
 
       {/* Map Navigation Sheet */}
       {selectedItem && selectedItem.data.latitude && selectedItem.data.longitude && (
