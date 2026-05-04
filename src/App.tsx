@@ -26,6 +26,7 @@ import AdminServiceRequests from "./pages/AdminServiceRequests";
 import AdminLegalAdvisors from "./pages/AdminLegalAdvisors";
 import AdminPlaces from "./pages/AdminPlaces";
 import { OnboardingFlow } from "@/components/onboarding/OnboardingFlow";
+import { OnboardingGate } from "@/components/onboarding/OnboardingGate";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <OnboardingGate />
             <Routes>
               {/* Admin Routes - Full screen without bottom nav */}
               <Route path="/admin/login" element={<AdminLogin />} />
