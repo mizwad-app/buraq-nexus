@@ -21,7 +21,7 @@ const taglineSizeClasses: Record<NonNullable<MizwadWordmarkProps["size"]>, strin
   xl: "text-base",
 };
 
-const SERIF_STACK = "Georgia, 'Times New Roman', 'Noto Serif', serif";
+const SERIF_STACK = "'Fraunces', Georgia, 'Times New Roman', 'Noto Serif', serif";
 
 /**
  * Mizwad brand wordmark.
