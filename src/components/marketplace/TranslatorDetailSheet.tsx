@@ -233,7 +233,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                       {/* Dark overlay */}
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/30 transition-colors" />
                       
-                      {/* Centered Play Button - Buraq Brand Style */}
+                      {/* Centered Play Button - Mizwad Brand Style */}
                       <div className="absolute inset-0 flex items-center justify-center">
                         <div className="w-20 h-20 rounded-full bg-primary backdrop-blur-sm flex items-center justify-center shadow-2xl shadow-primary/40 group-hover:scale-110 transition-transform">
                           <Play className="w-10 h-10 text-primary-foreground ml-1 fill-current" />

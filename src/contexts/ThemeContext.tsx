@@ -9,7 +9,22 @@ interface ThemeContextValue {
   setTheme: (theme: ThemeMode) => void;
 }
 
-const STORAGE_KEY = "buraq-theme";
+const STORAGE_KEY = "mizwad-theme";
+const LEGACY_STORAGE_KEY = "buraq-theme";
+
+// One-time migration of theme preference from the legacy key.
+if (typeof window !== "undefined") {
+  try {
+    const legacy = localStorage.getItem(LEGACY_STORAGE_KEY);
+    if (legacy && !localStorage.getItem(STORAGE_KEY)) {
+      localStorage.setItem(STORAGE_KEY, legacy);
+    }
+    if (legacy) localStorage.removeItem(LEGACY_STORAGE_KEY);
+  } catch {
+    // ignore storage errors (private mode, etc.)
+  }
+}
+
 const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 const getSystemTheme = (): ResolvedTheme =>
