@@ -790,5 +790,106 @@
       "historical": "Site historique",
       "market": "Marché"
     }
+  },
+  "onboarding": {
+    "welcome": {
+      "title": "Bienvenue sur Mizwad !",
+      "subtitle": "Quelques questions pour personnaliser votre expérience",
+      "estimated_time": "Environ 1 minute",
+      "benefits_title": "Ce que vous obtiendrez :",
+      "benefits": {
+        "tailored_content": "Expositions et actualités pertinentes",
+        "consulate_info": "Infos sur le consulat de votre pays",
+        "personalized_recommendations": "Recommandations personnalisées (mosquées, restaurants, traducteurs)"
+      },
+      "privacy_title": "Confidentialité :",
+      "privacy_points": {
+        "no_sale": "Vos données ne sont jamais vendues",
+        "no_share": "Non visibles par d'autres utilisateurs",
+        "editable": "Modifiables à tout moment dans le Profil",
+        "deletable": "Supprimables à tout moment"
+      }
+    },
+    "purpose": {
+      "question": "Pourquoi voyagez-vous en Chine ?",
+      "business": "Affaires",
+      "business_sub": "Commerce, gros, visites d'usines",
+      "tourism": "Tourisme",
+      "tourism_sub": "Culture, histoire, nature",
+      "both": "Les deux",
+      "both_sub": "Objectif mixte"
+    },
+    "frequency": {
+      "question": "À quelle fréquence visitez-vous la Chine ?",
+      "first_time": "Première fois",
+      "1_per_year": "1 fois par an",
+      "2_3_per_year": "2-3 fois par an",
+      "4_6_per_year": "4-6 fois par an",
+      "6_plus_per_year": "6+ fois par an"
+    },
+    "industries": {
+      "question": "Quelles catégories de produits vous intéressent ?",
+      "subtitle": "Choisissez jusqu'à 5",
+      "selected": "Sélectionné : {{count}}/{{max}}"
+    },
+    "interests": {
+      "question": "Qu'aimez-vous en voyage ?",
+      "subtitle": "Choisissez-en autant que vous voulez"
+    },
+    "country": {
+      "question": "De quel pays venez-vous ?",
+      "search_placeholder": "Rechercher un pays...",
+      "priority_countries": "Suggérés",
+      "all_countries": "Tous les pays"
+    },
+    "confirm": {
+      "title": "Confirmer",
+      "subtitle": "Vérifiez vos informations",
+      "complete": "Terminer",
+      "edit": "Modifier"
+    },
+    "navigation": {
+      "back": "Retour",
+      "next": "Suivant",
+      "skip": "Passer"
+    },
+    "why": {
+      "purpose": "Nous aide à afficher les bons services (expos d'affaires ou conseils de voyage).",
+      "frequency": "Les voyageurs fréquents bénéficient de réductions et fonctionnalités premium.",
+      "industries": "Nous vous informerons des nouvelles expositions dans vos domaines.",
+      "industries_example": "Choisissez \"Meubles\" → recevez une notification pour Foshan Furniture Fair 2026 (15-18 mars).",
+      "interests": "Nous suggérerons automatiquement mosquées, sites historiques et restaurants halal.",
+      "country": "Nous afficherons les infos du consulat de votre pays à Pékin, Shanghai et Guangzhou.",
+      "confirm": "Vous pouvez modifier ou supprimer ces données depuis votre Profil à tout moment."
+    },
+    "privacy_link": "À propos de la confidentialité",
+    "privacy": {
+      "title": "Comment vos données sont utilisées",
+      "what_we_do": "CE QUE NOUS FAISONS :",
+      "what_we_do_items": {
+        "personalize": "Personnaliser votre expérience",
+        "notify": "Notifications push (uniquement vos sujets)",
+        "anonymous_analytics": "Analyses anonymes"
+      },
+      "what_we_dont_do": "CE QUE NOUS NE FAISONS PAS :",
+      "what_we_dont_do_items": {
+        "no_sell": "Jamais vendues à des tiers",
+        "no_advertisers": "Jamais données aux annonceurs",
+        "no_share_users": "Jamais montrées aux autres utilisateurs",
+        "no_spam": "Jamais utilisées pour du spam"
+      },
+      "security": "Sécurité :",
+      "security_items": {
+        "encrypted": "Données chiffrées",
+        "limited_access": "Accès limité au personnel autorisé",
+        "gdpr": "Conforme au RGPD"
+      },
+      "your_rights": "Vos droits :",
+      "rights_items": {
+        "edit": "Modifier : Profil → Paramètres",
+        "delete": "Supprimer : Profil → Supprimer le compte",
+        "export": "Exporter (bientôt disponible)"
+      }
+    }
   }
 }
