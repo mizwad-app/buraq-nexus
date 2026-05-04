@@ -307,7 +307,7 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
             </div>
 
             <div className="px-5 py-4 space-y-5">
-              {/* Buraq tip */}
+              {/* Mizwad tip */}
               {buraqTip && (
                 <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
                   <div className="flex items-center gap-2 mb-2">

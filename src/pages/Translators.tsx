@@ -656,7 +656,7 @@ const Translators = () => {
                       )}
                     </div>
 
-                    {/* Transport Badges - Buraq Green */}
+                    {/* Transport Badges - Mizwad Green */}
                     <div className="flex flex-wrap gap-1.5">
                       {translator.has_personal_car && (
                         <span className="px-2 py-0.5 bg-primary/15 border border-primary/30 rounded-lg text-[11px] text-primary flex items-center gap-1 font-medium">

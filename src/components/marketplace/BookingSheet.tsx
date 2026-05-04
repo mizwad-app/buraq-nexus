@@ -174,7 +174,7 @@ export const BookingSheet = ({ translator, open, onOpenChange }: BookingSheetPro
 
   const calculateServiceFee = () => Math.round(calculateTranslatorAmount() * SERVICE_FEE_RATE);
 
-  // What the user pays (translator amount + 10% Buraq fee)
+  // What the user pays (translator amount + 10% Mizwad fee)
   const calculateTotal = () => Math.round(calculateTranslatorAmount() + calculateServiceFee());
 
   const calculateHours = () => {

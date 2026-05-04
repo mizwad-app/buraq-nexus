@@ -52,7 +52,7 @@ export const TranslatorProfileCard = ({ translator, onClick, onBook, onChat }: T
       );
     }
     
-    // Buraq Verified HSK (special badge)
+    // Mizwad Verified HSK (special badge)
     if (translator.buraq_verified_hsk) {
       badges.push(
         <span key="verified" className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-gradient-to-r from-primary to-accent text-white flex items-center gap-1">
