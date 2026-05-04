@@ -223,6 +223,48 @@ export default function AdminPlaces() {
                 onChange={e => { try { setDraft({ ...draft, transport_info: e.target.value ? JSON.parse(e.target.value) : null }); } catch {} }} />
             </div>
 
+            {/* Contact / verification fields */}
+            <div className="grid grid-cols-2 gap-3">
+              <div><Label>Telefon (qo'shimcha)</Label>
+                <Input value={draft.phone_secondary || ""} onChange={e => setDraft({ ...draft, phone_secondary: e.target.value })} placeholder="+86-..." />
+              </div>
+              <div><Label>Email</Label>
+                <Input type="email" value={draft.email || ""} onChange={e => setDraft({ ...draft, email: e.target.value })} />
+              </div>
+              <div><Label>Tuman / District</Label>
+                <Input value={draft.district || ""} onChange={e => setDraft({ ...draft, district: e.target.value })} placeholder="Choucheng" />
+              </div>
+              <div><Label>Tuman (中文)</Label>
+                <Input value={draft.district_zh || ""} onChange={e => setDraft({ ...draft, district_zh: e.target.value })} placeholder="稠城街道" />
+              </div>
+              <div><Label>Ish vaqti (matn)</Label>
+                <Input value={(draft as any).working_hours || ""} onChange={e => setDraft({ ...draft, working_hours: e.target.value } as PlaceRow)} placeholder="08:30-17:00" />
+              </div>
+              <div><Label>Ish vaqti (UZ)</Label>
+                <Input value={draft.working_hours_uz || ""} onChange={e => setDraft({ ...draft, working_hours_uz: e.target.value })} placeholder="08:30-17:00 (har kuni)" />
+              </div>
+              <div><Label>Ish vaqti (EN)</Label>
+                <Input value={draft.working_hours_en || ""} onChange={e => setDraft({ ...draft, working_hours_en: e.target.value })} placeholder="08:30-17:00 (Daily)" />
+              </div>
+              <div><Label>Tasdiqlash holati</Label>
+                <Select value={draft.verification_status || "unverified"} onValueChange={v => setDraft({ ...draft, verification_status: v })}>
+                  <SelectTrigger><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="unverified">Tasdiqlanmagan</SelectItem>
+                    <SelectItem value="admin_verified">Admin tasdiqlagan</SelectItem>
+                    <SelectItem value="community_verified">Hamjamiyat tasdiqlagan</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+            <div><Label>Manbalar (JSON: {`[{"url":"...","type":"wikipedia"}]`})</Label>
+              <Textarea
+                value={draft.data_sources ? JSON.stringify(draft.data_sources) : ""}
+                onChange={e => { try { setDraft({ ...draft, data_sources: e.target.value ? JSON.parse(e.target.value) : null }); } catch {} }}
+                placeholder='[{"url":"https://...","type":"wikipedia"}]'
+              />
+            </div>
+
             {type === "mall" && (
               <div><Label>Brendlar (vergul bilan)</Label>
                 <Textarea value={(draft.mall_brands || []).join(", ")} onChange={e => setDraft({ ...draft, mall_brands: e.target.value.split(",").map(s => s.trim()).filter(Boolean) })} />
