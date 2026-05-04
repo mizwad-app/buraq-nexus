@@ -651,7 +651,7 @@ const Ibadah = () => {
                 >
                   <div className="relative h-40 w-full">
                     <img
-                      src={getMosqueImage(mosque.name)}
+                      src={getMosqueImage(mosque)}
                       alt={getField(mosque, 'name')}
                       className="w-full h-full object-cover"
                       onError={(e) => {
