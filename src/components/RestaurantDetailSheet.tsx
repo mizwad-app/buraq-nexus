@@ -14,6 +14,7 @@ import {
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
+import { PlaceContactInfo } from "@/components/places/PlaceContactInfo";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -45,6 +46,20 @@ interface Restaurant {
   image_url?: string | null;
   latitude?: number | null;
   longitude?: number | null;
+  phone?: string | null;
+  phone_secondary?: string | null;
+  email?: string | null;
+  website?: string | null;
+  working_hours?: string | null;
+  working_hours_uz?: string | null;
+  working_hours_en?: string | null;
+  district?: string | null;
+  district_zh?: string | null;
+  verification_status?: string | null;
+  data_sources?: unknown;
+  cuisine_type_label?: string | null;
+  halal_certified?: boolean | null;
+  halal_certification_source?: string | null;
   [key: string]: unknown;
 }
 
@@ -137,6 +152,21 @@ export const RestaurantDetailSheet = ({ open, onOpenChange, restaurant }: Restau
             <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
               <MapPin className="w-4 h-4" />
               <span>{getField(restaurant, 'address') || `${getField(restaurant, 'city')}, ${restaurant.country}`}</span>
+            </div>
+
+            {/* Contact / Verification / Sources */}
+            <div className="mb-4">
+              <PlaceContactInfo
+                phone={restaurant.phone}
+                phone_secondary={restaurant.phone_secondary}
+                email={restaurant.email}
+                website={restaurant.website}
+                working_hours={restaurant.working_hours_uz || restaurant.working_hours_en || restaurant.working_hours}
+                district={restaurant.district}
+                district_zh={restaurant.district_zh}
+                verification_status={restaurant.verification_status}
+                data_sources={restaurant.data_sources}
+              />
             </div>
 
             {/* Overall Rating */}

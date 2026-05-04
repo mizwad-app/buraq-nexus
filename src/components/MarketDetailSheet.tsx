@@ -22,6 +22,7 @@ import { toast } from "sonner";
 import { MapNavigationSheet } from "./MapNavigationSheet";
 import { AskAgentButton } from "./SupportChat";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { PlaceContactInfo } from "./places/PlaceContactInfo";
 
 interface MarketDetailSheetProps {
   open: boolean;
@@ -57,9 +58,19 @@ interface MarketDetailSheetProps {
     travel_tips_uz?: string | null;
     travel_tips_ru?: string | null;
     working_hours?: string | null;
+    working_hours_uz?: string | null;
+    working_hours_en?: string | null;
     market_type?: string | null;
     latitude?: number | null;
     longitude?: number | null;
+    phone?: string | null;
+    phone_secondary?: string | null;
+    email?: string | null;
+    website?: string | null;
+    district?: string | null;
+    district_zh?: string | null;
+    verification_status?: string | null;
+    data_sources?: unknown;
     [key: string]: unknown;
   } | null;
 }
@@ -243,6 +254,19 @@ export const MarketDetailSheet = ({ open, onOpenChange, market }: MarketDetailSh
                 <p className="text-sm text-muted-foreground leading-relaxed">{translatedDescription}</p>
               </div>
             )}
+
+            {/* Contact / Verification / Sources */}
+            <PlaceContactInfo
+              phone={market.phone}
+              phone_secondary={market.phone_secondary}
+              email={market.email}
+              website={market.website}
+              working_hours={(market.working_hours_uz as string) || (market.working_hours_en as string) || market.working_hours}
+              district={market.district}
+              district_zh={market.district_zh}
+              verification_status={market.verification_status}
+              data_sources={market.data_sources}
+            />
 
             {/* Full Travel Tips */}
             {translatedTravelTips && (
