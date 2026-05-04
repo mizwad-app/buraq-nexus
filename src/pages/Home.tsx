@@ -49,13 +49,13 @@ const Home = () => {
       <header className="px-5 pt-12 pb-4">
         <div className="flex items-start justify-between gap-3 animate-fade-in">
           <div className="min-w-0">
-            <h1 className="text-2xl font-display font-extrabold tracking-tight bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              {t("app.name")}
-            </h1>
-            <p className="text-xs text-muted-foreground mt-0.5 truncate">
-              {t("brand.tagline")}
-            </p>
+            <MizwadWordmark size="md" showTagline />
             {user && (
+              <p className="text-sm text-foreground mt-2">
+                {`${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!`}
+              </p>
+            )}
+          </div>
               <p className="text-sm text-foreground mt-2">
                 {`${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!`}
               </p>
