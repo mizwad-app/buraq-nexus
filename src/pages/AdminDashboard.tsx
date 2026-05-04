@@ -15,14 +15,41 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+interface PlaceCount {
+  active: number;
+  total: number;
+}
+
+interface InactiveCityRow {
+  table: string;
+  city: string;
+  count: number;
+}
+
 interface Stats {
-  markets: number;
-  restaurants: number;
+  markets: PlaceCount;
+  restaurants: PlaceCount;
   translators: number;
   deepChecksPending: number;
   deepChecksCompleted: number;
   serviceRequests: number;
+  totalActive: number;
+  totalInactive: number;
+  inactiveByCity: InactiveCityRow[];
 }
+
+const PLACE_TABLES = [
+  "mosques",
+  "wholesale_markets",
+  "shopping_malls",
+  "restaurants",
+  "halal_shops",
+  "historical_sites",
+  "parks",
+  "production_hubs",
+  "exhibitions",
+  "companies",
+] as const;
 
 const AdminDashboard = () => {
   const navigate = useNavigate();
@@ -36,28 +63,57 @@ const AdminDashboard = () => {
   const fetchStats = async () => {
     try {
       const [
-        { count: marketsCount },
-        { count: restaurantsCount },
+        { count: marketsTotal },
+        { count: marketsActive },
+        { count: restaurantsTotal },
+        { count: restaurantsActive },
         { count: translatorsCount },
         { count: deepChecksPending },
         { count: deepChecksCompleted },
         { count: serviceRequestsCount },
       ] = await Promise.all([
         supabase.from("wholesale_markets").select("*", { count: "exact", head: true }),
+        supabase.from("wholesale_markets").select("*", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("restaurants").select("*", { count: "exact", head: true }),
+        supabase.from("restaurants").select("*", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("translators").select("*", { count: "exact", head: true }),
         supabase.from("deep_checks").select("*", { count: "exact", head: true }).eq("status", "pending"),
         supabase.from("deep_checks").select("*", { count: "exact", head: true }).eq("status", "completed"),
         supabase.from("service_requests").select("*", { count: "exact", head: true }).eq("status", "pending"),
       ]);
 
+      // Aggregate active/inactive across all place tables + inactive-by-city breakdown
+      let totalActive = 0;
+      let totalInactive = 0;
+      const inactiveByCity: InactiveCityRow[] = [];
+
+      await Promise.all(
+        PLACE_TABLES.map(async (tbl) => {
+          const [{ count: activeC }, { data: inactiveRows }] = await Promise.all([
+            supabase.from(tbl as never).select("*", { count: "exact", head: true }).eq("is_active", true),
+            supabase.from(tbl as never).select("city").eq("is_active", false),
+          ]);
+          totalActive += activeC || 0;
+          const rows = (inactiveRows as Array<{ city: string }> | null) || [];
+          totalInactive += rows.length;
+          const grouped = new Map<string, number>();
+          rows.forEach((r) => grouped.set(r.city, (grouped.get(r.city) || 0) + 1));
+          grouped.forEach((count, city) => inactiveByCity.push({ table: tbl, city, count }));
+        })
+      );
+
+      inactiveByCity.sort((a, b) => b.count - a.count);
+
       setStats({
-        markets: marketsCount || 0,
-        restaurants: restaurantsCount || 0,
+        markets: { active: marketsActive || 0, total: marketsTotal || 0 },
+        restaurants: { active: restaurantsActive || 0, total: restaurantsTotal || 0 },
         translators: translatorsCount || 0,
         deepChecksPending: deepChecksPending || 0,
         deepChecksCompleted: deepChecksCompleted || 0,
         serviceRequests: serviceRequestsCount || 0,
+        totalActive,
+        totalInactive,
+        inactiveByCity,
       });
     } catch (error) {
       console.error("Error fetching stats:", error);
