@@ -13,7 +13,8 @@
     "halal": "Halal",
     "travel": "Voyage",
     "mosques": "Mosquées",
-    "profile": "Profil"
+    "profile": "Profil",
+    "services": "Services"
   },
   "modules": {
     "halal": "Guide Halal",

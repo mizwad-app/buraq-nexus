@@ -13,7 +13,8 @@
     "halal": "حلال",
     "travel": "السفر",
     "mosques": "المساجد",
-    "profile": "الملف"
+    "profile": "الملف",
+    "services": "الخدمات"
   },
   "modules": {
     "halal": "دليل الحلال",

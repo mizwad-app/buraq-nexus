@@ -13,7 +13,8 @@
     "halal": "清真",
     "travel": "旅行",
     "mosques": "清真寺",
-    "profile": "个人资料"
+    "profile": "个人资料",
+    "services": "服务"
   },
   "modules": {
     "halal": "清真指南",
