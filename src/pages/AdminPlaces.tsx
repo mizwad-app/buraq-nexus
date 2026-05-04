@@ -70,6 +70,15 @@ interface PlaceRow {
   has_halal_food?: boolean | null;
   is_active?: boolean | null;
   rating?: number | null;
+  phone?: string | null;
+  phone_secondary?: string | null;
+  email?: string | null;
+  district?: string | null;
+  district_zh?: string | null;
+  working_hours_uz?: string | null;
+  working_hours_en?: string | null;
+  verification_status?: string | null;
+  data_sources?: unknown;
 }
 
 const empty = (): PlaceRow => ({
