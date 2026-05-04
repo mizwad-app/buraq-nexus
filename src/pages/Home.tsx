@@ -4,6 +4,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { ImageCard } from "@/components/ImageCard";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SupportChat } from "@/components/SupportChat";
+import { MizwadWordmark } from "@/components/MizwadWordmark";
 import { PrayerTimeCard } from "@/components/home/PrayerTimeCard";
 import { ExchangeRateCard } from "@/components/home/ExchangeRateCard";
 import { cn } from "@/lib/utils";
