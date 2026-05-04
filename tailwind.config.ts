@@ -14,8 +14,10 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Lexend', 'sans-serif'],
+        sans: ['Inter Tight', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        display: ['Fraunces', 'Georgia', 'serif'],
+        serif: ['Fraunces', 'Georgia', 'serif'],
+        mono: ['JetBrains Mono', 'Menlo', 'monospace'],
       },
       colors: {
         border: "hsl(var(--border))",
