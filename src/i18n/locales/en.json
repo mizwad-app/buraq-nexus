@@ -553,7 +553,7 @@
   },
   "services": {
     "title": "Services",
-    "subtitle": "Business services",
+    "subtitle": "Travel and business services",
     "description": "Essential services for your business trip",
     "flightBooking": {
       "title": "Flight Tickets",
@@ -591,7 +591,25 @@
     "messageRequired": "Please enter details",
     "requestDescription": "Enter details below. Our team will contact you shortly.",
     "requestPlaceholder": "How can we help?",
-    "submit": "Submit"
+    "submit": "Submit",
+    "cards": {
+      "yoriqnoma": {
+        "title": "Travel Guide",
+        "subtitle": "Travel rules"
+      },
+      "video": {
+        "title": "Video Tips",
+        "subtitle": "Useful videos"
+      },
+      "documents": {
+        "title": "Documents",
+        "subtitle": "Passport, visa, insurance"
+      },
+      "tickets": {
+        "title": "Tickets",
+        "subtitle": "Flights & trains"
+      }
+    }
   },
   "admin": {
     "locationPicker": "Location Picker",

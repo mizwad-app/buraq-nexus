@@ -28,6 +28,11 @@ import AdminPlaces from "./pages/AdminPlaces";
 import { OnboardingFlow } from "@/components/onboarding/OnboardingFlow";
 import { OnboardingGate } from "@/components/onboarding/OnboardingGate";
 import Consulate from "./pages/Consulate";
+import Services from "./pages/Services";
+import YoriqnomaPage from "./pages/services/YoriqnomaPage";
+import VideoTipsPage from "./pages/services/VideoTipsPage";
+import DocumentsPage from "./pages/services/DocumentsPage";
+import TicketsPage from "./pages/services/TicketsPage";
 
 const queryClient = new QueryClient();
 
@@ -69,6 +74,11 @@ const App = () => (
                       <Route path="/translators" element={<Translators />} />
                       <Route path="/onboarding" element={<OnboardingFlow />} />
                       <Route path="/consulate" element={<Consulate />} />
+                      <Route path="/xizmatlar" element={<Services />} />
+                      <Route path="/xizmatlar/yo-riqnoma" element={<YoriqnomaPage />} />
+                      <Route path="/xizmatlar/video" element={<VideoTipsPage />} />
+                      <Route path="/xizmatlar/hujjatlar" element={<DocumentsPage />} />
+                      <Route path="/xizmatlar/biletlar" element={<TicketsPage />} />
 
                       {/* Backward-compatible redirects */}
                       <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />

@@ -615,7 +615,26 @@
     "messageRequired": "Veuillez saisir les détails",
     "requestDescription": "Saisissez les détails ci-dessous. Notre équipe vous contactera sous peu.",
     "requestPlaceholder": "Comment pouvons-nous aider?",
-    "submit": "Envoyer"
+    "submit": "Envoyer",
+    "subtitle": "Services de voyage et d'affaires",
+    "cards": {
+      "yoriqnoma": {
+        "title": "Guide",
+        "subtitle": "Règles de voyage"
+      },
+      "video": {
+        "title": "Conseils vidéo",
+        "subtitle": "Vidéos utiles"
+      },
+      "documents": {
+        "title": "Documents",
+        "subtitle": "Passeport, visa, assurance"
+      },
+      "tickets": {
+        "title": "Billets",
+        "subtitle": "Vols et trains"
+      }
+    }
   },
   "prayers": {
     "fajr": "Fajr",
