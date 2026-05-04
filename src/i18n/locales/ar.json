@@ -13,7 +13,8 @@
     "halal": "حلال",
     "travel": "السفر",
     "mosques": "المساجد",
-    "profile": "الملف"
+    "profile": "الملف",
+    "services": "الخدمات"
   },
   "modules": {
     "halal": "دليل الحلال",
@@ -530,7 +531,7 @@
   },
   "services": {
     "title": "الخدمات",
-    "subtitle": "خدمات الأعمال",
+    "subtitle": "خدمات السفر والأعمال",
     "description": "خدمات أساسية لرحلة عملك",
     "flightBooking": {
       "title": "تذاكر الطيران",
@@ -568,7 +569,25 @@
     "messageRequired": "يرجى إدخال التفاصيل",
     "requestDescription": "أدخل التفاصيل أدناه. سيتواصل معك فريقنا قريبًا.",
     "requestPlaceholder": "كيف يمكننا المساعدة؟",
-    "submit": "إرسال"
+    "submit": "إرسال",
+    "cards": {
+      "yoriqnoma": {
+        "title": "الدليل",
+        "subtitle": "قواعد السفر"
+      },
+      "video": {
+        "title": "نصائح فيديو",
+        "subtitle": "فيديوهات مفيدة"
+      },
+      "documents": {
+        "title": "المستندات",
+        "subtitle": "جواز السفر والتأشيرة والتأمين"
+      },
+      "tickets": {
+        "title": "التذاكر",
+        "subtitle": "رحلات وقطارات"
+      }
+    }
   },
   "modes": {
     "business": "أعمال",

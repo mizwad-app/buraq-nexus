@@ -13,7 +13,8 @@
     "halal": "清真",
     "travel": "旅行",
     "mosques": "清真寺",
-    "profile": "个人资料"
+    "profile": "个人资料",
+    "services": "服务"
   },
   "modules": {
     "halal": "清真指南",
@@ -622,7 +623,7 @@
   },
   "services": {
     "title": "服务",
-    "subtitle": "核查与预订服务",
+    "subtitle": "旅行和商务服务",
     "description": "商务旅行所需的服务",
     "flightBooking": {
       "title": "机票",
@@ -660,7 +661,25 @@
     "messageRequired": "请输入详细信息",
     "requestDescription": "请在下方输入详细信息。我们的客服将尽快与您联系。",
     "requestPlaceholder": "您需要什么帮助?",
-    "submit": "提交"
+    "submit": "提交",
+    "cards": {
+      "yoriqnoma": {
+        "title": "旅行指南",
+        "subtitle": "旅行规则"
+      },
+      "video": {
+        "title": "视频指南",
+        "subtitle": "实用视频"
+      },
+      "documents": {
+        "title": "文件",
+        "subtitle": "护照、签证、保险"
+      },
+      "tickets": {
+        "title": "票务",
+        "subtitle": "机票和火车票"
+      }
+    }
   },
   "modes": {
     "business": "商业",

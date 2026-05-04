@@ -1,6 +1,6 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Home, Briefcase, Moon, Plane, User } from "lucide-react";
+import { Home, Briefcase, Moon, Plane, LayoutGrid } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export const BottomNavigation = () => {
@@ -12,7 +12,7 @@ export const BottomNavigation = () => {
     { path: "/business", icon: Briefcase, label: t("nav.business") },
     { path: "/ibadah", icon: Moon, label: t("nav.halal") },
     { path: "/travel", icon: Plane, label: t("nav.travel") },
-    { path: "/profile", icon: User, label: t("nav.profile") },
+    { path: "/xizmatlar", icon: LayoutGrid, label: t("nav.services") },
   ];
 
   return (

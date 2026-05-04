@@ -13,7 +13,8 @@
     "halal": "Halol",
     "travel": "Sayohat",
     "mosques": "Masjidlar",
-    "profile": "Profil"
+    "profile": "Profil",
+    "services": "Xizmatlar"
   },
   "modules": {
     "halal": "Halol Yo'ldosh",
@@ -621,7 +622,7 @@
   },
   "services": {
     "title": "Xizmatlar",
-    "subtitle": "Tekshiruv va bron qilish xizmatlari",
+    "subtitle": "Sayohat va biznes xizmatlari",
     "description": "Biznes safaringiz uchun zarur xizmatlar",
     "flightBooking": {
       "title": "Aviachiptalar",
@@ -659,7 +660,25 @@
     "messageRequired": "Iltimos, batafsil ma'lumot kiriting",
     "requestDescription": "Quyidagi maydonga batafsil ma'lumot kiriting. Operatorlarimiz tez orada bog'lanadi.",
     "requestPlaceholder": "Sizga qanday yordam kerak?",
-    "submit": "Yuborish"
+    "submit": "Yuborish",
+    "cards": {
+      "yoriqnoma": {
+        "title": "Yo'riqnoma",
+        "subtitle": "Sayohat qoidalari"
+      },
+      "video": {
+        "title": "Video maslahatlar",
+        "subtitle": "Foydali videolar"
+      },
+      "documents": {
+        "title": "Hujjatlar",
+        "subtitle": "Pasport, viza, sug'urta"
+      },
+      "tickets": {
+        "title": "Biletlar",
+        "subtitle": "Aviabilet va poyezd"
+      }
+    }
   },
   "modes": {
     "business": "Biznes",
