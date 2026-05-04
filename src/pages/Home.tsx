@@ -56,11 +56,6 @@ const Home = () => {
               </p>
             )}
           </div>
-              <p className="text-sm text-foreground mt-2">
-                {`${t("app.welcome")}, ${user.user_metadata?.full_name || t("home.user")}!`}
-              </p>
-            )}
-          </div>
           <LanguageSelector />
         </div>
       </header>
