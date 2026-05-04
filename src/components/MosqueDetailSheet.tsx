@@ -232,14 +232,36 @@ export const MosqueDetailSheet = ({ open, onOpenChange, mosque }: MosqueDetailSh
             </div>
 
             {/* Address */}
-            <div className="bg-card rounded-2xl p-4 border border-border/50">
-              <h3 className="font-semibold text-foreground flex items-center gap-2 mb-2">
+            <div className="bg-card rounded-2xl p-4 border border-border/50 space-y-2.5">
+              <h3 className="font-semibold text-foreground flex items-center gap-2 mb-1">
                 <MapPin className="w-4 h-4 text-primary" />
                 {t("common.address")}
               </h3>
               <p className="text-sm text-muted-foreground">
                 {translatedAddress || `${translatedCity}, ${mosque.country}`}
               </p>
+              {(mosque.district || mosque.district_zh) && (
+                <p className="text-xs text-muted-foreground">
+                  {mosque.district}
+                  {mosque.district && mosque.district_zh ? " · " : ""}
+                  {mosque.district_zh && <span className="font-mono">{mosque.district_zh}</span>}
+                </p>
+              )}
+              {mosque.working_hours && (
+                <div className="flex items-center gap-2 text-sm text-foreground">
+                  <Clock className="w-4 h-4 text-emerald-500 flex-shrink-0" />
+                  <span>{mosque.working_hours}</span>
+                </div>
+              )}
+              {mosque.phone && (
+                <a
+                  href={`tel:${mosque.phone}`}
+                  className="flex items-center gap-2 text-sm text-primary hover:underline"
+                >
+                  <Phone className="w-4 h-4 flex-shrink-0" />
+                  <span className="font-mono">{mosque.phone}</span>
+                </a>
+              )}
             </div>
 
             {/* Consolidated info card */}
