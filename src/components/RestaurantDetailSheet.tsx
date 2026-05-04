@@ -14,6 +14,7 @@ import {
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { HalalStatusBadge } from "@/components/icons/HalalStatusIcons";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
+import { PlaceContactInfo } from "@/components/places/PlaceContactInfo";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import {
@@ -45,6 +46,20 @@ interface Restaurant {
   image_url?: string | null;
   latitude?: number | null;
   longitude?: number | null;
+  phone?: string | null;
+  phone_secondary?: string | null;
+  email?: string | null;
+  website?: string | null;
+  working_hours?: string | null;
+  working_hours_uz?: string | null;
+  working_hours_en?: string | null;
+  district?: string | null;
+  district_zh?: string | null;
+  verification_status?: string | null;
+  data_sources?: unknown;
+  cuisine_type_label?: string | null;
+  halal_certified?: boolean | null;
+  halal_certification_source?: string | null;
   [key: string]: unknown;
 }
 
