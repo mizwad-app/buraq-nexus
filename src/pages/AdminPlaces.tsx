@@ -70,7 +70,7 @@ interface PlaceRow {
   has_halal_food?: boolean | null;
   is_active?: boolean | null;
   rating?: number | null;
-  phone?: string | null;
+  working_hours?: string | null;
   phone_secondary?: string | null;
   email?: string | null;
   district?: string | null;
