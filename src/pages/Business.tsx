@@ -472,7 +472,7 @@ const Business = () => {
               </button>
             ))}
           </div>
-          <div className="pointer-events-none absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-background to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-1 w-4 bg-gradient-to-l from-background to-transparent" />
         </div>
       </section>
 
