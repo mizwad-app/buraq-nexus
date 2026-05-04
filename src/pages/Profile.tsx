@@ -235,6 +235,45 @@ const Profile = () => {
         </div>
       </section>
 
+      {/* My Country Consulate */}
+      <section className="px-5 mb-4">
+        {userCountry ? (
+          <button
+            onClick={() => navigate("/consulate")}
+            className="w-full flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-primary/15 to-accent/10 border border-primary/20 hover:border-primary/40 transition-all"
+          >
+            <div className="w-10 h-10 rounded-lg bg-primary/15 flex items-center justify-center text-xl">
+              {userCountry.flag}
+            </div>
+            <div className="flex-1 text-left min-w-0">
+              <p className="text-sm font-semibold text-foreground truncate">
+                {t("profile.my_consulate")}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {userCountry.name} · {t("profile.consulate_subtitle")}
+              </p>
+            </div>
+            <ChevronRight className="w-5 h-5 text-muted-foreground shrink-0" />
+          </button>
+        ) : (
+          <div className="rounded-xl border border-dashed border-border p-4">
+            <p className="text-sm text-foreground font-medium mb-1">
+              {t("profile.country_not_set")}
+            </p>
+            <p className="text-xs text-muted-foreground mb-3">
+              {t("profile.consulate_subtitle")}
+            </p>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => navigate("/onboarding")}
+            >
+              {t("profile.set_country")}
+            </Button>
+          </div>
+        )}
+      </section>
+
       {/* Admin Access */}
       {isAdmin && (
         <section className="px-5 mb-4">
