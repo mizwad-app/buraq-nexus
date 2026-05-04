@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lexend:wght@400;500;600;700&display=swap');
+@layer base {
+  :root {
+    --font-display: 'Fraunces', Georgia, serif;
+    --font-sans: 'Inter Tight', Inter, system-ui, -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', Menlo, monospace;
+  }
+}
 
 @layer base {
   :root {
