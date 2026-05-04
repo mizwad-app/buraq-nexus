@@ -47,6 +47,7 @@ const Profile = () => {
   const [bookingsLoading, setBookingsLoading] = useState(false);
   const [hasInterests, setHasInterests] = useState<boolean | null>(null);
   const [showSurvey, setShowSurvey] = useState(false);
+  const [userCountry, setUserCountry] = useState<{ code: string; name: string; flag: string } | null>(null);
   const { theme, setTheme } = useTheme();
   const themeOptions: { value: ThemeMode; label: string; icon: typeof Sun }[] = [
     { value: "light", label: t("profile.theme.light"), icon: Sun },
@@ -84,6 +85,27 @@ const Profile = () => {
       .eq("user_id", user?.id)
       .maybeSingle();
     setHasInterests(!!interestsData);
+
+    // Fetch user country (from onboarding)
+    const { data: profileData } = await supabase
+      .from("profiles")
+      .select("country_code, country_name")
+      .eq("user_id", user?.id)
+      .maybeSingle();
+    if (profileData?.country_code) {
+      const { data: country } = await supabase
+        .from("countries_ref")
+        .select("flag_emoji, name_en, name_uz")
+        .eq("code", profileData.country_code)
+        .maybeSingle();
+      setUserCountry({
+        code: profileData.country_code,
+        name: profileData.country_name || country?.name_en || country?.name_uz || profileData.country_code,
+        flag: country?.flag_emoji || "🏛️",
+      });
+    } else {
+      setUserCountry(null);
+    }
 
     // Fetch translator bookings
     setBookingsLoading(true);
