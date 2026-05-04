@@ -305,10 +305,10 @@ const Travel = () => {
         supabase.from("markets").select("*").eq("is_active", true),
       ]);
 
-      if (parksRes.data) setParks(parksRes.data as Park[]);
-      if (mallsRes.data) setMalls(mallsRes.data as ShoppingMall[]);
-      if (histRes.data) setHistoricalSites(histRes.data as unknown as PlaceData[]);
-      if (marketsRes.data) setMarkets(marketsRes.data as unknown as PlaceData[]);
+      if (parksRes.data) setParks([...(parksRes.data as Park[])].sort(sortByQuality));
+      if (mallsRes.data) setMalls([...(mallsRes.data as ShoppingMall[])].sort(sortByQuality));
+      if (histRes.data) setHistoricalSites([...(histRes.data as unknown as PlaceData[])].sort(sortByQuality));
+      if (marketsRes.data) setMarkets([...(marketsRes.data as unknown as PlaceData[])].sort(sortByQuality));
     } catch (error) {
       console.error("Error fetching travel data:", error);
     } finally {

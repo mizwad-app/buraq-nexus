@@ -191,8 +191,8 @@ const Business = () => {
         supabase.from("product_categories").select("*").order("name"),
       ]);
 
-      if (marketsRes.data) setMarkets(marketsRes.data as WholesaleMarket[]);
-      if (hubsRes.data) setHubs(hubsRes.data as ProductionHub[]);
+      if (marketsRes.data) setMarkets([...(marketsRes.data as WholesaleMarket[])].sort(sortByQuality));
+      if (hubsRes.data) setHubs([...(hubsRes.data as ProductionHub[])].sort(sortByQuality));
       if (exhibitionsRes.data) setExhibitions(exhibitionsRes.data as Exhibition[]);
       if (categoriesRes.data) setCategories(categoriesRes.data as ProductCategory[]);
     } catch (error) {
