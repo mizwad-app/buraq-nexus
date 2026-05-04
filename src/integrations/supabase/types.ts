@@ -1490,6 +1490,7 @@ export type Database = {
           address_ru: string | null
           address_uz: string | null
           address_zh: string | null
+          built_year: number | null
           city: string
           city_ar: string | null
           city_en: string | null
@@ -1498,14 +1499,26 @@ export type Database = {
           city_zh: string | null
           country: string
           created_at: string
+          data_sources: Json | null
           description: string | null
           description_ar: string | null
           description_en: string | null
           description_ru: string | null
           description_uz: string | null
           description_zh: string | null
+          friday_prayer_time: string | null
           has_friday_prayer: boolean | null
           has_womens_section: boolean | null
+          historical_facts_ar: string | null
+          historical_facts_en: string | null
+          historical_facts_ru: string | null
+          historical_facts_uz: string | null
+          historical_facts_zh: string | null
+          historical_period_ar: string | null
+          historical_period_en: string | null
+          historical_period_ru: string | null
+          historical_period_uz: string | null
+          historical_period_zh: string | null
           id: string
           image_url: string | null
           latitude: number | null
@@ -1516,6 +1529,8 @@ export type Database = {
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          notable_features: Json | null
+          verification_status: string | null
         }
         Insert: {
           address?: string | null
@@ -1524,6 +1539,7 @@ export type Database = {
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          built_year?: number | null
           city: string
           city_ar?: string | null
           city_en?: string | null
@@ -1532,14 +1548,26 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          friday_prayer_time?: string | null
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
+          historical_facts_ar?: string | null
+          historical_facts_en?: string | null
+          historical_facts_ru?: string | null
+          historical_facts_uz?: string | null
+          historical_facts_zh?: string | null
+          historical_period_ar?: string | null
+          historical_period_en?: string | null
+          historical_period_ru?: string | null
+          historical_period_uz?: string | null
+          historical_period_zh?: string | null
           id?: string
           image_url?: string | null
           latitude?: number | null
@@ -1550,6 +1578,8 @@ export type Database = {
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          notable_features?: Json | null
+          verification_status?: string | null
         }
         Update: {
           address?: string | null
@@ -1558,6 +1588,7 @@ export type Database = {
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          built_year?: number | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
@@ -1566,14 +1597,26 @@ export type Database = {
           city_zh?: string | null
           country?: string
           created_at?: string
+          data_sources?: Json | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
           description_ru?: string | null
           description_uz?: string | null
           description_zh?: string | null
+          friday_prayer_time?: string | null
           has_friday_prayer?: boolean | null
           has_womens_section?: boolean | null
+          historical_facts_ar?: string | null
+          historical_facts_en?: string | null
+          historical_facts_ru?: string | null
+          historical_facts_uz?: string | null
+          historical_facts_zh?: string | null
+          historical_period_ar?: string | null
+          historical_period_en?: string | null
+          historical_period_ru?: string | null
+          historical_period_uz?: string | null
+          historical_period_zh?: string | null
           id?: string
           image_url?: string | null
           latitude?: number | null
@@ -1584,6 +1627,8 @@ export type Database = {
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          notable_features?: Json | null
+          verification_status?: string | null
         }
         Relationships: []
       }
