@@ -163,7 +163,7 @@ IMPORTANT: Return ONLY the JSON array, no markdown, no explanation.`;
 const cityTranslations: Record<string, { uz: string; ru: string; en: string; ar: string }> = {
   "Beijing": { uz: "Pekin", ru: "Пекин", en: "Beijing", ar: "بكين" },
   "Shanghai": { uz: "Shanxay", ru: "Шанхай", en: "Shanghai", ar: "شانغهاي" },
-  "Guangzhou": { uz: "Guanchzhou", ru: "Гуанчжоу", en: "Guangzhou", ar: "قوانغتشو" },
+  "Guangzhou": { uz: "Guangchjou", ru: "Гуанчжоу", en: "Guangzhou", ar: "قوانغتشو" },
   "Shenzhen": { uz: "Shenchjen", ru: "Шэньчжэнь", en: "Shenzhen", ar: "شنتشن" },
 };
 

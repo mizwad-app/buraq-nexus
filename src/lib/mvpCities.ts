@@ -15,7 +15,7 @@ export const MVP_CITIES: MvpCity[] = [
   // Tier 1
   { name: "Beijing", name_uz: "Pekin", name_zh: "北京", tier: 1 },
   { name: "Shanghai", name_uz: "Shanxay", name_zh: "上海", tier: 1 },
-  { name: "Guangzhou", name_uz: "Guangzhou", name_zh: "广州", tier: 1 },
+  { name: "Guangzhou", name_uz: "Guangchjou", name_zh: "广州", tier: 1 },
   { name: "Shenzhen", name_uz: "Shenzhen", name_zh: "深圳", tier: 1 },
   { name: "Yiwu", name_uz: "Yiwu", name_zh: "义乌", tier: 1 },
   { name: "Hangzhou", name_uz: "Hangzhou", name_zh: "杭州", tier: 1 },
