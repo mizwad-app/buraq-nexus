@@ -15,6 +15,8 @@ import {
   ScrollText,
   Phone,
   BadgeCheck,
+  Search,
+  SlidersHorizontal,
 } from "lucide-react";
 import { AIScannerModal } from "@/components/AIScannerModal";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,6 +28,11 @@ import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { RestaurantDetailSheet } from "@/components/RestaurantDetailSheet";
 import { MosqueDetailSheet } from "@/components/MosqueDetailSheet";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 // Import mosque images for list view
 import huaisheng1 from "@/assets/mosques/huaisheng-1.jpg";
