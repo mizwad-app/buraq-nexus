@@ -161,9 +161,12 @@ const getRestaurantFallback = (cuisine: string | null | undefined): string => {
   return CUISINE_FALLBACK_IMAGES[cuisine.trim().toLowerCase()] || RESTAURANT_FALLBACK_IMAGE;
 };
 
-// Map mosque names to their actual images
-const getMosqueImage = (mosqueName: string): string => {
-  const lowerName = mosqueName.toLowerCase();
+// Resolve mosque thumbnail: DB image_url > local asset by name match > generic fallback
+const getMosqueImage = (mosque: { name: string; image_url?: string | null }): string => {
+  if (mosque.image_url && mosque.image_url.trim().length > 0) {
+    return mosque.image_url;
+  }
+  const lowerName = mosque.name.toLowerCase();
   if (lowerName.includes("huaisheng") || lowerName.includes("怀圣")) return huaisheng1;
   if (lowerName.includes("vaqqos") || lowerName.includes("先贤") || lowerName.includes("xianxian")) return abiVaqqos1;
   if (lowerName.includes("xiaodongying") || lowerName.includes("小东营")) return xiaodongying1;
@@ -648,7 +651,7 @@ const Ibadah = () => {
                 >
                   <div className="relative h-40 w-full">
                     <img
-                      src={getMosqueImage(mosque.name)}
+                      src={getMosqueImage(mosque)}
                       alt={getField(mosque, 'name')}
                       className="w-full h-full object-cover"
                       onError={(e) => {
