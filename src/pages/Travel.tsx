@@ -62,6 +62,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { PlaceDetailSheet, type PlaceType, type PlaceData } from "@/components/travel/PlaceDetailSheet";
+import { MVP_CITIES } from "@/lib/mvpCities";
 
 interface Park {
   id: string;
@@ -320,17 +321,23 @@ const Travel = () => {
   };
 
   const allCities = useMemo(() => {
-    const citiesMap = new Map<string, { base: string; translated: string }>();
-    const addCity = (item: { city: string; city_uz?: string | null; city_ru?: string | null; city_en?: string | null; city_ar?: string | null }) => {
-      if (!citiesMap.has(item.city)) {
-        citiesMap.set(item.city, { base: item.city, translated: getTranslatedCity(item) });
-      }
+    // Build full MVP city list, enriched with translated names from any DB row when available
+    const dbCityData = new Map<string, { city: string; city_uz?: string | null; city_ru?: string | null; city_en?: string | null; city_ar?: string | null }>();
+    const collect = (item: { city: string; city_uz?: string | null; city_ru?: string | null; city_en?: string | null; city_ar?: string | null }) => {
+      if (item?.city && !dbCityData.has(item.city)) dbCityData.set(item.city, item);
     };
-    parks.forEach(addCity);
-    malls.forEach(addCity);
-    historicalSites.forEach((h) => addCity(h as unknown as { city: string }));
-    markets.forEach((m) => addCity(m as unknown as { city: string }));
-    return Array.from(citiesMap.values()).sort((a, b) => a.translated.localeCompare(b.translated));
+    parks.forEach(collect);
+    malls.forEach(collect);
+    historicalSites.forEach((h) => collect(h as unknown as { city: string }));
+    markets.forEach((m) => collect(m as unknown as { city: string }));
+
+    return MVP_CITIES.map((mc) => {
+      const dbRow = dbCityData.get(mc.name);
+      const translated = dbRow
+        ? getTranslatedCity(dbRow)
+        : (currentLanguage === "uz" ? mc.name_uz : mc.name);
+      return { base: mc.name, translated };
+    }).sort((a, b) => a.translated.localeCompare(b.translated));
   }, [parks, malls, historicalSites, markets, currentLanguage]);
 
   const unifiedResults = useMemo(() => {
@@ -605,6 +612,24 @@ const Travel = () => {
                     </button>
                   );
                 })}
+              </div>
+            ) : selectedCity !== "all" ? (
+              <div className="text-center py-12 text-muted-foreground">
+                <MapPin className="w-12 h-12 mx-auto mb-3 opacity-40" />
+                <p className="font-medium text-foreground">
+                  {t("travel.cityComingSoon", "Bu shaharda hali ma'lumot qo'shilmagan")}
+                </p>
+                <p className="text-sm mt-1">
+                  {t("travel.cityComingSoonHint", "Tez orada qo'shamiz. Boshqa shaharni tanlab ko'ring.")}
+                </p>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="mt-4"
+                  onClick={() => setSelectedCity("all")}
+                >
+                  {t("travel.showAllCities", "Barcha shaharlarni ko'rish")}
+                </Button>
               </div>
             ) : (
               <div className="text-center py-12 text-muted-foreground">
