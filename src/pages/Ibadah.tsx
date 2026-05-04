@@ -219,9 +219,9 @@ const Ibadah = () => {
   const fetchData = async () => {
     try {
       const [restaurantsRes, mosquesRes, shopsRes] = await Promise.all([
-        supabase.from("restaurants").select("*").order("rating", { ascending: false }),
-        supabase.from("mosques").select("*").order("name", { ascending: true }),
-        supabase.from("halal_shops" as any).select("*").order("name", { ascending: true }),
+        supabase.from("restaurants").select("*").eq("is_active", true).order("rating", { ascending: false }),
+        supabase.from("mosques").select("*").eq("is_active", true).order("name", { ascending: true }),
+        supabase.from("halal_shops" as any).select("*").eq("is_active", true).order("name", { ascending: true }),
       ]);
 
       if (restaurantsRes.data) setRestaurants(restaurantsRes.data as Restaurant[]);

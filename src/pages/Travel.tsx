@@ -298,8 +298,8 @@ const Travel = () => {
   const fetchData = async () => {
     try {
       const [parksRes, mallsRes, histRes, marketsRes] = await Promise.all([
-        supabase.from("parks").select("*"),
-        supabase.from("shopping_malls").select("*").order("rating", { ascending: false }),
+        supabase.from("parks").select("*").eq("is_active", true),
+        supabase.from("shopping_malls").select("*").eq("is_active", true).order("rating", { ascending: false }),
         supabase.from("historical_sites").select("*").eq("is_active", true),
         supabase.from("markets").select("*").eq("is_active", true),
       ]);

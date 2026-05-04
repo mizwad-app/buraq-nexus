@@ -185,9 +185,9 @@ const Business = () => {
   const fetchData = async () => {
     try {
       const [marketsRes, hubsRes, exhibitionsRes, categoriesRes] = await Promise.all([
-        supabase.from("wholesale_markets").select("*"),
-        supabase.from("production_hubs").select("*"),
-        supabase.from("exhibitions").select("*").order("start_date", { ascending: true }),
+        supabase.from("wholesale_markets").select("*").eq("is_active", true),
+        supabase.from("production_hubs").select("*").eq("is_active", true),
+        supabase.from("exhibitions").select("*").eq("is_active", true).order("start_date", { ascending: true }),
         supabase.from("product_categories").select("*").order("name"),
       ]);
 

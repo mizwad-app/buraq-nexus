@@ -11,6 +11,7 @@ import {
 import { useCity, CityOption } from "@/contexts/CityContext";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { MVP_CITIES, isMvpCity } from "@/lib/mvpCities";
 
 interface CityData {
   city: string;
@@ -30,11 +31,11 @@ export const GlobalCityFilter = () => {
     const fetchCities = async () => {
       try {
         const [marketsRes, hubsRes, restaurantsRes, mallsRes, mosquesRes] = await Promise.all([
-          supabase.from("wholesale_markets").select("city, city_uz, city_ru, city_en, city_ar"),
-          supabase.from("production_hubs").select("city, city_uz, city_ru, city_en, city_ar"),
-          supabase.from("restaurants").select("city, city_uz, city_ru, city_en, city_ar"),
-          supabase.from("shopping_malls").select("city, city_uz, city_ru, city_en, city_ar"),
-          supabase.from("mosques").select("city, city_uz, city_ru, city_en, city_ar"),
+          supabase.from("wholesale_markets").select("city, city_uz, city_ru, city_en, city_ar").eq("is_active", true),
+          supabase.from("production_hubs").select("city, city_uz, city_ru, city_en, city_ar").eq("is_active", true),
+          supabase.from("restaurants").select("city, city_uz, city_ru, city_en, city_ar").eq("is_active", true),
+          supabase.from("shopping_malls").select("city, city_uz, city_ru, city_en, city_ar").eq("is_active", true),
+          supabase.from("mosques").select("city, city_uz, city_ru, city_en, city_ar").eq("is_active", true),
         ]);
 
         const citiesMap = new Map<string, CityData>();
@@ -42,6 +43,8 @@ export const GlobalCityFilter = () => {
         const addCities = (data: CityData[] | null) => {
           if (data) {
             data.forEach(item => {
+              // Restrict to MVP 20-city scope
+              if (!isMvpCity(item.city)) return;
               if (!citiesMap.has(item.city)) {
                 citiesMap.set(item.city, item);
               }
@@ -55,11 +58,25 @@ export const GlobalCityFilter = () => {
         addCities(mallsRes.data as CityData[]);
         addCities(mosquesRes.data as CityData[]);
 
+        // Build the option list. For MVP cities not present in DB yet, include
+        // them anyway so the user sees the full 20-city scope in the dropdown.
+        const seen = new Set(citiesMap.keys());
+        MVP_CITIES.forEach((mc) => {
+          if (!seen.has(mc.name)) {
+            citiesMap.set(mc.name, {
+              city: mc.name,
+              city_uz: mc.name_uz,
+              city_zh: mc.name_zh,
+            } as CityData);
+          }
+        });
+
         const cities: CityOption[] = Array.from(citiesMap.entries())
           .map(([base, data]) => ({
             base,
             translated: getField(data, 'city') || base,
           }))
+          // Default sort: by Uzbek name (matches MVP_CITIES.name_uz fallback)
           .sort((a, b) => a.translated.localeCompare(b.translated));
 
         setAvailableCities(cities);

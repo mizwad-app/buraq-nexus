@@ -215,6 +215,7 @@ export type Database = {
           industry_ru: string | null
           industry_uz: string | null
           industry_zh: string | null
+          is_active: boolean
           name: string
           name_ar: string | null
           name_en: string | null
@@ -249,6 +250,7 @@ export type Database = {
           industry_ru?: string | null
           industry_uz?: string | null
           industry_zh?: string | null
+          is_active?: boolean
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -283,6 +285,7 @@ export type Database = {
           industry_ru?: string | null
           industry_uz?: string | null
           industry_zh?: string | null
+          is_active?: boolean
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -496,6 +499,7 @@ export type Database = {
           description_zh: string | null
           end_date: string
           id: string
+          is_active: boolean
           name: string
           name_ar: string | null
           name_en: string | null
@@ -534,6 +538,7 @@ export type Database = {
           description_zh?: string | null
           end_date: string
           id?: string
+          is_active?: boolean
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -572,6 +577,7 @@ export type Database = {
           description_zh?: string | null
           end_date?: string
           id?: string
+          is_active?: boolean
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -691,6 +697,7 @@ export type Database = {
           description_zh: string | null
           id: string
           image_url: string | null
+          is_active: boolean
           is_verified: boolean | null
           latitude: number | null
           longitude: number | null
@@ -727,6 +734,7 @@ export type Database = {
           description_zh?: string | null
           id?: string
           image_url?: string | null
+          is_active?: boolean
           is_verified?: boolean | null
           latitude?: number | null
           longitude?: number | null
@@ -763,6 +771,7 @@ export type Database = {
           description_zh?: string | null
           id?: string
           image_url?: string | null
+          is_active?: boolean
           is_verified?: boolean | null
           latitude?: number | null
           longitude?: number | null
@@ -1521,6 +1530,7 @@ export type Database = {
           historical_period_zh: string | null
           id: string
           image_url: string | null
+          is_active: boolean
           latitude: number | null
           longitude: number | null
           name: string
@@ -1570,6 +1580,7 @@ export type Database = {
           historical_period_zh?: string | null
           id?: string
           image_url?: string | null
+          is_active?: boolean
           latitude?: number | null
           longitude?: number | null
           name: string
@@ -1619,6 +1630,7 @@ export type Database = {
           historical_period_zh?: string | null
           id?: string
           image_url?: string | null
+          is_active?: boolean
           latitude?: number | null
           longitude?: number | null
           name?: string
@@ -1899,6 +1911,7 @@ export type Database = {
           industry_ru: string | null
           industry_uz: string | null
           industry_zh: string | null
+          is_active: boolean
           latitude: number | null
           longitude: number | null
           name_zh: string | null
@@ -1940,6 +1953,7 @@ export type Database = {
           industry_ru?: string | null
           industry_uz?: string | null
           industry_zh?: string | null
+          is_active?: boolean
           latitude?: number | null
           longitude?: number | null
           name_zh?: string | null
@@ -1981,6 +1995,7 @@ export type Database = {
           industry_ru?: string | null
           industry_uz?: string | null
           industry_zh?: string | null
+          is_active?: boolean
           latitude?: number | null
           longitude?: number | null
           name_zh?: string | null
@@ -2107,6 +2122,7 @@ export type Database = {
           has_prayer_room: boolean | null
           id: string
           image_url: string | null
+          is_active: boolean
           is_halal_certified: boolean | null
           latitude: number | null
           longitude: number | null
@@ -2167,6 +2183,7 @@ export type Database = {
           has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
+          is_active?: boolean
           is_halal_certified?: boolean | null
           latitude?: number | null
           longitude?: number | null
@@ -2227,6 +2244,7 @@ export type Database = {
           has_prayer_room?: boolean | null
           id?: string
           image_url?: string | null
+          is_active?: boolean
           is_halal_certified?: boolean | null
           latitude?: number | null
           longitude?: number | null
@@ -3127,6 +3145,7 @@ export type Database = {
           description_ru: string | null
           description_uz: string | null
           id: string
+          is_active: boolean
           latitude: number | null
           longitude: number | null
           market_type: string | null
@@ -3168,6 +3187,7 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           id?: string
+          is_active?: boolean
           latitude?: number | null
           longitude?: number | null
           market_type?: string | null
@@ -3209,6 +3229,7 @@ export type Database = {
           description_ru?: string | null
           description_uz?: string | null
           id?: string
+          is_active?: boolean
           latitude?: number | null
           longitude?: number | null
           market_type?: string | null
