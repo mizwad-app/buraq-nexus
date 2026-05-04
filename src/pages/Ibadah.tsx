@@ -307,9 +307,12 @@ const Ibadah = () => {
   }, [mosques, selectedCity, fridayPrayerOnly, womensSectionOnly, verifiedOnly, q]);
 
   const filteredShops = useMemo(() => {
-    if (selectedCity === "all") return halalShops;
-    return halalShops.filter(s => s.city === selectedCity);
-  }, [halalShops, selectedCity]);
+    let filtered = halalShops;
+    if (selectedCity !== "all") filtered = filtered.filter(s => s.city === selectedCity);
+    if (verifiedOnly) filtered = filtered.filter(s => (s as unknown as { is_verified?: boolean }).is_verified);
+    if (q) filtered = filtered.filter(s => matchesQuery(s as unknown as Record<string, unknown>, ['name', 'address', 'city']));
+    return filtered;
+  }, [halalShops, selectedCity, verifiedOnly, q]);
 
   const requestLocation = () => {
     setLoadingLocation(true);
