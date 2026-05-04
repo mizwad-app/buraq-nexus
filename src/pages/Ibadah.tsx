@@ -15,6 +15,8 @@ import {
   ScrollText,
   Phone,
   BadgeCheck,
+  Search,
+  SlidersHorizontal,
 } from "lucide-react";
 import { AIScannerModal } from "@/components/AIScannerModal";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,6 +28,11 @@ import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { RestaurantDetailSheet } from "@/components/RestaurantDetailSheet";
 import { MosqueDetailSheet } from "@/components/MosqueDetailSheet";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
 
 // Import mosque images for list view
 import huaisheng1 from "@/assets/mosques/huaisheng-1.jpg";
@@ -208,12 +215,32 @@ const Ibadah = () => {
   const [locationError, setLocationError] = useState<string | null>(null);
   const [loadingLocation, setLoadingLocation] = useState(false);
 
+  // Search + filter sheet
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filterSheetOpen, setFilterSheetOpen] = useState(false);
+  const [fridayPrayerOnly, setFridayPrayerOnly] = useState(false);
+  const [womensSectionOnly, setWomensSectionOnly] = useState(false);
+  const [verifiedOnly, setVerifiedOnly] = useState(false);
+
   const filterChips: { id: HalalFilter; labelKey: string; color: string }[] = [
     { id: 'all', labelKey: 'halal.filterAll', color: 'bg-secondary text-secondary-foreground' },
     { id: 'certified', labelKey: 'halal.filterHalalOnly', color: 'bg-primary text-white' },
     { id: 'doubtful', labelKey: 'halal.filterDoubtful', color: 'bg-gold text-white' },
     { id: 'not_halal', labelKey: 'halal.filterNotHalal', color: 'bg-red-500 text-white' },
   ];
+
+  const activeFilterCount =
+    (fridayPrayerOnly ? 1 : 0) +
+    (womensSectionOnly ? 1 : 0) +
+    (verifiedOnly ? 1 : 0) +
+    (halalFilter !== 'all' ? 1 : 0);
+
+  const resetFilters = () => {
+    setFridayPrayerOnly(false);
+    setWomensSectionOnly(false);
+    setVerifiedOnly(false);
+    setHalalFilter('all');
+  };
 
   useEffect(() => {
     fetchData();
@@ -246,33 +273,46 @@ const Ibadah = () => {
     return t(`halal.status.${status}Desc`);
   };
 
-  // Filter by selected city and halal status
+  const q = searchQuery.trim().toLowerCase();
+  const matchesQuery = (obj: Record<string, unknown>, fields: string[]) => {
+    if (!q) return true;
+    return fields.some((f) => {
+      const v = getField(obj, f);
+      return typeof v === "string" && v.toLowerCase().includes(q);
+    });
+  };
+
+  // Filter by selected city, halal status, search
   const filteredRestaurants = useMemo(() => {
     let filtered = restaurants;
-    
-    if (selectedCity !== "all") {
-      filtered = filtered.filter(r => r.city === selectedCity);
-    }
-    
+    if (selectedCity !== "all") filtered = filtered.filter(r => r.city === selectedCity);
     if (halalFilter !== 'all') {
       filtered = filtered.filter(r => {
         const status = r.halal_status || (r.is_halal_certified ? 'certified' : 'not_halal');
         return status === halalFilter;
       });
     }
-    
+    if (q) filtered = filtered.filter(r => matchesQuery(r as unknown as Record<string, unknown>, ['name', 'cuisine_type', 'address', 'city']));
     return filtered;
-  }, [restaurants, selectedCity, halalFilter]);
+  }, [restaurants, selectedCity, halalFilter, q]);
 
   const filteredMosques = useMemo(() => {
-    if (selectedCity === "all") return mosques;
-    return mosques.filter(m => m.city === selectedCity);
-  }, [mosques, selectedCity]);
+    let filtered = mosques;
+    if (selectedCity !== "all") filtered = filtered.filter(m => m.city === selectedCity);
+    if (fridayPrayerOnly) filtered = filtered.filter(m => m.has_friday_prayer);
+    if (womensSectionOnly) filtered = filtered.filter(m => m.has_womens_section);
+    if (verifiedOnly) filtered = filtered.filter(m => (m as unknown as { verification_status?: string }).verification_status === 'admin_verified');
+    if (q) filtered = filtered.filter(m => matchesQuery(m as unknown as Record<string, unknown>, ['name', 'address', 'city']));
+    return filtered;
+  }, [mosques, selectedCity, fridayPrayerOnly, womensSectionOnly, verifiedOnly, q]);
 
   const filteredShops = useMemo(() => {
-    if (selectedCity === "all") return halalShops;
-    return halalShops.filter(s => s.city === selectedCity);
-  }, [halalShops, selectedCity]);
+    let filtered = halalShops;
+    if (selectedCity !== "all") filtered = filtered.filter(s => s.city === selectedCity);
+    if (verifiedOnly) filtered = filtered.filter(s => (s as unknown as { is_verified?: boolean }).is_verified);
+    if (q) filtered = filtered.filter(s => matchesQuery(s as unknown as Record<string, unknown>, ['name', 'address', 'city']));
+    return filtered;
+  }, [halalShops, selectedCity, verifiedOnly, q]);
 
   const requestLocation = () => {
     setLoadingLocation(true);
@@ -321,27 +361,72 @@ const Ibadah = () => {
 
   return (
     <div className="min-h-screen bg-background safe-bottom pb-24">
-      {/* Header */}
-      <header className="px-5 pt-12 pb-4">
-        <div className="animate-fade-in">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 bg-gradient-to-br from-emerald-500 to-green-600 rounded-xl shadow-lg">
-              <Moon className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-sm font-medium text-muted-foreground">
-              {t("halal.subtitle")}
-            </span>
-          </div>
-          <h1 className="text-2xl font-display font-bold text-foreground">
-            {t("halal.title")}
+      {/* Compact sticky header: title + search + category pills */}
+      <div className="sticky top-0 z-30 bg-background/95 backdrop-blur-md border-b border-border/50">
+        {/* Row 1: Title + city selector */}
+        <div className="flex items-center justify-between gap-3 px-4 pt-3 pb-2">
+          <h1 className="text-lg font-display font-bold text-foreground flex items-center gap-2 min-w-0">
+            <span className="text-xl">🕌</span>
+            <span className="truncate">{t("halal.title")}</span>
           </h1>
+          <div className="shrink-0 [&_button]:!py-1.5 [&_button]:!text-xs">
+            <GlobalCityFilter />
+          </div>
         </div>
-      </header>
 
-      {/* Global City Filter */}
-      <section className="px-5 mb-4">
-        <GlobalCityFilter />
-      </section>
+        {/* Row 2: Search + filter button */}
+        <div className="flex items-center gap-2 px-4 pb-2">
+          <div className="flex-1 relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none" />
+            <Input
+              placeholder={t("halal.searchPlaceholder", "Masjid, restoran qidirish...")}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-10 rounded-full bg-muted/50 border-border/50"
+            />
+          </div>
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-10 w-10 rounded-full shrink-0 relative"
+            onClick={() => setFilterSheetOpen(true)}
+            aria-label={t("common.filters", "Filtrlar")}
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+            {activeFilterCount > 0 && (
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-primary text-primary-foreground text-[10px] font-bold flex items-center justify-center">
+                {activeFilterCount}
+              </span>
+            )}
+          </Button>
+        </div>
+
+        {/* Row 3: Category pills */}
+        <div className="flex gap-2 px-4 pb-3 overflow-x-auto scrollbar-hide">
+          {([
+            { id: 'restaurants' as ActiveSection, icon: '🍴', label: t("halal.restaurantsTab"), count: filteredRestaurants.length },
+            { id: 'mosques' as ActiveSection, icon: '🕌', label: t("halal.mosquesTab"), count: filteredMosques.length },
+            { id: 'shops' as ActiveSection, icon: '🛒', label: t("halal.shopsTab"), count: filteredShops.length },
+          ]).map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveSection(cat.id)}
+              className={cn(
+                "px-3.5 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border",
+                activeSection === cat.id
+                  ? "bg-primary text-primary-foreground border-primary shadow-sm"
+                  : "bg-background border-border text-muted-foreground hover:bg-muted"
+              )}
+            >
+              <span className="mr-1">{cat.icon}</span>
+              {cat.label}
+              <span className={cn("ml-1.5 text-xs", activeSection === cat.id ? "opacity-80" : "opacity-60")}>
+                ({cat.count})
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       {/* AI Scanner FAB — floating bottom-left to avoid overlap with SupportChat FAB */}
       <button
@@ -353,66 +438,65 @@ const Ibadah = () => {
         <ScanLine className="w-6 h-6 text-primary-foreground" strokeWidth={2.5} />
       </button>
 
-      {/* Section Toggle - 3 Tabs */}
-      <section className="px-5 mb-4">
-        <div className="flex gap-2">
-          <button
-            onClick={() => setActiveSection('restaurants')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
-              activeSection === 'restaurants'
-                ? 'bg-primary/15 text-primary border-primary/30'
-                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
-            }`}
-          >
-            <Utensils className="w-4 h-4 inline-block mr-1" />
-            {t("halal.restaurantsTab")}
-          </button>
-          <button
-            onClick={() => setActiveSection('mosques')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
-              activeSection === 'mosques'
-                ? 'bg-primary/15 text-primary border-primary/30'
-                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
-            }`}
-          >
-            <Moon className="w-4 h-4 inline-block mr-1" />
-            {t("halal.mosquesTab")}
-          </button>
-          <button
-            onClick={() => setActiveSection('shops')}
-            className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium border transition-all ${
-              activeSection === 'shops'
-                ? 'bg-primary/15 text-primary border-primary/30'
-                : 'bg-secondary/40 text-muted-foreground border-transparent hover:bg-secondary/60'
-            }`}
-          >
-            <Store className="w-4 h-4 inline-block mr-1" />
-            {t("halal.shopsTab")}
-          </button>
-        </div>
-      </section>
+      {/* Filter Bottom Sheet */}
+      <Sheet open={filterSheetOpen} onOpenChange={setFilterSheetOpen}>
+        <SheetContent side="bottom" className="rounded-t-2xl max-h-[80vh]">
+          <SheetHeader>
+            <SheetTitle className="text-left">{t("common.filters", "Filtrlar")}</SheetTitle>
+          </SheetHeader>
 
-      {/* Halal Filter Chips - Only show for restaurants */}
-      {activeSection === 'restaurants' && (
-        <section className="px-5 mb-4">
-          <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
-            {filterChips.map((chip) => (
-              <button
-                key={chip.id}
-                onClick={() => setHalalFilter(chip.id)}
-                className={cn(
-                  "px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all",
-                  halalFilter === chip.id
-                    ? chip.color
-                    : "bg-secondary/60 text-muted-foreground hover:bg-secondary"
-                )}
-              >
-                {t(chip.labelKey)}
-              </button>
-            ))}
+          <div className="space-y-5 mt-5 pb-2">
+            {activeSection === 'restaurants' && (
+              <div>
+                <Label className="text-sm font-semibold mb-2 block">{t("halal.halalStatusLabel", "Halol holati")}</Label>
+                <div className="flex flex-wrap gap-2">
+                  {filterChips.map((chip) => (
+                    <button
+                      key={chip.id}
+                      onClick={() => setHalalFilter(chip.id)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-full text-xs font-medium transition-all",
+                        halalFilter === chip.id ? chip.color : "bg-secondary/60 text-muted-foreground hover:bg-secondary"
+                      )}
+                    >
+                      {t(chip.labelKey)}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSection === 'mosques' && (
+              <>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="friday-prayer" className="text-sm font-medium">{t("mosques.fridayPrayer")}</Label>
+                  <Switch id="friday-prayer" checked={fridayPrayerOnly} onCheckedChange={setFridayPrayerOnly} />
+                </div>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="womens-section" className="text-sm font-medium">{t("mosques.womensSection")}</Label>
+                  <Switch id="womens-section" checked={womensSectionOnly} onCheckedChange={setWomensSectionOnly} />
+                </div>
+              </>
+            )}
+
+            {(activeSection === 'mosques' || activeSection === 'shops') && (
+              <div className="flex items-center justify-between">
+                <Label htmlFor="verified-only" className="text-sm font-medium">{t("common.verifiedOnly", "Faqat tasdiqlanganlar")}</Label>
+                <Switch id="verified-only" checked={verifiedOnly} onCheckedChange={setVerifiedOnly} />
+              </div>
+            )}
+
+            <div className="flex gap-2 pt-2">
+              <Button variant="outline" className="flex-1" onClick={() => { resetFilters(); }}>
+                {t("common.reset", "Tozalash")}
+              </Button>
+              <Button className="flex-1" onClick={() => setFilterSheetOpen(false)}>
+                {t("common.apply", "Qo'llash")}
+              </Button>
+            </div>
           </div>
-        </section>
-      )}
+        </SheetContent>
+      </Sheet>
 
       {/* Restaurants Section */}
       {activeSection === 'restaurants' && (
