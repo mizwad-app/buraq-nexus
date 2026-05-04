@@ -59,7 +59,9 @@
     },
     "checklistShort": "清单",
     "mosquesShort": "清真寺",
-    "walletShort": "钱包"
+    "walletShort": "钱包",
+    "my_consulate": "我的领事馆",
+    "emergency_contact": "紧急联系"
   },
   "business": {
     "title": "贸易中心",
@@ -313,7 +315,11 @@
       "dark": "深色",
       "light": "浅色",
       "auto": "自动（系统）"
-    }
+    },
+    "my_consulate": "我国领事馆",
+    "consulate_subtitle": "在紧急情况或文件事务中很有用",
+    "country_not_set": "您尚未设置国家",
+    "set_country": "设置国家"
   },
   "booking": {
     "confirmed": "已确认",
@@ -350,7 +356,7 @@
   "common": {
     "search": "搜索",
     "loading": "加载中...",
-    "more": "详情",
+    "more": "更多",
     "all": "全部",
     "close": "关闭",
     "available": "可用",
@@ -364,7 +370,9 @@
     "sending": "发送中...",
     "hourShort": "小时",
     "minuteShort": "分钟",
-    "tomorrow": "明天"
+    "tomorrow": "明天",
+    "verified": "已验证",
+    "unverified": "未验证"
   },
   "travel": {
     "title": "旅行与休闲",
@@ -943,5 +951,25 @@
         "export": "导出数据（即将推出）"
       }
     }
+  },
+  "consulate": {
+    "title": "我国领事馆",
+    "subtitle": "在紧急情况或文件事务中很有用",
+    "page_title": "领事馆信息",
+    "types": {
+      "embassy": "大使馆",
+      "consulate_general": "总领事馆",
+      "consulate": "领事馆",
+      "honorary_consulate": "名誉领事馆"
+    },
+    "main_phone": "主要电话",
+    "consular_phone": "领事处",
+    "emergency": "紧急联系（24/7）",
+    "website": "网站",
+    "services": "服务",
+    "directions": "路线（地图）",
+    "no_data": "暂无数据",
+    "no_data_subtitle": "您所在国家的领事馆信息尚未添加。",
+    "unverified_warning": "此信息尚未核实 — 请在拨打前通过官方来源确认。"
   }
 }
