@@ -9,16 +9,10 @@ import {
   Clock,
   Languages,
   Car,
-  IdCard,
   CircleDollarSign,
   SlidersHorizontal,
-  X,
   RotateCcw,
-  Check,
-  MessageCircle,
-  CalendarCheck,
-  Play,
-  Video
+  Check
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,6 +21,7 @@ import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { cn } from "@/lib/utils";
 import type { MarketplaceTranslator } from "@/types/marketplace";
 import { BookingSheet } from "@/components/marketplace/BookingSheet";
+import { TranslatorProfileCard } from "@/components/marketplace/TranslatorProfileCard";
 import { TranslatorDetailSheet } from "@/components/marketplace/TranslatorDetailSheet";
 import { ChatSheet } from "@/components/marketplace/ChatSheet";
 import { useAuth } from "@/contexts/AuthContext";
@@ -59,13 +54,19 @@ interface Translator {
   city_en?: string | null;
   city_ar?: string | null;
   hsk_level: number | null;
+  self_declared_hsk?: number | null;
+  buraq_verified_hsk?: number | null;
+  buraq_verified_at?: string | null;
   specializations: string[] | null;
+  languages?: unknown;
   bio?: string | null;
   bio_uz?: string | null;
   bio_ru?: string | null;
   bio_en?: string | null;
   bio_ar?: string | null;
   price_per_day: number | null;
+  hourly_rate?: number | null;
+  daily_rate?: number | null;
   is_verified: boolean;
   is_available: boolean;
   avatar_url: string | null;
@@ -77,8 +78,14 @@ interface Translator {
   completed_bookings?: number | null;
   language_pairs?: string[] | null;
   intro_video_url?: string | null;
+  available_today?: boolean | null;
+  response_time_avg?: number | null;
   has_personal_car?: boolean | null;
   has_chinese_driving_license?: boolean | null;
+  rating_reliability?: number | null;
+  rating_negotiation?: number | null;
+  rating_punctuality?: number | null;
+  rating_knowledge?: number | null;
   [key: string]: unknown;
 }
 
@@ -144,9 +151,6 @@ const RATING_OPTIONS = [
   { id: "4.5", label: "4.5+ ⭐", min: 4.5 },
   { id: "4.8", label: "4.8+ ⭐", min: 4.8 },
 ];
-
-const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
-
 
 const Translators = () => {
   const { t } = useTranslation();
