@@ -105,9 +105,44 @@ const TRANSPORT_OPTIONS = [
 
 const HSK_LEVELS = [
   { id: "all", label: "Barchasi" },
+  { id: "3", label: "HSK 3" },
   { id: "4", label: "HSK 4" },
   { id: "5", label: "HSK 5" },
   { id: "6", label: "HSK 6" },
+  { id: "verified", label: "Mizwad ✓" },
+];
+
+const SPECIALIZATIONS = [
+  { id: "all", label: "Barchasi" },
+  { id: "biznes", label: "Biznes" },
+  { id: "Canton Fair", label: "Canton Fair" },
+  { id: "zavodlar", label: "Zavodlar" },
+  { id: "ishlab chiqarish", label: "Ishlab chiqarish" },
+  { id: "elektronika", label: "Elektronika" },
+  { id: "optom", label: "Optom" },
+  { id: "bozorlar", label: "Bozorlar" },
+  { id: "huquq", label: "Huquq" },
+  { id: "moliya", label: "Moliya" },
+  { id: "IT", label: "IT" },
+  { id: "diplomatiya", label: "Diplomatiya" },
+  { id: "turizm", label: "Turizm" },
+];
+
+const AVAILABILITY_OPTIONS = [
+  { id: "all", label: "Hammasi" },
+  { id: "today", label: "Bugun mavjud" },
+];
+
+const GENDER_OPTIONS = [
+  { id: "all", label: "Hammasi" },
+  { id: "male", label: "Erkak" },
+  { id: "female", label: "Ayol" },
+];
+
+const RATING_OPTIONS = [
+  { id: "all", label: "Hammasi", min: 0 },
+  { id: "4.5", label: "4.5+ ⭐", min: 4.5 },
+  { id: "4.8", label: "4.8+ ⭐", min: 4.8 },
 ];
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
