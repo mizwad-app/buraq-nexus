@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard, ChevronRight, Languages } from "lucide-react";
+import { useState, useRef, useMemo } from "react";
+import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard, ChevronRight, Languages, Info, DollarSign, Phone, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { getFlagEmoji, HSK_BADGE_CLASS, type TranslatorLanguage } from "@/lib/flags";
 import type { MarketplaceTranslator } from "@/types/marketplace";
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
