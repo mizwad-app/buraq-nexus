@@ -242,6 +242,7 @@ const Travel = () => {
   const [historicalSites, setHistoricalSites] = useState<PlaceData[]>([]);
   const [markets, setMarkets] = useState<PlaceData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [topPicks, setTopPicks] = useState<Array<PlaceData & { type: PlaceType }>>([]);
   const [activeTab, setActiveTab] = useState<string>(searchParams.get("tab") || "places");
 
   // Place detail sheet
