@@ -1135,6 +1135,10 @@ export type Database = {
           metro_exit: string | null
           metro_line: string | null
           metro_station: string | null
+          mizwad_pick_rank: number | null
+          mizwad_pick_reason_en: string | null
+          mizwad_pick_reason_ru: string | null
+          mizwad_pick_reason_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1204,6 +1208,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -1273,6 +1281,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -1684,6 +1696,10 @@ export type Database = {
           metro_exit: string | null
           metro_line: string | null
           metro_station: string | null
+          mizwad_pick_rank: number | null
+          mizwad_pick_reason_en: string | null
+          mizwad_pick_reason_ru: string | null
+          mizwad_pick_reason_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1753,6 +1769,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -1822,6 +1842,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -1889,6 +1913,10 @@ export type Database = {
           metro_exit: string | null
           metro_line: string | null
           metro_station: string | null
+          mizwad_pick_rank: number | null
+          mizwad_pick_reason_en: string | null
+          mizwad_pick_reason_ru: string | null
+          mizwad_pick_reason_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1948,6 +1976,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2007,6 +2039,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -2948,6 +2984,10 @@ export type Database = {
           metro_exit: string | null
           metro_line: string | null
           metro_station: string | null
+          mizwad_pick_rank: number | null
+          mizwad_pick_reason_en: string | null
+          mizwad_pick_reason_ru: string | null
+          mizwad_pick_reason_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -3018,6 +3058,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -3088,6 +3132,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_pick_rank?: number | null
+          mizwad_pick_reason_en?: string | null
+          mizwad_pick_reason_ru?: string | null
+          mizwad_pick_reason_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
