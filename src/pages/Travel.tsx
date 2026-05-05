@@ -641,6 +641,21 @@ const Travel = () => {
                             );
                           })()
                         )}
+                        {(data as PlaceData).mizwad_pick_rank && (() => {
+                          const r = (data as PlaceData).mizwad_pick_rank as number;
+                          return (
+                            <div className={cn(
+                              "absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 backdrop-blur-md z-10",
+                              r === 1 && "bg-amber-500 text-white",
+                              r === 2 && "bg-slate-300 text-slate-900",
+                              r === 3 && "bg-orange-600 text-white",
+                              r >= 4 && "bg-emerald-500 text-white",
+                            )}>
+                              <Star className="w-3 h-3 fill-current" />
+                              <span>#{r}</span>
+                            </div>
+                          );
+                        })()}
                         <div className="absolute top-3 right-3 z-10">
                           <FavoriteButton placeId={data.id} placeType={item.type} />
                         </div>
