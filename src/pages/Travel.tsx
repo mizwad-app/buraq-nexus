@@ -274,6 +274,31 @@ const Travel = () => {
     fetchData();
   }, []);
 
+  // Fetch Mizwad Top 5 picks for selected city
+  useEffect(() => {
+    const fetchTopPicks = async () => {
+      if (!selectedCity || selectedCity === "all") {
+        setTopPicks([]);
+        return;
+      }
+      const [hist, mall, mkt, mosque] = await Promise.all([
+        supabase.from("historical_sites").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+        supabase.from("shopping_malls").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+        supabase.from("markets").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+        supabase.from("mosques").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+      ]);
+      const all: Array<PlaceData & { type: PlaceType }> = [
+        ...((hist.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "historical" as PlaceType })),
+        ...((mall.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "mall" as PlaceType })),
+        ...((mkt.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "market" as PlaceType })),
+        ...((mosque.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "historical" as PlaceType })),
+      ];
+      all.sort((a, b) => ((a.mizwad_pick_rank ?? 99) - (b.mizwad_pick_rank ?? 99)));
+      setTopPicks(all.slice(0, 5));
+    };
+    fetchTopPicks();
+  }, [selectedCity]);
+
   // Sync activeTab to URL
   useEffect(() => {
     const tabParam = searchParams.get("tab");
