@@ -21,7 +21,7 @@ const taglineSizeClasses: Record<NonNullable<MizwadWordmarkProps["size"]>, strin
   xl: "text-base",
 };
 
-const SERIF_STACK = "'Fraunces', Georgia, 'Times New Roman', 'Noto Serif', serif";
+const SERIF_STACK = "'Cormorant Garamond', Georgia, 'Times New Roman', serif";
 
 /**
  * Mizwad brand wordmark.
@@ -41,11 +41,11 @@ export const MizwadWordmark = ({
       <span
         className={cn(
           sizeClasses[size],
-          "italic font-medium tracking-tight leading-none",
+          "italic leading-none",
           "bg-clip-text text-transparent",
-          "bg-gradient-to-r from-[#27a87a] to-[#e0a52e]",
+          "bg-gradient-to-br from-emerald-500 to-amber-500",
         )}
-        style={{ fontFamily: SERIF_STACK, fontVariationSettings: '"opsz" 144' }}
+        style={{ fontFamily: SERIF_STACK, fontWeight: 600, letterSpacing: '-0.01em' }}
       >
         Mizwad
       </span>
