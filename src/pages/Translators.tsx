@@ -232,19 +232,32 @@ const Translators = () => {
       bio_en: selectedTranslator.bio_en ?? null,
       bio_ar: selectedTranslator.bio_ar ?? null,
       price_per_day: selectedTranslator.price_per_day ?? null,
-      hourly_rate: null,
-      daily_rate: null,
+      hourly_rate: selectedTranslator.hourly_rate ?? null,
+      daily_rate: selectedTranslator.daily_rate ?? null,
       is_verified: selectedTranslator.is_verified,
       is_available: selectedTranslator.is_available,
       avatar_url: selectedTranslator.avatar_url,
       intro_video_url: selectedTranslator.intro_video_url ?? null,
       rating: selectedTranslator.rating,
       total_reviews: selectedTranslator.total_reviews,
+      total_bookings: (selectedTranslator.total_bookings as number | undefined) ?? undefined,
+      completed_bookings: selectedTranslator.completed_bookings ?? undefined,
+      years_experience: selectedTranslator.years_experience ?? undefined,
+      age: selectedTranslator.age ?? null,
+      gender: selectedTranslator.gender ?? null,
+      has_personal_car: selectedTranslator.has_personal_car ?? null,
+      has_chinese_driving_license: selectedTranslator.has_chinese_driving_license ?? null,
       user_id: (selectedTranslator.user_id as string | null) ?? null,
-      // Optional computed fields
-      self_declared_hsk: null,
-      buraq_verified_hsk: null,
-      buraq_verified_at: null,
+      self_declared_hsk: selectedTranslator.self_declared_hsk ?? null,
+      buraq_verified_hsk: selectedTranslator.buraq_verified_hsk ?? null,
+      buraq_verified_at: selectedTranslator.buraq_verified_at ?? null,
+      languages: selectedTranslator.languages,
+      available_today: selectedTranslator.available_today ?? null,
+      response_time_avg: selectedTranslator.response_time_avg ?? null,
+      rating_reliability: selectedTranslator.rating_reliability ?? null,
+      rating_negotiation: selectedTranslator.rating_negotiation ?? null,
+      rating_punctuality: selectedTranslator.rating_punctuality ?? null,
+      rating_knowledge: selectedTranslator.rating_knowledge ?? null,
     } as MarketplaceTranslator;
   }, [selectedTranslator]);
 
@@ -378,28 +391,6 @@ const Translators = () => {
       console.error("Error starting chat:", error);
       toast({ title: "Chat ochishda xatolik", variant: "destructive" });
     }
-  };
-
-  const renderHSKBadge = (level: number | null) => {
-    if (!level) return null;
-    
-    const colors: Record<number, string> = {
-      1: "bg-gray-500",
-      2: "bg-blue-400",
-      3: "bg-blue-500",
-      4: "bg-green-500",
-      5: "bg-gold",
-      6: "bg-red-500",
-    };
-
-    return (
-      <span className={cn(
-        "px-2 py-0.5 rounded-full text-[10px] font-bold text-white",
-        colors[level] || "bg-gray-500"
-      )}>
-        HSK {level}
-      </span>
-    );
   };
 
   return (
