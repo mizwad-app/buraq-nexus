@@ -105,9 +105,44 @@ const TRANSPORT_OPTIONS = [
 
 const HSK_LEVELS = [
   { id: "all", label: "Barchasi" },
+  { id: "3", label: "HSK 3" },
   { id: "4", label: "HSK 4" },
   { id: "5", label: "HSK 5" },
   { id: "6", label: "HSK 6" },
+  { id: "verified", label: "Mizwad ✓" },
+];
+
+const SPECIALIZATIONS = [
+  { id: "all", label: "Barchasi" },
+  { id: "biznes", label: "Biznes" },
+  { id: "Canton Fair", label: "Canton Fair" },
+  { id: "zavodlar", label: "Zavodlar" },
+  { id: "ishlab chiqarish", label: "Ishlab chiqarish" },
+  { id: "elektronika", label: "Elektronika" },
+  { id: "optom", label: "Optom" },
+  { id: "bozorlar", label: "Bozorlar" },
+  { id: "huquq", label: "Huquq" },
+  { id: "moliya", label: "Moliya" },
+  { id: "IT", label: "IT" },
+  { id: "diplomatiya", label: "Diplomatiya" },
+  { id: "turizm", label: "Turizm" },
+];
+
+const AVAILABILITY_OPTIONS = [
+  { id: "all", label: "Hammasi" },
+  { id: "today", label: "Bugun mavjud" },
+];
+
+const GENDER_OPTIONS = [
+  { id: "all", label: "Hammasi" },
+  { id: "male", label: "Erkak" },
+  { id: "female", label: "Ayol" },
+];
+
+const RATING_OPTIONS = [
+  { id: "all", label: "Hammasi", min: 0 },
+  { id: "4.5", label: "4.5+ ⭐", min: 4.5 },
+  { id: "4.8", label: "4.8+ ⭐", min: 4.8 },
 ];
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
@@ -132,7 +167,11 @@ const Translators = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("all");
   const [selectedTransport, setSelectedTransport] = useState("all");
   const [selectedHskLevel, setSelectedHskLevel] = useState("all");
-  
+  const [selectedSpecialization, setSelectedSpecialization] = useState("all");
+  const [selectedAvailability, setSelectedAvailability] = useState("all");
+  const [selectedGender, setSelectedGender] = useState("all");
+  const [selectedRating, setSelectedRating] = useState("all");
+
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -147,8 +186,12 @@ const Translators = () => {
     if (selectedPriceRange !== "all") count++;
     if (selectedTransport !== "all") count++;
     if (selectedHskLevel !== "all") count++;
+    if (selectedSpecialization !== "all") count++;
+    if (selectedAvailability !== "all") count++;
+    if (selectedGender !== "all") count++;
+    if (selectedRating !== "all") count++;
     return count;
-  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
+  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
 
   const resetFilters = () => {
     setSelectedCity("all");
@@ -156,6 +199,10 @@ const Translators = () => {
     setSelectedPriceRange("all");
     setSelectedTransport("all");
     setSelectedHskLevel("all");
+    setSelectedSpecialization("all");
+    setSelectedAvailability("all");
+    setSelectedGender("all");
+    setSelectedRating("all");
   };
 
   const bookableTranslator: MarketplaceTranslator | null = useMemo(() => {
@@ -256,14 +303,43 @@ const Translators = () => {
       result = result.filter(t => t.has_chinese_driving_license === true);
     }
     
-    // HSK Level filter
+    // HSK Level filter (incl. Mizwad-verified)
     if (selectedHskLevel !== "all") {
-      const level = parseInt(selectedHskLevel);
-      result = result.filter(t => t.hsk_level === level);
+      if (selectedHskLevel === "verified") {
+        result = result.filter(t => (t as any).buraq_verified_hsk != null);
+      } else {
+        const level = parseInt(selectedHskLevel);
+        result = result.filter(t => t.hsk_level === level);
+      }
     }
-    
+
+    // Specialization filter
+    if (selectedSpecialization !== "all") {
+      const needle = selectedSpecialization.toLowerCase();
+      result = result.filter(t =>
+        Array.isArray(t.specializations) &&
+        t.specializations.some(s => String(s).toLowerCase().includes(needle))
+      );
+    }
+
+    // Availability filter
+    if (selectedAvailability === "today") {
+      result = result.filter(t => (t as any).available_today === true);
+    }
+
+    // Gender filter
+    if (selectedGender !== "all") {
+      result = result.filter(t => (t as any).gender === selectedGender);
+    }
+
+    // Min rating filter
+    if (selectedRating !== "all") {
+      const min = parseFloat(selectedRating);
+      result = result.filter(t => (t.rating ?? 0) >= min);
+    }
+
     return result;
-  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
+  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
 
   // Open chat for selected translator - inline chat sheet
   const openChat = async (translator: Translator) => {
@@ -402,12 +478,60 @@ const Translators = () => {
 
       {/* Filter Modal */}
       <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
-          <SheetHeader className="pb-4 border-b border-border/50">
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl p-0 flex flex-col">
+          <SheetHeader className="px-5 pt-5 pb-4 border-b border-border/50 flex-shrink-0">
             <SheetTitle className="text-xl font-bold text-left">Filtrlash</SheetTitle>
           </SheetHeader>
 
-          <div className="py-6 space-y-6 overflow-y-auto h-[calc(100%-160px)]">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6" style={{ WebkitOverflowScrolling: 'touch' as any }}>
+            {/* Availability */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Clock className="w-4 h-4 text-primary" />
+                Mavjudlik
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {AVAILABILITY_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedAvailability(opt.id)}
+                    className={cn(
+                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedAvailability === opt.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Specialization (Sector) */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <BadgeCheck className="w-4 h-4 text-primary" />
+                Mutaxassislik
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {SPECIALIZATIONS.map(spec => (
+                  <button
+                    key={spec.id}
+                    onClick={() => setSelectedSpecialization(spec.id)}
+                    className={cn(
+                      "px-3 py-2 rounded-full text-xs font-medium transition-all border",
+                      selectedSpecialization === spec.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-primary/5 text-primary border-primary/20 hover:border-primary/50"
+                    )}
+                  >
+                    {spec.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Language Filter */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
@@ -451,6 +575,54 @@ const Translators = () => {
               </Select>
             </div>
 
+            {/* HSK Level Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <BadgeCheck className="w-4 h-4 text-primary" />
+                HSK darajasi
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {HSK_LEVELS.map(level => (
+                  <button
+                    key={level.id}
+                    onClick={() => setSelectedHskLevel(level.id)}
+                    className={cn(
+                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedHskLevel === level.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {level.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Min Rating */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Star className="w-4 h-4 text-primary" />
+                Minimal reyting
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {RATING_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedRating(opt.id)}
+                    className={cn(
+                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedRating === opt.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Price Range Filter */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
@@ -475,11 +647,35 @@ const Translators = () => {
               </div>
             </div>
 
+            {/* Gender */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
+                Jinsi
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {GENDER_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedGender(opt.id)}
+                    className={cn(
+                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedGender === opt.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Transport Filter */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Car className="w-4 h-4 text-primary" />
-                Transport
+                Transport va guvohnoma
               </label>
               <div className="space-y-2">
                 {TRANSPORT_OPTIONS.map(option => (
@@ -499,43 +695,21 @@ const Translators = () => {
                 ))}
               </div>
             </div>
-
-            {/* HSK Level Filter */}
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                HSK darajasi
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {HSK_LEVELS.map(level => (
-                  <button
-                    key={level.id}
-                    onClick={() => setSelectedHskLevel(level.id)}
-                    className={cn(
-                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedHskLevel === level.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {level.label}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-background border-t border-border/50 flex gap-3">
-            <Button 
-              variant="outline" 
+          {/* Sticky Bottom Action Buttons (iOS-safe via flex column) */}
+          <div className="flex-shrink-0 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-background border-t border-border/50 flex gap-3">
+            <Button
+              variant="outline"
               className="flex-1 gap-2"
               onClick={resetFilters}
+              disabled={activeFilterCount === 0}
             >
               <RotateCcw className="w-4 h-4" />
               Tozalash
             </Button>
-            <Button 
-              className="flex-1 gap-2"
+            <Button
+              className="flex-[2] gap-2"
               onClick={() => setFilterOpen(false)}
             >
               <Check className="w-4 h-4" />
