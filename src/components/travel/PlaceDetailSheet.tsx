@@ -76,6 +76,10 @@ export interface PlaceData {
   metro_exit?: string | null;
   walking_distance_meters?: number | null;
   bus_routes?: string | null;
+  mizwad_pick_rank?: number | null;
+  mizwad_pick_reason_uz?: string | null;
+  mizwad_pick_reason_ru?: string | null;
+  mizwad_pick_reason_en?: string | null;
   [key: string]: unknown;
 }
 
