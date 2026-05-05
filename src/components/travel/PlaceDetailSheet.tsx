@@ -452,32 +452,65 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
                 </section>
               )}
 
-              {/* Transport */}
-              {place.transport_info && (place.transport_info.metro || place.transport_info.bus || place.transport_info.taxi_friendly) && (
-                <section>
-                  <h3 className="text-sm font-semibold text-foreground mb-2">{t("place.detail.transport")}</h3>
-                  <div className="space-y-2">
-                    {place.transport_info.metro && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Train className="w-4 h-4 text-primary" />
-                        <span><b className="text-foreground">{t("place.transport.metro")}:</b> {place.transport_info.metro}</span>
+              {/* Qanday borish */}
+              <section>
+                <h3 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <Navigation className="w-4 h-4 text-emerald-500" />
+                  Qanday borish
+                </h3>
+                <div className="space-y-2">
+                  {/* TAXI FIRST */}
+                  <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                    <Car className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                    <div className="flex-1">
+                      <div className="text-sm font-medium text-foreground">Taxi (DiDi)</div>
+                      <div className="text-xs text-muted-foreground">
+                        Manzilni Xitoy tilida ko'rsating (yuqorida copy tugmasi)
                       </div>
-                    )}
-                    {place.transport_info.bus && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Bus className="w-4 h-4 text-primary" />
-                        <span><b className="text-foreground">{t("place.transport.bus")}:</b> {place.transport_info.bus}</span>
-                      </div>
-                    )}
-                    {place.transport_info.taxi_friendly && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Car className="w-4 h-4 text-primary" />
-                        <span>{t("place.transport.taxiFriendly")}</span>
-                      </div>
-                    )}
+                    </div>
                   </div>
-                </section>
-              )}
+
+                  {/* METRO */}
+                  {place.metro_line && place.metro_station && (
+                    <div className="flex flex-col gap-2 p-3 bg-emerald-500/5 border border-emerald-500/20 rounded-lg">
+                      <div className="flex items-start gap-3">
+                        <Train className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-foreground">Metro</div>
+                          <div className="text-sm text-muted-foreground">
+                            {place.metro_line} · {place.metro_station} bekati
+                          </div>
+                        </div>
+                      </div>
+                      {place.metro_exit && (
+                        <div className="ml-7 flex items-center gap-2 text-sm text-emerald-500 font-medium">
+                          <ArrowUpRight className="w-3.5 h-3.5" />
+                          <span>Exit {place.metro_exit} dan chiqing</span>
+                        </div>
+                      )}
+                      {place.walking_distance_meters && (
+                        <div className="ml-7 flex items-center gap-1.5 text-xs text-muted-foreground">
+                          <Footprints className="w-3 h-3" />
+                          <span>~{place.walking_distance_meters}m piyoda</span>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* BUS */}
+                  {(place.bus_routes || place.transport_info?.bus) && (
+                    <div className="flex items-start gap-3 p-3 bg-muted/30 rounded-lg">
+                      <Bus className="w-4 h-4 text-muted-foreground flex-shrink-0 mt-0.5" />
+                      <div className="flex-1">
+                        <div className="text-sm font-medium text-foreground">Avtobus</div>
+                        <div className="text-xs text-muted-foreground">
+                          {place.bus_routes || place.transport_info?.bus}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
 
               {/* Gallery */}
               {gallery.length > 1 && (
