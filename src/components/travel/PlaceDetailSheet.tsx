@@ -41,6 +41,8 @@ import {
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { FavoriteButton } from "@/components/travel/FavoriteButton";
+import type { FavoritePlaceType } from "@/hooks/useFavorite";
 
 export type PlaceType = "mall" | "park" | "historical" | "market";
 
