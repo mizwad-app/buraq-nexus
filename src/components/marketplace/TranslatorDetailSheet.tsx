@@ -409,32 +409,104 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               </SheetHeader>
             </div>
 
-            {/* Detailed Rating Matrix (replaces single rating box) */}
-            <div className="px-5 mb-4">
-              <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
-                {([
-                  { label: t("translators.ratingMatrix.reliability"), value: translator.rating },
-                  { label: t("translators.ratingMatrix.negotiation"), value: translator.rating },
-                  { label: t("translators.ratingMatrix.punctuality"), value: translator.rating },
-                  { label: t("translators.ratingMatrix.expertise"), value: translator.rating },
-                ]).map((row) => (
-                  <div key={row.label} className="flex items-center justify-between">
-                    <span className="text-sm text-foreground/80">{row.label}</span>
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={cn(
-                            "w-4 h-4 transition-colors",
-                            star <= Math.round(Number(row.value) || 0)
-                              ? "fill-primary text-primary"
-                              : "text-muted-foreground/30"
-                          )}
-                        />
-                      ))}
-                    </div>
+            {/* Specializations (PRIORITY — emerald chips) */}
+            {translator.specializations && translator.specializations.length > 0 && (
+              <div className="px-5 mb-4">
+                <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <Briefcase className="w-4 h-4 text-emerald-400" />
+                  Mutaxassisliklar
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {translator.specializations.map((spec, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg text-sm font-medium"
+                    >
+                      {getSpecializationTranslation(t, spec)}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Languages (with verification badges) */}
+            {(() => {
+              const t2 = translator as Record<string, unknown>;
+              let langs: TranslatorLanguage[] = [];
+              const raw = t2.languages;
+              if (Array.isArray(raw)) langs = raw as unknown as TranslatorLanguage[];
+              else if (typeof raw === "string") { try { langs = JSON.parse(raw); } catch { /* noop */ } }
+              if (langs.length === 0) return null;
+              return (
+                <div className="px-5 mb-4">
+                  <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Languages className="w-4 h-4 text-emerald-400" />
+                    Tillar
+                  </h4>
+                  <div className="space-y-1 bg-muted/30 rounded-xl p-2 border border-border/30">
+                    {langs.map((lang, idx) => (
+                      <div key={idx} className="flex items-center justify-between py-2 px-2">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl leading-none">{getFlagEmoji(lang.code)}</span>
+                          <div>
+                            <div className="text-sm font-medium text-foreground">{lang.name}</div>
+                            <div className="text-xs text-muted-foreground">{lang.level}</div>
+                          </div>
+                        </div>
+                        {lang.verified && (
+                          <span className="flex items-center gap-1 px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded-md text-[11px] font-medium">
+                            <BadgeCheck className="w-3 h-3" />
+                            Mizwad tasdiqlagan
+                          </span>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+              );
+            })()}
+
+            {/* Detailed Rating Matrix — REAL DB values with variance */}
+            <div className="px-5 mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                  Baholashlar
+                </h4>
+                <span className="text-xs text-muted-foreground">{translator.total_reviews || 0} sharh</span>
+              </div>
+              <div className="space-y-2.5 bg-muted/30 rounded-xl p-4 border border-border/30">
+                {(() => {
+                  const t2 = translator as Record<string, unknown>;
+                  const fallback = Number(translator.rating) || 0;
+                  const rows = [
+                    { label: "Ishonchlilik", value: Number(t2.rating_reliability) || fallback },
+                    { label: "Muzokara san'ati", value: Number(t2.rating_negotiation) || fallback },
+                    { label: "Vaqtga rioya qilish", value: Number(t2.rating_punctuality) || fallback },
+                    { label: "Bilim darajasi", value: Number(t2.rating_knowledge) || fallback },
+                  ];
+                  return rows.map((row) => (
+                    <div key={row.label} className="flex items-center justify-between">
+                      <span className="text-sm text-foreground/80">{row.label}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              className={cn(
+                                "w-3.5 h-3.5",
+                                star <= Math.round(row.value)
+                                  ? "fill-emerald-400 text-emerald-400"
+                                  : "text-muted-foreground/30"
+                              )}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-sm font-medium w-8 text-right text-foreground">{row.value.toFixed(1)}</span>
+                      </div>
+                    </div>
+                  ));
+                })()}
               </div>
             </div>
 
