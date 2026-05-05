@@ -62,6 +62,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { PlaceDetailSheet, type PlaceType, type PlaceData } from "@/components/travel/PlaceDetailSheet";
+import { FavoriteButton } from "@/components/travel/FavoriteButton";
+import { getPlaceholderGradient, getPlaceholderIcon } from "@/lib/placePlaceholders";
 import { MVP_CITIES } from "@/lib/mvpCities";
 import { sortByQuality } from "@/lib/placeSorting";
 import { HeaderAvatar } from "@/components/HeaderAvatar";
