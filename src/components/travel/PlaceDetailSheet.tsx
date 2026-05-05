@@ -258,6 +258,9 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
                   <TypeIcon className="w-16 h-16 text-muted-foreground/30" />
                 </div>
               )}
+              <div className="absolute top-3 right-3 z-10">
+                <FavoriteButton placeId={place.id} placeType={type as FavoritePlaceType} />
+              </div>
             </div>
 
             {/* Title */}
