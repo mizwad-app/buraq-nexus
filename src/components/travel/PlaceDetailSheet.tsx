@@ -35,6 +35,8 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  ArrowUpRight,
+  Footprints,
 } from "lucide-react";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
