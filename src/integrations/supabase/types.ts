@@ -3827,6 +3827,7 @@ export type Database = {
       translators_public: {
         Row: {
           age: number | null
+          available_today: boolean | null
           avatar_url: string | null
           bio: string | null
           bio_ar: string | null
@@ -3854,6 +3855,7 @@ export type Database = {
           is_available: boolean | null
           is_verified: boolean | null
           language_pairs: string[] | null
+          languages: Json | null
           name: string | null
           name_ar: string | null
           name_en: string | null
@@ -3861,6 +3863,11 @@ export type Database = {
           name_uz: string | null
           price_per_day: number | null
           rating: number | null
+          rating_knowledge: number | null
+          rating_negotiation: number | null
+          rating_punctuality: number | null
+          rating_reliability: number | null
+          response_time_avg: number | null
           self_declared_hsk: number | null
           specializations: string[] | null
           total_bookings: number | null
@@ -3871,6 +3878,7 @@ export type Database = {
         }
         Insert: {
           age?: number | null
+          available_today?: boolean | null
           avatar_url?: string | null
           bio?: string | null
           bio_ar?: string | null
@@ -3898,6 +3906,7 @@ export type Database = {
           is_available?: boolean | null
           is_verified?: boolean | null
           language_pairs?: string[] | null
+          languages?: Json | null
           name?: string | null
           name_ar?: string | null
           name_en?: string | null
@@ -3905,6 +3914,11 @@ export type Database = {
           name_uz?: string | null
           price_per_day?: number | null
           rating?: number | null
+          rating_knowledge?: number | null
+          rating_negotiation?: number | null
+          rating_punctuality?: number | null
+          rating_reliability?: number | null
+          response_time_avg?: number | null
           self_declared_hsk?: number | null
           specializations?: string[] | null
           total_bookings?: number | null
@@ -3915,6 +3929,7 @@ export type Database = {
         }
         Update: {
           age?: number | null
+          available_today?: boolean | null
           avatar_url?: string | null
           bio?: string | null
           bio_ar?: string | null
@@ -3942,6 +3957,7 @@ export type Database = {
           is_available?: boolean | null
           is_verified?: boolean | null
           language_pairs?: string[] | null
+          languages?: Json | null
           name?: string | null
           name_ar?: string | null
           name_en?: string | null
@@ -3949,6 +3965,11 @@ export type Database = {
           name_uz?: string | null
           price_per_day?: number | null
           rating?: number | null
+          rating_knowledge?: number | null
+          rating_negotiation?: number | null
+          rating_punctuality?: number | null
+          rating_reliability?: number | null
+          response_time_avg?: number | null
           self_declared_hsk?: number | null
           specializations?: string[] | null
           total_bookings?: number | null

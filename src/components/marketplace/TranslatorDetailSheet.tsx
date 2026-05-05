@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard, ChevronRight, Languages } from "lucide-react";
+import { useState, useRef, useMemo } from "react";
+import { Star, MapPin, BadgeCheck, Shield, Video, Calendar, Briefcase, MessageCircle, ExternalLink, Award, Play, Pause, Volume2, VolumeX, GraduationCap, Clock, Car, IdCard, ChevronRight, Languages, Info, DollarSign, Phone, FileText } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cn } from "@/lib/utils";
@@ -12,6 +12,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { getFlagEmoji, HSK_BADGE_CLASS, type TranslatorLanguage } from "@/lib/flags";
 import type { MarketplaceTranslator } from "@/types/marketplace";
 
 const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
@@ -140,26 +141,30 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
         </h4>
 
         <div className={cn("grid gap-3", verifiedHsk ? "grid-cols-2" : "grid-cols-1")}>
-          {/* Self-declared - neutral styling */}
+          {/* Self-declared */}
           <div className="bg-background/50 rounded-xl p-3">
             <p className="text-[10px] text-muted-foreground mb-1">O'zi e'lon qilgan</p>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-secondary text-foreground border border-border">
+              <span className={cn(
+                "px-2.5 py-1 rounded-lg text-sm font-bold border",
+                HSK_BADGE_CLASS(selfHsk)
+              )}>
                 HSK {selfHsk || "—"}
               </span>
             </div>
           </div>
 
-          {/* Mizwad Verified - only show when verified */}
+          {/* Mizwad Verified */}
           {verifiedHsk && (
-            <div className="rounded-xl p-3 bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
+            <div className="rounded-xl p-3 bg-emerald-500/10 border border-emerald-500/30">
               <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
                 <Shield className="w-3 h-3" />
                 Mizwad tasdiqlagan
               </p>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-gradient-to-r from-primary to-accent text-primary-foreground">
-                  HSK {verifiedHsk} ✓
+                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-emerald-500 text-white flex items-center gap-1">
+                  HSK {verifiedHsk}
+                  <BadgeCheck className="w-3.5 h-3.5" />
                 </span>
               </div>
             </div>
@@ -408,32 +413,104 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               </SheetHeader>
             </div>
 
-            {/* Detailed Rating Matrix (replaces single rating box) */}
-            <div className="px-5 mb-4">
-              <div className="space-y-3 bg-muted/30 rounded-xl p-4 border border-border/30">
-                {([
-                  { label: t("translators.ratingMatrix.reliability"), value: translator.rating },
-                  { label: t("translators.ratingMatrix.negotiation"), value: translator.rating },
-                  { label: t("translators.ratingMatrix.punctuality"), value: translator.rating },
-                  { label: t("translators.ratingMatrix.expertise"), value: translator.rating },
-                ]).map((row) => (
-                  <div key={row.label} className="flex items-center justify-between">
-                    <span className="text-sm text-foreground/80">{row.label}</span>
-                    <div className="flex items-center gap-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={cn(
-                            "w-4 h-4 transition-colors",
-                            star <= Math.round(Number(row.value) || 0)
-                              ? "fill-primary text-primary"
-                              : "text-muted-foreground/30"
-                          )}
-                        />
-                      ))}
-                    </div>
+            {/* Specializations (PRIORITY — emerald chips) */}
+            {translator.specializations && translator.specializations.length > 0 && (
+              <div className="px-5 mb-4">
+                <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                  <Briefcase className="w-4 h-4 text-emerald-400" />
+                  Mutaxassisliklar
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {translator.specializations.map((spec, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg text-sm font-medium"
+                    >
+                      {getSpecializationTranslation(t, spec)}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Languages (with verification badges) */}
+            {(() => {
+              const t2 = translator as Record<string, unknown>;
+              let langs: TranslatorLanguage[] = [];
+              const raw = t2.languages;
+              if (Array.isArray(raw)) langs = raw as unknown as TranslatorLanguage[];
+              else if (typeof raw === "string") { try { langs = JSON.parse(raw); } catch { /* noop */ } }
+              if (langs.length === 0) return null;
+              return (
+                <div className="px-5 mb-4">
+                  <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                    <Languages className="w-4 h-4 text-emerald-400" />
+                    Tillar
+                  </h4>
+                  <div className="space-y-1 bg-muted/30 rounded-xl p-2 border border-border/30">
+                    {langs.map((lang, idx) => (
+                      <div key={idx} className="flex items-center justify-between py-2 px-2">
+                        <div className="flex items-center gap-3">
+                          <span className="text-2xl leading-none">{getFlagEmoji(lang.code)}</span>
+                          <div>
+                            <div className="text-sm font-medium text-foreground">{lang.name}</div>
+                            <div className="text-xs text-muted-foreground">{lang.level}</div>
+                          </div>
+                        </div>
+                        {lang.verified && (
+                          <span className="flex items-center gap-1 px-2 py-1 bg-emerald-500/10 text-emerald-400 rounded-md text-[11px] font-medium">
+                            <BadgeCheck className="w-3 h-3" />
+                            Mizwad tasdiqlagan
+                          </span>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                ))}
+                </div>
+              );
+            })()}
+
+            {/* Detailed Rating Matrix — REAL DB values with variance */}
+            <div className="px-5 mb-4">
+              <div className="flex items-center justify-between mb-3">
+                <h4 className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                  Baholashlar
+                </h4>
+                <span className="text-xs text-muted-foreground">{translator.total_reviews || 0} sharh</span>
+              </div>
+              <div className="space-y-2.5 bg-muted/30 rounded-xl p-4 border border-border/30">
+                {(() => {
+                  const t2 = translator as Record<string, unknown>;
+                  const fallback = Number(translator.rating) || 0;
+                  const rows = [
+                    { label: "Ishonchlilik", value: Number(t2.rating_reliability) || fallback },
+                    { label: "Muzokara san'ati", value: Number(t2.rating_negotiation) || fallback },
+                    { label: "Vaqtga rioya qilish", value: Number(t2.rating_punctuality) || fallback },
+                    { label: "Bilim darajasi", value: Number(t2.rating_knowledge) || fallback },
+                  ];
+                  return rows.map((row) => (
+                    <div key={row.label} className="flex items-center justify-between">
+                      <span className="text-sm text-foreground/80">{row.label}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="flex">
+                          {[1, 2, 3, 4, 5].map((star) => (
+                            <Star
+                              key={star}
+                              className={cn(
+                                "w-3.5 h-3.5",
+                                star <= Math.round(row.value)
+                                  ? "fill-emerald-400 text-emerald-400"
+                                  : "text-muted-foreground/30"
+                              )}
+                            />
+                          ))}
+                        </div>
+                        <span className="text-sm font-medium w-8 text-right text-foreground">{row.value.toFixed(1)}</span>
+                      </div>
+                    </div>
+                  ));
+                })()}
               </div>
             </div>
 
@@ -471,24 +548,21 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               {renderHSKSection()}
             </div>
 
-            {/* Bio */}
-            {getField(translator, 'bio') && (() => {
-              const currentLangBio = (translator as Record<string, unknown>)[`bio_${i18n.language}`];
-              const isFallback = !currentLangBio || typeof currentLangBio !== 'string' || !currentLangBio.trim();
+            {/* Bio — auto-translated from DB columns (bio_uz/ru/en) */}
+            {(() => {
+              const t2 = translator as Record<string, unknown>;
+              const lang = (i18n.language || "uz").toLowerCase();
+              const bio =
+                (typeof t2[`bio_${lang}`] === "string" && (t2[`bio_${lang}`] as string).trim()) ||
+                (typeof t2.bio_uz === "string" && (t2.bio_uz as string).trim()) ||
+                (typeof t2.bio_en === "string" && (t2.bio_en as string).trim()) ||
+                (typeof t2.bio === "string" && (t2.bio as string).trim()) ||
+                "";
+              if (!bio) return null;
               return (
                 <div className="px-5 mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h4 className="text-sm font-semibold text-foreground">Haqida</h4>
-                    {isFallback && (
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-secondary/60 border border-border text-[10px] text-muted-foreground">
-                        <Languages className="w-2.5 h-2.5" />
-                        Tarjima qilinmoqda
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {getField(translator, 'bio')}
-                  </p>
+                  <h4 className="text-sm font-semibold text-foreground mb-2">Haqida</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{bio}</p>
                 </div>
               );
             })()}
@@ -496,53 +570,82 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             {/* Resume Timeline Section */}
             {renderResumeSection()}
 
-            {/* Specializations */}
-            {translator.specializations && translator.specializations.length > 0 && (
-              <div className="px-5 mb-4">
-                <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
-                  <Briefcase className="w-4 h-4" />
-                  {t("translators.specializations")}
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {translator.specializations.map((spec, idx) => (
-                    <Badge key={idx} variant="secondary" className="px-3 py-1">
-                      {getSpecializationTranslation(t, spec)}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Pricing */}
+            {/* Pricing — with fee transparency */}
             <div className="px-5 mb-4">
-              <h4 className="text-sm font-semibold text-foreground mb-3">Narxlar</h4>
+              <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <DollarSign className="w-4 h-4 text-emerald-400" />
+                Narxlar
+              </h4>
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 border border-primary/20">
+                <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3">
                   <p className="text-xs text-muted-foreground mb-1">Kunlik</p>
-                  <p className="text-2xl font-bold text-primary">¥{price}</p>
+                  <p className="text-2xl font-bold text-emerald-400">¥{price}</p>
+                  <p className="text-xs text-muted-foreground">8 soat ish</p>
                 </div>
-                <div className="bg-muted/50 rounded-xl p-4">
+                <div className="bg-muted/30 border border-border rounded-xl p-3">
                   <p className="text-xs text-muted-foreground mb-1">Soatlik</p>
                   <p className="text-2xl font-bold text-foreground">¥{hourlyPrice}</p>
+                  <p className="text-xs text-muted-foreground">+ ovqat alohida</p>
                 </div>
+              </div>
+              <div className="mt-3 flex items-start gap-2 text-xs text-muted-foreground">
+                <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                <span>Yakuniy narxga Mizwad xizmat haqi 10% qo'shiladi.</span>
               </div>
             </div>
 
+            {/* Contact / quick info */}
+            <div className="px-5 mb-4">
+              <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Phone className="w-4 h-4 text-emerald-400" />
+                Aloqa
+              </h4>
+              <div className="space-y-2 text-sm">
+                {(() => {
+                  const t2 = translator as Record<string, unknown>;
+                  const responseTime = t2.response_time_avg as number | null;
+                  const availableToday = t2.available_today === true;
+                  return (
+                    <>
+                      {responseTime ? (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>Odatda {responseTime} daqiqada javob beradi</span>
+                        </div>
+                      ) : null}
+                      {availableToday && (
+                        <div className="flex items-center gap-2 text-emerald-400">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <span>Bugun mavjud</span>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+                {translator.has_personal_car && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Car className="w-3.5 h-3.5" />
+                    <span>Avtomobili bor</span>
+                  </div>
+                )}
+                {translator.has_chinese_driving_license && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>Xitoy haydovchilik guvohnomasi bor</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
-            {/* Spacer for bottom button */}
-            <div className="h-28" />
+            {/* Bottom spacer (room for sticky CTA) */}
+            <div className="pb-24" />
           </div>
 
-          {/* Fixed Bottom Buttons with Social Proof */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background to-transparent">
-            {/* Social Proof Text */}
-            <p className="text-xs text-center text-muted-foreground mb-2">
-              Xizmat ko'rsatilgan mijozlar: <span className="text-primary font-semibold">{translator.completed_bookings || 150}+</span>
-            </p>
-            <div className="flex gap-2">
-              {/* Primary: Online Chat */}
-              <Button 
-                size="lg" 
+          {/* Sticky Bottom CTA — iOS Safari safe (flex-shrink-0 in column flex) */}
+          <div className="flex-shrink-0 relative z-10 bg-background/95 backdrop-blur-md border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+            <div className="flex gap-3">
+              <Button
+                size="lg"
                 variant="outline"
                 className="flex-1 gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                 onClick={onChat}
@@ -550,9 +653,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                 <MessageCircle className="w-5 h-5" />
                 Xabar yozish
               </Button>
-              
-              {/* Secondary: Book */}
-              <Button size="lg" className="flex-1 gap-2" onClick={onBook}>
+              <Button size="lg" className="flex-[2] gap-2" onClick={onBook}>
                 <Calendar className="w-5 h-5" />
                 Bron qilish
               </Button>
