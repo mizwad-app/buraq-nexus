@@ -9,16 +9,10 @@ import {
   Clock,
   Languages,
   Car,
-  IdCard,
   CircleDollarSign,
   SlidersHorizontal,
-  X,
   RotateCcw,
-  Check,
-  MessageCircle,
-  CalendarCheck,
-  Play,
-  Video
+  Check
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -27,6 +21,7 @@ import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { cn } from "@/lib/utils";
 import type { MarketplaceTranslator } from "@/types/marketplace";
 import { BookingSheet } from "@/components/marketplace/BookingSheet";
+import { TranslatorProfileCard } from "@/components/marketplace/TranslatorProfileCard";
 import { TranslatorDetailSheet } from "@/components/marketplace/TranslatorDetailSheet";
 import { ChatSheet } from "@/components/marketplace/ChatSheet";
 import { useAuth } from "@/contexts/AuthContext";
@@ -59,13 +54,19 @@ interface Translator {
   city_en?: string | null;
   city_ar?: string | null;
   hsk_level: number | null;
+  self_declared_hsk?: number | null;
+  buraq_verified_hsk?: number | null;
+  buraq_verified_at?: string | null;
   specializations: string[] | null;
+  languages?: unknown;
   bio?: string | null;
   bio_uz?: string | null;
   bio_ru?: string | null;
   bio_en?: string | null;
   bio_ar?: string | null;
   price_per_day: number | null;
+  hourly_rate?: number | null;
+  daily_rate?: number | null;
   is_verified: boolean;
   is_available: boolean;
   avatar_url: string | null;
@@ -77,8 +78,14 @@ interface Translator {
   completed_bookings?: number | null;
   language_pairs?: string[] | null;
   intro_video_url?: string | null;
+  available_today?: boolean | null;
+  response_time_avg?: number | null;
   has_personal_car?: boolean | null;
   has_chinese_driving_license?: boolean | null;
+  rating_reliability?: number | null;
+  rating_negotiation?: number | null;
+  rating_punctuality?: number | null;
+  rating_knowledge?: number | null;
   [key: string]: unknown;
 }
 
@@ -144,9 +151,6 @@ const RATING_OPTIONS = [
   { id: "4.5", label: "4.5+ ⭐", min: 4.5 },
   { id: "4.8", label: "4.8+ ⭐", min: 4.8 },
 ];
-
-const AVATAR_PLACEHOLDER = "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80";
-
 
 const Translators = () => {
   const { t } = useTranslation();
@@ -228,19 +232,32 @@ const Translators = () => {
       bio_en: selectedTranslator.bio_en ?? null,
       bio_ar: selectedTranslator.bio_ar ?? null,
       price_per_day: selectedTranslator.price_per_day ?? null,
-      hourly_rate: null,
-      daily_rate: null,
+      hourly_rate: selectedTranslator.hourly_rate ?? null,
+      daily_rate: selectedTranslator.daily_rate ?? null,
       is_verified: selectedTranslator.is_verified,
       is_available: selectedTranslator.is_available,
       avatar_url: selectedTranslator.avatar_url,
       intro_video_url: selectedTranslator.intro_video_url ?? null,
       rating: selectedTranslator.rating,
       total_reviews: selectedTranslator.total_reviews,
+      total_bookings: (selectedTranslator.total_bookings as number | undefined) ?? undefined,
+      completed_bookings: selectedTranslator.completed_bookings ?? undefined,
+      years_experience: selectedTranslator.years_experience ?? undefined,
+      age: selectedTranslator.age ?? null,
+      gender: selectedTranslator.gender ?? null,
+      has_personal_car: selectedTranslator.has_personal_car ?? null,
+      has_chinese_driving_license: selectedTranslator.has_chinese_driving_license ?? null,
       user_id: (selectedTranslator.user_id as string | null) ?? null,
-      // Optional computed fields
-      self_declared_hsk: null,
-      buraq_verified_hsk: null,
-      buraq_verified_at: null,
+      self_declared_hsk: selectedTranslator.self_declared_hsk ?? null,
+      buraq_verified_hsk: selectedTranslator.buraq_verified_hsk ?? null,
+      buraq_verified_at: selectedTranslator.buraq_verified_at ?? null,
+      languages: selectedTranslator.languages,
+      available_today: selectedTranslator.available_today ?? null,
+      response_time_avg: selectedTranslator.response_time_avg ?? null,
+      rating_reliability: selectedTranslator.rating_reliability ?? null,
+      rating_negotiation: selectedTranslator.rating_negotiation ?? null,
+      rating_punctuality: selectedTranslator.rating_punctuality ?? null,
+      rating_knowledge: selectedTranslator.rating_knowledge ?? null,
     } as MarketplaceTranslator;
   }, [selectedTranslator]);
 
@@ -374,28 +391,6 @@ const Translators = () => {
       console.error("Error starting chat:", error);
       toast({ title: "Chat ochishda xatolik", variant: "destructive" });
     }
-  };
-
-  const renderHSKBadge = (level: number | null) => {
-    if (!level) return null;
-    
-    const colors: Record<number, string> = {
-      1: "bg-gray-500",
-      2: "bg-blue-400",
-      3: "bg-blue-500",
-      4: "bg-green-500",
-      5: "bg-gold",
-      6: "bg-red-500",
-    };
-
-    return (
-      <span className={cn(
-        "px-2 py-0.5 rounded-full text-[10px] font-bold text-white",
-        colors[level] || "bg-gray-500"
-      )}>
-        HSK {level}
-      </span>
-    );
   };
 
   return (
@@ -751,142 +746,13 @@ const Translators = () => {
         ) : (
           <div className="space-y-4">
             {filteredTranslators.map((translator) => (
-              <div
+              <TranslatorProfileCard
                 key={translator.id}
-                className="bg-card rounded-2xl border border-border/50 hover:border-primary/30 transition-all overflow-hidden"
-              >
-                {/* Full-Width Card - Preply Style Horizontal Layout */}
-                <div 
-                  className="flex gap-4 p-4 cursor-pointer"
-                  onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
-                >
-                  {/* Large Profile Picture */}
-                  <div className="relative flex-shrink-0">
-                    <img
-                      src={translator.avatar_url || AVATAR_PLACEHOLDER}
-                      alt={getField(translator, 'name')}
-                      className="w-24 h-24 rounded-2xl object-cover shadow-lg"
-                    />
-                    {/* Availability Badge */}
-                    <div className="absolute -bottom-1 -right-1">
-                      <span className={cn(
-                        "px-2 py-0.5 rounded-lg text-[10px] font-bold shadow-md",
-                        translator.is_available 
-                          ? "bg-primary text-primary-foreground" 
-                          : "bg-muted text-muted-foreground"
-                      )}>
-                        {translator.is_available ? "✓" : "—"}
-                      </span>
-                    </div>
-                    {/* Video Indicator */}
-                    {translator.intro_video_url && (
-                      <div className="absolute top-1 left-1">
-                        <div className="w-6 h-6 rounded-lg bg-primary flex items-center justify-center shadow-md shadow-primary/30">
-                          <Play className="w-3 h-3 text-primary-foreground fill-primary-foreground ml-0.5" />
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Info Section */}
-                  <div className="flex-1 min-w-0">
-                    {/* Header Row - Name + Verification */}
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-bold text-foreground text-lg truncate">{getField(translator, 'name')}</h3>
-                      {translator.is_verified && (
-                        <BadgeCheck className="w-5 h-5 text-primary flex-shrink-0" />
-                      )}
-                    </div>
-                    
-                    {/* Location, Age, HSK Row */}
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2 flex-wrap">
-                      <div className="flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5" />
-                        <span>{getField(translator, 'city')}</span>
-                      </div>
-                      {translator.age && (
-                        <>
-                          <span className="text-muted-foreground/40">•</span>
-                          <span>{translator.age} yosh</span>
-                        </>
-                      )}
-                      {translator.hsk_level && (
-                        <>
-                          <span className="text-muted-foreground/40">•</span>
-                          {renderHSKBadge(translator.hsk_level)}
-                        </>
-                      )}
-                    </div>
-
-                    {/* Price - Prominent */}
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-xl font-bold text-primary">¥{translator.price_per_day || 0}</span>
-                      <span className="text-sm text-muted-foreground">/kun</span>
-                      {translator.rating && (
-                        <div className="flex items-center gap-1 ml-auto">
-                          <Star className="w-4 h-4 fill-gold text-gold" />
-                          <span className="font-semibold text-foreground">{translator.rating?.toFixed(1)}</span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Transport Badges - Mizwad Green */}
-                    <div className="flex flex-wrap gap-1.5">
-                      {translator.has_personal_car && (
-                        <span className="px-2 py-0.5 bg-primary/15 border border-primary/30 rounded-lg text-[11px] text-primary flex items-center gap-1 font-medium">
-                          <Car className="w-3 h-3" />
-                          🚗 Avtomobil
-                        </span>
-                      )}
-                      {translator.has_chinese_driving_license && (
-                        <span className="px-2 py-0.5 bg-primary/15 border border-primary/30 rounded-lg text-[11px] text-primary flex items-center gap-1 font-medium">
-                          <IdCard className="w-3 h-3" />
-                          🪪 Guvohnoma
-                        </span>
-                      )}
-                      {/* Stats badges */}
-                      {(translator.completed_bookings ?? 0) > 0 && (
-                        <span className="px-2 py-0.5 bg-muted rounded-lg text-[11px] text-muted-foreground">
-                          {translator.completed_bookings}+ mijoz
-                        </span>
-                      )}
-                      {(translator.total_reviews ?? 0) > 0 && (
-                        <span className="px-2 py-0.5 bg-muted rounded-lg text-[11px] text-muted-foreground">
-                          {translator.total_reviews} sharh
-                        </span>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Card Footer - Action Buttons */}
-                <div className="px-4 py-3 bg-muted/30 border-t border-border/30 flex items-center gap-2">
-                  <Button 
-                    size="sm" 
-                    variant="outline"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openChat(translator);
-                    }}
-                    className="flex-1 gap-1.5 border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground"
-                  >
-                    <MessageCircle className="w-4 h-4" />
-                    Xabar
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedTranslator(translator);
-                      setBookingOpen(true);
-                    }}
-                    className="flex-1 gap-1.5 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-md shadow-primary/20"
-                  >
-                    <CalendarCheck className="w-4 h-4" />
-                    Band qilish
-                  </Button>
-                </div>
-              </div>
+                translator={translator as MarketplaceTranslator}
+                onClick={() => { setSelectedTranslator(translator); setDetailOpen(true); }}
+                onChat={() => openChat(translator)}
+                onBook={() => { setSelectedTranslator(translator); setBookingOpen(true); }}
+              />
             ))}
           </div>
         )}
