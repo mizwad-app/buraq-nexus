@@ -33,6 +33,7 @@ import YoriqnomaPage from "./pages/services/YoriqnomaPage";
 import VideoTipsPage from "./pages/services/VideoTipsPage";
 import DocumentsPage from "./pages/services/DocumentsPage";
 import TicketsPage from "./pages/services/TicketsPage";
+import Favorites from "./pages/Favorites";
 
 const queryClient = new QueryClient();
 
