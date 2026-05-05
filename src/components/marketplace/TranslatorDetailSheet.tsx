@@ -141,26 +141,30 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
         </h4>
 
         <div className={cn("grid gap-3", verifiedHsk ? "grid-cols-2" : "grid-cols-1")}>
-          {/* Self-declared - neutral styling */}
+          {/* Self-declared */}
           <div className="bg-background/50 rounded-xl p-3">
             <p className="text-[10px] text-muted-foreground mb-1">O'zi e'lon qilgan</p>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-secondary text-foreground border border-border">
+              <span className={cn(
+                "px-2.5 py-1 rounded-lg text-sm font-bold border",
+                HSK_BADGE_CLASS(selfHsk)
+              )}>
                 HSK {selfHsk || "—"}
               </span>
             </div>
           </div>
 
-          {/* Mizwad Verified - only show when verified */}
+          {/* Mizwad Verified */}
           {verifiedHsk && (
-            <div className="rounded-xl p-3 bg-gradient-to-br from-primary/20 to-accent/20 border border-primary/30">
+            <div className="rounded-xl p-3 bg-emerald-500/10 border border-emerald-500/30">
               <p className="text-[10px] text-muted-foreground mb-1 flex items-center gap-1">
                 <Shield className="w-3 h-3" />
                 Mizwad tasdiqlagan
               </p>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-gradient-to-r from-primary to-accent text-primary-foreground">
-                  HSK {verifiedHsk} ✓
+                <span className="px-2.5 py-1 rounded-lg text-sm font-bold bg-emerald-500 text-white flex items-center gap-1">
+                  HSK {verifiedHsk}
+                  <BadgeCheck className="w-3.5 h-3.5" />
                 </span>
               </div>
             </div>
