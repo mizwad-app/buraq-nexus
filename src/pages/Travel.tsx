@@ -27,6 +27,7 @@ import {
   Send,
   Train,
   MessageSquare,
+  Sparkles,
 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
@@ -241,6 +242,7 @@ const Travel = () => {
   const [historicalSites, setHistoricalSites] = useState<PlaceData[]>([]);
   const [markets, setMarkets] = useState<PlaceData[]>([]);
   const [loading, setLoading] = useState(true);
+  const [topPicks, setTopPicks] = useState<Array<PlaceData & { type: PlaceType }>>([]);
   const [activeTab, setActiveTab] = useState<string>(searchParams.get("tab") || "places");
 
   // Place detail sheet
@@ -271,6 +273,31 @@ const Travel = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  // Fetch Mizwad Top 5 picks for selected city
+  useEffect(() => {
+    const fetchTopPicks = async () => {
+      if (!selectedCity || selectedCity === "all") {
+        setTopPicks([]);
+        return;
+      }
+      const [hist, mall, mkt, mosque] = await Promise.all([
+        supabase.from("historical_sites").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+        supabase.from("shopping_malls").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+        supabase.from("markets").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+        supabase.from("mosques").select("*").eq("city", selectedCity).eq("is_active", true).not("mizwad_pick_rank", "is", null),
+      ]);
+      const all: Array<PlaceData & { type: PlaceType }> = [
+        ...((hist.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "historical" as PlaceType })),
+        ...((mall.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "mall" as PlaceType })),
+        ...((mkt.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "market" as PlaceType })),
+        ...((mosque.data || []) as unknown as PlaceData[]).map((p) => ({ ...p, type: "historical" as PlaceType })),
+      ];
+      all.sort((a, b) => ((a.mizwad_pick_rank ?? 99) - (b.mizwad_pick_rank ?? 99)));
+      setTopPicks(all.slice(0, 5));
+    };
+    fetchTopPicks();
+  }, [selectedCity]);
 
   // Sync activeTab to URL
   useEffect(() => {
@@ -501,6 +528,63 @@ const Travel = () => {
               <Send className="w-4 h-4" />
             </button>
 
+            {/* Mizwad Tavsiyasi — Top 5 picks */}
+            {topPicks.length > 0 && (
+              <section className="-mx-5">
+                <div className="flex items-center justify-between mb-3 px-5">
+                  <h2 className="text-base font-bold flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    Mizwad tavsiyasi
+                  </h2>
+                  <span className="text-xs text-muted-foreground">{selectedCityTranslated}</span>
+                </div>
+                <div className="flex gap-3 overflow-x-auto pb-2 px-5 scrollbar-hide snap-x snap-mandatory">
+                  {topPicks.map((place) => {
+                    const PIcon = getPlaceholderIcon(place.type);
+                    const rank = place.mizwad_pick_rank || 0;
+                    return (
+                      <button
+                        key={`pick-${place.type}-${place.id}`}
+                        onClick={() => {
+                          setPlaceDetail({ type: place.type, data: place });
+                          setPlaceDetailOpen(true);
+                        }}
+                        className="flex-shrink-0 w-64 snap-start text-left bg-card rounded-2xl overflow-hidden border border-border/50 hover:border-amber-500/40 transition-all"
+                      >
+                        <div className="relative h-32">
+                          {place.image_url ? (
+                            <img src={place.image_url} alt={getField(place, 'name')} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className={cn("w-full h-full bg-gradient-to-br flex items-center justify-center", getPlaceholderGradient(place.type))}>
+                              <PIcon className="w-10 h-10 text-emerald-500/50" />
+                            </div>
+                          )}
+                          <div className={cn(
+                            "absolute top-2 left-2 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 backdrop-blur-md",
+                            rank === 1 && "bg-amber-500 text-white",
+                            rank === 2 && "bg-slate-300 text-slate-900",
+                            rank === 3 && "bg-orange-600 text-white",
+                            rank >= 4 && "bg-emerald-500 text-white",
+                          )}>
+                            <Star className="w-3 h-3 fill-current" />
+                            <span>#{rank}</span>
+                          </div>
+                        </div>
+                        <div className="p-3">
+                          <h3 className="font-semibold text-sm line-clamp-1 mb-1">{getField(place, 'name')}</h3>
+                          {place.mizwad_pick_reason_uz && (
+                            <p className="text-xs text-muted-foreground line-clamp-2 italic">
+                              "{place.mizwad_pick_reason_uz}"
+                            </p>
+                          )}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
+
             {/* Results Count */}
             <p className="text-sm text-muted-foreground">
               {unifiedResults.length} {t("travel.placesFound")} {selectedCity !== "all" && `• ${selectedCityTranslated}`}
@@ -557,6 +641,21 @@ const Travel = () => {
                             );
                           })()
                         )}
+                        {(data as PlaceData).mizwad_pick_rank && (() => {
+                          const r = (data as PlaceData).mizwad_pick_rank as number;
+                          return (
+                            <div className={cn(
+                              "absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1 backdrop-blur-md z-10",
+                              r === 1 && "bg-amber-500 text-white",
+                              r === 2 && "bg-slate-300 text-slate-900",
+                              r === 3 && "bg-orange-600 text-white",
+                              r >= 4 && "bg-emerald-500 text-white",
+                            )}>
+                              <Star className="w-3 h-3 fill-current" />
+                              <span>#{r}</span>
+                            </div>
+                          );
+                        })()}
                         <div className="absolute top-3 right-3 z-10">
                           <FavoriteButton placeId={data.id} placeType={item.type} />
                         </div>
