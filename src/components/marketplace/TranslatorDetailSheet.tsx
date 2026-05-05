@@ -544,24 +544,21 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
               {renderHSKSection()}
             </div>
 
-            {/* Bio */}
-            {getField(translator, 'bio') && (() => {
-              const currentLangBio = (translator as Record<string, unknown>)[`bio_${i18n.language}`];
-              const isFallback = !currentLangBio || typeof currentLangBio !== 'string' || !currentLangBio.trim();
+            {/* Bio — auto-translated from DB columns (bio_uz/ru/en) */}
+            {(() => {
+              const t2 = translator as Record<string, unknown>;
+              const lang = (i18n.language || "uz").toLowerCase();
+              const bio =
+                (typeof t2[`bio_${lang}`] === "string" && (t2[`bio_${lang}`] as string).trim()) ||
+                (typeof t2.bio_uz === "string" && (t2.bio_uz as string).trim()) ||
+                (typeof t2.bio_en === "string" && (t2.bio_en as string).trim()) ||
+                (typeof t2.bio === "string" && (t2.bio as string).trim()) ||
+                "";
+              if (!bio) return null;
               return (
                 <div className="px-5 mb-4">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h4 className="text-sm font-semibold text-foreground">Haqida</h4>
-                    {isFallback && (
-                      <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-secondary/60 border border-border text-[10px] text-muted-foreground">
-                        <Languages className="w-2.5 h-2.5" />
-                        Tarjima qilinmoqda
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {getField(translator, 'bio')}
-                  </p>
+                  <h4 className="text-sm font-semibold text-foreground mb-2">Haqida</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{bio}</p>
                 </div>
               );
             })()}
@@ -569,53 +566,82 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
             {/* Resume Timeline Section */}
             {renderResumeSection()}
 
-            {/* Specializations */}
-            {translator.specializations && translator.specializations.length > 0 && (
-              <div className="px-5 mb-4">
-                <h4 className="text-sm font-semibold text-foreground mb-2 flex items-center gap-2">
-                  <Briefcase className="w-4 h-4" />
-                  {t("translators.specializations")}
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {translator.specializations.map((spec, idx) => (
-                    <Badge key={idx} variant="secondary" className="px-3 py-1">
-                      {getSpecializationTranslation(t, spec)}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Pricing */}
+            {/* Pricing — with fee transparency */}
             <div className="px-5 mb-4">
-              <h4 className="text-sm font-semibold text-foreground mb-3">Narxlar</h4>
+              <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <DollarSign className="w-4 h-4 text-emerald-400" />
+                Narxlar
+              </h4>
               <div className="grid grid-cols-2 gap-3">
-                <div className="bg-gradient-to-br from-primary/10 to-primary/5 rounded-xl p-4 border border-primary/20">
+                <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-xl p-3">
                   <p className="text-xs text-muted-foreground mb-1">Kunlik</p>
-                  <p className="text-2xl font-bold text-primary">¥{price}</p>
+                  <p className="text-2xl font-bold text-emerald-400">¥{price}</p>
+                  <p className="text-xs text-muted-foreground">8 soat ish</p>
                 </div>
-                <div className="bg-muted/50 rounded-xl p-4">
+                <div className="bg-muted/30 border border-border rounded-xl p-3">
                   <p className="text-xs text-muted-foreground mb-1">Soatlik</p>
                   <p className="text-2xl font-bold text-foreground">¥{hourlyPrice}</p>
+                  <p className="text-xs text-muted-foreground">+ ovqat alohida</p>
                 </div>
+              </div>
+              <div className="mt-3 flex items-start gap-2 text-xs text-muted-foreground">
+                <Info className="w-3.5 h-3.5 flex-shrink-0 mt-0.5" />
+                <span>Yakuniy narxga Mizwad xizmat haqi 10% qo'shiladi.</span>
               </div>
             </div>
 
+            {/* Contact / quick info */}
+            <div className="px-5 mb-4">
+              <h4 className="text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Phone className="w-4 h-4 text-emerald-400" />
+                Aloqa
+              </h4>
+              <div className="space-y-2 text-sm">
+                {(() => {
+                  const t2 = translator as Record<string, unknown>;
+                  const responseTime = t2.response_time_avg as number | null;
+                  const availableToday = t2.available_today === true;
+                  return (
+                    <>
+                      {responseTime ? (
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                          <Clock className="w-3.5 h-3.5" />
+                          <span>Odatda {responseTime} daqiqada javob beradi</span>
+                        </div>
+                      ) : null}
+                      {availableToday && (
+                        <div className="flex items-center gap-2 text-emerald-400">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <span>Bugun mavjud</span>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+                {translator.has_personal_car && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Car className="w-3.5 h-3.5" />
+                    <span>Avtomobili bor</span>
+                  </div>
+                )}
+                {translator.has_chinese_driving_license && (
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>Xitoy haydovchilik guvohnomasi bor</span>
+                  </div>
+                )}
+              </div>
+            </div>
 
-            {/* Spacer for bottom button */}
-            <div className="h-28" />
+            {/* Bottom spacer (room for sticky CTA) */}
+            <div className="pb-24" />
           </div>
 
-          {/* Fixed Bottom Buttons with Social Proof */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-background via-background to-transparent">
-            {/* Social Proof Text */}
-            <p className="text-xs text-center text-muted-foreground mb-2">
-              Xizmat ko'rsatilgan mijozlar: <span className="text-primary font-semibold">{translator.completed_bookings || 150}+</span>
-            </p>
-            <div className="flex gap-2">
-              {/* Primary: Online Chat */}
-              <Button 
-                size="lg" 
+          {/* Sticky Bottom CTA — iOS Safari safe (flex-shrink-0 in column flex) */}
+          <div className="flex-shrink-0 relative z-10 bg-background/95 backdrop-blur-md border-t border-border p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
+            <div className="flex gap-3">
+              <Button
+                size="lg"
                 variant="outline"
                 className="flex-1 gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
                 onClick={onChat}
@@ -623,9 +649,7 @@ export const TranslatorDetailSheet = ({ translator, open, onOpenChange, onBook, 
                 <MessageCircle className="w-5 h-5" />
                 Xabar yozish
               </Button>
-              
-              {/* Secondary: Book */}
-              <Button size="lg" className="flex-1 gap-2" onClick={onBook}>
+              <Button size="lg" className="flex-[2] gap-2" onClick={onBook}>
                 <Calendar className="w-5 h-5" />
                 Bron qilish
               </Button>
