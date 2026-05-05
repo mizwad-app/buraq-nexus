@@ -80,6 +80,7 @@ const App = () => (
                       <Route path="/xizmatlar/video" element={<VideoTipsPage />} />
                       <Route path="/xizmatlar/hujjatlar" element={<DocumentsPage />} />
                       <Route path="/xizmatlar/biletlar" element={<TicketsPage />} />
+                      <Route path="/sevimlilar" element={<Favorites />} />
 
                       {/* Backward-compatible redirects */}
                       <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />
