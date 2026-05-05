@@ -478,12 +478,60 @@ const Translators = () => {
 
       {/* Filter Modal */}
       <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
-        <SheetContent side="bottom" className="h-[85vh] rounded-t-3xl">
-          <SheetHeader className="pb-4 border-b border-border/50">
+        <SheetContent side="bottom" className="h-[90vh] rounded-t-3xl p-0 flex flex-col">
+          <SheetHeader className="px-5 pt-5 pb-4 border-b border-border/50 flex-shrink-0">
             <SheetTitle className="text-xl font-bold text-left">Filtrlash</SheetTitle>
           </SheetHeader>
 
-          <div className="py-6 space-y-6 overflow-y-auto h-[calc(100%-160px)]">
+          <div className="flex-1 overflow-y-auto overscroll-contain px-5 py-6 space-y-6" style={{ WebkitOverflowScrolling: 'touch' as any }}>
+            {/* Availability */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Clock className="w-4 h-4 text-primary" />
+                Mavjudlik
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {AVAILABILITY_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedAvailability(opt.id)}
+                    className={cn(
+                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedAvailability === opt.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Specialization (Sector) */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <BadgeCheck className="w-4 h-4 text-primary" />
+                Mutaxassislik
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {SPECIALIZATIONS.map(spec => (
+                  <button
+                    key={spec.id}
+                    onClick={() => setSelectedSpecialization(spec.id)}
+                    className={cn(
+                      "px-3 py-2 rounded-full text-xs font-medium transition-all border",
+                      selectedSpecialization === spec.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-primary/5 text-primary border-primary/20 hover:border-primary/50"
+                    )}
+                  >
+                    {spec.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Language Filter */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
@@ -527,6 +575,54 @@ const Translators = () => {
               </Select>
             </div>
 
+            {/* HSK Level Filter */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <BadgeCheck className="w-4 h-4 text-primary" />
+                HSK darajasi
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {HSK_LEVELS.map(level => (
+                  <button
+                    key={level.id}
+                    onClick={() => setSelectedHskLevel(level.id)}
+                    className={cn(
+                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedHskLevel === level.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {level.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Min Rating */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Star className="w-4 h-4 text-primary" />
+                Minimal reyting
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {RATING_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedRating(opt.id)}
+                    className={cn(
+                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedRating === opt.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Price Range Filter */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
@@ -551,11 +647,35 @@ const Translators = () => {
               </div>
             </div>
 
+            {/* Gender */}
+            <div className="space-y-3">
+              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                <Users className="w-4 h-4 text-primary" />
+                Jinsi
+              </label>
+              <div className="grid grid-cols-3 gap-2">
+                {GENDER_OPTIONS.map(opt => (
+                  <button
+                    key={opt.id}
+                    onClick={() => setSelectedGender(opt.id)}
+                    className={cn(
+                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                      selectedGender === opt.id
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
+                    )}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
             {/* Transport Filter */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Car className="w-4 h-4 text-primary" />
-                Transport
+                Transport va guvohnoma
               </label>
               <div className="space-y-2">
                 {TRANSPORT_OPTIONS.map(option => (
@@ -575,43 +695,21 @@ const Translators = () => {
                 ))}
               </div>
             </div>
-
-            {/* HSK Level Filter */}
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                HSK darajasi
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {HSK_LEVELS.map(level => (
-                  <button
-                    key={level.id}
-                    onClick={() => setSelectedHskLevel(level.id)}
-                    className={cn(
-                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedHskLevel === level.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {level.label}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="absolute bottom-0 left-0 right-0 p-4 bg-background border-t border-border/50 flex gap-3">
-            <Button 
-              variant="outline" 
+          {/* Sticky Bottom Action Buttons (iOS-safe via flex column) */}
+          <div className="flex-shrink-0 p-4 pb-[max(1rem,env(safe-area-inset-bottom))] bg-background border-t border-border/50 flex gap-3">
+            <Button
+              variant="outline"
               className="flex-1 gap-2"
               onClick={resetFilters}
+              disabled={activeFilterCount === 0}
             >
               <RotateCcw className="w-4 h-4" />
               Tozalash
             </Button>
-            <Button 
-              className="flex-1 gap-2"
+            <Button
+              className="flex-[2] gap-2"
               onClick={() => setFilterOpen(false)}
             >
               <Check className="w-4 h-4" />
