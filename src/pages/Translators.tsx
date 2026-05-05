@@ -167,7 +167,11 @@ const Translators = () => {
   const [selectedPriceRange, setSelectedPriceRange] = useState("all");
   const [selectedTransport, setSelectedTransport] = useState("all");
   const [selectedHskLevel, setSelectedHskLevel] = useState("all");
-  
+  const [selectedSpecialization, setSelectedSpecialization] = useState("all");
+  const [selectedAvailability, setSelectedAvailability] = useState("all");
+  const [selectedGender, setSelectedGender] = useState("all");
+  const [selectedRating, setSelectedRating] = useState("all");
+
   const [selectedTranslator, setSelectedTranslator] = useState<Translator | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [bookingOpen, setBookingOpen] = useState(false);
@@ -182,8 +186,12 @@ const Translators = () => {
     if (selectedPriceRange !== "all") count++;
     if (selectedTransport !== "all") count++;
     if (selectedHskLevel !== "all") count++;
+    if (selectedSpecialization !== "all") count++;
+    if (selectedAvailability !== "all") count++;
+    if (selectedGender !== "all") count++;
+    if (selectedRating !== "all") count++;
     return count;
-  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
+  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
 
   const resetFilters = () => {
     setSelectedCity("all");
@@ -191,6 +199,10 @@ const Translators = () => {
     setSelectedPriceRange("all");
     setSelectedTransport("all");
     setSelectedHskLevel("all");
+    setSelectedSpecialization("all");
+    setSelectedAvailability("all");
+    setSelectedGender("all");
+    setSelectedRating("all");
   };
 
   const bookableTranslator: MarketplaceTranslator | null = useMemo(() => {
