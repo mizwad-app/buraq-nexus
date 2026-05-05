@@ -99,8 +99,8 @@ const PRICE_RANGES = [
 
 const TRANSPORT_OPTIONS = [
   { id: "all", label: "Hammasi" },
-  { id: "has_car", label: "Faqat avtomobil borlar" },
-  { id: "has_license", label: "Haydovchilik guvohnomasi bor" },
+  { id: "has_car", label: "Avtomobili bor tarjimonlar" },
+  { id: "has_license", label: "Guvohnomasi bor tarjimonlar" },
 ];
 
 const HSK_LEVELS = [
