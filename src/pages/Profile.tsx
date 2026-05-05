@@ -21,6 +21,7 @@ import {
   Languages,
   Shield,
   Sparkles,
+  Heart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -138,10 +139,11 @@ const Profile = () => {
   };
 
   const menuItems = [
+    { icon: Heart, label: t("profile.favorites", "Sevimlilarim"), action: () => navigate("/sevimlilar") },
     { icon: CalendarCheck, label: t("profile.myBookings"), action: () => {} },
-    { icon: MapPin, label: t("profile.savedPlaces") },
-    { icon: Bell, label: t("profile.notifications") },
-    { icon: Settings, label: t("profile.settings") },
+    { icon: MapPin, label: t("profile.savedPlaces"), action: () => {} },
+    { icon: Bell, label: t("profile.notifications"), action: () => {} },
+    { icon: Settings, label: t("profile.settings"), action: () => {} },
   ];
 
   const getStatusColor = (status: string) => {

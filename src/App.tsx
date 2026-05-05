@@ -33,6 +33,7 @@ import YoriqnomaPage from "./pages/services/YoriqnomaPage";
 import VideoTipsPage from "./pages/services/VideoTipsPage";
 import DocumentsPage from "./pages/services/DocumentsPage";
 import TicketsPage from "./pages/services/TicketsPage";
+import Favorites from "./pages/Favorites";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +80,7 @@ const App = () => (
                       <Route path="/xizmatlar/video" element={<VideoTipsPage />} />
                       <Route path="/xizmatlar/hujjatlar" element={<DocumentsPage />} />
                       <Route path="/xizmatlar/biletlar" element={<TicketsPage />} />
+                      <Route path="/sevimlilar" element={<Favorites />} />
 
                       {/* Backward-compatible redirects */}
                       <Route path="/mosques" element={<Navigate to="/ibadah" replace />} />

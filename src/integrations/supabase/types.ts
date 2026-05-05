@@ -1132,6 +1132,9 @@ export type Database = {
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
+          metro_exit: string | null
+          metro_line: string | null
+          metro_station: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1146,6 +1149,7 @@ export type Database = {
           transport_info: Json | null
           updated_at: string
           verification_status: string | null
+          walking_distance_meters: number | null
           website: string | null
         }
         Insert: {
@@ -1197,6 +1201,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -1211,6 +1218,7 @@ export type Database = {
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
         }
         Update: {
@@ -1262,6 +1270,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -1276,6 +1287,7 @@ export type Database = {
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
         }
         Relationships: []
@@ -1669,6 +1681,9 @@ export type Database = {
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
+          metro_exit: string | null
+          metro_line: string | null
+          metro_station: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1683,6 +1698,7 @@ export type Database = {
           transport_info: Json | null
           updated_at: string
           verification_status: string | null
+          walking_distance_meters: number | null
           website: string | null
         }
         Insert: {
@@ -1734,6 +1750,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -1748,6 +1767,7 @@ export type Database = {
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
         }
         Update: {
@@ -1799,6 +1819,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -1813,6 +1836,7 @@ export type Database = {
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
         }
         Relationships: []
@@ -1862,6 +1886,9 @@ export type Database = {
           last_verified_at: string | null
           latitude: number | null
           longitude: number | null
+          metro_exit: string | null
+          metro_line: string | null
+          metro_station: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1871,6 +1898,7 @@ export type Database = {
           notable_features: Json | null
           phone: string | null
           verification_status: string | null
+          walking_distance_meters: number | null
           working_hours: string | null
         }
         Insert: {
@@ -1917,6 +1945,9 @@ export type Database = {
           last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -1926,6 +1957,7 @@ export type Database = {
           notable_features?: Json | null
           phone?: string | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           working_hours?: string | null
         }
         Update: {
@@ -1972,6 +2004,9 @@ export type Database = {
           last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -1981,6 +2016,7 @@ export type Database = {
           notable_features?: Json | null
           phone?: string | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           working_hours?: string | null
         }
         Relationships: []
@@ -2032,6 +2068,9 @@ export type Database = {
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
+          metro_exit: string | null
+          metro_line: string | null
+          metro_station: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -2044,6 +2083,7 @@ export type Database = {
           price_range: string | null
           transport_info: Json | null
           verification_status: string | null
+          walking_distance_meters: number | null
           website: string | null
         }
         Insert: {
@@ -2092,6 +2132,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2104,6 +2147,7 @@ export type Database = {
           price_range?: string | null
           transport_info?: Json | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
         }
         Update: {
@@ -2152,6 +2196,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -2164,6 +2211,7 @@ export type Database = {
           price_range?: string | null
           transport_info?: Json | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
         }
         Relationships: []
@@ -2543,6 +2591,9 @@ export type Database = {
           last_verified_at: string | null
           latitude: number | null
           longitude: number | null
+          metro_exit: string | null
+          metro_line: string | null
+          metro_station: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -2563,6 +2614,7 @@ export type Database = {
           rating_taste: number | null
           serves_alcohol: boolean | null
           verification_status: string | null
+          walking_distance_meters: number | null
           website: string | null
           working_hours: string | null
           working_hours_en: string | null
@@ -2618,6 +2670,9 @@ export type Database = {
           last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2638,6 +2693,7 @@ export type Database = {
           rating_taste?: number | null
           serves_alcohol?: boolean | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
           working_hours?: string | null
           working_hours_en?: string | null
@@ -2693,6 +2749,9 @@ export type Database = {
           last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -2713,6 +2772,7 @@ export type Database = {
           rating_taste?: number | null
           serves_alcohol?: boolean | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
           working_hours?: string | null
           working_hours_en?: string | null
@@ -2885,6 +2945,9 @@ export type Database = {
           latitude: number | null
           longitude: number | null
           mall_brands: string[] | null
+          metro_exit: string | null
+          metro_line: string | null
+          metro_station: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -2898,6 +2961,7 @@ export type Database = {
           rating: number | null
           transport_info: Json | null
           verification_status: string | null
+          walking_distance_meters: number | null
           website: string | null
           working_hours: string | null
           working_hours_en: string | null
@@ -2951,6 +3015,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2964,6 +3031,7 @@ export type Database = {
           rating?: number | null
           transport_info?: Json | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
           working_hours?: string | null
           working_hours_en?: string | null
@@ -3017,6 +3085,9 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           mall_brands?: string[] | null
+          metro_exit?: string | null
+          metro_line?: string | null
+          metro_station?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -3030,6 +3101,7 @@ export type Database = {
           rating?: number | null
           transport_info?: Json | null
           verification_status?: string | null
+          walking_distance_meters?: number | null
           website?: string | null
           working_hours?: string | null
           working_hours_en?: string | null
@@ -3498,6 +3570,33 @@ export type Database = {
           is_default?: boolean | null
           item_name?: string
           sort_order?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_favorites: {
+        Row: {
+          created_at: string
+          id: string
+          notes: string | null
+          place_id: string
+          place_type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          place_id: string
+          place_type: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          notes?: string | null
+          place_id?: string
+          place_type?: string
           user_id?: string
         }
         Relationships: []

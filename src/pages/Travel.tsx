@@ -62,6 +62,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { MapNavigationSheet } from "@/components/MapNavigationSheet";
 import { PlaceDetailSheet, type PlaceType, type PlaceData } from "@/components/travel/PlaceDetailSheet";
+import { FavoriteButton } from "@/components/travel/FavoriteButton";
+import { getPlaceholderGradient, getPlaceholderIcon } from "@/lib/placePlaceholders";
 import { MVP_CITIES } from "@/lib/mvpCities";
 import { sortByQuality } from "@/lib/placeSorting";
 import { HeaderAvatar } from "@/components/HeaderAvatar";
@@ -533,14 +535,31 @@ const Travel = () => {
                       className="w-full text-left bg-card rounded-2xl overflow-hidden border border-border/50 animate-fade-in hover:border-primary/40 transition-all"
                       style={{ animationDelay: `${index * 40}ms` }}
                     >
-                      <div className="h-36 overflow-hidden bg-muted">
+                      <div className="relative h-36 overflow-hidden bg-muted">
                         {data.image_url ? (
-                          <img src={data.image_url} alt={getField(data, 'name')} className="w-full h-full object-cover" />
+                          <img
+                            src={data.image_url}
+                            alt={getField(data, 'name')}
+                            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                            className="w-full h-full object-cover"
+                          />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center">
-                            <Icon className="w-12 h-12 text-muted-foreground/30" />
-                          </div>
+                          (() => {
+                            const PIcon = getPlaceholderIcon(item.type);
+                            return (
+                              <div className={cn(
+                                "w-full h-full bg-gradient-to-br flex flex-col items-center justify-center",
+                                getPlaceholderGradient(item.type)
+                              )}>
+                                <PIcon className="w-12 h-12 text-emerald-500/60" />
+                                <span className="text-xs text-muted-foreground mt-2">Rasm tez orada</span>
+                              </div>
+                            );
+                          })()
                         )}
+                        <div className="absolute top-3 right-3 z-10">
+                          <FavoriteButton placeId={data.id} placeType={item.type} />
+                        </div>
                       </div>
                       <div className="p-4">
                         <div className="flex items-start justify-between mb-2">
@@ -550,6 +569,15 @@ const Travel = () => {
                               <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                               {getTranslatedCity(data as { city: string })}
                             </p>
+                            {(data as PlaceData).metro_station && (
+                              <div className="flex items-center gap-1 text-xs text-emerald-500 mt-1">
+                                <Train className="w-3 h-3" />
+                                <span>
+                                  {(data as PlaceData).metro_line}
+                                  {(data as PlaceData).metro_exit && ` · Exit ${(data as PlaceData).metro_exit}`}
+                                </span>
+                              </div>
+                            )}
                           </div>
                           <div className="flex items-center gap-2 ml-2 flex-shrink-0">
                             {data.rating != null && (
