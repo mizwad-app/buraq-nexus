@@ -323,6 +323,21 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
             </div>
 
             <div className="px-5 py-4 space-y-5">
+              {/* Mizwad pick reason */}
+              {place.mizwad_pick_rank && (place.mizwad_pick_reason_uz || place.mizwad_pick_reason_ru || place.mizwad_pick_reason_en) && (
+                <div className="p-4 bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Sparkles className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <span className="text-sm font-bold text-amber-500">
+                      Mizwad tavsiyasi #{place.mizwad_pick_rank}
+                    </span>
+                  </div>
+                  <p className="text-sm italic text-foreground/90 leading-relaxed">
+                    "{place.mizwad_pick_reason_uz || place.mizwad_pick_reason_ru || place.mizwad_pick_reason_en}"
+                  </p>
+                </div>
+              )}
+
               {/* Mizwad tip */}
               {buraqTip && (
                 <div className="bg-primary/10 border border-primary/20 rounded-xl p-4">
