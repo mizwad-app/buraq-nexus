@@ -303,14 +303,43 @@ const Translators = () => {
       result = result.filter(t => t.has_chinese_driving_license === true);
     }
     
-    // HSK Level filter
+    // HSK Level filter (incl. Mizwad-verified)
     if (selectedHskLevel !== "all") {
-      const level = parseInt(selectedHskLevel);
-      result = result.filter(t => t.hsk_level === level);
+      if (selectedHskLevel === "verified") {
+        result = result.filter(t => (t as any).buraq_verified_hsk != null);
+      } else {
+        const level = parseInt(selectedHskLevel);
+        result = result.filter(t => t.hsk_level === level);
+      }
     }
-    
+
+    // Specialization filter
+    if (selectedSpecialization !== "all") {
+      const needle = selectedSpecialization.toLowerCase();
+      result = result.filter(t =>
+        Array.isArray(t.specializations) &&
+        t.specializations.some(s => String(s).toLowerCase().includes(needle))
+      );
+    }
+
+    // Availability filter
+    if (selectedAvailability === "today") {
+      result = result.filter(t => (t as any).available_today === true);
+    }
+
+    // Gender filter
+    if (selectedGender !== "all") {
+      result = result.filter(t => (t as any).gender === selectedGender);
+    }
+
+    // Min rating filter
+    if (selectedRating !== "all") {
+      const min = parseFloat(selectedRating);
+      result = result.filter(t => (t.rating ?? 0) >= min);
+    }
+
     return result;
-  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel]);
+  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
 
   // Open chat for selected translator - inline chat sheet
   const openChat = async (translator: Translator) => {
