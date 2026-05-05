@@ -67,6 +67,11 @@ export interface PlaceData {
   has_prayer_room?: boolean | null;
   has_halal_food?: boolean | null;
   rating?: number | null;
+  metro_line?: string | null;
+  metro_station?: string | null;
+  metro_exit?: string | null;
+  walking_distance_meters?: number | null;
+  bus_routes?: string | null;
   [key: string]: unknown;
 }
 
