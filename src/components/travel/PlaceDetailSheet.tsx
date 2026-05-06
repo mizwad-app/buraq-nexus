@@ -137,6 +137,7 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
   const [galleryIdx, setGalleryIdx] = useState(0);
   const [showAllBrands, setShowAllBrands] = useState(false);
   const [lightboxIdx, setLightboxIdx] = useState<number | null>(null);
+  const [heroError, setHeroError] = useState(false);
 
   const gallery = useMemo(() => {
     if (!place) return [];
