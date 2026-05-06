@@ -92,16 +92,14 @@ const CategoryHub = () => {
       setMarkets(marketsData as Row[]);
       setExhibitions(exhibitionsData as Row[]);
 
-      // Production hubs (junction table may not exist in all schemas — fallback to fuzzy)
-      let hubsList: Row[] = [];
-      try {
-        const { data: junctionHubs } = await (supabase.from as never as (t: string) => { select: (q: string) => { eq: (k: string, v: string) => Promise<{ data: { production_hubs: Row }[] | null }> } })("category_hubs")
-          .select("hub_id, production_hubs(*)")
-          .eq("category_slug", categorySlug);
-        hubsList = (junctionHubs ?? []).map((r) => r.production_hubs).filter(Boolean) as Row[];
-      } catch {
-        hubsList = [];
-      }
+      // Production hubs via junction; fallback to fuzzy match
+      const { data: junctionHubs } = await supabase
+        .from("category_hubs")
+        .select("hub_id, production_hubs(*)")
+        .eq("category_slug", categorySlug);
+      let hubsList: Row[] = (junctionHubs ?? [])
+        .map((r) => r.production_hubs as unknown as Row)
+        .filter(Boolean);
       if (hubsList.length === 0) {
         const { data: allHubs } = await supabase.from("production_hubs").select("*");
         hubsList = ((allHubs ?? []) as Row[]).filter((h) =>
