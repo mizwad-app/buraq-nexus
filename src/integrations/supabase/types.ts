@@ -133,6 +133,123 @@ export type Database = {
         }
         Relationships: []
       }
+      category_exhibitions: {
+        Row: {
+          category_slug: string
+          created_at: string | null
+          exhibition_id: string
+          id: string
+          is_primary: boolean | null
+        }
+        Insert: {
+          category_slug: string
+          created_at?: string | null
+          exhibition_id: string
+          id?: string
+          is_primary?: boolean | null
+        }
+        Update: {
+          category_slug?: string
+          created_at?: string | null
+          exhibition_id?: string
+          id?: string
+          is_primary?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_exhibitions_category_slug_fkey"
+            columns: ["category_slug"]
+            isOneToOne: false
+            referencedRelation: "product_categories"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "category_exhibitions_exhibition_id_fkey"
+            columns: ["exhibition_id"]
+            isOneToOne: false
+            referencedRelation: "exhibitions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      category_hubs: {
+        Row: {
+          category_slug: string
+          created_at: string | null
+          hub_id: string
+          id: string
+          is_primary: boolean | null
+        }
+        Insert: {
+          category_slug: string
+          created_at?: string | null
+          hub_id: string
+          id?: string
+          is_primary?: boolean | null
+        }
+        Update: {
+          category_slug?: string
+          created_at?: string | null
+          hub_id?: string
+          id?: string
+          is_primary?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_hubs_category_slug_fkey"
+            columns: ["category_slug"]
+            isOneToOne: false
+            referencedRelation: "product_categories"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "category_hubs_hub_id_fkey"
+            columns: ["hub_id"]
+            isOneToOne: false
+            referencedRelation: "production_hubs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      category_markets: {
+        Row: {
+          category_slug: string
+          created_at: string | null
+          id: string
+          is_primary: boolean | null
+          market_id: string
+        }
+        Insert: {
+          category_slug: string
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          market_id: string
+        }
+        Update: {
+          category_slug?: string
+          created_at?: string | null
+          id?: string
+          is_primary?: boolean | null
+          market_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "category_markets_category_slug_fkey"
+            columns: ["category_slug"]
+            isOneToOne: false
+            referencedRelation: "product_categories"
+            referencedColumns: ["slug"]
+          },
+          {
+            foreignKeyName: "category_markets_market_id_fkey"
+            columns: ["market_id"]
+            isOneToOne: false
+            referencedRelation: "wholesale_markets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chat_conversations: {
         Row: {
           booking_id: string | null
