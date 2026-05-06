@@ -23,6 +23,7 @@ interface Market {
   address?: string | null;
   working_hours?: string | null;
   market_type?: string | null;
+  nearest_metro?: string | null;
   [k: string]: unknown;
 }
 
@@ -159,6 +160,11 @@ const MarketsScreen = () => {
                         )}
                         {m.working_hours && (
                           <p className="text-[10px] text-muted-foreground/70 truncate mt-0.5">{m.working_hours}</p>
+                        )}
+                        {m.nearest_metro && (
+                          <p className="text-[10px] text-emerald-400/80 mt-0.5 truncate">
+                            🚇 {m.nearest_metro.replace(/\s*\([^)]+\)/, "")}
+                          </p>
                         )}
                       </div>
                       <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />

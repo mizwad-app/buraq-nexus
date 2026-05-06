@@ -3969,6 +3969,8 @@ export type Database = {
           address_ru: string | null
           address_uz: string | null
           address_zh: string | null
+          airport_taxi_cost_yuan: string | null
+          airport_taxi_minutes: number | null
           area_description: string | null
           category: string
           category_ar: string | null
@@ -3999,16 +4001,21 @@ export type Database = {
           latitude: number | null
           longitude: number | null
           market_type: string | null
+          metro_exit: string | null
+          metro_walk_minutes: number | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          nearest_airport: string | null
+          nearest_metro: string | null
           opening_hours: string | null
           phone: string | null
           phone_secondary: string | null
           shop_count_estimate: string | null
+          transport_notes: string | null
           travel_tips: string | null
           travel_tips_ar: string | null
           travel_tips_en: string | null
@@ -4028,6 +4035,8 @@ export type Database = {
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          airport_taxi_cost_yuan?: string | null
+          airport_taxi_minutes?: number | null
           area_description?: string | null
           category: string
           category_ar?: string | null
@@ -4058,16 +4067,21 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           market_type?: string | null
+          metro_exit?: string | null
+          metro_walk_minutes?: number | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          nearest_airport?: string | null
+          nearest_metro?: string | null
           opening_hours?: string | null
           phone?: string | null
           phone_secondary?: string | null
           shop_count_estimate?: string | null
+          transport_notes?: string | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null
@@ -4087,6 +4101,8 @@ export type Database = {
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          airport_taxi_cost_yuan?: string | null
+          airport_taxi_minutes?: number | null
           area_description?: string | null
           category?: string
           category_ar?: string | null
@@ -4117,16 +4133,21 @@ export type Database = {
           latitude?: number | null
           longitude?: number | null
           market_type?: string | null
+          metro_exit?: string | null
+          metro_walk_minutes?: number | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          nearest_airport?: string | null
+          nearest_metro?: string | null
           opening_hours?: string | null
           phone?: string | null
           phone_secondary?: string | null
           shop_count_estimate?: string | null
+          transport_notes?: string | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null

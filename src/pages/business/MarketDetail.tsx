@@ -20,8 +20,10 @@ interface Category {
 interface Market {
   id: string;
   name: string;
+  name_zh?: string | null;
   city: string;
   address?: string | null;
+  address_zh?: string | null;
   address_chinese?: string | null;
   phone?: string | null;
   website?: string | null;
@@ -30,6 +32,13 @@ interface Market {
   latitude?: number | null;
   longitude?: number | null;
   image_url?: string | null;
+  nearest_metro?: string | null;
+  metro_exit?: string | null;
+  metro_walk_minutes?: number | null;
+  nearest_airport?: string | null;
+  airport_taxi_cost_yuan?: string | null;
+  airport_taxi_minutes?: number | null;
+  transport_notes?: string | null;
   [k: string]: unknown;
 }
 
@@ -154,7 +163,12 @@ const MarketDetail = () => {
 
       <div className="px-5 pt-4">
         <h1 className="text-lg font-semibold text-foreground leading-tight">{name}</h1>
-        <p className="text-[12px] text-muted-foreground mt-0.5">
+        {market.name_zh && (
+          <p className="text-sm text-muted-foreground mt-0.5 select-all" lang="zh">
+            {market.name_zh}
+          </p>
+        )}
+        <p className="text-[12px] text-muted-foreground mt-1">
           {market.city} 🇨🇳 {market.market_type ? `· ${market.market_type}` : ""}
         </p>
       </div>
@@ -169,7 +183,10 @@ const MarketDetail = () => {
       <section className="px-5 mt-5">
         <div className="bg-card border border-border/40 rounded-xl px-3 py-1">
           {address && <InfoRow label="Manzil" value={address as string} />}
-          {market.address_chinese && market.address_chinese !== address && (
+          {market.address_zh && market.address_zh !== address && (
+            <InfoRow label="Manzil (中文)" value={market.address_zh} />
+          )}
+          {market.address_chinese && market.address_chinese !== address && market.address_chinese !== market.address_zh && (
             <InfoRow label="中文地址" value={market.address_chinese} />
           )}
           {market.working_hours && <InfoRow label="Ish vaqti" value={market.working_hours} />}
@@ -178,6 +195,46 @@ const MarketDetail = () => {
           {market.market_type && <InfoRow label="Mahsulotlar" value={market.market_type} />}
         </div>
       </section>
+
+      {(market.nearest_metro || market.nearest_airport) && (
+        <section className="px-5 mt-4">
+          <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-3">
+            <div className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2">
+              🚇 Yo'l ko'rsatma
+            </div>
+            {market.nearest_metro && (
+              <div className="flex items-start gap-2 mb-2">
+                <span className="text-base shrink-0">🚇</span>
+                <div className="flex-1">
+                  <div className="text-[13px] font-medium text-foreground">{market.nearest_metro}</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    {market.metro_exit && `${market.metro_exit}`}
+                    {market.metro_exit && market.metro_walk_minutes && ` · `}
+                    {market.metro_walk_minutes && `${market.metro_walk_minutes} daq piyoda`}
+                  </div>
+                </div>
+              </div>
+            )}
+            {market.nearest_airport && (
+              <div className="flex items-start gap-2 mb-2">
+                <span className="text-base shrink-0">✈️</span>
+                <div className="flex-1">
+                  <div className="text-[13px] font-medium text-foreground">{market.nearest_airport}</div>
+                  <div className="text-[11px] text-muted-foreground">
+                    {market.airport_taxi_cost_yuan && <>Taxi: {market.airport_taxi_cost_yuan} ¥</>}
+                    {market.airport_taxi_minutes && ` · ~${market.airport_taxi_minutes} daq`}
+                  </div>
+                </div>
+              </div>
+            )}
+            {market.transport_notes && (
+              <div className="text-[12px] text-muted-foreground mt-2 pt-2 border-t border-emerald-500/10 leading-relaxed">
+                💡 {market.transport_notes}
+              </div>
+            )}
+          </div>
+        </section>
+      )}
 
       {description && (
         <section className="px-5 mt-3">

@@ -67,7 +67,7 @@ const BusinessHome = () => {
   };
 
   const pickChip = (slug: string) => {
-    navigate(`/business/category-picker?question=cities&preselect=${slug}`);
+    navigate(`/business/markets/${slug}`);
   };
 
   let card3Subtitle = "Yaqinlashayotgan ko'rgazmalar";
@@ -143,7 +143,8 @@ const BusinessHome = () => {
       </section>
 
       <section className="mb-5">
-        <p className="px-5 text-[11px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">Mashhur kategoriyalar</p>
+        <p className="px-5 text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">Mashhur kategoriyalar</p>
+        <p className="px-5 text-[10px] text-muted-foreground/70 mb-2">Bozorni tezda topish</p>
         <div className="flex gap-2 overflow-x-auto px-5 scrollbar-hide">
           {POPULAR_CHIPS.map((c) => (
             <button
