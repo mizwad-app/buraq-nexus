@@ -23,6 +23,7 @@ interface Market {
   address?: string | null;
   working_hours?: string | null;
   market_type?: string | null;
+  nearest_metro?: string | null;
   [k: string]: unknown;
 }
 
