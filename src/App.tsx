@@ -11,7 +11,11 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Home from "./pages/Home";
 import Travel from "./pages/Travel";
 import Ibadah from "./pages/Ibadah";
-import Business from "./pages/Business";
+import BusinessHome from "./pages/business/BusinessHome";
+import CategoryPicker from "./pages/business/CategoryPicker";
+import CitiesScreen from "./pages/business/CitiesScreen";
+import LawyersPage from "./pages/business/LawyersPage";
+import PhaseTwoPlaceholder from "./pages/business/PhaseTwoPlaceholder";
 import Profile from "./pages/Profile";
 import DeepCheckRequest from "./pages/DeepCheckRequest";
 import AdminDeepChecks from "./pages/AdminDeepChecks";
@@ -68,7 +72,12 @@ const App = () => (
                       <Route path="/" element={<Home />} />
                       <Route path="/travel" element={<Travel />} />
                       <Route path="/ibadah" element={<Ibadah />} />
-                      <Route path="/business" element={<Business />} />
+                      <Route path="/business" element={<BusinessHome />} />
+                      <Route path="/business/lawyers" element={<LawyersPage />} />
+                      <Route path="/business/category-picker" element={<CategoryPicker />} />
+                      <Route path="/business/cities/:categorySlug" element={<CitiesScreen />} />
+                      <Route path="/business/markets/:categorySlug" element={<PhaseTwoPlaceholder question="markets" title="Optom bozorlar" subtitle="Qaysi optom bozorda topiladi?" />} />
+                      <Route path="/business/exhibitions/:categorySlug" element={<PhaseTwoPlaceholder question="exhibitions" title="Ko'rgazmalar" subtitle="Qaysi ko'rgazmaga borish kerak?" />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
