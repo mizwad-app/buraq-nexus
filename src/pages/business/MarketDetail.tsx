@@ -20,8 +20,10 @@ interface Category {
 interface Market {
   id: string;
   name: string;
+  name_zh?: string | null;
   city: string;
   address?: string | null;
+  address_zh?: string | null;
   address_chinese?: string | null;
   phone?: string | null;
   website?: string | null;
@@ -30,6 +32,13 @@ interface Market {
   latitude?: number | null;
   longitude?: number | null;
   image_url?: string | null;
+  nearest_metro?: string | null;
+  metro_exit?: string | null;
+  metro_walk_minutes?: number | null;
+  nearest_airport?: string | null;
+  airport_taxi_cost_yuan?: string | null;
+  airport_taxi_minutes?: number | null;
+  transport_notes?: string | null;
   [k: string]: unknown;
 }
 
