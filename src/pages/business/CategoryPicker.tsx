@@ -43,11 +43,12 @@ const CategoryPicker = () => {
   }, []);
 
   // Auto-navigate if preselect is provided and category found
+  const tabMap: Record<string, string> = { cities: "all", markets: "markets", exhibitions: "exhibitions" };
   useEffect(() => {
     if (!preselect || categories.length === 0) return;
     const cat = categories.find((c) => c.slug === preselect);
     if (cat) {
-      navigate(`/business/${question}/${cat.slug}`, { replace: true });
+      navigate(`/business/category/${cat.slug}?tab=${tabMap[question] || "all"}`, { replace: true });
     }
   }, [preselect, categories, question, navigate]);
 
@@ -97,7 +98,7 @@ const CategoryPicker = () => {
         {filtered.map((cat) => (
           <button
             key={cat.id}
-            onClick={() => navigate(`/business/${question}/${cat.slug}`)}
+            onClick={() => navigate(`/business/category/${cat.slug}?tab=${tabMap[question] || "all"}`)}
             className="w-full flex items-center gap-3 bg-card hover:bg-emerald-500/5 border border-border/50 hover:border-emerald-500/30 rounded-xl py-2.5 px-3 text-left transition-colors"
           >
             <div className="w-9 h-9 rounded-lg bg-white/[0.04] flex items-center justify-center text-[20px] flex-shrink-0">

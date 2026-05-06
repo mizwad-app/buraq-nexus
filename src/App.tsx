@@ -2,7 +2,12 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useParams } from "react-router-dom";
+
+const RedirectToCategory = ({ tab }: { tab: string }) => {
+  const { categorySlug } = useParams();
+  return <Navigate to={`/business/category/${categorySlug}?tab=${tab}`} replace />;
+};
 import { BottomNavigation } from "@/components/BottomNavigation";
 import { AuthProvider } from "@/contexts/AuthContext";
 import { CityProvider } from "@/contexts/CityContext";
@@ -13,11 +18,9 @@ import Travel from "./pages/Travel";
 import Ibadah from "./pages/Ibadah";
 import BusinessHome from "./pages/business/BusinessHome";
 import CategoryPicker from "./pages/business/CategoryPicker";
-import CitiesScreen from "./pages/business/CitiesScreen";
+import CategoryHub from "./pages/business/CategoryHub";
 import LawyersPage from "./pages/business/LawyersPage";
-import MarketsScreen from "./pages/business/MarketsScreen";
 import MarketDetail from "./pages/business/MarketDetail";
-import ExhibitionsScreen from "./pages/business/ExhibitionsScreen";
 import ExhibitionDetail from "./pages/business/ExhibitionDetail";
 import Profile from "./pages/Profile";
 import DeepCheckRequest from "./pages/DeepCheckRequest";
@@ -78,10 +81,11 @@ const App = () => (
                       <Route path="/business" element={<BusinessHome />} />
                       <Route path="/business/lawyers" element={<LawyersPage />} />
                       <Route path="/business/category-picker" element={<CategoryPicker />} />
-                      <Route path="/business/cities/:categorySlug" element={<CitiesScreen />} />
-                      <Route path="/business/markets/:categorySlug" element={<MarketsScreen />} />
+                      <Route path="/business/category/:categorySlug" element={<CategoryHub />} />
+                      <Route path="/business/cities/:categorySlug" element={<RedirectToCategory tab="all" />} />
+                      <Route path="/business/markets/:categorySlug" element={<RedirectToCategory tab="markets" />} />
                       <Route path="/business/markets/:categorySlug/:marketId" element={<MarketDetail />} />
-                      <Route path="/business/exhibitions/:categorySlug" element={<ExhibitionsScreen />} />
+                      <Route path="/business/exhibitions/:categorySlug" element={<RedirectToCategory tab="exhibitions" />} />
                       <Route path="/business/exhibitions/:categorySlug/:exhibitionId" element={<ExhibitionDetail />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
