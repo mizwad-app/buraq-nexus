@@ -80,6 +80,12 @@ export interface PlaceData {
   mizwad_pick_reason_uz?: string | null;
   mizwad_pick_reason_ru?: string | null;
   mizwad_pick_reason_en?: string | null;
+  mizwad_rank?: number | null;
+  mizwad_recommendation_uz?: string | null;
+  mizwad_recommendation_ru?: string | null;
+  mizwad_recommendation_en?: string | null;
+  recommended_duration?: string | null;
+  best_for?: string[] | null;
   [key: string]: unknown;
 }
 
