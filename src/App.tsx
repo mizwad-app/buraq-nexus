@@ -72,7 +72,12 @@ const App = () => (
                       <Route path="/" element={<Home />} />
                       <Route path="/travel" element={<Travel />} />
                       <Route path="/ibadah" element={<Ibadah />} />
-                      <Route path="/business" element={<Business />} />
+                      <Route path="/business" element={<BusinessHome />} />
+                      <Route path="/business/lawyers" element={<LawyersPage />} />
+                      <Route path="/business/category-picker" element={<CategoryPicker />} />
+                      <Route path="/business/cities/:categorySlug" element={<CitiesScreen />} />
+                      <Route path="/business/markets/:categorySlug" element={<PhaseTwoPlaceholder question="markets" title="Optom bozorlar" subtitle="Qaysi optom bozorda topiladi?" />} />
+                      <Route path="/business/exhibitions/:categorySlug" element={<PhaseTwoPlaceholder question="exhibitions" title="Ko'rgazmalar" subtitle="Qaysi ko'rgazmaga borish kerak?" />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
                       <Route path="/checklist" element={<TravelChecklist />} />
