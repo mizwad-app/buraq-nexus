@@ -526,18 +526,20 @@ const Travel = () => {
               {categoryChips.map((chip) => {
                 const Icon = chip.icon;
                 const isActive = categoryFilter === chip.id;
+                const special = (chip as { special?: boolean }).special;
                 return (
                   <button
                     key={chip.id}
                     onClick={() => setCategoryFilter(chip.id)}
                     className={cn(
-                      "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all",
-                      isActive
-                        ? "bg-primary text-primary-foreground shadow-sm"
-                        : "bg-secondary/60 text-muted-foreground hover:bg-secondary"
+                      "flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-all border",
+                      special && isActive && "bg-amber-500/15 text-amber-400 border-amber-500",
+                      special && !isActive && "bg-amber-500/[0.06] text-amber-400/80 border-amber-500/40 hover:bg-amber-500/10",
+                      !special && isActive && "bg-primary text-primary-foreground shadow-sm border-transparent",
+                      !special && !isActive && "bg-secondary/60 text-muted-foreground hover:bg-secondary border-transparent"
                     )}
                   >
-                    <Icon className="w-3.5 h-3.5" />
+                    {special ? <span>✨</span> : <Icon className="w-3.5 h-3.5" />}
                     {chip.label}
                   </button>
                 );
