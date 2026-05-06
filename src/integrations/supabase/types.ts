@@ -1261,6 +1261,7 @@ export type Database = {
           address_uz: string | null
           address_zh: string | null
           amenities: string[] | null
+          best_for: string[] | null
           buraq_recommendation: string | null
           buraq_recommendation_ar: string | null
           buraq_recommendation_en: string | null
@@ -1307,6 +1308,10 @@ export type Database = {
           mizwad_pick_reason_en: string | null
           mizwad_pick_reason_ru: string | null
           mizwad_pick_reason_uz: string | null
+          mizwad_rank: number | null
+          mizwad_recommendation_en: string | null
+          mizwad_recommendation_ru: string | null
+          mizwad_recommendation_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1318,6 +1323,7 @@ export type Database = {
           phone: string | null
           price_range: string | null
           rating: number | null
+          recommended_duration: string | null
           transport_info: Json | null
           updated_at: string
           verification_status: string | null
@@ -1334,6 +1340,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -1380,6 +1387,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -1391,6 +1402,7 @@ export type Database = {
           phone?: string | null
           price_range?: string | null
           rating?: number | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
@@ -1407,6 +1419,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -1453,6 +1466,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -1464,6 +1481,7 @@ export type Database = {
           phone?: string | null
           price_range?: string | null
           rating?: number | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
@@ -1822,6 +1840,7 @@ export type Database = {
           address_uz: string | null
           address_zh: string | null
           amenities: string[] | null
+          best_for: string[] | null
           buraq_recommendation: string | null
           buraq_recommendation_ar: string | null
           buraq_recommendation_en: string | null
@@ -1868,6 +1887,10 @@ export type Database = {
           mizwad_pick_reason_en: string | null
           mizwad_pick_reason_ru: string | null
           mizwad_pick_reason_uz: string | null
+          mizwad_rank: number | null
+          mizwad_recommendation_en: string | null
+          mizwad_recommendation_ru: string | null
+          mizwad_recommendation_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -1879,6 +1902,7 @@ export type Database = {
           phone: string | null
           price_range: string | null
           rating: number | null
+          recommended_duration: string | null
           transport_info: Json | null
           updated_at: string
           verification_status: string | null
@@ -1895,6 +1919,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -1941,6 +1966,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -1952,6 +1981,7 @@ export type Database = {
           phone?: string | null
           price_range?: string | null
           rating?: number | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
@@ -1968,6 +1998,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -2014,6 +2045,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -2025,6 +2060,7 @@ export type Database = {
           phone?: string | null
           price_range?: string | null
           rating?: number | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           updated_at?: string
           verification_status?: string | null
@@ -2071,6 +2107,7 @@ export type Database = {
           address_ru: string | null
           address_uz: string | null
           address_zh: string | null
+          best_for: string[] | null
           built_year: number | null
           city: string
           city_ar: string | null
@@ -2115,6 +2152,10 @@ export type Database = {
           mizwad_pick_reason_en: string | null
           mizwad_pick_reason_ru: string | null
           mizwad_pick_reason_uz: string | null
+          mizwad_rank: number | null
+          mizwad_recommendation_en: string | null
+          mizwad_recommendation_ru: string | null
+          mizwad_recommendation_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -2123,6 +2164,7 @@ export type Database = {
           name_zh: string | null
           notable_features: Json | null
           phone: string | null
+          recommended_duration: string | null
           verification_status: string | null
           walking_distance_meters: number | null
           working_hours: string | null
@@ -2134,6 +2176,7 @@ export type Database = {
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          best_for?: string[] | null
           built_year?: number | null
           city: string
           city_ar?: string | null
@@ -2178,6 +2221,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2186,6 +2233,7 @@ export type Database = {
           name_zh?: string | null
           notable_features?: Json | null
           phone?: string | null
+          recommended_duration?: string | null
           verification_status?: string | null
           walking_distance_meters?: number | null
           working_hours?: string | null
@@ -2197,6 +2245,7 @@ export type Database = {
           address_ru?: string | null
           address_uz?: string | null
           address_zh?: string | null
+          best_for?: string[] | null
           built_year?: number | null
           city?: string
           city_ar?: string | null
@@ -2241,6 +2290,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -2249,6 +2302,7 @@ export type Database = {
           name_zh?: string | null
           notable_features?: Json | null
           phone?: string | null
+          recommended_duration?: string | null
           verification_status?: string | null
           walking_distance_meters?: number | null
           working_hours?: string | null
@@ -2265,6 +2319,7 @@ export type Database = {
           address_uz: string | null
           address_zh: string | null
           amenities: string[] | null
+          best_for: string[] | null
           buraq_recommendation: string | null
           buraq_recommendation_ar: string | null
           buraq_recommendation_en: string | null
@@ -2305,6 +2360,10 @@ export type Database = {
           metro_exit: string | null
           metro_line: string | null
           metro_station: string | null
+          mizwad_rank: number | null
+          mizwad_recommendation_en: string | null
+          mizwad_recommendation_ru: string | null
+          mizwad_recommendation_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -2315,6 +2374,7 @@ export type Database = {
           park_type: string | null
           phone: string | null
           price_range: string | null
+          recommended_duration: string | null
           transport_info: Json | null
           verification_status: string | null
           walking_distance_meters: number | null
@@ -2329,6 +2389,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -2369,6 +2430,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2379,6 +2444,7 @@ export type Database = {
           park_type?: string | null
           phone?: string | null
           price_range?: string | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           verification_status?: string | null
           walking_distance_meters?: number | null
@@ -2393,6 +2459,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -2433,6 +2500,10 @@ export type Database = {
           metro_exit?: string | null
           metro_line?: string | null
           metro_station?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -2443,6 +2514,7 @@ export type Database = {
           park_type?: string | null
           phone?: string | null
           price_range?: string | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           verification_status?: string | null
           walking_distance_meters?: number | null
@@ -3146,6 +3218,7 @@ export type Database = {
           address_uz: string | null
           address_zh: string | null
           amenities: string[] | null
+          best_for: string[] | null
           buraq_recommendation: string | null
           buraq_recommendation_ar: string | null
           buraq_recommendation_en: string | null
@@ -3192,6 +3265,10 @@ export type Database = {
           mizwad_pick_reason_en: string | null
           mizwad_pick_reason_ru: string | null
           mizwad_pick_reason_uz: string | null
+          mizwad_rank: number | null
+          mizwad_recommendation_en: string | null
+          mizwad_recommendation_ru: string | null
+          mizwad_recommendation_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
@@ -3203,6 +3280,7 @@ export type Database = {
           phone_secondary: string | null
           price_range: string | null
           rating: number | null
+          recommended_duration: string | null
           transport_info: Json | null
           verification_status: string | null
           walking_distance_meters: number | null
@@ -3220,6 +3298,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -3266,6 +3345,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -3277,6 +3360,7 @@ export type Database = {
           phone_secondary?: string | null
           price_range?: string | null
           rating?: number | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           verification_status?: string | null
           walking_distance_meters?: number | null
@@ -3294,6 +3378,7 @@ export type Database = {
           address_uz?: string | null
           address_zh?: string | null
           amenities?: string[] | null
+          best_for?: string[] | null
           buraq_recommendation?: string | null
           buraq_recommendation_ar?: string | null
           buraq_recommendation_en?: string | null
@@ -3340,6 +3425,10 @@ export type Database = {
           mizwad_pick_reason_en?: string | null
           mizwad_pick_reason_ru?: string | null
           mizwad_pick_reason_uz?: string | null
+          mizwad_rank?: number | null
+          mizwad_recommendation_en?: string | null
+          mizwad_recommendation_ru?: string | null
+          mizwad_recommendation_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
@@ -3351,6 +3440,7 @@ export type Database = {
           phone_secondary?: string | null
           price_range?: string | null
           rating?: number | null
+          recommended_duration?: string | null
           transport_info?: Json | null
           verification_status?: string | null
           walking_distance_meters?: number | null
