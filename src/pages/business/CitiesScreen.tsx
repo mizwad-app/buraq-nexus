@@ -37,12 +37,11 @@ const CitiesScreen = () => {
   useEffect(() => {
     (async () => {
       setLoading(true);
-      const today = new Date().toISOString().slice(0, 10);
       const [cat, m, h, e, ins] = await Promise.all([
         supabase.from("product_categories").select("*").eq("slug", categorySlug).maybeSingle(),
         supabase.from("wholesale_markets").select("city,category").eq("is_active", true),
         supabase.from("production_hubs").select("city,industry"),
-        supabase.from("exhibitions").select("city,category,start_date").eq("is_active", true).gte("start_date", today),
+        supabase.from("exhibitions").select("city,category,start_date").eq("is_active", true),
         supabase.from("mizwad_city_insights").select("*").eq("category_slug", categorySlug).maybeSingle(),
       ]);
       if (cat.data) setCategory(cat.data as unknown as Category);

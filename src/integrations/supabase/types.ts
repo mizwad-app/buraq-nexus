@@ -3968,6 +3968,8 @@ export type Database = {
           address_en: string | null
           address_ru: string | null
           address_uz: string | null
+          address_zh: string | null
+          area_description: string | null
           category: string
           category_ar: string | null
           category_en: string | null
@@ -3992,6 +3994,7 @@ export type Database = {
           email: string | null
           id: string
           is_active: boolean
+          is_mizwad_verified: boolean | null
           last_verified_at: string | null
           latitude: number | null
           longitude: number | null
@@ -4001,8 +4004,11 @@ export type Database = {
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
+          name_zh: string | null
+          opening_hours: string | null
           phone: string | null
           phone_secondary: string | null
+          shop_count_estimate: string | null
           travel_tips: string | null
           travel_tips_ar: string | null
           travel_tips_en: string | null
@@ -4021,6 +4027,8 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
+          area_description?: string | null
           category: string
           category_ar?: string | null
           category_en?: string | null
@@ -4045,6 +4053,7 @@ export type Database = {
           email?: string | null
           id?: string
           is_active?: boolean
+          is_mizwad_verified?: boolean | null
           last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
@@ -4054,8 +4063,11 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
+          opening_hours?: string | null
           phone?: string | null
           phone_secondary?: string | null
+          shop_count_estimate?: string | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null
@@ -4074,6 +4086,8 @@ export type Database = {
           address_en?: string | null
           address_ru?: string | null
           address_uz?: string | null
+          address_zh?: string | null
+          area_description?: string | null
           category?: string
           category_ar?: string | null
           category_en?: string | null
@@ -4098,6 +4112,7 @@ export type Database = {
           email?: string | null
           id?: string
           is_active?: boolean
+          is_mizwad_verified?: boolean | null
           last_verified_at?: string | null
           latitude?: number | null
           longitude?: number | null
@@ -4107,8 +4122,11 @@ export type Database = {
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
+          name_zh?: string | null
+          opening_hours?: string | null
           phone?: string | null
           phone_secondary?: string | null
+          shop_count_estimate?: string | null
           travel_tips?: string | null
           travel_tips_ar?: string | null
           travel_tips_en?: string | null
