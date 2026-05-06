@@ -270,6 +270,7 @@ const Travel = () => {
   const [selectedItem, setSelectedItem] = useState<SelectedItem | null>(null);
 
   const categoryChips = [
+    { id: "mizwad_top" as const, label: "Mizwad TOP", icon: Sparkles, special: true },
     { id: "all" as const, label: t("travel.allCategories"), icon: Compass },
     { id: "parks" as const, label: t("place.type.park"), icon: TreePine },
     { id: "malls" as const, label: t("place.type.mall"), icon: ShoppingBag },
