@@ -877,7 +877,7 @@ const Travel = () => {
                 <p className="font-medium">{t("business.noResults")}</p>
                 <p className="text-sm mt-1">{t("travel.tryDifferentFilters")}</p>
               </div>
-            )}
+            ))}
           </div>
       </section>
 
