@@ -657,62 +657,66 @@ const Travel = () => {
                             </h2>
                             <span className="text-[10px] text-muted-foreground">({items.length})</span>
                           </div>
-                          <div className="space-y-2">
+                          <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory scrollbar-hide pb-2 -mx-4 px-4">
                             {items.map((it) => {
                               const p = it.data as PlaceData;
                               const rank = p.mizwad_rank!;
                               const badge = rank === 1
-                                ? { e: "🥇", c: "bg-amber-500/20 text-amber-400" }
+                                ? { e: "🥇", c: "bg-amber-500/90 text-amber-950" }
                                 : rank === 2
-                                ? { e: "🥈", c: "bg-gray-400/20 text-gray-300" }
+                                ? { e: "🥈", c: "bg-gray-300/90 text-gray-900" }
                                 : rank === 3
-                                ? { e: "🥉", c: "bg-orange-700/20 text-orange-400" }
-                                : { e: `#${rank}`, c: "bg-emerald-500/15 text-emerald-400" };
+                                ? { e: "🥉", c: "bg-orange-600/90 text-orange-50" }
+                                : { e: `#${rank}`, c: "bg-emerald-500/90 text-emerald-950" };
                               const rec = getField(p, 'mizwad_recommendation') || p.mizwad_recommendation_uz;
                               return (
                                 <button
                                   key={`top-${it.type}-${p.id}`}
                                   onClick={() => { setPlaceDetail({ type: it.type as PlaceType, data: p }); setPlaceDetailOpen(true); }}
-                                  className="w-full bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30 rounded-xl p-3 text-left transition-colors"
+                                  className="snap-start shrink-0 w-[260px] flex flex-col bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30 rounded-xl overflow-hidden text-left transition-colors"
                                 >
-                                  <div className="flex items-start gap-3">
-                                    <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-emerald-500/10">
-                                      {p.image_url ? (
-                                        <img src={p.image_url} alt={getField(p, 'name')} className="w-full h-full object-cover" />
-                                      ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-xl opacity-40">
-                                          {meta.emoji}
-                                        </div>
-                                      )}
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
-                                        <span className={cn("text-[11px] font-bold rounded-full px-2 py-0.5", badge.c)}>{badge.e}</span>
-                                        <span className="text-[14px] font-semibold text-foreground truncate">{getField(p, 'name') || p.name}</span>
+                                  <div className="relative w-full aspect-[4/3] bg-emerald-500/10 overflow-hidden">
+                                    {p.image_url ? (
+                                      <img src={p.image_url} alt={getField(p, 'name')} className="w-full h-full object-cover" />
+                                    ) : (
+                                      <div className="w-full h-full flex items-center justify-center text-4xl opacity-40">
+                                        {meta.emoji}
                                       </div>
-                                      <div className="text-[11px] text-muted-foreground flex items-center gap-2 flex-wrap">
-                                        <span>📍 {getTranslatedCity(p as { city: string })}</span>
-                                        {p.recommended_duration && (<><span>·</span><span>⏱️ {p.recommended_duration}</span></>)}
-                                      </div>
-                                      {rec && (
-                                        <div className="mt-2 text-[12px] text-foreground/85 leading-relaxed italic border-l-2 border-amber-500/40 pl-2">
-                                          <span className="text-amber-400 font-medium not-italic">✦ Mizwad: </span>
-                                          {rec}
-                                        </div>
-                                      )}
-                                      {p.best_for && p.best_for.length > 0 && (
-                                        <div className="flex flex-wrap gap-1 mt-2">
-                                          {p.best_for.map((tag) => (
-                                            <span key={tag} className="text-[10px] bg-white/[0.05] text-muted-foreground rounded-full px-2 py-0.5">{tag}</span>
-                                          ))}
-                                        </div>
-                                      )}
+                                    )}
+                                    <div className={cn("absolute top-2 left-2 flex items-center gap-1 rounded-full px-2 py-1 text-[11px] font-bold shadow-md", badge.c)}>
+                                      <span>{badge.e}</span>
+                                      {rank > 3 && <span className="sr-only">rank</span>}
                                     </div>
+                                  </div>
+                                  <div className="p-3 flex-1 flex flex-col">
+                                    <h3 className="text-[14px] font-semibold text-foreground line-clamp-1">
+                                      {getField(p, 'name') || p.name}
+                                    </h3>
+                                    <div className="text-[11px] text-muted-foreground flex items-center gap-2 flex-wrap mt-0.5">
+                                      <span>📍 {getTranslatedCity(p as { city: string })}</span>
+                                      {p.recommended_duration && (<><span>·</span><span>⏱️ {p.recommended_duration}</span></>)}
+                                    </div>
+                                    {rec && (
+                                      <div className="mt-2 text-[12px] text-foreground/85 leading-relaxed italic border-l-2 border-amber-500/40 pl-2 line-clamp-3">
+                                        <span className="text-amber-400 font-medium not-italic">✦ </span>
+                                        {rec}
+                                      </div>
+                                    )}
+                                    {p.best_for && p.best_for.length > 0 && (
+                                      <div className="flex flex-wrap gap-1 mt-2">
+                                        {p.best_for.slice(0, 2).map((tag) => (
+                                          <span key={tag} className="text-[10px] bg-white/[0.05] text-muted-foreground rounded-full px-2 py-0.5">{tag}</span>
+                                        ))}
+                                      </div>
+                                    )}
                                   </div>
                                 </button>
                               );
                             })}
                           </div>
+                          {items.length > 1 && (
+                            <div className="text-[10px] text-muted-foreground/60 mt-1 px-1">→ swipe</div>
+                          )}
                         </section>
                       );
                     });
