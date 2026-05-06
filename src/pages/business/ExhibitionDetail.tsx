@@ -28,6 +28,23 @@ interface Exhibition {
   category?: string | null;
   website_url?: string | null;
   description?: string | null;
+  country_code?: string | null;
+  country_name?: string | null;
+  world_rank?: number | null;
+  china_rank?: number | null;
+  regional_rank?: string | null;
+  attendees_count?: number | null;
+  countries_count?: number | null;
+  exhibitors_count?: number | null;
+  area_sqm?: number | null;
+  frequency?: string | null;
+  recurring_pattern?: string | null;
+  mizwad_note_uz?: string | null;
+  mizwad_note_ru?: string | null;
+  mizwad_note_en?: string | null;
+  official_website?: string | null;
+  data_source?: string | null;
+  data_verified_date?: string | null;
   [k: string]: unknown;
 }
 
