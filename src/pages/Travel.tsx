@@ -130,12 +130,19 @@ interface ShoppingMall {
   [key: string]: unknown;
 }
 
-type CategoryFilter = "all" | "parks" | "malls" | "historical" | "markets";
+type CategoryFilter = "mizwad_top" | "all" | "parks" | "malls" | "historical" | "markets";
 type SelectedItem =
   | { type: "park"; data: Park }
   | { type: "mall"; data: ShoppingMall }
   | { type: "historical"; data: PlaceData }
   | { type: "market"; data: PlaceData };
+
+const MIZWAD_CATEGORY_LABELS: Record<string, { emoji: string; label: string }> = {
+  park: { emoji: "🌳", label: "Park va bog'lar" },
+  mall: { emoji: "🏬", label: "Savdo joylari" },
+  historical: { emoji: "🏛️", label: "Tarixiy joylar" },
+  market: { emoji: "🛒", label: "Bozorlar" },
+};
 
 interface EmbassyInfo {
   id: string;
