@@ -221,13 +221,14 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
           <div className="flex-1 overflow-y-auto pb-24">
             {/* Hero */}
             <div className="relative h-48 bg-muted">
-              {gallery.length > 0 ? (
+              {gallery.length > 0 && !heroError ? (
                 <>
                   <img
                     src={gallery[galleryIdx]}
                     alt={name}
                     className="w-full h-full object-cover"
                     onClick={() => setLightboxIdx(galleryIdx)}
+                    onError={() => setHeroError(true)}
                   />
                   {gallery.length > 1 && (
                     <>
@@ -259,8 +260,9 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
                   )}
                 </>
               ) : (
-                <div className="w-full h-full flex items-center justify-center">
-                  <TypeIcon className="w-16 h-16 text-muted-foreground/30" />
+                <div className="w-full h-full flex flex-col items-center justify-center gap-2 bg-gradient-to-br from-emerald-500/8 via-emerald-500/4 to-transparent">
+                  <TypeIcon className="w-14 h-14 text-emerald-500/40" />
+                  <span className="text-[10px] text-muted-foreground/70 uppercase tracking-wide">Rasm tez orada</span>
                 </div>
               )}
               <div className="absolute top-3 right-3 z-10">
