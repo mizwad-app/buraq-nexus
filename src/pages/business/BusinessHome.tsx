@@ -67,7 +67,7 @@ const BusinessHome = () => {
   };
 
   const pickChip = (slug: string) => {
-    navigate(`/business/category-picker?question=cities&preselect=${slug}`);
+    navigate(`/business/markets/${slug}`);
   };
 
   let card3Subtitle = "Yaqinlashayotgan ko'rgazmalar";
