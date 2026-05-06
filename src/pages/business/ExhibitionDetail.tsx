@@ -173,13 +173,95 @@ const ExhibitionDetail = () => {
       <div className="px-5 pt-4">
         <h1 className="text-lg font-semibold text-foreground leading-tight">{name}</h1>
         <p className="text-[12px] text-muted-foreground mt-1">📅 {fmtRange(ex.start_date, ex.end_date)}</p>
-        <p className="text-[12px] text-muted-foreground">📍 {ex.city} 🇨🇳{venue ? ` · ${venue}` : ""}</p>
+        <p className="text-[12px] text-muted-foreground">
+          📍 {ex.city} {exhibitionFlag(ex.country_code)}
+          {ex.country_code && ex.country_code !== "CN" && ex.country_name ? ` (${ex.country_name})` : ""}
+          {venue ? ` · ${venue}` : ""}
+        </p>
       </div>
+
+      {(ex.world_rank || ex.china_rank || ex.regional_rank || ex.attendees_count) && (
+        <div className="mx-4 mt-3 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-3">
+          <div className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide mb-2">⭐ Reyting va statistika</div>
+          <div className="flex flex-wrap gap-2 mb-2">
+            {ex.china_rank && (
+              <div className="rounded-lg bg-white/[0.04] border border-white/10 px-2.5 py-1 text-[11px]">
+                🇨🇳 Xitoyda <span className="font-semibold text-foreground">№{ex.china_rank}</span>
+              </div>
+            )}
+            {ex.world_rank && (
+              <div className="rounded-lg bg-white/[0.04] border border-white/10 px-2.5 py-1 text-[11px]">
+                🌍 Dunyoda <span className="font-semibold text-foreground">№{ex.world_rank}</span>
+              </div>
+            )}
+            {ex.regional_rank && !ex.world_rank && (
+              <div className="rounded-lg bg-white/[0.04] border border-white/10 px-2.5 py-1 text-[11px]">{ex.regional_rank}</div>
+            )}
+          </div>
+          {(ex.attendees_count || ex.countries_count || ex.exhibitors_count) && (
+            <div className="grid grid-cols-3 gap-2 mt-3">
+              {ex.attendees_count && (
+                <div className="text-center bg-white/[0.03] rounded-lg py-2">
+                  <div className="text-sm font-semibold text-foreground">
+                    {ex.attendees_count >= 1000 ? `${Math.round(ex.attendees_count / 1000)}K+` : ex.attendees_count}
+                  </div>
+                  <div className="text-[10px] text-muted-foreground">Tashrif buyuruvchi</div>
+                </div>
+              )}
+              {ex.countries_count && (
+                <div className="text-center bg-white/[0.03] rounded-lg py-2">
+                  <div className="text-sm font-semibold text-foreground">{ex.countries_count}+</div>
+                  <div className="text-[10px] text-muted-foreground">Davlat</div>
+                </div>
+              )}
+              {ex.exhibitors_count && (
+                <div className="text-center bg-white/[0.03] rounded-lg py-2">
+                  <div className="text-sm font-semibold text-foreground">
+                    {ex.exhibitors_count >= 1000 ? `${(ex.exhibitors_count / 1000).toFixed(1)}K+` : ex.exhibitors_count}
+                  </div>
+                  <div className="text-[10px] text-muted-foreground">Ekspozit</div>
+                </div>
+              )}
+            </div>
+          )}
+          {(ex.frequency || ex.recurring_pattern) && (
+            <div className="text-[11px] text-muted-foreground mt-2 pt-2 border-t border-amber-500/10">
+              🔄 {ex.frequency}
+              {ex.recurring_pattern && ` · ${ex.recurring_pattern}`}
+            </div>
+          )}
+        </div>
+      )}
+
+      {ex.mizwad_note_uz && (
+        <div className="mx-4 mt-3 rounded-xl border border-emerald-500/30 bg-emerald-500/[0.05] p-3">
+          <div className="flex items-start gap-2">
+            <span className="text-base shrink-0">✦</span>
+            <div className="flex-1">
+              <div className="text-[11px] font-semibold text-emerald-400 mb-1">Mizwad maslahati</div>
+              <div className="text-[12px] text-foreground/90 leading-relaxed">{ex.mizwad_note_uz}</div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {(ex.data_source || ex.official_website) && (
+        <div className="mx-4 mt-2 text-[10px] text-muted-foreground/70 leading-relaxed">
+          ℹ️ Sanalar har yili o'zgarishi mumkin. Borishdan oldin{" "}
+          {ex.official_website ? (
+            <a href={ex.official_website} target="_blank" rel="noreferrer" className="text-emerald-400 underline">rasmiy saytdan</a>
+          ) : (
+            "rasmiy saytdan"
+          )}{" "}
+          tekshiring.
+          {ex.data_source && <span className="block mt-1">Manba: {ex.data_source}</span>}
+        </div>
+      )}
 
       <div className="px-5 mt-4 grid grid-cols-4 gap-2">
         <Action icon={CalendarPlus} label="Kalendar" onClick={() => downloadIcs(ex)} />
         <Action icon={Navigation} label="Yo'l" onClick={handleNavigate} />
-        <Action icon={Globe} label="Sayt" onClick={() => ex.website_url && window.open(ex.website_url, "_blank")} disabled={!ex.website_url} />
+        <Action icon={Globe} label="Sayt" onClick={() => (ex.official_website || ex.website_url) && window.open((ex.official_website || ex.website_url)!, "_blank")} disabled={!ex.official_website && !ex.website_url} />
         <Action icon={Share2} label="Ulashish" onClick={handleShare} />
       </div>
 
