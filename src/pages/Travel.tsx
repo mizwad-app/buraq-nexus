@@ -373,6 +373,14 @@ const Travel = () => {
     const results: SelectedItem[] = [];
     const matchCity = (c: string) => selectedCity === "all" || c === selectedCity;
 
+    if (categoryFilter === "mizwad_top") {
+      parks.filter((p) => matchCity(p.city) && p.mizwad_rank != null).forEach((p) => results.push({ type: "park", data: p }));
+      malls.filter((m) => matchCity(m.city) && (m as PlaceData).mizwad_rank != null).forEach((m) => results.push({ type: "mall", data: m }));
+      historicalSites.filter((h) => matchCity(h.city) && h.mizwad_rank != null).forEach((h) => results.push({ type: "historical", data: h }));
+      markets.filter((m) => matchCity(m.city) && m.mizwad_rank != null).forEach((m) => results.push({ type: "market", data: m }));
+      return results;
+    }
+
     if (categoryFilter === "all" || categoryFilter === "parks") {
       parks.filter((p) => matchCity(p.city)).forEach((park) => results.push({ type: "park", data: park }));
     }
@@ -384,6 +392,18 @@ const Travel = () => {
     }
     if (categoryFilter === "all" || categoryFilter === "markets") {
       markets.filter((m) => matchCity(m.city)).forEach((m) => results.push({ type: "market", data: m }));
+    }
+
+    // Ranked first within filtered list (when not 'all')
+    if (categoryFilter !== "all") {
+      results.sort((a, b) => {
+        const ar = (a.data as PlaceData).mizwad_rank;
+        const br = (b.data as PlaceData).mizwad_rank;
+        if (ar != null && br == null) return -1;
+        if (ar == null && br != null) return 1;
+        if (ar != null && br != null) return ar - br;
+        return 0;
+      });
     }
 
     return results;
