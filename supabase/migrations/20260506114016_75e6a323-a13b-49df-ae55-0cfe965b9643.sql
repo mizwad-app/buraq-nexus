@@ -1,0 +1,18 @@
+ALTER TABLE exhibitions
+  ADD COLUMN IF NOT EXISTS country_code text DEFAULT 'CN',
+  ADD COLUMN IF NOT EXISTS country_name text,
+  ADD COLUMN IF NOT EXISTS world_rank integer,
+  ADD COLUMN IF NOT EXISTS china_rank integer,
+  ADD COLUMN IF NOT EXISTS regional_rank text,
+  ADD COLUMN IF NOT EXISTS attendees_count integer,
+  ADD COLUMN IF NOT EXISTS countries_count integer,
+  ADD COLUMN IF NOT EXISTS exhibitors_count integer,
+  ADD COLUMN IF NOT EXISTS area_sqm integer,
+  ADD COLUMN IF NOT EXISTS frequency text,
+  ADD COLUMN IF NOT EXISTS recurring_pattern text,
+  ADD COLUMN IF NOT EXISTS mizwad_note_uz text,
+  ADD COLUMN IF NOT EXISTS mizwad_note_ru text,
+  ADD COLUMN IF NOT EXISTS mizwad_note_en text,
+  ADD COLUMN IF NOT EXISTS official_website text,
+  ADD COLUMN IF NOT EXISTS data_source text,
+  ADD COLUMN IF NOT EXISTS data_verified_date date;

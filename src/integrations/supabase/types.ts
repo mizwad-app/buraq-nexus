@@ -842,21 +842,29 @@ export type Database = {
       }
       exhibitions: {
         Row: {
+          area_sqm: number | null
+          attendees_count: number | null
           category: string
           category_ar: string | null
           category_en: string | null
           category_ru: string | null
           category_uz: string | null
           category_zh: string | null
+          china_rank: number | null
           city: string
           city_ar: string | null
           city_en: string | null
           city_ru: string | null
           city_uz: string | null
           city_zh: string | null
+          countries_count: number | null
           country: string
+          country_code: string | null
+          country_name: string | null
           created_at: string
+          data_source: string | null
           data_sources: Json | null
+          data_verified_date: string | null
           description: string | null
           description_ar: string | null
           description_en: string | null
@@ -866,16 +874,24 @@ export type Database = {
           district: string | null
           district_zh: string | null
           end_date: string
+          exhibitors_count: number | null
+          frequency: string | null
           id: string
           is_active: boolean
           last_verified_at: string | null
+          mizwad_note_en: string | null
+          mizwad_note_ru: string | null
+          mizwad_note_uz: string | null
           name: string
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          official_website: string | null
           phone: string | null
+          recurring_pattern: string | null
+          regional_rank: string | null
           start_date: string
           venue: string | null
           venue_ar: string | null
@@ -886,23 +902,32 @@ export type Database = {
           verification_status: string | null
           website_url: string | null
           working_hours: string | null
+          world_rank: number | null
         }
         Insert: {
+          area_sqm?: number | null
+          attendees_count?: number | null
           category: string
           category_ar?: string | null
           category_en?: string | null
           category_ru?: string | null
           category_uz?: string | null
           category_zh?: string | null
+          china_rank?: number | null
           city: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
           city_zh?: string | null
+          countries_count?: number | null
           country?: string
+          country_code?: string | null
+          country_name?: string | null
           created_at?: string
+          data_source?: string | null
           data_sources?: Json | null
+          data_verified_date?: string | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -912,16 +937,24 @@ export type Database = {
           district?: string | null
           district_zh?: string | null
           end_date: string
+          exhibitors_count?: number | null
+          frequency?: string | null
           id?: string
           is_active?: boolean
           last_verified_at?: string | null
+          mizwad_note_en?: string | null
+          mizwad_note_ru?: string | null
+          mizwad_note_uz?: string | null
           name: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          official_website?: string | null
           phone?: string | null
+          recurring_pattern?: string | null
+          regional_rank?: string | null
           start_date: string
           venue?: string | null
           venue_ar?: string | null
@@ -932,23 +965,32 @@ export type Database = {
           verification_status?: string | null
           website_url?: string | null
           working_hours?: string | null
+          world_rank?: number | null
         }
         Update: {
+          area_sqm?: number | null
+          attendees_count?: number | null
           category?: string
           category_ar?: string | null
           category_en?: string | null
           category_ru?: string | null
           category_uz?: string | null
           category_zh?: string | null
+          china_rank?: number | null
           city?: string
           city_ar?: string | null
           city_en?: string | null
           city_ru?: string | null
           city_uz?: string | null
           city_zh?: string | null
+          countries_count?: number | null
           country?: string
+          country_code?: string | null
+          country_name?: string | null
           created_at?: string
+          data_source?: string | null
           data_sources?: Json | null
+          data_verified_date?: string | null
           description?: string | null
           description_ar?: string | null
           description_en?: string | null
@@ -958,16 +1000,24 @@ export type Database = {
           district?: string | null
           district_zh?: string | null
           end_date?: string
+          exhibitors_count?: number | null
+          frequency?: string | null
           id?: string
           is_active?: boolean
           last_verified_at?: string | null
+          mizwad_note_en?: string | null
+          mizwad_note_ru?: string | null
+          mizwad_note_uz?: string | null
           name?: string
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          official_website?: string | null
           phone?: string | null
+          recurring_pattern?: string | null
+          regional_rank?: string | null
           start_date?: string
           venue?: string | null
           venue_ar?: string | null
@@ -978,6 +1028,7 @@ export type Database = {
           verification_status?: string | null
           website_url?: string | null
           working_hours?: string | null
+          world_rank?: number | null
         }
         Relationships: []
       }

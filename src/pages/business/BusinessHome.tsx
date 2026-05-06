@@ -49,7 +49,7 @@ const BusinessHome = () => {
         supabase.from("exhibitions").select("*", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("legal_advisors").select("*", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("translators").select("*", { count: "exact", head: true }),
-        supabase.from("exhibitions").select("name,start_date").gte("start_date", today).order("start_date", { ascending: true }).limit(1).maybeSingle(),
+        supabase.from("exhibitions").select("name,start_date,world_rank,china_rank").gte("start_date", today).eq("is_active", true).order("start_date", { ascending: true }).limit(5),
       ]);
       setCounts({
         markets: m.count ?? 0,
@@ -58,7 +58,11 @@ const BusinessHome = () => {
         advisors: a.count ?? 0,
         translators: t.count ?? 0,
       });
-      if (ne.data) setNextEx(ne.data as NextExhibition);
+      const list = (ne.data ?? []) as Array<{ name: string; start_date: string; world_rank: number | null; china_rank: number | null }>;
+      const within60 = (d: string) => Math.ceil((new Date(d).getTime() - Date.now()) / 86400000) <= 60;
+      const ranked = list.filter((x) => within60(x.start_date) && (x.world_rank || x.china_rank === 1));
+      const pick = ranked[0] || list[0] || null;
+      if (pick) setNextEx({ name: pick.name, start_date: pick.start_date });
     })();
   }, []);
 
