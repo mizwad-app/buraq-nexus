@@ -80,6 +80,12 @@ export interface PlaceData {
   mizwad_pick_reason_uz?: string | null;
   mizwad_pick_reason_ru?: string | null;
   mizwad_pick_reason_en?: string | null;
+  mizwad_rank?: number | null;
+  mizwad_recommendation_uz?: string | null;
+  mizwad_recommendation_ru?: string | null;
+  mizwad_recommendation_en?: string | null;
+  recommended_duration?: string | null;
+  best_for?: string[] | null;
   [key: string]: unknown;
 }
 
@@ -326,7 +332,32 @@ export const PlaceDetailSheet = ({ open, onOpenChange, place, type }: Props) => 
             </div>
 
             <div className="px-5 py-4 space-y-5">
-              {/* Mizwad pick reason */}
+              {/* Mizwad TOP rank (curated) */}
+              {place.mizwad_rank != null && (
+                <div className="rounded-xl border border-amber-500/30 bg-amber-500/[0.06] p-3.5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-base">
+                      {place.mizwad_rank === 1 ? '🥇' : place.mizwad_rank === 2 ? '🥈' : place.mizwad_rank === 3 ? '🥉' : `#${place.mizwad_rank}`}
+                    </span>
+                    <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide">
+                      Mizwad TOP
+                    </span>
+                  </div>
+                  {(getField(place, 'mizwad_recommendation') || place.mizwad_recommendation_uz) && (
+                    <p className="text-[13px] text-foreground/90 leading-relaxed mb-2">
+                      {getField(place, 'mizwad_recommendation') || place.mizwad_recommendation_uz}
+                    </p>
+                  )}
+                  <div className="flex items-center gap-3 text-[11px] text-muted-foreground flex-wrap">
+                    {place.recommended_duration && <span>⏱️ {place.recommended_duration}</span>}
+                    {place.best_for && place.best_for.length > 0 && (
+                      <span>· {place.best_for.join(', ')}</span>
+                    )}
+                  </div>
+                </div>
+              )}
+
+
               {place.mizwad_pick_rank && (place.mizwad_pick_reason_uz || place.mizwad_pick_reason_ru || place.mizwad_pick_reason_en) && (
                 <div className="p-4 bg-gradient-to-br from-amber-500/10 to-orange-500/10 border border-amber-500/30 rounded-xl">
                   <div className="flex items-center gap-2 mb-2">
