@@ -43,11 +43,12 @@ const CategoryPicker = () => {
   }, []);
 
   // Auto-navigate if preselect is provided and category found
+  const tabMap: Record<string, string> = { cities: "all", markets: "markets", exhibitions: "exhibitions" };
   useEffect(() => {
     if (!preselect || categories.length === 0) return;
     const cat = categories.find((c) => c.slug === preselect);
     if (cat) {
-      navigate(`/business/${question}/${cat.slug}`, { replace: true });
+      navigate(`/business/category/${cat.slug}?tab=${tabMap[question] || "all"}`, { replace: true });
     }
   }, [preselect, categories, question, navigate]);
 
