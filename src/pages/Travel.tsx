@@ -616,12 +616,113 @@ const Travel = () => {
             )}
 
             {/* Results Count */}
-            <p className="text-sm text-muted-foreground">
-              {unifiedResults.length} {t("travel.placesFound")} {selectedCity !== "all" && `• ${selectedCityTranslated}`}
-            </p>
+            {categoryFilter !== "mizwad_top" && (
+              <p className="text-sm text-muted-foreground">
+                {unifiedResults.length} {t("travel.placesFound")} {selectedCity !== "all" && `• ${selectedCityTranslated}`}
+              </p>
+            )}
+
+            {/* Mizwad TOP grouped view */}
+            {categoryFilter === "mizwad_top" && !loading && (
+              unifiedResults.length === 0 ? (
+                <div className="px-2 py-12 text-center">
+                  <div className="w-14 h-14 rounded-full bg-amber-500/10 flex items-center justify-center mx-auto mb-3">
+                    <span className="text-2xl">✨</span>
+                  </div>
+                  <h3 className="text-sm font-medium text-foreground mb-1">
+                    Mizwad TOP joylar tez orada
+                  </h3>
+                  <p className="text-[12px] text-muted-foreground leading-relaxed max-w-xs mx-auto">
+                    Mizwad team eng yaxshi joylarni tanlab, har biri uchun nima uchun tavsiya qilinganligini tushuntirib boradi. Bu funksiya tez orada to'liq ishga tushadi.
+                  </p>
+                </div>
+              ) : (
+                <div className="space-y-5">
+                  {(() => {
+                    const groups = new Map<string, SelectedItem[]>();
+                    [...unifiedResults]
+                      .sort((a, b) => ((a.data as PlaceData).mizwad_rank ?? 99) - ((b.data as PlaceData).mizwad_rank ?? 99))
+                      .forEach((it) => {
+                        if (!groups.has(it.type)) groups.set(it.type, []);
+                        groups.get(it.type)!.push(it);
+                      });
+                    return Array.from(groups.entries()).map(([type, items]) => {
+                      const meta = MIZWAD_CATEGORY_LABELS[type] ?? { emoji: "📍", label: type };
+                      return (
+                        <section key={type}>
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="text-base">{meta.emoji}</span>
+                            <h2 className="text-[12px] font-semibold text-amber-400 uppercase tracking-wide">
+                              {meta.label}
+                            </h2>
+                            <span className="text-[10px] text-muted-foreground">({items.length})</span>
+                          </div>
+                          <div className="space-y-2">
+                            {items.map((it) => {
+                              const p = it.data as PlaceData;
+                              const rank = p.mizwad_rank!;
+                              const badge = rank === 1
+                                ? { e: "🥇", c: "bg-amber-500/20 text-amber-400" }
+                                : rank === 2
+                                ? { e: "🥈", c: "bg-gray-400/20 text-gray-300" }
+                                : rank === 3
+                                ? { e: "🥉", c: "bg-orange-700/20 text-orange-400" }
+                                : { e: `#${rank}`, c: "bg-emerald-500/15 text-emerald-400" };
+                              const rec = getField(p, 'mizwad_recommendation') || p.mizwad_recommendation_uz;
+                              return (
+                                <button
+                                  key={`top-${it.type}-${p.id}`}
+                                  onClick={() => { setPlaceDetail({ type: it.type as PlaceType, data: p }); setPlaceDetailOpen(true); }}
+                                  className="w-full bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30 rounded-xl p-3 text-left transition-colors"
+                                >
+                                  <div className="flex items-start gap-3">
+                                    <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0 bg-emerald-500/10">
+                                      {p.image_url ? (
+                                        <img src={p.image_url} alt={getField(p, 'name')} className="w-full h-full object-cover" />
+                                      ) : (
+                                        <div className="w-full h-full flex items-center justify-center text-xl opacity-40">
+                                          {meta.emoji}
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-center gap-2 mb-0.5 flex-wrap">
+                                        <span className={cn("text-[11px] font-bold rounded-full px-2 py-0.5", badge.c)}>{badge.e}</span>
+                                        <span className="text-[14px] font-semibold text-foreground truncate">{getField(p, 'name') || p.name}</span>
+                                      </div>
+                                      <div className="text-[11px] text-muted-foreground flex items-center gap-2 flex-wrap">
+                                        <span>📍 {getTranslatedCity(p as { city: string })}</span>
+                                        {p.recommended_duration && (<><span>·</span><span>⏱️ {p.recommended_duration}</span></>)}
+                                      </div>
+                                      {rec && (
+                                        <div className="mt-2 text-[12px] text-foreground/85 leading-relaxed italic border-l-2 border-amber-500/40 pl-2">
+                                          <span className="text-amber-400 font-medium not-italic">✦ Mizwad: </span>
+                                          {rec}
+                                        </div>
+                                      )}
+                                      {p.best_for && p.best_for.length > 0 && (
+                                        <div className="flex flex-wrap gap-1 mt-2">
+                                          {p.best_for.map((tag) => (
+                                            <span key={tag} className="text-[10px] bg-white/[0.05] text-muted-foreground rounded-full px-2 py-0.5">{tag}</span>
+                                          ))}
+                                        </div>
+                                      )}
+                                    </div>
+                                  </div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </section>
+                      );
+                    });
+                  })()}
+                </div>
+              )
+            )}
 
             {/* Results */}
-            {loading ? (
+            {categoryFilter !== "mizwad_top" && (loading ? (
               <div className="flex justify-center py-12">
                 <div className="w-6 h-6 border-2 border-primary border-t-transparent rounded-full animate-spin" />
               </div>
