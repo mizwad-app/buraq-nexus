@@ -1865,6 +1865,36 @@ export type Database = {
         }
         Relationships: []
       }
+      mizwad_city_insights: {
+        Row: {
+          category_slug: string
+          city: string
+          created_at: string
+          id: string
+          insight_en: string | null
+          insight_ru: string | null
+          insight_uz: string
+        }
+        Insert: {
+          category_slug: string
+          city: string
+          created_at?: string
+          id?: string
+          insight_en?: string | null
+          insight_ru?: string | null
+          insight_uz: string
+        }
+        Update: {
+          category_slug?: string
+          city?: string
+          created_at?: string
+          id?: string
+          insight_en?: string | null
+          insight_ru?: string | null
+          insight_uz?: string
+        }
+        Relationships: []
+      }
       mosques: {
         Row: {
           address: string | null
@@ -2285,8 +2315,10 @@ export type Database = {
       product_categories: {
         Row: {
           created_at: string
+          emoji: string | null
           icon: string | null
           id: string
+          is_active: boolean
           name: string
           name_ar: string | null
           name_en: string | null
@@ -2297,8 +2329,10 @@ export type Database = {
         }
         Insert: {
           created_at?: string
+          emoji?: string | null
           icon?: string | null
           id?: string
+          is_active?: boolean
           name: string
           name_ar?: string | null
           name_en?: string | null
@@ -2309,8 +2343,10 @@ export type Database = {
         }
         Update: {
           created_at?: string
+          emoji?: string | null
           icon?: string | null
           id?: string
+          is_active?: boolean
           name?: string
           name_ar?: string | null
           name_en?: string | null
