@@ -76,10 +76,11 @@ const App = () => (
                       <Route path="/business" element={<BusinessHome />} />
                       <Route path="/business/lawyers" element={<LawyersPage />} />
                       <Route path="/business/category-picker" element={<CategoryPicker />} />
-                      <Route path="/business/cities/:categorySlug" element={<CitiesScreen />} />
-                      <Route path="/business/markets/:categorySlug" element={<MarketsScreen />} />
+                      <Route path="/business/category/:categorySlug" element={<CategoryHub />} />
+                      <Route path="/business/cities/:categorySlug" element={<RedirectToCategory tab="all" />} />
+                      <Route path="/business/markets/:categorySlug" element={<RedirectToCategory tab="markets" />} />
                       <Route path="/business/markets/:categorySlug/:marketId" element={<MarketDetail />} />
-                      <Route path="/business/exhibitions/:categorySlug" element={<ExhibitionsScreen />} />
+                      <Route path="/business/exhibitions/:categorySlug" element={<RedirectToCategory tab="exhibitions" />} />
                       <Route path="/business/exhibitions/:categorySlug/:exhibitionId" element={<ExhibitionDetail />} />
                       <Route path="/profile" element={<Profile />} />
                       <Route path="/deep-check" element={<DeepCheckRequest />} />
