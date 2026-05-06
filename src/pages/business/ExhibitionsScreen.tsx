@@ -6,6 +6,7 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { fetchExhibitionsForCategory } from "@/lib/businessFetchers";
 import { CategoryBadge } from "@/components/business/CategoryBadge";
+import { exhibitionFlag } from "@/lib/exhibitionFlags";
 import { cn } from "@/lib/utils";
 
 interface Category {
@@ -24,6 +25,11 @@ interface Exhibition {
   start_date: string;
   end_date: string;
   description?: string | null;
+  country_code?: string | null;
+  country_name?: string | null;
+  world_rank?: number | null;
+  china_rank?: number | null;
+  regional_rank?: string | null;
   [k: string]: unknown;
 }
 
@@ -49,6 +55,8 @@ const countdownInfo = (start: string, end: string) => {
   return { text: `${days} kun qoldi`, cls: "bg-white/[0.05] text-muted-foreground" };
 };
 
+type TabKey = "china" | "world" | "upcoming";
+
 const ExhibitionsScreen = () => {
   const navigate = useNavigate();
   const { categorySlug = "" } = useParams();
@@ -57,7 +65,7 @@ const ExhibitionsScreen = () => {
 
   const [category, setCategory] = useState<Category | null>(null);
   const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
-  const [filter, setFilter] = useState<"upcoming" | "all">("upcoming");
+  const [activeTab, setActiveTab] = useState<TabKey>("china");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -75,11 +83,55 @@ const ExhibitionsScreen = () => {
     })();
   }, [categorySlug]);
 
+  const sixMonthsStr = useMemo(() => {
+    const d = new Date();
+    d.setMonth(d.getMonth() + 6);
+    return d.toISOString().slice(0, 10);
+  }, []);
+  const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
+
+  const counts = useMemo(() => ({
+    china: exhibitions.filter((e) => !e.country_code || e.country_code === "CN").length,
+    world: exhibitions.filter((e) => e.country_code && e.country_code !== "CN").length,
+    upcoming: exhibitions.filter((e) => e.start_date >= today && e.start_date <= sixMonthsStr).length,
+  }), [exhibitions, today, sixMonthsStr]);
+
   const filtered = useMemo(() => {
-    const today = new Date().toISOString().slice(0, 10);
-    const list = filter === "upcoming" ? exhibitions.filter((e) => e.end_date >= today) : exhibitions;
-    return [...list].sort((a, b) => a.start_date.localeCompare(b.start_date));
-  }, [exhibitions, filter]);
+    let list = exhibitions;
+    if (activeTab === "china") list = list.filter((e) => !e.country_code || e.country_code === "CN");
+    else if (activeTab === "world") list = list.filter((e) => e.country_code && e.country_code !== "CN");
+    else list = list.filter((e) => e.start_date >= today && e.start_date <= sixMonthsStr);
+
+    return [...list].sort((a, b) => {
+      if (activeTab === "upcoming") return a.start_date.localeCompare(b.start_date);
+      const aRank = a.world_rank ?? a.china_rank ?? 999;
+      const bRank = b.world_rank ?? b.china_rank ?? 999;
+      if (aRank !== bRank) return aRank - bRank;
+      return a.start_date.localeCompare(b.start_date);
+    });
+  }, [exhibitions, activeTab, today, sixMonthsStr]);
+
+  const emptyMsg =
+    activeTab === "china"
+      ? "Bu kategoriya uchun Xitoyda ko'rgazma yo'q. Dunyo tabini ko'rib chiqing."
+      : activeTab === "world"
+      ? "Bu kategoriya uchun dunyoda ko'rgazma ma'lumotlari tez orada qo'shiladi."
+      : "Yaqin 6 oyda ko'rgazma yo'q. Xitoy yoki Dunyo tabidan to'liq ro'yxatni ko'ring.";
+
+  const TabBtn = ({ k, label }: { k: TabKey; label: string }) => (
+    <button
+      onClick={() => setActiveTab(k)}
+      className={cn(
+        "shrink-0 flex items-center gap-1.5 rounded-full py-1.5 px-3 text-[11px] border transition-colors",
+        activeTab === k
+          ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+          : "bg-white/[0.04] text-foreground border-white/10",
+      )}
+    >
+      {label}
+      <span className="opacity-70">({counts[k]})</span>
+    </button>
+  );
 
   return (
     <div className="min-h-screen bg-background safe-bottom pb-24">
@@ -91,7 +143,7 @@ const ExhibitionsScreen = () => {
           <div className="flex-1 min-w-0">
             <span className="text-[10px] text-muted-foreground">Qaysi ko'rgazmaga borish kerak?</span>
             <h1 className="text-base italic font-medium text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-              Yaqinlashayotgan ko'rgazmalar
+              Ko'rgazmalar
             </h1>
           </div>
         </div>
@@ -99,21 +151,10 @@ const ExhibitionsScreen = () => {
 
       {category && <CategoryBadge emoji={category.emoji} name={getField(category, "name") || category.name} />}
 
-      <section className="px-5 mb-3 flex gap-2">
-        {(["upcoming", "all"] as const).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={cn(
-              "rounded-full py-1.5 px-3 text-[11px] border transition-colors",
-              filter === f
-                ? "bg-emerald-500 text-emerald-950 border-emerald-500"
-                : "bg-white/[0.04] text-foreground border-white/10"
-            )}
-          >
-            {f === "upcoming" ? "Yaqinlashayotgan" : "Barchasi"}
-          </button>
-        ))}
+      <section className="px-5 mb-3 flex gap-2 overflow-x-auto scrollbar-hide">
+        <TabBtn k="china" label="🇨🇳 Xitoy" />
+        <TabBtn k="world" label="🌍 Dunyo" />
+        <TabBtn k="upcoming" label="📅 Yaqin 6 oy" />
       </section>
 
       <section className="px-5">
@@ -127,18 +168,14 @@ const ExhibitionsScreen = () => {
               <Info className="w-5 h-5 text-emerald-400" />
             </div>
             <p className="text-sm font-medium text-foreground mb-1">Ma'lumot yo'q</p>
-            <p className="text-xs text-muted-foreground mb-4">Bu kategoriya uchun ko'rgazmalar tez orada qo'shiladi.</p>
-            <button
-              onClick={() => navigate("/business")}
-              className="inline-flex items-center px-4 py-2 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-[12px] text-emerald-300"
-            >
-              Mizwadga so'rov yuborish
-            </button>
+            <p className="text-xs text-muted-foreground mb-4 px-6">{emptyMsg}</p>
           </div>
         ) : (
           <div className="space-y-2.5">
             {filtered.map((ex) => {
               const cd = countdownInfo(ex.start_date, ex.end_date);
+              const flag = exhibitionFlag(ex.country_code);
+              const showCountry = ex.country_code && ex.country_code !== "CN" && ex.country_name;
               return (
                 <button
                   key={ex.id}
@@ -152,8 +189,21 @@ const ExhibitionsScreen = () => {
                         <p className="text-sm font-medium text-foreground line-clamp-2">
                           {getField(ex as unknown as Record<string, unknown>, "name") || ex.name}
                         </p>
+                        {(ex.world_rank || ex.china_rank || ex.regional_rank) && (
+                          <div className="text-[11px] text-amber-400/90 mt-0.5 flex items-center gap-1 flex-wrap">
+                            <span>⭐</span>
+                            {ex.china_rank && <span>Xitoyda №{ex.china_rank}</span>}
+                            {ex.china_rank && ex.world_rank && <span className="text-muted-foreground">·</span>}
+                            {ex.world_rank && <span>Dunyoda №{ex.world_rank}</span>}
+                            {!ex.china_rank && !ex.world_rank && ex.regional_rank && <span>{ex.regional_rank}</span>}
+                          </div>
+                        )}
                         <p className="text-[11px] text-muted-foreground mt-1">📅 {fmtRange(ex.start_date, ex.end_date)}</p>
-                        <p className="text-[11px] text-muted-foreground">📍 {ex.city}{ex.venue ? ` · ${ex.venue}` : ""}</p>
+                        <p className="text-[11px] text-muted-foreground">
+                          📍 {ex.city} {flag}
+                          {showCountry ? ` (${ex.country_name})` : ""}
+                          {ex.venue ? ` · ${ex.venue}` : ""}
+                        </p>
                         {ex.description && <p className="text-[11px] text-muted-foreground/80 line-clamp-1 mt-1">{ex.description}</p>}
                       </div>
                     </div>
