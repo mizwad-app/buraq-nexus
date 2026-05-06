@@ -693,7 +693,14 @@ const Travel = () => {
                       <div className="p-4">
                         <div className="flex items-start justify-between mb-2">
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-foreground truncate">{getField(data, 'name')}</h3>
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <h3 className="font-semibold text-foreground truncate">{getField(data, 'name')}</h3>
+                              {data.mizwad_rank != null && (
+                                <span className="text-[9px] bg-amber-500/15 text-amber-400 rounded-full px-1.5 py-0.5 font-semibold uppercase tracking-wide shrink-0">
+                                  ✦ Mizwad #{data.mizwad_rank}
+                                </span>
+                              )}
+                            </div>
                             <p className="text-sm text-muted-foreground flex items-center gap-1">
                               <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
                               {getTranslatedCity(data as { city: string })}
