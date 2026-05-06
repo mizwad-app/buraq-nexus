@@ -71,7 +71,7 @@ const BusinessHome = () => {
   };
 
   const pickChip = (slug: string) => {
-    navigate(`/business/markets/${slug}`);
+    navigate(`/business/category/${slug}?tab=all`);
   };
 
   let card3Subtitle = "Yaqinlashayotgan ko'rgazmalar";
