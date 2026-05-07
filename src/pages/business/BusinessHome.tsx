@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search, MapPin, Store, Calendar, Scale, MessageSquare, ShieldCheck, ChevronLeft, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -74,6 +74,14 @@ const BusinessHome = () => {
     navigate(`/business/category/${slug}?tab=cities`);
   };
 
+  const filteredChips = useMemo(() => {
+    const q = search.toLowerCase().trim();
+    if (!q) return POPULAR_CHIPS;
+    return POPULAR_CHIPS.filter(
+      (c) => c.label.toLowerCase().includes(q) || c.slug.toLowerCase().includes(q),
+    );
+  }, [search]);
+
   let card3Subtitle = "Yaqinlashayotgan ko'rgazmalar";
   if (nextEx) {
     const days = Math.max(0, Math.ceil((new Date(nextEx.start_date).getTime() - Date.now()) / 86400000));
@@ -145,20 +153,30 @@ const BusinessHome = () => {
       </section>
 
       <section className="mb-5">
-        <p className="px-5 text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">Mashhur kategoriyalar</p>
-        <p className="px-5 text-[10px] text-muted-foreground/70 mb-2">Bozorni tezda topish</p>
-        <div className="flex gap-2 overflow-x-auto px-5 scrollbar-hide">
-          {POPULAR_CHIPS.map((c) => (
-            <button
-              key={c.slug}
-              onClick={() => pickChip(c.slug)}
-              className="shrink-0 flex items-center gap-1.5 bg-white/[0.04] border border-white/10 rounded-full py-1.5 px-2.5 text-[11px] text-foreground hover:bg-white/[0.07]"
-            >
-              <span>{c.emoji}</span>
-              <span>{c.label}</span>
-            </button>
-          ))}
-        </div>
+        <p className="px-5 text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
+          {search.trim() ? "Qidiruv natijalari" : "Mashhur kategoriyalar"}
+        </p>
+        <p className="px-5 text-[10px] text-muted-foreground/70 mb-2">
+          {search.trim() ? `"${search.trim()}" bo'yicha` : "Bozorni tezda topish"}
+        </p>
+        {filteredChips.length > 0 ? (
+          <div className="flex gap-2 overflow-x-auto px-5 scrollbar-hide">
+            {filteredChips.map((c) => (
+              <button
+                key={c.slug}
+                onClick={() => pickChip(c.slug)}
+                className="shrink-0 flex items-center gap-1.5 bg-white/[0.04] border border-white/10 rounded-full py-1.5 px-2.5 text-[11px] text-foreground hover:bg-white/[0.07]"
+              >
+                <span>{c.emoji}</span>
+                <span>{c.label}</span>
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="px-5 py-3 text-[12px] text-muted-foreground text-center">
+            "{search.trim()}" bo'yicha kategoriya topilmadi
+          </div>
+        )}
       </section>
 
       <section className="px-5 mb-5">
