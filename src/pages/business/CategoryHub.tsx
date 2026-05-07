@@ -11,7 +11,7 @@ import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { exhibitionFlag } from "@/lib/exhibitionFlags";
 import { cn } from "@/lib/utils";
 
-type TabKey = "all" | "markets" | "exhibitions";
+type TabKey = "cities" | "markets" | "exhibitions";
 type Row = Record<string, unknown>;
 
 interface Category {
@@ -64,8 +64,18 @@ const CategoryHub = () => {
   const { getField } = useTranslatedField();
   useSwipeBack();
 
-  const initialTab = (searchParams.get("tab") as TabKey) || "all";
+  const rawTab = searchParams.get("tab");
+  const initialTab: TabKey = rawTab === "markets" || rawTab === "exhibitions" ? rawTab : "cities";
   const [activeTab, setActiveTab] = useState<TabKey>(initialTab);
+
+  // Migrate legacy ?tab=all to ?tab=cities
+  useEffect(() => {
+    if (searchParams.get("tab") === "all") {
+      setSearchParams({ tab: "cities" }, { replace: true });
+      setActiveTab("cities");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const [category, setCategory] = useState<Category | null>(null);
   const [markets, setMarkets] = useState<Row[]>([]);
@@ -144,8 +154,7 @@ const CategoryHub = () => {
     return Array.from(cityMap.values())
       .map((c) => ({ ...c, score: c.markets + c.hubs * 2 + c.exhibitions }))
       .filter((c) => c.score > 0)
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 3);
+      .sort((a, b) => b.score - a.score);
   }, [markets, hubs, exhibitions]);
 
   const topMarkets = useMemo(() => {
@@ -182,7 +191,7 @@ const CategoryHub = () => {
 
       {/* Tabs */}
       <section className="px-5 mb-3 flex gap-2 overflow-x-auto scrollbar-hide">
-        <TabButton active={activeTab === "all"} onClick={() => handleTabChange("all")} icon="📋" label="Hammasi" />
+        <TabButton active={activeTab === "cities"} onClick={() => handleTabChange("cities")} icon="🏙️" label="Shaharlar" />
         <TabButton active={activeTab === "markets"} onClick={() => handleTabChange("markets")} icon="🏬" label="Bozorlar" count={counts.markets} />
         <TabButton active={activeTab === "exhibitions"} onClick={() => handleTabChange("exhibitions")} icon="📅" label="Ko'rgazmalar" count={counts.exhibitions} />
       </section>
@@ -193,18 +202,8 @@ const CategoryHub = () => {
         </div>
       ) : (
         <>
-          {activeTab === "all" && (
-            <AllTab
-              topCities={topCities}
-              topMarkets={topMarkets}
-              topExhibitions={topExhibitions}
-              insight={insight}
-              categorySlug={categorySlug}
-              totalMarkets={markets.length}
-              totalExhibitions={exhibitions.length}
-              onShowMoreMarkets={() => handleTabChange("markets")}
-              onShowMoreExhibitions={() => handleTabChange("exhibitions")}
-            />
+          {activeTab === "cities" && (
+            <CitiesTab topCities={topCities} insight={insight} />
           )}
           {activeTab === "markets" && <MarketsTab markets={markets} categorySlug={categorySlug} />}
           {activeTab === "exhibitions" && <ExhibitionsTab exhibitions={exhibitions} categorySlug={categorySlug} />}
