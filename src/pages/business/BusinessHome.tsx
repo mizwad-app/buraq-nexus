@@ -123,27 +123,25 @@ const BusinessHome = () => {
 
       <section className="px-5 mb-5">
         <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2.5 font-medium">Qaysi savolingiz bor?</p>
-        <div className="space-y-2.5">
-          <QuestionCard
-            icon={MapPin}
-            title="Qaysi shaharda ishlab chiqariladi?"
-            subtitle="Mahsulot → Xitoy shaharlari"
-            onClick={() => goQuestion("cities")}
-          />
-          <QuestionCard
-            icon={Store}
-            title="Qaysi optom bozorda topiladi?"
-            subtitle="Mahsulot → bozorlar"
-            onClick={() => goQuestion("markets")}
-          />
-          <QuestionCard
-            icon={Calendar}
-            accent="amber"
-            title="Qaysi ko'rgazmaga borish kerak?"
-            subtitle={card3Subtitle}
-            onClick={() => goQuestion("exhibitions")}
-          />
-        </div>
+        <button
+          onClick={() => navigate('/business/category-picker')}
+          className="w-full bg-gradient-to-br from-emerald-500/15 via-emerald-500/[0.08] to-transparent border-2 border-emerald-500/40 hover:border-emerald-500/60 hover:from-emerald-500/20 active:scale-[0.99] rounded-2xl p-4 text-left transition-all flex items-start gap-3"
+        >
+          <div className="w-11 h-11 rounded-xl bg-emerald-500/20 flex items-center justify-center text-2xl shrink-0">
+            📦
+          </div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[15px] font-semibold text-foreground mb-1">
+              Qaysi mahsulot bilan ishlaysiz?
+            </div>
+            <div className="text-[12px] text-muted-foreground leading-relaxed">
+              Bozor, ko'rgazma va ishlab chiqaruvchini bir joyda ko'rasiz
+            </div>
+          </div>
+          <div className="text-emerald-400 text-lg shrink-0 mt-2">
+            →
+          </div>
+        </button>
       </section>
 
       <section className="mb-5">
