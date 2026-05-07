@@ -476,9 +476,16 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
                     <div className="flex items-start gap-2 flex-1 min-w-0">
                       <Calendar className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                       <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-foreground line-clamp-2">
-                          {getField(ex, "name") || (ex.name as string)}
-                        </p>
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <p className="text-sm font-medium text-foreground line-clamp-2 flex-1 min-w-0">
+                            {getField(ex, "name") || (ex.name as string)}
+                          </p>
+                          {ex.phase_number ? (
+                            <span className="text-[9px] bg-amber-500/15 text-amber-400 rounded-full px-1.5 py-0.5 font-semibold uppercase tracking-wide whitespace-nowrap">
+                              Phase {ex.phase_number as number}
+                            </span>
+                          ) : null}
+                        </div>
                         {(ex.world_rank || ex.china_rank || ex.regional_rank) && (
                           <div className="text-[11px] text-amber-400/90 mt-0.5 flex items-center gap-1 flex-wrap">
                             <span>⭐</span>

@@ -45,6 +45,10 @@ interface Exhibition {
   official_website?: string | null;
   data_source?: string | null;
   data_verified_date?: string | null;
+  phase_number?: number | null;
+  phase_info_uz?: string | null;
+  phase_info_ru?: string | null;
+  phase_info_en?: string | null;
   [k: string]: unknown;
 }
 
@@ -230,6 +234,20 @@ const ExhibitionDetail = () => {
               {ex.recurring_pattern && ` · ${ex.recurring_pattern}`}
             </div>
           )}
+        </div>
+      )}
+
+      {ex.phase_info_uz && (
+        <div className="mx-4 mt-3 rounded-xl border border-amber-500/30 bg-amber-500/[0.05] p-3.5">
+          <div className="flex items-center gap-2 mb-1.5">
+            <span className="text-base">📋</span>
+            <span className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide">
+              {ex.phase_number ? `Phase ${ex.phase_number} ma'lumoti` : "Faza ma'lumoti"}
+            </span>
+          </div>
+          <p className="text-[13px] text-foreground/90 leading-relaxed">
+            {(getField(ex as unknown as Record<string, unknown>, "phase_info") as string) || ex.phase_info_uz}
+          </p>
         </div>
       )}
 
