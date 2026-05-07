@@ -48,7 +48,7 @@ const CategoryPicker = () => {
     if (!preselect || categories.length === 0) return;
     const cat = categories.find((c) => c.slug === preselect);
     if (cat) {
-      navigate(`/business/category/${cat.slug}?tab=${tabMap[question] || "all"}`, { replace: true });
+      navigate(`/business/category/${cat.slug}?tab=${tabMap[question] || "cities"}`, { replace: true });
     }
   }, [preselect, categories, question, navigate]);
 
