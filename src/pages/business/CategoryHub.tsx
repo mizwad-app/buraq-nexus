@@ -227,143 +227,57 @@ const TabButton = ({ active, onClick, icon, label, count }: { active: boolean; o
   </button>
 );
 
-/* ---------------- AllTab ---------------- */
+/* ---------------- CitiesTab ---------------- */
 
-interface AllTabProps {
+interface CitiesTabProps {
   topCities: { city: string; markets: number; hubs: number; exhibitions: number; score: number }[];
-  topMarkets: Row[];
-  topExhibitions: Row[];
   insight: Insight | null;
-  categorySlug: string;
-  totalMarkets: number;
-  totalExhibitions: number;
-  onShowMoreMarkets: () => void;
-  onShowMoreExhibitions: () => void;
 }
 
-const AllTab = ({ topCities, topMarkets, topExhibitions, insight, categorySlug, totalMarkets, totalExhibitions, onShowMoreMarkets, onShowMoreExhibitions }: AllTabProps) => {
-  const navigate = useNavigate();
-  const { getField } = useTranslatedField();
+const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
+  if (topCities.length === 0) {
+    return (
+      <div className="px-6 py-12 text-center">
+        <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-3">
+          <span className="text-xl">🏙️</span>
+        </div>
+        <h3 className="text-sm font-medium text-foreground mb-1">
+          Bu kategoriya uchun shahar ma'lumoti yo'q
+        </h3>
+        <p className="text-[12px] text-muted-foreground max-w-xs mx-auto">
+          Bozorlar yoki ko'rgazmalar tabini sinab ko'ring
+        </p>
+      </div>
+    );
+  }
 
   return (
-    <div className="px-5 space-y-6">
-      {/* Top cities */}
-      <section>
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2.5 font-medium">🏙️ TOP 3 shahar (ishlab chiqarish)</p>
-        {topCities.length === 0 ? (
-          <p className="text-[12px] text-muted-foreground italic">Bu kategoriya uchun shahar ma'lumoti yo'q</p>
-        ) : (
-          <div className="space-y-2.5">
-            {topCities.map((c, i) => (
-              <div key={c.city} className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5">
-                <div className="flex items-center gap-2.5">
-                  <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
-                    {i + 1}
-                  </div>
-                  <span className="text-sm font-medium text-foreground flex-1">{c.city}</span>
-                  <span className="text-sm">🇨🇳</span>
-                </div>
-                <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
-                  {c.markets > 0 && <span>{c.markets} ta bozor</span>}
-                  {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
-                  {c.hubs > 0 && <span>{c.hubs} ta zavod</span>}
-                  {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
-                  {c.exhibitions > 0 && <span>{c.exhibitions} ko'rgazma</span>}
-                </div>
-                {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
-              </div>
-            ))}
+    <div className="px-5 space-y-3">
+      <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
+        🏙️ Top ishlab chiqarish shaharlari
+      </p>
+      {topCities.map((c, i) => (
+        <div key={c.city} className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5">
+          <div className="flex items-center gap-2.5">
+            <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
+              {i + 1}
+            </div>
+            <span className="text-sm font-medium text-foreground flex-1">{c.city}</span>
+            <span className="text-sm">🇨🇳</span>
           </div>
-        )}
-      </section>
-
-      {/* Top markets */}
-      <section>
-        <div className="flex items-center justify-between mb-2.5">
-          <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">🏬 Top bozorlar</p>
-          {totalMarkets > topMarkets.length && (
-            <button onClick={onShowMoreMarkets} className="text-[11px] text-emerald-400">
-              Hammasi ({totalMarkets}) →
-            </button>
-          )}
+          <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
+            {c.markets > 0 && <span>{c.markets} ta bozor</span>}
+            {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
+            {c.hubs > 0 && <span>{c.hubs} ta zavod</span>}
+            {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
+            {c.exhibitions > 0 && <span>{c.exhibitions} ko'rgazma</span>}
+          </div>
+          {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
         </div>
-        {topMarkets.length === 0 ? (
-          <p className="text-[12px] text-muted-foreground italic">Bu kategoriya uchun bozor ma'lumoti yo'q</p>
-        ) : (
-          <div className="space-y-2">
-            {topMarkets.map((m) => (
-              <button
-                key={m.id as string}
-                onClick={() => navigate(`/business/markets/${categorySlug}/${m.id}`)}
-                className="w-full flex items-center gap-3 bg-card hover:bg-emerald-500/5 border border-border/40 hover:border-emerald-500/30 rounded-xl py-2.5 px-3 text-left transition-colors min-h-[56px]"
-              >
-                <div className="w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-4 h-4 text-emerald-400" />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-sm font-medium text-foreground truncate">{getField(m, "name") || (m.name as string)}</span>
-                    {m.is_mizwad_verified ? (
-                      <span className="text-[10px] bg-emerald-500/15 text-emerald-300 rounded-full px-1.5 py-0.5">✓ Mizwad</span>
-                    ) : null}
-                  </div>
-                  <p className="text-[11px] text-muted-foreground mt-0.5">{m.city as string} 🇨🇳</p>
-                </div>
-                <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-              </button>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* Top exhibitions */}
-      <section>
-        <div className="flex items-center justify-between mb-2.5">
-          <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">📅 Yaqin ko'rgazmalar</p>
-          {totalExhibitions > 0 && (
-            <button onClick={onShowMoreExhibitions} className="text-[11px] text-emerald-400">
-              Hammasi →
-            </button>
-          )}
-        </div>
-        {topExhibitions.length === 0 ? (
-          <p className="text-[12px] text-muted-foreground italic">Bu kategoriya uchun yaqin ko'rgazma yo'q</p>
-        ) : (
-          <div className="space-y-2">
-            {topExhibitions.map((ex) => {
-              const days = Math.ceil((new Date(ex.start_date as string).getTime() - Date.now()) / 86400000);
-              return (
-                <button
-                  key={ex.id as string}
-                  onClick={() => navigate(`/business/exhibitions/${categorySlug}/${ex.id}`)}
-                  className="w-full flex items-center gap-3 bg-card hover:bg-emerald-500/5 border border-border/40 hover:border-emerald-500/30 rounded-xl py-2.5 px-3 text-left transition-colors"
-                >
-                  <div className="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-4 h-4 text-amber-400" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-foreground truncate">
-                      {exhibitionFlag(ex.country_code as string | undefined)} {getField(ex, "name") || (ex.name as string)}
-                    </p>
-                    <div className="flex items-center gap-1.5 flex-wrap text-[11px] text-muted-foreground mt-0.5">
-                      <span>{ex.city as string}</span>
-                      <span>·</span>
-                      <span>{days > 0 ? `${days} kun qoldi` : "Hozir ketmoqda"}</span>
-                      {ex.world_rank ? <span className="text-amber-400">⭐ Dunyoda №{ex.world_rank as number}</span> : null}
-                    </div>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </section>
+      ))}
     </div>
   );
 };
-
-/* ---------------- MarketsTab ---------------- */
 
 const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: string }) => {
   const navigate = useNavigate();
