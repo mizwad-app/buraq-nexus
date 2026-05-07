@@ -889,6 +889,10 @@ export type Database = {
           name_uz: string | null
           name_zh: string | null
           official_website: string | null
+          phase_info_en: string | null
+          phase_info_ru: string | null
+          phase_info_uz: string | null
+          phase_number: number | null
           phone: string | null
           recurring_pattern: string | null
           regional_rank: string | null
@@ -952,6 +956,10 @@ export type Database = {
           name_uz?: string | null
           name_zh?: string | null
           official_website?: string | null
+          phase_info_en?: string | null
+          phase_info_ru?: string | null
+          phase_info_uz?: string | null
+          phase_number?: number | null
           phone?: string | null
           recurring_pattern?: string | null
           regional_rank?: string | null
@@ -1015,6 +1023,10 @@ export type Database = {
           name_uz?: string | null
           name_zh?: string | null
           official_website?: string | null
+          phase_info_en?: string | null
+          phase_info_ru?: string | null
+          phase_info_uz?: string | null
+          phase_number?: number | null
           phone?: string | null
           recurring_pattern?: string | null
           regional_rank?: string | null
