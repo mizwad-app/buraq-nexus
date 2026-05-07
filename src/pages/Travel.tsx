@@ -35,13 +35,7 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { SearchableSelect } from "@/components/ui/SearchableSelect";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -508,18 +502,18 @@ const Travel = () => {
       <section className="px-5">
         <div className="mt-4 space-y-4">
             {/* City Filter */}
-            <Select value={selectedCity} onValueChange={setSelectedCity}>
-              <SelectTrigger className="w-full bg-card border-border/50">
-                <MapPin className="w-4 h-4 mr-2 text-muted-foreground" />
-                <SelectValue placeholder={t("travel.selectCity")} />
-              </SelectTrigger>
-              <SelectContent className="bg-card border-border z-50">
-                <SelectItem value="all">{t("travel.allCities")}</SelectItem>
-                {allCities.map((city) => (
-                  <SelectItem key={city.base} value={city.base}>{city.translated}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <SearchableSelect
+              value={selectedCity}
+              onChange={setSelectedCity}
+              options={[
+                { value: "all", label: t("travel.allCities") },
+                ...allCities.map((c) => ({ value: c.base, label: c.translated })),
+              ]}
+              placeholder={t("travel.selectCity")}
+              searchPlaceholder={t("travel.selectCity")}
+              emptyMessage="—"
+              icon={<MapPin className="w-4 h-4" />}
+            />
 
             {/* Category Filter Chips */}
             <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
