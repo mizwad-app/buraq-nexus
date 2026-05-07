@@ -82,7 +82,7 @@ const App = () => (
                       <Route path="/business/lawyers" element={<LawyersPage />} />
                       <Route path="/business/category-picker" element={<CategoryPicker />} />
                       <Route path="/business/category/:categorySlug" element={<CategoryHub />} />
-                      <Route path="/business/cities/:categorySlug" element={<RedirectToCategory tab="all" />} />
+                      <Route path="/business/cities/:categorySlug" element={<RedirectToCategory tab="cities" />} />
                       <Route path="/business/markets/:categorySlug" element={<RedirectToCategory tab="markets" />} />
                       <Route path="/business/markets/:categorySlug/:marketId" element={<MarketDetail />} />
                       <Route path="/business/exhibitions/:categorySlug" element={<RedirectToCategory tab="exhibitions" />} />
