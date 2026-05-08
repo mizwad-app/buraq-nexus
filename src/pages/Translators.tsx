@@ -99,30 +99,24 @@ const LANGUAGE_PAIRS = [
   { id: "ar-zh", label: "Xitoy-Arabcha" },
 ];
 
-const PRICE_RANGES = [
-  { id: "all", label: "Hammasi", min: 0, max: Infinity },
-  { id: "0-300", label: "Arzonroq (¥300 gacha)", min: 0, max: 300 },
-  { id: "300-500", label: "O'rtacha (¥300-¥500)", min: 300, max: 500 },
-  { id: "500+", label: "Premium (¥500+)", min: 500, max: Infinity },
-];
+const PRICE_MIN = 0;
+const PRICE_MAX = 1000;
+const PRICE_STEP = 50;
 
 const TRANSPORT_OPTIONS = [
-  { id: "all", label: "Hammasi" },
-  { id: "has_car", label: "Avtomobili bor tarjimonlar" },
-  { id: "has_license", label: "Guvohnomasi bor tarjimonlar" },
+  { id: "all", label: "Hammasi", description: null as string | null },
+  { id: "has_car", label: "Avtomobili bor tarjimonlar", description: "(o'z mashinasi bor)" },
+  { id: "has_license", label: "Guvohnomasi bor tarjimonlar", description: "(Xitoy haydovchilik guvohnomasi — kerak bo'lsa ijaraga avto olish uchun)" },
 ];
 
 const HSK_LEVELS = [
-  { id: "all", label: "Barchasi" },
   { id: "3", label: "HSK 3" },
   { id: "4", label: "HSK 4" },
   { id: "5", label: "HSK 5" },
   { id: "6", label: "HSK 6" },
-  { id: "verified", label: "Mizwad ✓" },
 ];
 
 const SPECIALIZATIONS = [
-  { id: "all", label: "Barchasi" },
   { id: "biznes", label: "Biznes" },
   { id: "Canton Fair", label: "Canton Fair" },
   { id: "zavodlar", label: "Zavodlar" },
@@ -136,6 +130,8 @@ const SPECIALIZATIONS = [
   { id: "diplomatiya", label: "Diplomatiya" },
   { id: "turizm", label: "Turizm" },
 ];
+
+const LANGUAGE_OPTIONS = LANGUAGE_PAIRS.filter(l => l.id !== "all");
 
 const AVAILABILITY_OPTIONS = [
   { id: "all", label: "Hammasi" },
