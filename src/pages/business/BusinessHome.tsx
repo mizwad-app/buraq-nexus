@@ -8,6 +8,7 @@ import { QuestionCard } from "@/components/business/QuestionCard";
 import { StatsRow } from "@/components/business/StatsRow";
 import { OtherServicesList } from "@/components/business/OtherServicesList";
 import { UpcomingExhibitionsPreview } from "@/components/business/UpcomingExhibitionsPreview";
+import { LocationButton } from "@/components/business/LocationButton";
 import { cn } from "@/lib/utils";
 
 const POPULAR_CHIPS = [
@@ -106,6 +107,9 @@ const BusinessHome = () => {
               Tijorat Markazi
             </h1>
           </div>
+        </div>
+        <div className="mt-2 pl-11">
+          <LocationButton />
         </div>
       </header>
 
