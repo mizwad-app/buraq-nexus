@@ -303,46 +303,46 @@ const Translators = () => {
       result = result.filter(t => t.city === selectedCity);
     }
     
-    if (selectedLanguage !== "all") {
-      result = result.filter(t => 
-        t.language_pairs && t.language_pairs.includes(selectedLanguage)
+    if (selectedLanguages.length > 0) {
+      result = result.filter(t =>
+        Array.isArray(t.language_pairs) &&
+        selectedLanguages.some(l => t.language_pairs!.includes(l))
       );
     }
-    
-    // Price range filter
-    if (selectedPriceRange !== "all") {
-      const priceRange = PRICE_RANGES.find(p => p.id === selectedPriceRange);
-      if (priceRange) {
-        result = result.filter(t => {
-          const price = t.price_per_day || 0;
-          return price >= priceRange.min && price < priceRange.max;
-        });
-      }
+
+    // Price range slider filter
+    if (priceActive) {
+      result = result.filter(t => {
+        const price = t.price_per_day ?? 0;
+        return price >= priceRange[0] && price <= priceRange[1];
+      });
     }
-    
+
     // Transport filter
     if (selectedTransport === "has_car") {
       result = result.filter(t => t.has_personal_car === true);
     } else if (selectedTransport === "has_license") {
       result = result.filter(t => t.has_chinese_driving_license === true);
     }
-    
-    // HSK Level filter (incl. Mizwad-verified)
-    if (selectedHskLevel !== "all") {
-      if (selectedHskLevel === "verified") {
-        result = result.filter(t => (t as any).buraq_verified_hsk != null);
-      } else {
-        const level = parseInt(selectedHskLevel);
-        result = result.filter(t => t.hsk_level === level);
-      }
+
+    // HSK Level filter (multi + Mizwad-verified)
+    if (selectedHskLevels.length > 0 || hskMizwadVerified) {
+      result = result.filter(t => {
+        const levelMatch = selectedHskLevels.length === 0
+          ? false
+          : selectedHskLevels.map(Number).includes(t.hsk_level as number);
+        const verifiedMatch = hskMizwadVerified && (t as any).buraq_verified_hsk != null;
+        return levelMatch || verifiedMatch;
+      });
     }
 
-    // Specialization filter
-    if (selectedSpecialization !== "all") {
-      const needle = selectedSpecialization.toLowerCase();
+    // Specialization filter (multi: any overlap)
+    if (selectedSpecializations.length > 0) {
       result = result.filter(t =>
         Array.isArray(t.specializations) &&
-        t.specializations.some(s => String(s).toLowerCase().includes(needle))
+        selectedSpecializations.some(sel =>
+          t.specializations!.some(s => String(s).toLowerCase().includes(sel.toLowerCase()))
+        )
       );
     }
 
@@ -363,7 +363,7 @@ const Translators = () => {
     }
 
     return result;
-  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
+  }, [translators, selectedCity, selectedLanguages, priceRange, priceActive, selectedTransport, selectedHskLevels, hskMizwadVerified, selectedSpecializations, selectedAvailability, selectedGender, selectedRating]);
 
   // Open chat for selected translator - inline chat sheet
   const openChat = async (translator: Translator) => {
