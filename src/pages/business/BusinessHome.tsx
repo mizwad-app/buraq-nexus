@@ -7,6 +7,7 @@ import { SupportChat } from "@/components/SupportChat";
 import { QuestionCard } from "@/components/business/QuestionCard";
 import { StatsRow } from "@/components/business/StatsRow";
 import { OtherServicesList } from "@/components/business/OtherServicesList";
+import { UpcomingExhibitionsPreview } from "@/components/business/UpcomingExhibitionsPreview";
 import { cn } from "@/lib/utils";
 
 const POPULAR_CHIPS = [
@@ -151,6 +152,8 @@ const BusinessHome = () => {
           </div>
         </button>
       </section>
+
+      <UpcomingExhibitionsPreview />
 
       <section className="mb-5">
         <p className="px-5 text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
