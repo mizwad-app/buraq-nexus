@@ -12,8 +12,10 @@ import {
   CircleDollarSign,
   SlidersHorizontal,
   RotateCcw,
-  Check
+  Check,
+  Info
 } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
@@ -97,30 +99,24 @@ const LANGUAGE_PAIRS = [
   { id: "ar-zh", label: "Xitoy-Arabcha" },
 ];
 
-const PRICE_RANGES = [
-  { id: "all", label: "Hammasi", min: 0, max: Infinity },
-  { id: "0-300", label: "Arzonroq (¥300 gacha)", min: 0, max: 300 },
-  { id: "300-500", label: "O'rtacha (¥300-¥500)", min: 300, max: 500 },
-  { id: "500+", label: "Premium (¥500+)", min: 500, max: Infinity },
-];
+const PRICE_MIN = 0;
+const PRICE_MAX = 1000;
+const PRICE_STEP = 50;
 
 const TRANSPORT_OPTIONS = [
-  { id: "all", label: "Hammasi" },
-  { id: "has_car", label: "Avtomobili bor tarjimonlar" },
-  { id: "has_license", label: "Guvohnomasi bor tarjimonlar" },
+  { id: "all", label: "Hammasi", description: null as string | null },
+  { id: "has_car", label: "Avtomobili bor tarjimonlar", description: "(o'z mashinasi bor)" },
+  { id: "has_license", label: "Guvohnomasi bor tarjimonlar", description: "(Xitoy haydovchilik guvohnomasi — kerak bo'lsa ijaraga avto olish uchun)" },
 ];
 
 const HSK_LEVELS = [
-  { id: "all", label: "Barchasi" },
   { id: "3", label: "HSK 3" },
   { id: "4", label: "HSK 4" },
   { id: "5", label: "HSK 5" },
   { id: "6", label: "HSK 6" },
-  { id: "verified", label: "Mizwad ✓" },
 ];
 
 const SPECIALIZATIONS = [
-  { id: "all", label: "Barchasi" },
   { id: "biznes", label: "Biznes" },
   { id: "Canton Fair", label: "Canton Fair" },
   { id: "zavodlar", label: "Zavodlar" },
@@ -134,6 +130,8 @@ const SPECIALIZATIONS = [
   { id: "diplomatiya", label: "Diplomatiya" },
   { id: "turizm", label: "Turizm" },
 ];
+
+const LANGUAGE_OPTIONS = LANGUAGE_PAIRS.filter(l => l.id !== "all");
 
 const AVAILABILITY_OPTIONS = [
   { id: "all", label: "Hammasi" },
@@ -167,11 +165,13 @@ const Translators = () => {
   
   // Filter states
   const [selectedCity, setSelectedCity] = useState("all");
-  const [selectedLanguage, setSelectedLanguage] = useState("all");
-  const [selectedPriceRange, setSelectedPriceRange] = useState("all");
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([PRICE_MIN, PRICE_MAX]);
   const [selectedTransport, setSelectedTransport] = useState("all");
-  const [selectedHskLevel, setSelectedHskLevel] = useState("all");
-  const [selectedSpecialization, setSelectedSpecialization] = useState("all");
+  const [selectedHskLevels, setSelectedHskLevels] = useState<string[]>([]);
+  const [hskMizwadVerified, setHskMizwadVerified] = useState(false);
+  const [showHskInfo, setShowHskInfo] = useState(false);
+  const [selectedSpecializations, setSelectedSpecializations] = useState<string[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState("all");
   const [selectedGender, setSelectedGender] = useState("all");
   const [selectedRating, setSelectedRating] = useState("all");
@@ -182,28 +182,35 @@ const Translators = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
 
+  const priceActive = priceRange[0] !== PRICE_MIN || priceRange[1] !== PRICE_MAX;
+
+  const toggleInArray = (setter: React.Dispatch<React.SetStateAction<string[]>>, val: string) => {
+    setter(prev => (prev.includes(val) ? prev.filter(x => x !== val) : [...prev, val]));
+  };
+
   // Count active filters
   const activeFilterCount = useMemo(() => {
     let count = 0;
     if (selectedCity !== "all") count++;
-    if (selectedLanguage !== "all") count++;
-    if (selectedPriceRange !== "all") count++;
+    if (selectedLanguages.length > 0) count++;
+    if (priceActive) count++;
     if (selectedTransport !== "all") count++;
-    if (selectedHskLevel !== "all") count++;
-    if (selectedSpecialization !== "all") count++;
+    if (selectedHskLevels.length > 0 || hskMizwadVerified) count++;
+    if (selectedSpecializations.length > 0) count++;
     if (selectedAvailability !== "all") count++;
     if (selectedGender !== "all") count++;
     if (selectedRating !== "all") count++;
     return count;
-  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
+  }, [selectedCity, selectedLanguages, priceActive, selectedTransport, selectedHskLevels, hskMizwadVerified, selectedSpecializations, selectedAvailability, selectedGender, selectedRating]);
 
   const resetFilters = () => {
     setSelectedCity("all");
-    setSelectedLanguage("all");
-    setSelectedPriceRange("all");
+    setSelectedLanguages([]);
+    setPriceRange([PRICE_MIN, PRICE_MAX]);
     setSelectedTransport("all");
-    setSelectedHskLevel("all");
-    setSelectedSpecialization("all");
+    setSelectedHskLevels([]);
+    setHskMizwadVerified(false);
+    setSelectedSpecializations([]);
     setSelectedAvailability("all");
     setSelectedGender("all");
     setSelectedRating("all");
@@ -296,46 +303,46 @@ const Translators = () => {
       result = result.filter(t => t.city === selectedCity);
     }
     
-    if (selectedLanguage !== "all") {
-      result = result.filter(t => 
-        t.language_pairs && t.language_pairs.includes(selectedLanguage)
+    if (selectedLanguages.length > 0) {
+      result = result.filter(t =>
+        Array.isArray(t.language_pairs) &&
+        selectedLanguages.some(l => t.language_pairs!.includes(l))
       );
     }
-    
-    // Price range filter
-    if (selectedPriceRange !== "all") {
-      const priceRange = PRICE_RANGES.find(p => p.id === selectedPriceRange);
-      if (priceRange) {
-        result = result.filter(t => {
-          const price = t.price_per_day || 0;
-          return price >= priceRange.min && price < priceRange.max;
-        });
-      }
+
+    // Price range slider filter
+    if (priceActive) {
+      result = result.filter(t => {
+        const price = t.price_per_day ?? 0;
+        return price >= priceRange[0] && price <= priceRange[1];
+      });
     }
-    
+
     // Transport filter
     if (selectedTransport === "has_car") {
       result = result.filter(t => t.has_personal_car === true);
     } else if (selectedTransport === "has_license") {
       result = result.filter(t => t.has_chinese_driving_license === true);
     }
-    
-    // HSK Level filter (incl. Mizwad-verified)
-    if (selectedHskLevel !== "all") {
-      if (selectedHskLevel === "verified") {
-        result = result.filter(t => (t as any).buraq_verified_hsk != null);
-      } else {
-        const level = parseInt(selectedHskLevel);
-        result = result.filter(t => t.hsk_level === level);
-      }
+
+    // HSK Level filter (multi + Mizwad-verified)
+    if (selectedHskLevels.length > 0 || hskMizwadVerified) {
+      result = result.filter(t => {
+        const levelMatch = selectedHskLevels.length === 0
+          ? false
+          : selectedHskLevels.map(Number).includes(t.hsk_level as number);
+        const verifiedMatch = hskMizwadVerified && (t as any).buraq_verified_hsk != null;
+        return levelMatch || verifiedMatch;
+      });
     }
 
-    // Specialization filter
-    if (selectedSpecialization !== "all") {
-      const needle = selectedSpecialization.toLowerCase();
+    // Specialization filter (multi: any overlap)
+    if (selectedSpecializations.length > 0) {
       result = result.filter(t =>
         Array.isArray(t.specializations) &&
-        t.specializations.some(s => String(s).toLowerCase().includes(needle))
+        selectedSpecializations.some(sel =>
+          t.specializations!.some(s => String(s).toLowerCase().includes(sel.toLowerCase()))
+        )
       );
     }
 
@@ -356,7 +363,7 @@ const Translators = () => {
     }
 
     return result;
-  }, [translators, selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
+  }, [translators, selectedCity, selectedLanguages, priceRange, priceActive, selectedTransport, selectedHskLevels, hskMizwadVerified, selectedSpecializations, selectedAvailability, selectedGender, selectedRating]);
 
   // Open chat for selected translator - inline chat sheet
   const openChat = async (translator: Translator) => {
@@ -438,10 +445,10 @@ const Translators = () => {
         {/* Active Filters Summary */}
         {activeFilterCount > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">
-            {selectedLanguage !== "all" && (
+            {selectedLanguages.length > 0 && (
               <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
                 <Languages className="w-3 h-3" />
-                {LANGUAGE_PAIRS.find(l => l.id === selectedLanguage)?.label}
+                {selectedLanguages.length} til
               </span>
             )}
             {selectedCity !== "all" && (
@@ -450,10 +457,10 @@ const Translators = () => {
                 {selectedCity}
               </span>
             )}
-            {selectedPriceRange !== "all" && (
+            {priceActive && (
               <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
                 <CircleDollarSign className="w-3 h-3" />
-                {PRICE_RANGES.find(p => p.id === selectedPriceRange)?.label}
+                ¥{priceRange[0]}–¥{priceRange[1]}
               </span>
             )}
             {selectedTransport !== "all" && (
@@ -462,9 +469,9 @@ const Translators = () => {
                 {TRANSPORT_OPTIONS.find(t => t.id === selectedTransport)?.label}
               </span>
             )}
-            {selectedHskLevel !== "all" && (
+            {(selectedHskLevels.length > 0 || hskMizwadVerified) && (
               <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
-                HSK {selectedHskLevel}
+                HSK {selectedHskLevels.join(",") || ""}{hskMizwadVerified ? " ✓" : ""}
               </span>
             )}
           </div>
@@ -503,51 +510,79 @@ const Translators = () => {
               </div>
             </div>
 
-            {/* Specialization (Sector) */}
+            {/* Specialization (Sector) — multi-select */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <BadgeCheck className="w-4 h-4 text-primary" />
                 Mutaxassislik
               </label>
               <div className="flex flex-wrap gap-2">
-                {SPECIALIZATIONS.map(spec => (
-                  <button
-                    key={spec.id}
-                    onClick={() => setSelectedSpecialization(spec.id)}
-                    className={cn(
-                      "px-3 py-2 rounded-full text-xs font-medium transition-all border",
-                      selectedSpecialization === spec.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-primary/5 text-primary border-primary/20 hover:border-primary/50"
-                    )}
-                  >
-                    {spec.label}
-                  </button>
-                ))}
+                <button
+                  onClick={() => setSelectedSpecializations([])}
+                  className={cn(
+                    "px-3 py-2 rounded-full text-xs font-medium transition-all border min-h-[36px]",
+                    selectedSpecializations.length === 0
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  Barchasi
+                </button>
+                {SPECIALIZATIONS.map(spec => {
+                  const isActive = selectedSpecializations.includes(spec.id);
+                  return (
+                    <button
+                      key={spec.id}
+                      onClick={() => toggleInArray(setSelectedSpecializations, spec.id)}
+                      className={cn(
+                        "px-3 py-2 rounded-full text-xs font-medium transition-all border min-h-[36px]",
+                        isActive
+                          ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      {spec.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Language Filter */}
+            {/* Language Filter — multi-select */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Languages className="w-4 h-4 text-primary" />
                 Til
               </label>
               <div className="grid grid-cols-2 gap-2">
-                {LANGUAGE_PAIRS.map(lang => (
-                  <button
-                    key={lang.id}
-                    onClick={() => setSelectedLanguage(lang.id)}
-                    className={cn(
-                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedLanguage === lang.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
+                <button
+                  onClick={() => setSelectedLanguages([])}
+                  className={cn(
+                    "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                    selectedLanguages.length === 0
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  Barcha tillar
+                </button>
+                {LANGUAGE_OPTIONS.map(lang => {
+                  const isActive = selectedLanguages.includes(lang.id);
+                  return (
+                    <button
+                      key={lang.id}
+                      onClick={() => toggleInArray(setSelectedLanguages, lang.id)}
+                      className={cn(
+                        "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                        isActive
+                          ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      {lang.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
@@ -570,27 +605,67 @@ const Translators = () => {
               </Select>
             </div>
 
-            {/* HSK Level Filter */}
+            {/* HSK Level Filter — multi-select + Mizwad-verified */}
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <BadgeCheck className="w-4 h-4 text-primary" />
-                HSK darajasi
-              </label>
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <BadgeCheck className="w-4 h-4 text-primary" />
+                  HSK darajasi
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowHskInfo(v => !v)}
+                  className="text-muted-foreground hover:text-foreground"
+                  aria-label="HSK ma'lumoti"
+                >
+                  <Info className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              {showHskInfo && (
+                <div className="text-xs text-muted-foreground bg-white/[0.04] border border-white/10 rounded-lg p-3 leading-relaxed">
+                  HSK — xitoy tilini bilish darajasi (1–6). "Mizwad tasdiqlagan" — Mizwad jamoasi tarjimonning HSK darajasini tekshirgan va tasdiqlagan.
+                </div>
+              )}
               <div className="grid grid-cols-3 gap-2">
-                {HSK_LEVELS.map(level => (
-                  <button
-                    key={level.id}
-                    onClick={() => setSelectedHskLevel(level.id)}
-                    className={cn(
-                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedHskLevel === level.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {level.label}
-                  </button>
-                ))}
+                <button
+                  onClick={() => { setSelectedHskLevels([]); setHskMizwadVerified(false); }}
+                  className={cn(
+                    "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                    selectedHskLevels.length === 0 && !hskMizwadVerified
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  Barchasi
+                </button>
+                {HSK_LEVELS.map(level => {
+                  const isActive = selectedHskLevels.includes(level.id);
+                  return (
+                    <button
+                      key={level.id}
+                      onClick={() => toggleInArray(setSelectedHskLevels, level.id)}
+                      className={cn(
+                        "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                        isActive
+                          ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      {level.label}
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => setHskMizwadVerified(v => !v)}
+                  className={cn(
+                    "col-span-3 px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                    hskMizwadVerified
+                      ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  ✓ Mizwad tasdiqlagan
+                </button>
               </div>
             </div>
 
@@ -618,28 +693,32 @@ const Translators = () => {
               </div>
             </div>
 
-            {/* Price Range Filter */}
+            {/* Price Range Slider */}
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <CircleDollarSign className="w-4 h-4 text-primary" />
-                Narx diapazoni (kunlik)
-              </label>
-              <div className="grid grid-cols-2 gap-2">
-                {PRICE_RANGES.map(range => (
-                  <button
-                    key={range.id}
-                    onClick={() => setSelectedPriceRange(range.id)}
-                    className={cn(
-                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedPriceRange === range.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {range.label}
-                  </button>
-                ))}
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <CircleDollarSign className="w-4 h-4 text-primary" />
+                  Narx (kuniga, ¥)
+                </label>
+                <span className="text-sm text-emerald-400 font-medium">
+                  ¥{priceRange[0]} — ¥{priceRange[1]}{priceRange[1] === PRICE_MAX ? "+" : ""}
+                </span>
               </div>
+              <Slider
+                value={priceRange}
+                onValueChange={(v) => setPriceRange([v[0], v[1]] as [number, number])}
+                min={PRICE_MIN}
+                max={PRICE_MAX}
+                step={PRICE_STEP}
+                className="my-3"
+              />
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>¥{PRICE_MIN}</span>
+                <span>¥{PRICE_MAX}+</span>
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Tarjimon o'z narxini belgilaydi. Sizga mos diapazonni tanlang.
+              </p>
             </div>
 
             {/* Gender */}
@@ -673,21 +752,29 @@ const Translators = () => {
                 Transport va guvohnoma
               </label>
               <div className="space-y-2">
-                {TRANSPORT_OPTIONS.map(option => (
-                  <button
-                    key={option.id}
-                    onClick={() => setSelectedTransport(option.id)}
-                    className={cn(
-                      "w-full px-4 py-3 rounded-xl text-sm font-medium transition-all border flex items-center justify-between",
-                      selectedTransport === option.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    <span>{option.label}</span>
-                    {selectedTransport === option.id && <Check className="w-4 h-4" />}
-                  </button>
-                ))}
+                {TRANSPORT_OPTIONS.map(option => {
+                  const isActive = selectedTransport === option.id;
+                  return (
+                    <button
+                      key={option.id}
+                      onClick={() => setSelectedTransport(option.id)}
+                      className={cn(
+                        "w-full rounded-xl border py-3 px-4 text-left flex items-center justify-between gap-3 transition-all",
+                        isActive
+                          ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/40"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-sm font-medium">{option.label}</span>
+                        {option.description && (
+                          <span className="text-[11px] text-muted-foreground mt-0.5">{option.description}</span>
+                        )}
+                      </div>
+                      {isActive && <Check className="w-4 h-4 shrink-0" />}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -708,7 +795,9 @@ const Translators = () => {
               onClick={() => setFilterOpen(false)}
             >
               <Check className="w-4 h-4" />
-              Tasdiqlash · {filteredTranslators.length} ta tarjimon
+              {filteredTranslators.length === 0
+                ? "Tasdiqlash · Mos tarjimon yo'q"
+                : `Tasdiqlash · ${filteredTranslators.length} ta tarjimon`}
             </Button>
           </div>
         </SheetContent>
