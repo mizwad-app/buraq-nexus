@@ -343,6 +343,42 @@ export type Database = {
           },
         ]
       }
+      china_cities: {
+        Row: {
+          created_at: string | null
+          is_active: boolean | null
+          latitude: number
+          longitude: number
+          name_en: string | null
+          name_uz: string
+          name_zh: string | null
+          province: string | null
+          slug: string
+        }
+        Insert: {
+          created_at?: string | null
+          is_active?: boolean | null
+          latitude: number
+          longitude: number
+          name_en?: string | null
+          name_uz: string
+          name_zh?: string | null
+          province?: string | null
+          slug: string
+        }
+        Update: {
+          created_at?: string | null
+          is_active?: boolean | null
+          latitude?: number
+          longitude?: number
+          name_en?: string | null
+          name_uz?: string
+          name_zh?: string | null
+          province?: string | null
+          slug?: string
+        }
+        Relationships: []
+      }
       companies: {
         Row: {
           address_zh: string | null
