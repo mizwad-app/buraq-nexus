@@ -752,21 +752,29 @@ const Translators = () => {
                 Transport va guvohnoma
               </label>
               <div className="space-y-2">
-                {TRANSPORT_OPTIONS.map(option => (
-                  <button
-                    key={option.id}
-                    onClick={() => setSelectedTransport(option.id)}
-                    className={cn(
-                      "w-full px-4 py-3 rounded-xl text-sm font-medium transition-all border flex items-center justify-between",
-                      selectedTransport === option.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    <span>{option.label}</span>
-                    {selectedTransport === option.id && <Check className="w-4 h-4" />}
-                  </button>
-                ))}
+                {TRANSPORT_OPTIONS.map(option => {
+                  const isActive = selectedTransport === option.id;
+                  return (
+                    <button
+                      key={option.id}
+                      onClick={() => setSelectedTransport(option.id)}
+                      className={cn(
+                        "w-full rounded-xl border py-3 px-4 text-left flex items-center justify-between gap-3 transition-all",
+                        isActive
+                          ? "bg-emerald-500/15 text-emerald-400 border-emerald-500/40"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      <div className="flex flex-col min-w-0">
+                        <span className="text-sm font-medium">{option.label}</span>
+                        {option.description && (
+                          <span className="text-[11px] text-muted-foreground mt-0.5">{option.description}</span>
+                        )}
+                      </div>
+                      {isActive && <Check className="w-4 h-4 shrink-0" />}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
