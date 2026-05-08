@@ -605,27 +605,67 @@ const Translators = () => {
               </Select>
             </div>
 
-            {/* HSK Level Filter */}
+            {/* HSK Level Filter — multi-select + Mizwad-verified */}
             <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <BadgeCheck className="w-4 h-4 text-primary" />
-                HSK darajasi
-              </label>
+              <div className="flex items-center gap-2">
+                <label className="text-sm font-semibold text-foreground flex items-center gap-2">
+                  <BadgeCheck className="w-4 h-4 text-primary" />
+                  HSK darajasi
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setShowHskInfo(v => !v)}
+                  className="text-muted-foreground hover:text-foreground"
+                  aria-label="HSK ma'lumoti"
+                >
+                  <Info className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              {showHskInfo && (
+                <div className="text-xs text-muted-foreground bg-white/[0.04] border border-white/10 rounded-lg p-3 leading-relaxed">
+                  HSK — xitoy tilini bilish darajasi (1–6). "Mizwad tasdiqlagan" — Mizwad jamoasi tarjimonning HSK darajasini tekshirgan va tasdiqlagan.
+                </div>
+              )}
               <div className="grid grid-cols-3 gap-2">
-                {HSK_LEVELS.map(level => (
-                  <button
-                    key={level.id}
-                    onClick={() => setSelectedHskLevel(level.id)}
-                    className={cn(
-                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedHskLevel === level.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {level.label}
-                  </button>
-                ))}
+                <button
+                  onClick={() => { setSelectedHskLevels([]); setHskMizwadVerified(false); }}
+                  className={cn(
+                    "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                    selectedHskLevels.length === 0 && !hskMizwadVerified
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  Barchasi
+                </button>
+                {HSK_LEVELS.map(level => {
+                  const isActive = selectedHskLevels.includes(level.id);
+                  return (
+                    <button
+                      key={level.id}
+                      onClick={() => toggleInArray(setSelectedHskLevels, level.id)}
+                      className={cn(
+                        "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                        isActive
+                          ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      {level.label}
+                    </button>
+                  );
+                })}
+                <button
+                  onClick={() => setHskMizwadVerified(v => !v)}
+                  className={cn(
+                    "col-span-3 px-3 py-3 rounded-xl text-sm font-medium transition-all border",
+                    hskMizwadVerified
+                      ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  ✓ Mizwad tasdiqlagan
+                </button>
               </div>
             </div>
 
