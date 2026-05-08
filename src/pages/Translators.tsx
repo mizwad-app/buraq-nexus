@@ -445,10 +445,10 @@ const Translators = () => {
         {/* Active Filters Summary */}
         {activeFilterCount > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">
-            {selectedLanguage !== "all" && (
+            {selectedLanguages.length > 0 && (
               <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
                 <Languages className="w-3 h-3" />
-                {LANGUAGE_PAIRS.find(l => l.id === selectedLanguage)?.label}
+                {selectedLanguages.length} til
               </span>
             )}
             {selectedCity !== "all" && (
@@ -457,10 +457,10 @@ const Translators = () => {
                 {selectedCity}
               </span>
             )}
-            {selectedPriceRange !== "all" && (
+            {priceActive && (
               <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
                 <CircleDollarSign className="w-3 h-3" />
-                {PRICE_RANGES.find(p => p.id === selectedPriceRange)?.label}
+                ¥{priceRange[0]}–¥{priceRange[1]}
               </span>
             )}
             {selectedTransport !== "all" && (
@@ -469,9 +469,9 @@ const Translators = () => {
                 {TRANSPORT_OPTIONS.find(t => t.id === selectedTransport)?.label}
               </span>
             )}
-            {selectedHskLevel !== "all" && (
+            {(selectedHskLevels.length > 0 || hskMizwadVerified) && (
               <span className="inline-flex items-center gap-1 px-2 py-1 bg-primary/10 border border-primary/20 rounded-lg text-xs text-primary">
-                HSK {selectedHskLevel}
+                HSK {selectedHskLevels.join(",") || ""}{hskMizwadVerified ? " ✓" : ""}
               </span>
             )}
           </div>
