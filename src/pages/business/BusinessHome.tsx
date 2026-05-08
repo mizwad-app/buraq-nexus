@@ -45,7 +45,7 @@ const BusinessHome = () => {
     (async () => {
       const today = new Date().toISOString().slice(0, 10);
       const [m, h, e, a, t, ne] = await Promise.all([
-        supabase.from("wholesale_markets").select("*", { count: "exact", head: true }).eq("is_active", true),
+        supabase.from("wholesale_markets").select("*", { count: "exact", head: true }).eq("is_mizwad_verified", true),
         supabase.from("production_hubs").select("*", { count: "exact", head: true }),
         supabase.from("exhibitions").select("*", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("legal_advisors").select("*", { count: "exact", head: true }).eq("is_active", true),
