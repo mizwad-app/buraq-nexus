@@ -54,3 +54,29 @@ export function findClosestCity(
   if (!closest || minDistance > maxDistanceKm) return null;
   return { city: closest, distanceKm: minDistance };
 }
+
+export interface ChinaCity {
+  slug: string;
+  name_uz: string;
+  latitude: number;
+  longitude: number;
+}
+
+export function findClosestChinaCity(
+  userLat: number,
+  userLng: number,
+  cities: ChinaCity[],
+  maxDistanceKm: number = 200
+): { city: ChinaCity; distanceKm: number } | null {
+  let closest: ChinaCity | null = null;
+  let minDist = Infinity;
+  for (const c of cities) {
+    const d = haversineDistance(userLat, userLng, c.latitude, c.longitude);
+    if (d < minDist) {
+      minDist = d;
+      closest = c;
+    }
+  }
+  if (!closest || minDist > maxDistanceKm) return null;
+  return { city: closest, distanceKm: minDist };
+}
