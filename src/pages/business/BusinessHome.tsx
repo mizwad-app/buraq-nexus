@@ -131,7 +131,7 @@ const BusinessHome = () => {
       </section>
 
       <section className="px-5 mb-5">
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2.5 font-medium">Qaysi savolingiz bor?</p>
+        <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2.5 font-medium">Mahsulot qidirish</p>
         <button
           onClick={() => navigate('/business/category-picker')}
           className="w-full bg-gradient-to-br from-emerald-500/15 via-emerald-500/[0.08] to-transparent border-2 border-emerald-500/40 hover:border-emerald-500/60 hover:from-emerald-500/20 active:scale-[0.99] rounded-2xl p-4 text-left transition-all flex items-start gap-3"
