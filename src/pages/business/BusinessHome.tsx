@@ -115,7 +115,7 @@ const BusinessHome = () => {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Mahsulot, brend yoki bozor..."
+            placeholder="Kategoriya qidirish..."
             className={cn(
               "w-full pl-10 pr-9 py-2.5 rounded-xl text-sm",
               "bg-emerald-500/[0.08] border border-emerald-500/25 text-foreground placeholder:text-muted-foreground",
