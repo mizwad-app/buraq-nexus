@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { Moon, MapPin } from "lucide-react";
 import { useCity } from "@/contexts/CityContext";
+import { PrayerTimesModal } from "@/components/shared/PrayerTimesModal";
 
 const PRAYER_TIMES_GUANGZHOU: Record<string, string> = {
   fajr: "05:42",
