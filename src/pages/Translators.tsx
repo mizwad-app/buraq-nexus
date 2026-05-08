@@ -12,8 +12,10 @@ import {
   CircleDollarSign,
   SlidersHorizontal,
   RotateCcw,
-  Check
+  Check,
+  Info
 } from "lucide-react";
+import { Slider } from "@/components/ui/slider";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
