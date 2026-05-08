@@ -510,51 +510,79 @@ const Translators = () => {
               </div>
             </div>
 
-            {/* Specialization (Sector) */}
+            {/* Specialization (Sector) — multi-select */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <BadgeCheck className="w-4 h-4 text-primary" />
                 Mutaxassislik
               </label>
               <div className="flex flex-wrap gap-2">
-                {SPECIALIZATIONS.map(spec => (
-                  <button
-                    key={spec.id}
-                    onClick={() => setSelectedSpecialization(spec.id)}
-                    className={cn(
-                      "px-3 py-2 rounded-full text-xs font-medium transition-all border",
-                      selectedSpecialization === spec.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-primary/5 text-primary border-primary/20 hover:border-primary/50"
-                    )}
-                  >
-                    {spec.label}
-                  </button>
-                ))}
+                <button
+                  onClick={() => setSelectedSpecializations([])}
+                  className={cn(
+                    "px-3 py-2 rounded-full text-xs font-medium transition-all border min-h-[36px]",
+                    selectedSpecializations.length === 0
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  Barchasi
+                </button>
+                {SPECIALIZATIONS.map(spec => {
+                  const isActive = selectedSpecializations.includes(spec.id);
+                  return (
+                    <button
+                      key={spec.id}
+                      onClick={() => toggleInArray(setSelectedSpecializations, spec.id)}
+                      className={cn(
+                        "px-3 py-2 rounded-full text-xs font-medium transition-all border min-h-[36px]",
+                        isActive
+                          ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      {spec.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* Language Filter */}
+            {/* Language Filter — multi-select */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground flex items-center gap-2">
                 <Languages className="w-4 h-4 text-primary" />
                 Til
               </label>
               <div className="grid grid-cols-2 gap-2">
-                {LANGUAGE_PAIRS.map(lang => (
-                  <button
-                    key={lang.id}
-                    onClick={() => setSelectedLanguage(lang.id)}
-                    className={cn(
-                      "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedLanguage === lang.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {lang.label}
-                  </button>
-                ))}
+                <button
+                  onClick={() => setSelectedLanguages([])}
+                  className={cn(
+                    "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                    selectedLanguages.length === 0
+                      ? "bg-primary text-primary-foreground border-primary"
+                      : "bg-white/[0.04] text-foreground border-white/10"
+                  )}
+                >
+                  Barcha tillar
+                </button>
+                {LANGUAGE_OPTIONS.map(lang => {
+                  const isActive = selectedLanguages.includes(lang.id);
+                  return (
+                    <button
+                      key={lang.id}
+                      onClick={() => toggleInArray(setSelectedLanguages, lang.id)}
+                      className={cn(
+                        "px-4 py-3 rounded-xl text-sm font-medium transition-all border",
+                        isActive
+                          ? "bg-emerald-500 text-emerald-950 border-emerald-500"
+                          : "bg-white/[0.04] text-foreground border-white/10"
+                      )}
+                    >
+                      {lang.label}
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
