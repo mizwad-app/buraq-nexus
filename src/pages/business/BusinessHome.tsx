@@ -215,31 +215,6 @@ const BusinessHome = () => {
               meta: `${counts.advisors} ta`,
               onClick: () => navigate("/business/lawyers"),
             },
-        />
-      </section>
-
-      <section className="px-5">
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">Boshqa xizmatlar</p>
-        <OtherServicesList
-          items={[
-            {
-              icon: Scale,
-              label: "Mizwad tasdiqlagan advokatlar",
-              meta: `${counts.advisors} ta`,
-              onClick: () => navigate("/business/lawyers"),
-            },
-            {
-              icon: MessageSquare,
-              label: "Tarjimonlar",
-              meta: `${counts.translators} ta`,
-              onClick: () => navigate("/translators"),
-            },
-            {
-              icon: ShieldCheck,
-              label: "Zavod tekshiruvi (Deep Check)",
-              meta: "↗",
-              onClick: () => navigate("/deep-check"),
-            },
           ]}
         />
       </section>
