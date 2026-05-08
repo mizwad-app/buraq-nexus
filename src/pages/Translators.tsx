@@ -795,7 +795,9 @@ const Translators = () => {
               onClick={() => setFilterOpen(false)}
             >
               <Check className="w-4 h-4" />
-              Tasdiqlash · {filteredTranslators.length} ta tarjimon
+              {filteredTranslators.length === 0
+                ? "Tasdiqlash · Mos tarjimon yo'q"
+                : `Tasdiqlash · ${filteredTranslators.length} ta tarjimon`}
             </Button>
           </div>
         </SheetContent>
