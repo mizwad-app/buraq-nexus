@@ -62,6 +62,7 @@ import { getPlaceholderGradient, getPlaceholderIcon } from "@/lib/placePlacehold
 import { MVP_CITIES } from "@/lib/mvpCities";
 import { sortByQuality } from "@/lib/placeSorting";
 import { HeaderAvatar } from "@/components/HeaderAvatar";
+import { LocationDetectButton } from "@/components/travel/LocationDetectButton";
 
 interface Park {
   id: string;
@@ -258,6 +259,24 @@ const Travel = () => {
 
   // Enable swipe back gesture
   useSwipeBack();
+
+  // Restore GPS-detected city from sessionStorage (within 30 min)
+  useEffect(() => {
+    try {
+      const cached = sessionStorage.getItem("mizwad_detected_city");
+      if (!cached) return;
+      const parsed = JSON.parse(cached) as {
+        name_en?: string | null;
+        name_uz?: string;
+        timestamp?: number;
+      };
+      if (!parsed.timestamp || Date.now() - parsed.timestamp > 30 * 60 * 1000) return;
+      const key = parsed.name_en || parsed.name_uz;
+      if (key) setSelectedCity(key);
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // Map navigation sheet state
   const [mapSheetOpen, setMapSheetOpen] = useState(false);
@@ -501,6 +520,11 @@ const Travel = () => {
       {/* Places */}
       <section className="px-5">
         <div className="mt-4 space-y-4">
+            {/* GPS location detect */}
+            <LocationDetectButton
+              onCityDetected={(cityKey) => setSelectedCity(cityKey)}
+            />
+
             {/* City Filter */}
             <SearchableSelect
               value={selectedCity}
