@@ -721,29 +721,6 @@ const Translators = () => {
               </p>
             </div>
 
-            {/* Gender */}
-            <div className="space-y-3">
-              <label className="text-sm font-semibold text-foreground flex items-center gap-2">
-                <Users className="w-4 h-4 text-primary" />
-                Jinsi
-              </label>
-              <div className="grid grid-cols-3 gap-2">
-                {GENDER_OPTIONS.map(opt => (
-                  <button
-                    key={opt.id}
-                    onClick={() => setSelectedGender(opt.id)}
-                    className={cn(
-                      "px-3 py-3 rounded-xl text-sm font-medium transition-all border",
-                      selectedGender === opt.id
-                        ? "bg-primary text-primary-foreground border-primary"
-                        : "bg-muted/50 text-foreground border-border/50 hover:border-primary/50"
-                    )}
-                  >
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            </div>
 
             {/* Transport Filter */}
             <div className="space-y-3">
