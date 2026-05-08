@@ -165,11 +165,13 @@ const Translators = () => {
   
   // Filter states
   const [selectedCity, setSelectedCity] = useState("all");
-  const [selectedLanguage, setSelectedLanguage] = useState("all");
-  const [selectedPriceRange, setSelectedPriceRange] = useState("all");
+  const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([PRICE_MIN, PRICE_MAX]);
   const [selectedTransport, setSelectedTransport] = useState("all");
-  const [selectedHskLevel, setSelectedHskLevel] = useState("all");
-  const [selectedSpecialization, setSelectedSpecialization] = useState("all");
+  const [selectedHskLevels, setSelectedHskLevels] = useState<string[]>([]);
+  const [hskMizwadVerified, setHskMizwadVerified] = useState(false);
+  const [showHskInfo, setShowHskInfo] = useState(false);
+  const [selectedSpecializations, setSelectedSpecializations] = useState<string[]>([]);
   const [selectedAvailability, setSelectedAvailability] = useState("all");
   const [selectedGender, setSelectedGender] = useState("all");
   const [selectedRating, setSelectedRating] = useState("all");
@@ -180,28 +182,35 @@ const Translators = () => {
   const [chatOpen, setChatOpen] = useState(false);
   const [conversationId, setConversationId] = useState<string | null>(null);
 
+  const priceActive = priceRange[0] !== PRICE_MIN || priceRange[1] !== PRICE_MAX;
+
+  const toggleInArray = (setter: React.Dispatch<React.SetStateAction<string[]>>, val: string) => {
+    setter(prev => (prev.includes(val) ? prev.filter(x => x !== val) : [...prev, val]));
+  };
+
   // Count active filters
   const activeFilterCount = useMemo(() => {
     let count = 0;
     if (selectedCity !== "all") count++;
-    if (selectedLanguage !== "all") count++;
-    if (selectedPriceRange !== "all") count++;
+    if (selectedLanguages.length > 0) count++;
+    if (priceActive) count++;
     if (selectedTransport !== "all") count++;
-    if (selectedHskLevel !== "all") count++;
-    if (selectedSpecialization !== "all") count++;
+    if (selectedHskLevels.length > 0 || hskMizwadVerified) count++;
+    if (selectedSpecializations.length > 0) count++;
     if (selectedAvailability !== "all") count++;
     if (selectedGender !== "all") count++;
     if (selectedRating !== "all") count++;
     return count;
-  }, [selectedCity, selectedLanguage, selectedPriceRange, selectedTransport, selectedHskLevel, selectedSpecialization, selectedAvailability, selectedGender, selectedRating]);
+  }, [selectedCity, selectedLanguages, priceActive, selectedTransport, selectedHskLevels, hskMizwadVerified, selectedSpecializations, selectedAvailability, selectedGender, selectedRating]);
 
   const resetFilters = () => {
     setSelectedCity("all");
-    setSelectedLanguage("all");
-    setSelectedPriceRange("all");
+    setSelectedLanguages([]);
+    setPriceRange([PRICE_MIN, PRICE_MAX]);
     setSelectedTransport("all");
-    setSelectedHskLevel("all");
-    setSelectedSpecialization("all");
+    setSelectedHskLevels([]);
+    setHskMizwadVerified(false);
+    setSelectedSpecializations([]);
     setSelectedAvailability("all");
     setSelectedGender("all");
     setSelectedRating("all");
