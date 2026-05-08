@@ -19,6 +19,7 @@ import Ibadah from "./pages/Ibadah";
 import BusinessHome from "./pages/business/BusinessHome";
 import CategoryPicker from "./pages/business/CategoryPicker";
 import CategoryHub from "./pages/business/CategoryHub";
+import UpcomingExhibitions from "./pages/business/UpcomingExhibitions";
 import LawyersPage from "./pages/business/LawyersPage";
 import MarketDetail from "./pages/business/MarketDetail";
 import ExhibitionDetail from "./pages/business/ExhibitionDetail";
@@ -85,6 +86,7 @@ const App = () => (
                       <Route path="/business/cities/:categorySlug" element={<RedirectToCategory tab="cities" />} />
                       <Route path="/business/markets/:categorySlug" element={<RedirectToCategory tab="markets" />} />
                       <Route path="/business/markets/:categorySlug/:marketId" element={<MarketDetail />} />
+                      <Route path="/business/exhibitions/upcoming" element={<UpcomingExhibitions />} />
                       <Route path="/business/exhibitions/:categorySlug" element={<RedirectToCategory tab="exhibitions" />} />
                       <Route path="/business/exhibitions/:categorySlug/:exhibitionId" element={<ExhibitionDetail />} />
                       <Route path="/profile" element={<Profile />} />
