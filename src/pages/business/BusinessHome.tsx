@@ -45,7 +45,7 @@ const BusinessHome = () => {
     (async () => {
       const today = new Date().toISOString().slice(0, 10);
       const [m, h, e, a, t, ne] = await Promise.all([
-        supabase.from("wholesale_markets").select("*", { count: "exact", head: true }).eq("is_active", true),
+        supabase.from("wholesale_markets").select("*", { count: "exact", head: true }).eq("is_mizwad_verified", true),
         supabase.from("production_hubs").select("*", { count: "exact", head: true }),
         supabase.from("exhibitions").select("*", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("legal_advisors").select("*", { count: "exact", head: true }).eq("is_active", true),
@@ -115,7 +115,7 @@ const BusinessHome = () => {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Mahsulot, brend yoki bozor..."
+            placeholder="Kategoriya qidirish..."
             className={cn(
               "w-full pl-10 pr-9 py-2.5 rounded-xl text-sm",
               "bg-emerald-500/[0.08] border border-emerald-500/25 text-foreground placeholder:text-muted-foreground",
@@ -131,7 +131,7 @@ const BusinessHome = () => {
       </section>
 
       <section className="px-5 mb-5">
-        <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2.5 font-medium">Qaysi savolingiz bor?</p>
+        <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2.5 font-medium">Mahsulot qidirish</p>
         <button
           onClick={() => navigate('/business/category-picker')}
           className="w-full bg-gradient-to-br from-emerald-500/15 via-emerald-500/[0.08] to-transparent border-2 border-emerald-500/40 hover:border-emerald-500/60 hover:from-emerald-500/20 active:scale-[0.99] rounded-2xl p-4 text-left transition-all flex items-start gap-3"
@@ -188,7 +188,7 @@ const BusinessHome = () => {
           stats={[
             { value: counts.markets, label: "Tasdiqlangan bozor" },
             { value: counts.hubs, label: "Ishlab chiqarish hubi" },
-            { value: counts.exhibitions, label: "Ko'rgazma yiliga" },
+            { value: counts.exhibitions, label: "Ko'rgazma" },
           ]}
         />
       </section>
@@ -198,10 +198,10 @@ const BusinessHome = () => {
         <OtherServicesList
           items={[
             {
-              icon: Scale,
-              label: "Mizwad tasdiqlagan advokatlar",
-              meta: `${counts.advisors} ta`,
-              onClick: () => navigate("/business/lawyers"),
+              icon: ShieldCheck,
+              label: "Zavod tekshiruvi (Deep Check)",
+              meta: "↗",
+              onClick: () => navigate("/deep-check"),
             },
             {
               icon: MessageSquare,
@@ -210,10 +210,10 @@ const BusinessHome = () => {
               onClick: () => navigate("/translators"),
             },
             {
-              icon: ShieldCheck,
-              label: "Zavod tekshiruvi (Deep Check)",
-              meta: "↗",
-              onClick: () => navigate("/deep-check"),
+              icon: Scale,
+              label: "Mizwad tasdiqlagan advokatlar",
+              meta: `${counts.advisors} ta`,
+              onClick: () => navigate("/business/lawyers"),
             },
           ]}
         />
