@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Audit hisobotlari (private)
+AUDIT_REPORT.md
+AUDIT_*.md
