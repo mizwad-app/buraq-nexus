@@ -535,50 +535,90 @@
       "pen": "Stylo"
     }
   },
-  "translator": {
-    "title": "Marché des traducteurs",
-    "subtitle": "Trouvez des traducteurs professionnels",
-    "searchPlaceholder": "Rechercher des traducteurs...",
-    "filters": "Filtres",
-    "filterLanguage": "Langue",
-    "filterCity": "Ville",
-    "filterPrice": "Fourchette de prix",
-    "filterTransport": "Transport",
-    "clearFilters": "Effacer",
-    "applyFilters": "Appliquer",
-    "priceAll": "Tout",
-    "priceRange1": "¥0-¥300",
-    "priceRange2": "¥300-¥500",
-    "priceRange3": "¥500+",
-    "hasCar": "A une voiture",
-    "hasLicense": "Permis de conduire",
-    "perDay": "/jour",
-    "reviews": "avis",
+  "translators": {
+    "title": "Traducteurs",
+    "subtitle": "Trouvez des traducteurs vérifiés",
+    "hskLevel": "Niveau HSK",
     "experience": "Expérience",
-    "years": "ans",
-    "book": "Réserver",
-    "about": "À propos",
-    "languages": "Langues",
-    "specializations": "Spécialisations",
     "rating": "Note",
-    "verified": "Vérifié",
-    "topRated": "Mieux noté",
+    "reviews": "avis",
+    "pricePerDay": "par jour",
     "available": "Disponible",
-    "unavailable": "Indisponible",
-    "contactNow": "Contacter maintenant",
-    "viewProfile": "Voir le profil",
+    "busy": "Occupé",
+    "verified": "Vérifié par Mizwad",
+    "verifiedByBuraq": "Vérifié par Mizwad",
+    "specializations": "Spécialisations",
+    "contact": "Contact",
+    "noTranslators": "Aucun traducteur trouvé",
     "noResults": "Aucun traducteur trouvé",
-    "tryDifferentFilters": "Essayez d'autres filtres",
-    "activeFilters": "Filtres actifs",
-    "resume": "Mon CV",
-    "bookingTitle": "Réserver un traducteur",
-    "selectDate": "Sélectionner la date",
-    "selectTime": "Sélectionner l'heure",
-    "duration": "Durée",
-    "totalPrice": "Prix total",
-    "confirmBooking": "Confirmer la réservation",
-    "bookingSuccess": "Réservation réussie!",
-    "bookingError": "Erreur de réservation"
+    "filterCity": "Filtrer par ville",
+    "allCities": "Toutes les villes",
+    "about": "À propos",
+    "perDay": "Par jour",
+    "contactMessage": "Bonjour ! J'aimerais contacter {{name}} via Mizwad.",
+    "contactVia": "Contacter via {{method}}",
+    "myResume": "Mon CV",
+    "translator": "Traducteur",
+    "study": "Études",
+    "cantonFair": "Foire de Canton",
+    "university": "Université de Guangzhou",
+    "ratingMatrix": {
+      "reliability": "Fiabilité",
+      "negotiation": "Compétence en négociation",
+      "punctuality": "Ponctualité",
+      "expertise": "Niveau de connaissance"
+    },
+    "languages": {
+      "uzbekNative": "Ouzbek (langue maternelle)",
+      "chinese": "Chinois",
+      "english": "Anglais"
+    },
+    "transport": {
+      "personalCar": "Véhicule personnel",
+      "drivingLicense": "Permis de conduire chinois"
+    },
+    "specialization": {
+      "medical": "Médical",
+      "legal": "Juridique",
+      "it": "Informatique",
+      "construction": "Construction",
+      "manufacturing": "Industrie",
+      "electronics": "Électronique",
+      "furniture": "Mobilier",
+      "textile": "Textile",
+      "automotive": "Automobile",
+      "trade": "Commerce",
+      "tourism": "Tourisme",
+      "education": "Éducation",
+      "finance": "Finance",
+      "general": "Général",
+      "business": "Affaires",
+      "factory": "Usines"
+    }
+  },
+  "marketplace": {
+    "title": "Marché des traducteurs",
+    "searchPlaceholder": "Rechercher par nom ou ville...",
+    "results": "{{count}} traducteurs trouvés",
+    "noResults": "Aucun traducteur trouvé",
+    "tryDifferent": "Essayez un autre filtre",
+    "clearFilters": "Effacer les filtres",
+    "clearAll": "Tout effacer",
+    "filters": "Filtres",
+    "reset": "Réinitialiser",
+    "city": "Ville",
+    "allCities": "Toutes les villes",
+    "specialization": "Spécialisation",
+    "allSpecializations": "Toutes les spécialisations",
+    "gender": "Sexe",
+    "allGenders": "Tous",
+    "male": "Homme",
+    "female": "Femme",
+    "priceRange": "Fourchette de prix (¥/jour)",
+    "minRating": "Note minimale",
+    "buraqVerified": "HSK vérifié par Mizwad",
+    "verifiedDesc": "Vérifié via entretien vidéo",
+    "applyFilters": "Appliquer"
   },
   "deepCheck": {
     "title": "Vérification d'usine et entreprise",
@@ -603,6 +643,33 @@
     "travelDesc": "Pour les voyageurs"
   },
   "services": {
+    "title": "Services",
+    "subtitle": "Services de voyage et d'affaires",
+    "description": "Services essentiels pour votre voyage d'affaires",
+    "flightBooking": {
+      "title": "Billets d'avion",
+      "desc": "Réservation de billets d'avion"
+    },
+    "trainBooking": {
+      "title": "Billets de train",
+      "desc": "Trains à grande vitesse"
+    },
+    "vpnSetup": {
+      "title": "Service VPN",
+      "desc": "Accès Internet en Chine"
+    },
+    "concierge": {
+      "title": "Service de conciergerie",
+      "desc": "Assistant personnel"
+    },
+    "requestService": "Demander un service",
+    "contactUs": "Contactez-nous pour demander ce service",
+    "requestSent": "Demande de service envoyée !",
+    "additionalDetails": "Détails supplémentaires",
+    "detailsPlaceholder": "Décrivez votre demande en détail...",
+    "contactVia": "Comment souhaitez-vous être contacté ?",
+    "instantResponse": "Réponse instantanée",
+    "defaultMessage": "J'ai besoin d'aide",
     "visaHelp": {
       "title": "Demander de l'aide pour le visa"
     },
@@ -616,7 +683,6 @@
     "requestDescription": "Saisissez les détails ci-dessous. Notre équipe vous contactera sous peu.",
     "requestPlaceholder": "Comment pouvons-nous aider?",
     "submit": "Envoyer",
-    "subtitle": "Services de voyage et d'affaires",
     "cards": {
       "yoriqnoma": {
         "title": "Guide",

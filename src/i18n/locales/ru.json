@@ -454,9 +454,15 @@
       "subtitle": "Посольство и Консульство Узбекистана в Китае",
       "embassy": "Посольство",
       "consulate": "Генеральное Консульство",
+      "hotline": "Горячая линия",
+      "emergencyPhone": "Экстренный телефон",
+      "workingHours": "Часы работы",
+      "openMap": "Открыть на карте",
       "call": "Позвонить",
       "copyAddress": "Скопировать китайский адрес",
       "addressCopied": "Китайский адрес скопирован! Покажите таксисту.",
+      "email": "Email",
+      "website": "Веб-сайт",
       "beijing": "Посольство в Пекине",
       "guangzhou": "Консульство в Гуанчжоу",
       "shanghai": "Консульство в Шанхае"
@@ -531,7 +537,7 @@
       "pen": "Ручка"
     }
   },
-  "translator": {
+  "translators": {
     "title": "Переводчики",
     "subtitle": "Найдите проверенных переводчиков",
     "hskLevel": "Уровень HSK",
@@ -542,10 +548,79 @@
     "available": "Доступен",
     "busy": "Занят",
     "verified": "Проверен Mizwad",
+    "verifiedByBuraq": "Проверено Mizwad",
     "specializations": "Специализации",
     "contact": "Связаться",
     "noTranslators": "Переводчики не найдены",
-    "filterCity": "Фильтр по городу"
+    "noResults": "Переводчики не найдены",
+    "filterCity": "Фильтр по городу",
+    "allCities": "Все города",
+    "about": "О себе",
+    "perDay": "За день",
+    "contactMessage": "Здравствуйте! Я хотел бы связаться с {{name}} через Mizwad.",
+    "contactVia": "Связаться через {{method}}",
+    "myResume": "Моё резюме",
+    "translator": "Переводчик",
+    "study": "Учёба",
+    "cantonFair": "Кантонская ярмарка",
+    "university": "Гуанчжоуский университет",
+    "ratingMatrix": {
+      "reliability": "Надёжность",
+      "negotiation": "Навык переговоров",
+      "punctuality": "Пунктуальность",
+      "expertise": "Уровень знаний"
+    },
+    "languages": {
+      "uzbekNative": "Узбекский (родной)",
+      "chinese": "Китайский",
+      "english": "Английский"
+    },
+    "transport": {
+      "personalCar": "Личный автомобиль",
+      "drivingLicense": "Китайские водительские права"
+    },
+    "specialization": {
+      "medical": "Медицина",
+      "legal": "Юридическая",
+      "it": "IT",
+      "construction": "Строительство",
+      "manufacturing": "Производство",
+      "electronics": "Электроника",
+      "furniture": "Мебель",
+      "textile": "Текстиль",
+      "automotive": "Автомобильная",
+      "trade": "Торговля",
+      "tourism": "Туризм",
+      "education": "Образование",
+      "finance": "Финансы",
+      "general": "Общая",
+      "business": "Бизнес",
+      "factory": "Заводы"
+    }
+  },
+  "marketplace": {
+    "title": "Маркетплейс переводчиков",
+    "searchPlaceholder": "Поиск по имени или городу...",
+    "results": "Найдено {{count}} переводчиков",
+    "noResults": "Переводчики не найдены",
+    "tryDifferent": "Попробуйте другой фильтр",
+    "clearFilters": "Сбросить фильтры",
+    "clearAll": "Сбросить всё",
+    "filters": "Фильтры",
+    "reset": "Сбросить",
+    "city": "Город",
+    "allCities": "Все города",
+    "specialization": "Специализация",
+    "allSpecializations": "Все специализации",
+    "gender": "Пол",
+    "allGenders": "Все",
+    "male": "Мужской",
+    "female": "Женский",
+    "priceRange": "Диапазон цен (¥/день)",
+    "minRating": "Минимальный рейтинг",
+    "buraqVerified": "HSK проверен Mizwad",
+    "verifiedDesc": "Подтверждено через видеоинтервью",
+    "applyFilters": "Применить"
   },
   "services": {
     "title": "Услуги",

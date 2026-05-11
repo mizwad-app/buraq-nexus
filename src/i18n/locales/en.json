@@ -535,7 +535,7 @@
       "pen": "Pen"
     }
   },
-  "translator": {
+  "translators": {
     "title": "Translators",
     "subtitle": "Find verified translators",
     "hskLevel": "HSK Level",
@@ -546,10 +546,79 @@
     "available": "Available",
     "busy": "Busy",
     "verified": "Verified by Mizwad",
+    "verifiedByBuraq": "Mizwad verified",
     "specializations": "Specializations",
     "contact": "Contact",
     "noTranslators": "No translators found",
-    "filterCity": "Filter by city"
+    "noResults": "No translators found",
+    "filterCity": "Filter by city",
+    "allCities": "All cities",
+    "about": "About",
+    "perDay": "Per day",
+    "contactMessage": "Hello! I'd like to contact {{name}} via Mizwad.",
+    "contactVia": "Contact via {{method}}",
+    "myResume": "My resume",
+    "translator": "Translator",
+    "study": "Studies",
+    "cantonFair": "Canton Fair",
+    "university": "Guangzhou University",
+    "ratingMatrix": {
+      "reliability": "Reliability",
+      "negotiation": "Negotiation skill",
+      "punctuality": "Punctuality",
+      "expertise": "Knowledge level"
+    },
+    "languages": {
+      "uzbekNative": "Uzbek (Native)",
+      "chinese": "Chinese",
+      "english": "English"
+    },
+    "transport": {
+      "personalCar": "Personal vehicle",
+      "drivingLicense": "Chinese driving license"
+    },
+    "specialization": {
+      "medical": "Medical",
+      "legal": "Legal",
+      "it": "IT",
+      "construction": "Construction",
+      "manufacturing": "Manufacturing",
+      "electronics": "Electronics",
+      "furniture": "Furniture",
+      "textile": "Textile",
+      "automotive": "Automotive",
+      "trade": "Trade",
+      "tourism": "Tourism",
+      "education": "Education",
+      "finance": "Finance",
+      "general": "General",
+      "business": "Business",
+      "factory": "Factories"
+    }
+  },
+  "marketplace": {
+    "title": "Translator Marketplace",
+    "searchPlaceholder": "Search by name or city...",
+    "results": "{{count}} translators found",
+    "noResults": "No translators found",
+    "tryDifferent": "Try a different filter",
+    "clearFilters": "Clear filters",
+    "clearAll": "Clear all",
+    "filters": "Filters",
+    "reset": "Reset",
+    "city": "City",
+    "allCities": "All cities",
+    "specialization": "Specialization",
+    "allSpecializations": "All specializations",
+    "gender": "Gender",
+    "allGenders": "All",
+    "male": "Male",
+    "female": "Female",
+    "priceRange": "Price range (¥/day)",
+    "minRating": "Minimum rating",
+    "buraqVerified": "Mizwad-verified HSK",
+    "verifiedDesc": "Verified via video interview",
+    "applyFilters": "Apply"
   },
   "services": {
     "title": "Services",
