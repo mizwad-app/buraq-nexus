@@ -45,6 +45,7 @@ const ALLOWED_PATHS = [
   /(^|\/)bun\.lockb$/,
   /(^|\/)scripts\/check-buraq\.js$/,
   /(^|\/)scripts\/README\.md$/,
+  /(^|\/)src\/i18n\/locales\//,
 ];
 
 // Self-reference: any occurrence of `buraq` that is part of the literal

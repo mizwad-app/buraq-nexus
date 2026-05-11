@@ -411,6 +411,10 @@
   "guide": {
     "title": "دليل السفر",
     "subtitle": "نصائح أساسية للصين",
+    "tabs": {
+      "diplomatic": "دبلوماسي",
+      "video": "نصائح فيديو"
+    },
     "intro": {
       "title": "مرحباً بكم في الصين!",
       "description": "شاهد أدلة الفيديو للتحضير لرحلة عملك. تعرف على المدفوعات والاتصالات والأمان."
@@ -460,8 +464,30 @@
       "copyAddress": "نسخ العنوان الصيني",
       "addressCopied": "تم نسخ العنوان الصيني! أظهره لسائق التاكسي.",
       "email": "البريد الإلكتروني",
-      "website": "الموقع الإلكتروني"
+      "website": "الموقع الإلكتروني",
+      "beijing": "السفارة في بكين",
+      "guangzhou": "قنصلية قوانغتشو",
+      "shanghai": "قنصلية شنغهاي"
+    },
+    "faq": {
+      "title": "الأسئلة الشائعة",
+      "subtitle": "نصائح عامة عن السفر",
+      "q1": "هل يمكن السفر إلى الصين بدون تأشيرة؟",
+      "a1": "يحتاج مواطنو أوزبكستان إلى تأشيرة. يمكن البقاء حتى 144 ساعة في بعض المدن بتأشيرة العبور.",
+      "q2": "ما هو أفضل وقت للسفر؟",
+      "a2": "أبريل-مايو وسبتمبر-أكتوبر هي أفضل الفترات من حيث الطقس. تكون الأسعار مرتفعة خلال السنة الصينية الجديدة (يناير-فبراير).",
+      "q3": "هل أحتاج إلى حمل النقد؟",
+      "a3": "Alipay و WeChat Pay هما وسيلتا الدفع الرئيسيتان. احمل مبلغًا صغيرًا من النقد (500-1000 يوان).",
+      "q4": "هل ستواجه مشاكل في الإنترنت؟",
+      "a4": "لا تعمل Google و WhatsApp و Telegram. قم بتنزيل VPN مسبقًا أو استخدم التطبيقات المحلية."
     }
+  },
+  "mosque": {
+    "about": "عن المسجد",
+    "nameOrigin": "أصل التسمية",
+    "history": "التاريخ",
+    "features": "المميزات الخاصة",
+    "poemSubtitle": "قصيدة تاريخية في مدح النبي ﷺ"
   },
   "mapNav": {
     "selectApp": "اختر تطبيق الملاحة",
@@ -513,7 +539,7 @@
       "pen": "قلم"
     }
   },
-  "translator": {
+  "translators": {
     "title": "المترجمون",
     "subtitle": "ابحث عن مترجمين موثقين",
     "hskLevel": "مستوى HSK",
@@ -524,10 +550,79 @@
     "available": "متاح",
     "busy": "مشغول",
     "verified": "موثق من Mizwad",
+    "verifiedByBuraq": "موثق من Mizwad",
     "specializations": "التخصصات",
-    "contact": "اتصال",
+    "contact": "تواصل",
     "noTranslators": "لم يتم العثور على مترجمين",
-    "filterCity": "تصفية حسب المدينة"
+    "noResults": "لم يتم العثور على مترجمين",
+    "filterCity": "تصفية حسب المدينة",
+    "allCities": "كل المدن",
+    "about": "نبذة",
+    "perDay": "يومي",
+    "contactMessage": "مرحبًا! أود التواصل مع {{name}} عبر Mizwad.",
+    "contactVia": "التواصل عبر {{method}}",
+    "myResume": "سيرتي الذاتية",
+    "translator": "مترجم",
+    "study": "الدراسة",
+    "cantonFair": "معرض كانتون",
+    "university": "جامعة قوانغتشو",
+    "ratingMatrix": {
+      "reliability": "الموثوقية",
+      "negotiation": "مهارة التفاوض",
+      "punctuality": "الالتزام بالمواعيد",
+      "expertise": "مستوى الخبرة"
+    },
+    "languages": {
+      "uzbekNative": "الأوزبكية (اللغة الأم)",
+      "chinese": "الصينية",
+      "english": "الإنجليزية"
+    },
+    "transport": {
+      "personalCar": "سيارة شخصية",
+      "drivingLicense": "رخصة قيادة صينية"
+    },
+    "specialization": {
+      "medical": "الطب",
+      "legal": "القانون",
+      "it": "تقنية المعلومات",
+      "construction": "البناء",
+      "manufacturing": "التصنيع",
+      "electronics": "الإلكترونيات",
+      "furniture": "الأثاث",
+      "textile": "المنسوجات",
+      "automotive": "السيارات",
+      "trade": "التجارة",
+      "tourism": "السياحة",
+      "education": "التعليم",
+      "finance": "المالية",
+      "general": "عام",
+      "business": "الأعمال",
+      "factory": "المصانع"
+    }
+  },
+  "marketplace": {
+    "title": "سوق المترجمين",
+    "searchPlaceholder": "ابحث بالاسم أو المدينة...",
+    "results": "تم العثور على {{count}} مترجم",
+    "noResults": "لم يتم العثور على مترجمين",
+    "tryDifferent": "جرّب فلترًا مختلفًا",
+    "clearFilters": "مسح الفلاتر",
+    "clearAll": "مسح الكل",
+    "filters": "الفلاتر",
+    "reset": "إعادة تعيين",
+    "city": "المدينة",
+    "allCities": "كل المدن",
+    "specialization": "التخصص",
+    "allSpecializations": "كل التخصصات",
+    "gender": "الجنس",
+    "allGenders": "الكل",
+    "male": "ذكر",
+    "female": "أنثى",
+    "priceRange": "نطاق السعر (¥/يوم)",
+    "minRating": "الحد الأدنى للتقييم",
+    "buraqVerified": "HSK موثق من Mizwad",
+    "verifiedDesc": "موثق عبر مقابلة فيديو",
+    "applyFilters": "تطبيق"
   },
   "services": {
     "title": "الخدمات",
