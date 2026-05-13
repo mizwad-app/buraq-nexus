@@ -68,8 +68,34 @@
     "title": "Tijorat Markazi",
     "subtitle": "Biznes markazi",
     "tradeDataTag": "Tijorat ma'lumotlari",
-    "months": ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
-    "monthsShort": ["yan", "fev", "mar", "apr", "may", "iyun", "iyul", "avg", "sen", "okt", "noy", "dek"],
+    "months": [
+      "Yanvar",
+      "Fevral",
+      "Mart",
+      "Aprel",
+      "May",
+      "Iyun",
+      "Iyul",
+      "Avgust",
+      "Sentyabr",
+      "Oktyabr",
+      "Noyabr",
+      "Dekabr"
+    ],
+    "monthsShort": [
+      "yan",
+      "fev",
+      "mar",
+      "apr",
+      "may",
+      "iyun",
+      "iyul",
+      "avg",
+      "sen",
+      "okt",
+      "noy",
+      "dek"
+    ],
     "categoryHub": {
       "loading": "Yuklanmoqda...",
       "tabs": {
@@ -1169,5 +1195,22 @@
     "no_data": "Maʼlumot mavjud emas",
     "no_data_subtitle": "Mamlakatingiz konsulligi haqida hali maʼlumot qoʻshilmagan.",
     "unverified_warning": "Bu maʼlumot hali tasdiqlanmagan — qoʻngʻiroq qilishdan oldin rasmiy manbadan tekshiring."
+  },
+  "exhibitions": {
+    "filter": {
+      "all": "Hammasi",
+      "international": "Xalqaro",
+      "domestic": "Mahalliy",
+      "allCategories": "Barcha kategoriyalar"
+    },
+    "badge": {
+      "international": "Xalqaro",
+      "domestic": "Mahalliy"
+    },
+    "empty": {
+      "generic": "Filtr bo'yicha ko'rgazma topilmadi",
+      "domesticTitle": "Mahalliy ko'rgazmalar tez orada",
+      "domesticDesc": "Xitoyning ichki bozori uchun ko'rgazmalarni keyingi bosqichda qo'shamiz"
+    }
   }
 }
