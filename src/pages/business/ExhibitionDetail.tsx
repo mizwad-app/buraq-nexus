@@ -187,6 +187,28 @@ const ExhibitionDetail = () => {
         </p>
       </div>
 
+      <div className="px-5 mt-2 flex items-center gap-1.5 flex-wrap">
+        {ex.is_international === true && (
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+            🌐 {t("exhibitions.badge.international")}
+          </span>
+        )}
+        {ex.is_international === false && (
+          <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+            🇨🇳 {t("exhibitions.badge.domestic")}
+          </span>
+        )}
+        {(() => {
+          const cat = ex.exhibition_category as { emoji?: string | null; name_en?: string | null; name_uz?: string | null; [k: string]: unknown } | null | undefined;
+          if (!cat) return null;
+          const name = (cat[`name_${lang}`] as string | undefined) ?? cat.name_en ?? cat.name_uz;
+          return (
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-foreground/80 border border-white/10">
+              {cat.emoji ?? "📂"} {name}
+            </span>
+          );
+        })()}
+
       {(ex.world_rank || ex.china_rank || ex.regional_rank || ex.attendees_count) && (
         <div className="mx-4 mt-3 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-3">
           <div className="text-[11px] font-semibold text-amber-400 uppercase tracking-wide mb-2">{t("business.exhibitionDetail.ratingBlock.title")}</div>
