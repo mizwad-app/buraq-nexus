@@ -208,6 +208,7 @@ const ExhibitionDetail = () => {
             </span>
           );
         })()}
+      </div>
 
       {(ex.world_rank || ex.china_rank || ex.regional_rank || ex.attendees_count) && (
         <div className="mx-4 mt-3 rounded-xl border border-amber-500/20 bg-amber-500/[0.04] p-3">
