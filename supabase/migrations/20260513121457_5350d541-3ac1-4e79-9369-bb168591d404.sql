@@ -1,0 +1,3 @@
+ALTER TABLE exhibitions ALTER COLUMN name DROP NOT NULL;
+ALTER TABLE exhibitions ALTER COLUMN start_date DROP NOT NULL;
+ALTER TABLE exhibitions ALTER COLUMN end_date DROP NOT NULL;

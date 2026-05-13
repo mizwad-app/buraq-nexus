@@ -955,7 +955,7 @@ export type Database = {
           description_zh: string | null
           district: string | null
           district_zh: string | null
-          end_date: string
+          end_date: string | null
           exhibitors_count: number | null
           frequency: string | null
           id: string
@@ -965,7 +965,7 @@ export type Database = {
           mizwad_note_en: string | null
           mizwad_note_ru: string | null
           mizwad_note_uz: string | null
-          name: string
+          name: string | null
           name_ar: string | null
           name_en: string | null
           name_ru: string | null
@@ -980,7 +980,7 @@ export type Database = {
           recurring_pattern: string | null
           regional_rank: string | null
           slug: string
-          start_date: string
+          start_date: string | null
           venue: string | null
           venue_ar: string | null
           venue_en: string | null
@@ -1026,7 +1026,7 @@ export type Database = {
           description_zh?: string | null
           district?: string | null
           district_zh?: string | null
-          end_date: string
+          end_date?: string | null
           exhibitors_count?: number | null
           frequency?: string | null
           id?: string
@@ -1036,7 +1036,7 @@ export type Database = {
           mizwad_note_en?: string | null
           mizwad_note_ru?: string | null
           mizwad_note_uz?: string | null
-          name: string
+          name?: string | null
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
@@ -1051,7 +1051,7 @@ export type Database = {
           recurring_pattern?: string | null
           regional_rank?: string | null
           slug: string
-          start_date: string
+          start_date?: string | null
           venue?: string | null
           venue_ar?: string | null
           venue_en?: string | null
@@ -1097,7 +1097,7 @@ export type Database = {
           description_zh?: string | null
           district?: string | null
           district_zh?: string | null
-          end_date?: string
+          end_date?: string | null
           exhibitors_count?: number | null
           frequency?: string | null
           id?: string
@@ -1107,7 +1107,7 @@ export type Database = {
           mizwad_note_en?: string | null
           mizwad_note_ru?: string | null
           mizwad_note_uz?: string | null
-          name?: string
+          name?: string | null
           name_ar?: string | null
           name_en?: string | null
           name_ru?: string | null
@@ -1122,7 +1122,7 @@ export type Database = {
           recurring_pattern?: string | null
           regional_rank?: string | null
           slug?: string
-          start_date?: string
+          start_date?: string | null
           venue?: string | null
           venue_ar?: string | null
           venue_en?: string | null
