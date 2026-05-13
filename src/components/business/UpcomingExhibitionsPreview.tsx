@@ -79,23 +79,8 @@ const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
 
 export const UpcomingExhibitionsPreview = () => {
   const navigate = useNavigate();
-  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    (async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const { data } = await supabase
-        .from("exhibitions")
-        .select("*")
-        .gte("end_date", today)
-        .eq("is_active", true)
-        .order("start_date", { ascending: true })
-        .limit(3);
-      setExhibitions((data ?? []) as Exhibition[]);
-      setLoading(false);
-    })();
-  }, []);
+  const { data, loading } = useExhibitions({ locationFilter: "all", limit: 3 });
+  const exhibitions = data as unknown as Exhibition[];
 
   if (loading) {
     return (
