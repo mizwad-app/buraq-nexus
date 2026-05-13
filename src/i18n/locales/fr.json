@@ -68,8 +68,34 @@
     "title": "Centre commercial",
     "subtitle": "Centre d'affaires",
     "tradeDataTag": "Informations commerciales",
-    "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
-    "monthsShort": ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"],
+    "months": [
+      "Janvier",
+      "Février",
+      "Mars",
+      "Avril",
+      "Mai",
+      "Juin",
+      "Juillet",
+      "Août",
+      "Septembre",
+      "Octobre",
+      "Novembre",
+      "Décembre"
+    ],
+    "monthsShort": [
+      "janv",
+      "févr",
+      "mars",
+      "avr",
+      "mai",
+      "juin",
+      "juil",
+      "août",
+      "sept",
+      "oct",
+      "nov",
+      "déc"
+    ],
     "categoryHub": {
       "loading": "Chargement...",
       "tabs": {
@@ -1185,5 +1211,22 @@
     "no_data": "Pas encore de données",
     "no_data_subtitle": "Les informations sur le consulat de votre pays n'ont pas encore été ajoutées.",
     "unverified_warning": "Ces informations ne sont pas vérifiées — veuillez confirmer auprès des sources officielles avant d'appeler."
+  },
+  "exhibitions": {
+    "filter": {
+      "all": "Tous",
+      "international": "International",
+      "domestic": "National",
+      "allCategories": "Toutes les catégories"
+    },
+    "badge": {
+      "international": "International",
+      "domestic": "National"
+    },
+    "empty": {
+      "generic": "Aucune exposition ne correspond au filtre",
+      "domesticTitle": "Expositions nationales bientôt disponibles",
+      "domesticDesc": "Nous ajouterons les foires chinoises domestiques dans la prochaine phase"
+    }
   }
 }

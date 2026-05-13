@@ -68,8 +68,34 @@
     "title": "Trade Center",
     "subtitle": "Business center",
     "tradeDataTag": "Trade Information",
-    "months": ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-    "monthsShort": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "monthsShort": [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec"
+    ],
     "categoryHub": {
       "loading": "Loading...",
       "tabs": {
@@ -1189,5 +1215,22 @@
     "no_data": "No data yet",
     "no_data_subtitle": "Information about your country's consulate hasn't been added yet.",
     "unverified_warning": "This data isn't verified yet — please confirm via official sources before calling."
+  },
+  "exhibitions": {
+    "filter": {
+      "all": "All",
+      "international": "International",
+      "domestic": "Domestic",
+      "allCategories": "All categories"
+    },
+    "badge": {
+      "international": "International",
+      "domestic": "Domestic"
+    },
+    "empty": {
+      "generic": "No exhibitions match filter",
+      "domesticTitle": "Domestic exhibitions coming soon",
+      "domesticDesc": "We'll add Chinese domestic-only fairs in the next phase"
+    }
   }
 }
