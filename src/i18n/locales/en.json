@@ -126,7 +126,53 @@
       "copyAddress": "Copy Address",
       "moreMarketsSoon": "More markets coming soon"
     },
-    "pageSubtitle": "Find and source products from China"
+    "pageSubtitle": "Find and source products from China",
+    "home": {
+      "back": "Back",
+      "headerSubtitle": "Find products in China",
+      "searchPlaceholder": "Search categories...",
+      "chips": {
+        "vehicleParts": "Auto Parts",
+        "electronics": "Electronics",
+        "furniture": "Furniture",
+        "apparel": "Apparel",
+        "toys": "Toys"
+      },
+      "productSearchLabel": "Product Search",
+      "productQuestion": "What product do you work with?",
+      "productQuestionDesc": "See markets, exhibitions and manufacturers in one place",
+      "upcomingExhibitions": "Upcoming exhibitions",
+      "daysLeft": "{{name}} · {{count}} days left",
+      "searchResults": "Search results",
+      "popularCategories": "Popular categories",
+      "searchFor": "Results for \"{{query}}\"",
+      "findMarketFast": "Find a market quickly",
+      "noCategoriesFound": "No categories found for \"{{query}}\"",
+      "statsLabel": "Mizwad statistics",
+      "stats": {
+        "verifiedMarkets": "Verified markets",
+        "productionHubs": "Production hubs",
+        "exhibitions": "Exhibitions"
+      },
+      "otherServicesLabel": "Other services",
+      "services": {
+        "deepCheck": "Factory inspection (Deep Check)",
+        "translators": "Translators",
+        "verifiedLawyers": "Mizwad-verified lawyers",
+        "count": "{{count}}"
+      }
+    },
+    "categoryPicker": {
+      "questions": {
+        "cities": "Which city is it produced in?",
+        "markets": "Which wholesale market sells it?",
+        "exhibitions": "Which exhibition should I attend?"
+      },
+      "title": "Product category",
+      "searchPlaceholder": "Search categories...",
+      "notFound": "Not found",
+      "searchHint": "If your category is not listed, use the search bar above to find it."
+    }
   },
   "sourcing": {
     "strategicPlanner": "Strategic Travel Planning",

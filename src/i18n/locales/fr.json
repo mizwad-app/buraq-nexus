@@ -126,7 +126,53 @@
       "copyAddress": "Copier l'adresse",
       "moreMarketsSoon": "Plus de marchés bientôt"
     },
-    "pageSubtitle": "Trouver et acheter des produits de Chine"
+    "pageSubtitle": "Trouver et acheter des produits de Chine",
+    "home": {
+      "back": "Retour",
+      "headerSubtitle": "Trouver des produits en Chine",
+      "searchPlaceholder": "Rechercher des catégories...",
+      "chips": {
+        "vehicleParts": "Pièces auto",
+        "electronics": "Électronique",
+        "furniture": "Meubles",
+        "apparel": "Vêtements",
+        "toys": "Jouets"
+      },
+      "productSearchLabel": "Recherche de produit",
+      "productQuestion": "Avec quel produit travaillez-vous ?",
+      "productQuestionDesc": "Marchés, expositions et fabricants en un seul endroit",
+      "upcomingExhibitions": "Expositions à venir",
+      "daysLeft": "{{name}} · {{count}} jours restants",
+      "searchResults": "Résultats de recherche",
+      "popularCategories": "Catégories populaires",
+      "searchFor": "Résultats pour « {{query}} »",
+      "findMarketFast": "Trouver un marché rapidement",
+      "noCategoriesFound": "Aucune catégorie trouvée pour « {{query}} »",
+      "statsLabel": "Statistiques Mizwad",
+      "stats": {
+        "verifiedMarkets": "Marchés vérifiés",
+        "productionHubs": "Centres de production",
+        "exhibitions": "Expositions"
+      },
+      "otherServicesLabel": "Autres services",
+      "services": {
+        "deepCheck": "Inspection d'usine (Deep Check)",
+        "translators": "Traducteurs",
+        "verifiedLawyers": "Avocats vérifiés par Mizwad",
+        "count": "{{count}}"
+      }
+    },
+    "categoryPicker": {
+      "questions": {
+        "cities": "Dans quelle ville est-il produit ?",
+        "markets": "Sur quel marché de gros est-il vendu ?",
+        "exhibitions": "À quelle exposition aller ?"
+      },
+      "title": "Catégorie de produit",
+      "searchPlaceholder": "Rechercher des catégories...",
+      "notFound": "Introuvable",
+      "searchHint": "Si votre catégorie n'apparaît pas, utilisez la barre de recherche ci-dessus."
+    }
   },
   "sourcing": {
     "strategicPlanner": "Planification stratégique de voyage",

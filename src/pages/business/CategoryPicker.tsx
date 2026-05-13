@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChevronLeft, ChevronRight, Search, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
@@ -14,14 +15,9 @@ interface Category {
   [k: string]: unknown;
 }
 
-const QUESTION_LABEL: Record<string, string> = {
-  cities: "Qaysi shaharda ishlab chiqariladi?",
-  markets: "Qaysi optom bozorda topiladi?",
-  exhibitions: "Qaysi ko'rgazmaga borish kerak?",
-};
-
 const CategoryPicker = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [params] = useSearchParams();
   const question = (params.get("question") ?? "cities") as "cities" | "markets" | "exhibitions";
   const preselect = params.get("preselect");
@@ -30,6 +26,12 @@ const CategoryPicker = () => {
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [search, setSearch] = useState("");
+
+  const questionLabel: Record<string, string> = {
+    cities: t("business.categoryPicker.questions.cities"),
+    markets: t("business.categoryPicker.questions.markets"),
+    exhibitions: t("business.categoryPicker.questions.exhibitions"),
+  };
 
   useEffect(() => {
     (async () => {
@@ -69,9 +71,9 @@ const CategoryPicker = () => {
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex-1 min-w-0">
-            <span className="text-[10px] text-muted-foreground">{QUESTION_LABEL[question]}</span>
+            <span className="text-[10px] text-muted-foreground">{questionLabel[question]}</span>
             <h1 className="text-base italic font-medium text-foreground" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-              Mahsulot kategoriyasi
+              {t("business.categoryPicker.title")}
             </h1>
           </div>
         </div>
@@ -83,7 +85,7 @@ const CategoryPicker = () => {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Kategoriya qidirish..."
+            placeholder={t("business.categoryPicker.searchPlaceholder")}
             className="w-full pl-10 pr-9 py-2.5 rounded-xl text-sm bg-card border border-border/50 focus:outline-none focus:border-emerald-500/40"
           />
           {search && (
@@ -109,12 +111,12 @@ const CategoryPicker = () => {
           </button>
         ))}
         {filtered.length === 0 && (
-          <p className="text-center text-sm text-muted-foreground py-8">Topilmadi</p>
+          <p className="text-center text-sm text-muted-foreground py-8">{t("business.categoryPicker.notFound")}</p>
         )}
       </section>
 
       <p className="px-5 mt-4 text-[11px] text-muted-foreground italic">
-        Bu yerda ko'rmagan kategoriyangizni qidirish uchun yuqoridagi qidiruv panelidan foydalaning.
+        {t("business.categoryPicker.searchHint")}
       </p>
     </div>
   );

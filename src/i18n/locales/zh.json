@@ -126,7 +126,53 @@
       "copyAddress": "复制地址",
       "moreMarketsSoon": "更多市场即将上线"
     },
-    "pageSubtitle": "从中国寻找和采购产品"
+    "pageSubtitle": "从中国寻找和采购产品",
+    "home": {
+      "back": "返回",
+      "headerSubtitle": "在中国寻找产品",
+      "searchPlaceholder": "搜索类目...",
+      "chips": {
+        "vehicleParts": "汽车配件",
+        "electronics": "电子产品",
+        "furniture": "家具",
+        "apparel": "服装",
+        "toys": "玩具"
+      },
+      "productSearchLabel": "产品搜索",
+      "productQuestion": "您主营什么产品?",
+      "productQuestionDesc": "市场、展会和厂家一站式查看",
+      "upcomingExhibitions": "即将举办的展会",
+      "daysLeft": "{{name}} · 还剩 {{count}} 天",
+      "searchResults": "搜索结果",
+      "popularCategories": "热门类目",
+      "searchFor": "「{{query}}」的搜索结果",
+      "findMarketFast": "快速找到市场",
+      "noCategoriesFound": "未找到「{{query}}」的相关类目",
+      "statsLabel": "Mizwad 统计",
+      "stats": {
+        "verifiedMarkets": "认证市场",
+        "productionHubs": "生产基地",
+        "exhibitions": "展会"
+      },
+      "otherServicesLabel": "其他服务",
+      "services": {
+        "deepCheck": "工厂核查 (Deep Check)",
+        "translators": "翻译人员",
+        "verifiedLawyers": "Mizwad 认证律师",
+        "count": "{{count}}"
+      }
+    },
+    "categoryPicker": {
+      "questions": {
+        "cities": "在哪个城市生产?",
+        "markets": "在哪个批发市场销售?",
+        "exhibitions": "应该去哪个展会?"
+      },
+      "title": "产品类目",
+      "searchPlaceholder": "搜索类目...",
+      "notFound": "未找到",
+      "searchHint": "如果未列出您的类目,请使用上方的搜索栏查找。"
+    }
   },
   "sourcing": {
     "strategicPlanner": "战略行程规划",

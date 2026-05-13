@@ -126,7 +126,53 @@
       "copyAddress": "Manzilni nusxalash",
       "moreMarketsSoon": "Boshqa bozorlar tez orada qo'shiladi"
     },
-    "pageSubtitle": "Xitoydan mahsulot topish va sotib olish"
+    "pageSubtitle": "Xitoydan mahsulot topish va sotib olish",
+    "home": {
+      "back": "Orqaga",
+      "headerSubtitle": "Xitoyda mahsulot qidirish",
+      "searchPlaceholder": "Kategoriya qidirish...",
+      "chips": {
+        "vehicleParts": "Avto qismlar",
+        "electronics": "Elektronika",
+        "furniture": "Mebel",
+        "apparel": "Kiyim",
+        "toys": "O'yinchoqlar"
+      },
+      "productSearchLabel": "Mahsulot qidirish",
+      "productQuestion": "Qaysi mahsulot bilan ishlaysiz?",
+      "productQuestionDesc": "Bozor, ko'rgazma va ishlab chiqaruvchini bir joyda ko'rasiz",
+      "upcomingExhibitions": "Yaqinlashayotgan ko'rgazmalar",
+      "daysLeft": "{{name}} · {{count}} kun qoldi",
+      "searchResults": "Qidiruv natijalari",
+      "popularCategories": "Mashhur kategoriyalar",
+      "searchFor": "\"{{query}}\" bo'yicha",
+      "findMarketFast": "Bozorni tezda topish",
+      "noCategoriesFound": "\"{{query}}\" bo'yicha kategoriya topilmadi",
+      "statsLabel": "Mizwad statistikasi",
+      "stats": {
+        "verifiedMarkets": "Tasdiqlangan bozor",
+        "productionHubs": "Ishlab chiqarish hubi",
+        "exhibitions": "Ko'rgazma"
+      },
+      "otherServicesLabel": "Boshqa xizmatlar",
+      "services": {
+        "deepCheck": "Zavod tekshiruvi (Deep Check)",
+        "translators": "Tarjimonlar",
+        "verifiedLawyers": "Mizwad tasdiqlagan advokatlar",
+        "count": "{{count}} ta"
+      }
+    },
+    "categoryPicker": {
+      "questions": {
+        "cities": "Qaysi shaharda ishlab chiqariladi?",
+        "markets": "Qaysi optom bozorda topiladi?",
+        "exhibitions": "Qaysi ko'rgazmaga borish kerak?"
+      },
+      "title": "Mahsulot kategoriyasi",
+      "searchPlaceholder": "Kategoriya qidirish...",
+      "notFound": "Topilmadi",
+      "searchHint": "Bu yerda ko'rmagan kategoriyangizni qidirish uchun yuqoridagi qidiruv panelidan foydalaning."
+    }
   },
   "sourcing": {
     "strategicPlanner": "Strategik Sayohat Rejalashtirish",

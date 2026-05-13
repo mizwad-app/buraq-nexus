@@ -126,7 +126,53 @@
       "copyAddress": "نسخ العنوان",
       "moreMarketsSoon": "المزيد من الأسواق قريباً"
     },
-    "pageSubtitle": "البحث عن المنتجات وشرائها من الصين"
+    "pageSubtitle": "البحث عن المنتجات وشرائها من الصين",
+    "home": {
+      "back": "رجوع",
+      "headerSubtitle": "ابحث عن المنتجات في الصين",
+      "searchPlaceholder": "ابحث عن فئة...",
+      "chips": {
+        "vehicleParts": "قطع غيار السيارات",
+        "electronics": "الإلكترونيات",
+        "furniture": "الأثاث",
+        "apparel": "الملابس",
+        "toys": "الألعاب"
+      },
+      "productSearchLabel": "البحث عن منتج",
+      "productQuestion": "ما المنتج الذي تعمل به؟",
+      "productQuestionDesc": "الأسواق والمعارض والمصنّعون في مكان واحد",
+      "upcomingExhibitions": "المعارض القادمة",
+      "daysLeft": "{{name}} · باقٍ {{count}} يوم",
+      "searchResults": "نتائج البحث",
+      "popularCategories": "الفئات الشائعة",
+      "searchFor": "نتائج البحث عن \"{{query}}\"",
+      "findMarketFast": "ابحث عن السوق بسرعة",
+      "noCategoriesFound": "لم يتم العثور على فئات لـ \"{{query}}\"",
+      "statsLabel": "إحصائيات Mizwad",
+      "stats": {
+        "verifiedMarkets": "أسواق موثّقة",
+        "productionHubs": "مراكز الإنتاج",
+        "exhibitions": "المعارض"
+      },
+      "otherServicesLabel": "خدمات أخرى",
+      "services": {
+        "deepCheck": "فحص المصنع (Deep Check)",
+        "translators": "المترجمون",
+        "verifiedLawyers": "محامون موثّقون من Mizwad",
+        "count": "{{count}}"
+      }
+    },
+    "categoryPicker": {
+      "questions": {
+        "cities": "في أي مدينة يُصنَع؟",
+        "markets": "في أي سوق جملة يُباع؟",
+        "exhibitions": "أي معرض يجب حضوره؟"
+      },
+      "title": "فئة المنتج",
+      "searchPlaceholder": "ابحث عن فئة...",
+      "notFound": "غير موجود",
+      "searchHint": "إذا لم تجد فئتك هنا، استخدم شريط البحث في الأعلى للعثور عليها."
+    }
   },
   "sourcing": {
     "strategicPlanner": "التخطيط الاستراتيجي للرحلة",

@@ -126,7 +126,53 @@
       "copyAddress": "Копировать адрес",
       "moreMarketsSoon": "Другие рынки скоро появятся"
     },
-    "pageSubtitle": "Поиск и закупка товаров из Китая"
+    "pageSubtitle": "Поиск и закупка товаров из Китая",
+    "home": {
+      "back": "Назад",
+      "headerSubtitle": "Поиск товаров в Китае",
+      "searchPlaceholder": "Поиск категорий...",
+      "chips": {
+        "vehicleParts": "Автозапчасти",
+        "electronics": "Электроника",
+        "furniture": "Мебель",
+        "apparel": "Одежда",
+        "toys": "Игрушки"
+      },
+      "productSearchLabel": "Поиск товара",
+      "productQuestion": "С каким товаром вы работаете?",
+      "productQuestionDesc": "Рынки, выставки и производители в одном месте",
+      "upcomingExhibitions": "Ближайшие выставки",
+      "daysLeft": "{{name}} · осталось {{count}} дн.",
+      "searchResults": "Результаты поиска",
+      "popularCategories": "Популярные категории",
+      "searchFor": "Результаты по «{{query}}»",
+      "findMarketFast": "Быстро найти рынок",
+      "noCategoriesFound": "Категории по «{{query}}» не найдены",
+      "statsLabel": "Статистика Mizwad",
+      "stats": {
+        "verifiedMarkets": "Проверенные рынки",
+        "productionHubs": "Производственные хабы",
+        "exhibitions": "Выставки"
+      },
+      "otherServicesLabel": "Другие услуги",
+      "services": {
+        "deepCheck": "Проверка завода (Deep Check)",
+        "translators": "Переводчики",
+        "verifiedLawyers": "Адвокаты, проверенные Mizwad",
+        "count": "{{count}}"
+      }
+    },
+    "categoryPicker": {
+      "questions": {
+        "cities": "В каком городе производится?",
+        "markets": "На каком оптовом рынке продаётся?",
+        "exhibitions": "На какую выставку поехать?"
+      },
+      "title": "Категория товара",
+      "searchPlaceholder": "Поиск категорий...",
+      "notFound": "Не найдено",
+      "searchHint": "Если вашей категории нет в списке, воспользуйтесь поиском выше."
+    }
   },
   "sourcing": {
     "strategicPlanner": "Стратегическое планирование поездки",
