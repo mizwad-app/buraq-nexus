@@ -67,6 +67,140 @@
   "business": {
     "title": "Tijorat Markazi",
     "subtitle": "Biznes markazi",
+    "tradeDataTag": "Tijorat ma'lumotlari",
+    "months": ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"],
+    "monthsShort": ["yan", "fev", "mar", "apr", "may", "iyun", "iyul", "avg", "sen", "okt", "noy", "dek"],
+    "categoryHub": {
+      "loading": "Yuklanmoqda...",
+      "tabs": {
+        "cities": "Shaharlar",
+        "markets": "Bozorlar",
+        "exhibitions": "Ko'rgazmalar"
+      },
+      "countdown": {
+        "ended": "Tugagan",
+        "live": "🔴 Hozir ketmoqda",
+        "daysLeft": "{{count}} kun qoldi"
+      },
+      "emptyCity": {
+        "title": "Bu kategoriya uchun shahar ma'lumoti yo'q",
+        "subtitle": "Bozorlar yoki ko'rgazmalar tabini sinab ko'ring"
+      },
+      "topCitiesTitle": "🏙️ Top ishlab chiqarish shaharlari",
+      "cityStats": {
+        "markets": "{{count}} ta bozor",
+        "hubs": "{{count}} ta zavod",
+        "exhibitions": "{{count}} ko'rgazma"
+      },
+      "emptyMarkets": {
+        "title": "Ma'lumot yo'q",
+        "subtitle": "Bu kategoriya uchun bozorlar tez orada qo'shiladi."
+      },
+      "all": "Hammasi",
+      "itemsCount": "{{count}} ta",
+      "exhibitions": {
+        "subTabs": {
+          "china": "🇨🇳 Xitoy",
+          "world": "🌍 Dunyo",
+          "upcoming": "📅 Yaqin 6 oy"
+        },
+        "emptyTitle": "Ma'lumot yo'q",
+        "emptyChina": "Bu kategoriya uchun Xitoyda ko'rgazma yo'q. Dunyo tabini ko'rib chiqing.",
+        "emptyWorld": "Bu kategoriya uchun dunyoda ko'rgazma ma'lumotlari tez orada qo'shiladi.",
+        "emptyUpcoming": "Yaqin 6 oyda ko'rgazma yo'q. Xitoy yoki Dunyo tabidan to'liq ro'yxatni ko'ring.",
+        "phase": "Phase {{n}}",
+        "chinaRank": "Xitoyda №{{n}}",
+        "worldRank": "Dunyoda №{{n}}"
+      }
+    },
+    "marketDetail": {
+      "notFound": "Bozor topilmadi",
+      "linkCopied": "Havola nusxalandi",
+      "actions": {
+        "call": "Qo'ng'iroq",
+        "directions": "Yo'l ko'rsat",
+        "website": "Sayt",
+        "share": "Ulashish"
+      },
+      "info": {
+        "address": "Manzil",
+        "addressZh": "Manzil (中文)",
+        "addressChinese": "中文地址",
+        "hours": "Ish vaqti",
+        "phone": "Telefon",
+        "website": "Sayt",
+        "products": "Mahsulotlar"
+      },
+      "directionsBlock": {
+        "title": "🚇 Yo'l ko'rsatma"
+      },
+      "walkMinutes": "{{count}} daq piyoda",
+      "taxiCost": "Taxi: {{cost}} ¥",
+      "taxiMinutes": "~{{count}} daq",
+      "moreSoon": "Bu bozor haqida to'liq ma'lumot tez orada qo'shiladi.",
+      "nearbyInCity": "Shu shaharda yana"
+    },
+    "exhibitionDetail": {
+      "notFound": "Ko'rgazma topilmadi",
+      "linkCopied": "Havola nusxalandi",
+      "ratingBlock": {
+        "title": "⭐ Reyting va statistika"
+      },
+      "chinaRank": "🇨🇳 Xitoyda",
+      "worldRank": "🌍 Dunyoda",
+      "stats": {
+        "attendees": "Tashrif buyuruvchi",
+        "countries": "Davlat",
+        "exhibitors": "Ekspozit"
+      },
+      "phase": {
+        "titleWithNum": "Phase {{n}} ma'lumoti",
+        "title": "Faza ma'lumoti"
+      },
+      "mizwadAdvice": "Mizwad maslahati",
+      "sourceNote": {
+        "before": "Sanalar har yili o'zgarishi mumkin. Borishdan oldin",
+        "officialSite": "rasmiy saytdan",
+        "after": "tekshiring.",
+        "source": "Manba: {{source}}"
+      },
+      "actions": {
+        "calendar": "Kalendar",
+        "directions": "Yo'l",
+        "website": "Sayt",
+        "share": "Ulashish"
+      },
+      "info": {
+        "date": "Sana",
+        "location": "Joy",
+        "website": "Veb-sayt",
+        "category": "Kategoriya"
+      },
+      "travelPrep": "Sayohatga tayyorgarlik",
+      "travelOptions": {
+        "hotel": "Mehmonxona",
+        "translator": "Tarjimon",
+        "halal": "Halol joylar"
+      },
+      "moreInCategory": "Shu kategoriyada yana"
+    },
+    "upcomingExhibitions": {
+      "title": "Yaqin ko'rgazmalar",
+      "tabs": {
+        "china": "Xitoy",
+        "world": "Dunyo"
+      },
+      "daysLeft": "{{count}} kun qoldi",
+      "today": "Bugun!",
+      "live": "Hozir ketmoqda",
+      "chinaRank": "Xitoyda №{{n}}",
+      "worldRank": "Dunyoda №{{n}}",
+      "emptyChina": "Xitoy ko'rgazmalari yo'q",
+      "emptyWorld": "Dunyo ko'rgazmalari yo'q"
+    },
+    "lawyers": {
+      "verifiedLawyers": "Mizwad tasdiqlagan advokatlar"
+    },
     "deepCheck": "Chuqur Tekshiruv",
     "deepCheckDesc": "Mahsulot yoki kompaniyani to'liq tahlil qiling",
     "markets": "Bozorlar",

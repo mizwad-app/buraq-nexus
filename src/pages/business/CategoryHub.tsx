@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import type { TFunction } from "i18next";
 import { ChevronLeft, ChevronRight, Info, MapPin, Calendar } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { CategoryBadge } from "@/components/business/CategoryBadge";
@@ -28,26 +30,25 @@ interface Insight {
   insight_uz: string;
 }
 
-const MONTHS_UZ = ["Yanvar", "Fevral", "Mart", "Aprel", "May", "Iyun", "Iyul", "Avgust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"];
-const fmtRange = (start: string, end: string) => {
+const fmtRange = (months: string[], start: string, end: string) => {
   const s = new Date(start);
   const e = new Date(end);
   if (s.getMonth() === e.getMonth() && s.getFullYear() === e.getFullYear()) {
-    return `${s.getDate()}-${e.getDate()} ${MONTHS_UZ[s.getMonth()]} ${s.getFullYear()}`;
+    return `${s.getDate()}-${e.getDate()} ${months[s.getMonth()]} ${s.getFullYear()}`;
   }
-  return `${s.getDate()} ${MONTHS_UZ[s.getMonth()]} – ${e.getDate()} ${MONTHS_UZ[e.getMonth()]} ${e.getFullYear()}`;
+  return `${s.getDate()} ${months[s.getMonth()]} – ${e.getDate()} ${months[e.getMonth()]} ${e.getFullYear()}`;
 };
 
-const countdownInfo = (start: string, end: string) => {
+const countdownInfo = (t: TFunction, start: string, end: string) => {
   const now = Date.now();
   const s = new Date(start).getTime();
   const e = new Date(end).getTime();
-  if (now > e) return { text: "Tugagan", cls: "bg-white/[0.05] text-muted-foreground" };
-  if (now >= s) return { text: "🔴 Hozir ketmoqda", cls: "bg-red-500/15 text-red-400" };
+  if (now > e) return { text: t("business.categoryHub.countdown.ended"), cls: "bg-white/[0.05] text-muted-foreground" };
+  if (now >= s) return { text: t("business.categoryHub.countdown.live"), cls: "bg-red-500/15 text-red-400" };
   const days = Math.ceil((s - now) / 86400000);
-  if (days <= 7) return { text: `${days} kun qoldi`, cls: "bg-amber-500/15 text-amber-400" };
-  if (days <= 30) return { text: `${days} kun qoldi`, cls: "bg-emerald-500/15 text-emerald-400" };
-  return { text: `${days} kun qoldi`, cls: "bg-white/[0.05] text-muted-foreground" };
+  if (days <= 7) return { text: t("business.categoryHub.countdown.daysLeft", { count: days }), cls: "bg-amber-500/15 text-amber-400" };
+  if (days <= 30) return { text: t("business.categoryHub.countdown.daysLeft", { count: days }), cls: "bg-emerald-500/15 text-emerald-400" };
+  return { text: t("business.categoryHub.countdown.daysLeft", { count: days }), cls: "bg-white/[0.05] text-muted-foreground" };
 };
 
 const rankBadgeCls = (rank: number) => {
@@ -59,6 +60,7 @@ const rankBadgeCls = (rank: number) => {
 
 const CategoryHub = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { categorySlug = "" } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
   const { getField } = useTranslatedField();
@@ -175,13 +177,13 @@ const CategoryHub = () => {
     <div className="min-h-screen bg-background safe-bottom pb-24">
       <header className="px-5 pt-12 pb-3">
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-xl hover:bg-muted active:scale-95" aria-label="Back">
+          <button onClick={() => navigate(-1)} className="p-2 -ml-2 rounded-xl hover:bg-muted active:scale-95" aria-label={t("business.home.back")}>
             <ChevronLeft className="w-5 h-5" />
           </button>
           <div className="flex-1 min-w-0">
-            <span className="text-[10px] text-muted-foreground">Tijorat ma'lumotlari</span>
+            <span className="text-[10px] text-muted-foreground">{t("business.tradeDataTag")}</span>
             <h1 className="text-base italic font-medium text-foreground truncate" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-              {category ? `${getField(category, "name") || category.name}` : "Yuklanmoqda..."}
+              {category ? `${getField(category, "name") || category.name}` : t("business.categoryHub.loading")}
             </h1>
           </div>
         </div>
@@ -191,9 +193,9 @@ const CategoryHub = () => {
 
       {/* Tabs */}
       <section className="px-5 mb-3 flex gap-2 overflow-x-auto scrollbar-hide">
-        <TabButton active={activeTab === "cities"} onClick={() => handleTabChange("cities")} icon="🏙️" label="Shaharlar" />
-        <TabButton active={activeTab === "markets"} onClick={() => handleTabChange("markets")} icon="🏬" label="Bozorlar" count={counts.markets} />
-        <TabButton active={activeTab === "exhibitions"} onClick={() => handleTabChange("exhibitions")} icon="📅" label="Ko'rgazmalar" count={counts.exhibitions} />
+        <TabButton active={activeTab === "cities"} onClick={() => handleTabChange("cities")} icon="🏙️" label={t("business.categoryHub.tabs.cities")} />
+        <TabButton active={activeTab === "markets"} onClick={() => handleTabChange("markets")} icon="🏬" label={t("business.categoryHub.tabs.markets")} count={counts.markets} />
+        <TabButton active={activeTab === "exhibitions"} onClick={() => handleTabChange("exhibitions")} icon="📅" label={t("business.categoryHub.tabs.exhibitions")} count={counts.exhibitions} />
       </section>
 
       {loading ? (
@@ -235,6 +237,7 @@ interface CitiesTabProps {
 }
 
 const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
+  const { t } = useTranslation();
   if (topCities.length === 0) {
     return (
       <div className="px-6 py-12 text-center">
@@ -242,10 +245,10 @@ const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
           <span className="text-xl">🏙️</span>
         </div>
         <h3 className="text-sm font-medium text-foreground mb-1">
-          Bu kategoriya uchun shahar ma'lumoti yo'q
+          {t("business.categoryHub.emptyCity.title")}
         </h3>
         <p className="text-[12px] text-muted-foreground max-w-xs mx-auto">
-          Bozorlar yoki ko'rgazmalar tabini sinab ko'ring
+          {t("business.categoryHub.emptyCity.subtitle")}
         </p>
       </div>
     );
@@ -254,7 +257,7 @@ const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
   return (
     <div className="px-5 space-y-3">
       <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
-        🏙️ Top ishlab chiqarish shaharlari
+        {t("business.categoryHub.topCitiesTitle")}
       </p>
       {topCities.map((c, i) => (
         <div key={c.city} className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5">
@@ -266,11 +269,11 @@ const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
             <span className="text-sm">🇨🇳</span>
           </div>
           <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
-            {c.markets > 0 && <span>{c.markets} ta bozor</span>}
+            {c.markets > 0 && <span>{t("business.categoryHub.cityStats.markets", { count: c.markets })}</span>}
             {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
-            {c.hubs > 0 && <span>{c.hubs} ta zavod</span>}
+            {c.hubs > 0 && <span>{t("business.categoryHub.cityStats.hubs", { count: c.hubs })}</span>}
             {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
-            {c.exhibitions > 0 && <span>{c.exhibitions} ko'rgazma</span>}
+            {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
           </div>
           {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
         </div>
@@ -281,6 +284,7 @@ const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
 
 const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: string }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { getField } = useTranslatedField();
   const [activeCity, setActiveCity] = useState<string>("all");
 
@@ -311,8 +315,8 @@ const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: s
         <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-3">
           <Info className="w-5 h-5 text-emerald-400" />
         </div>
-        <p className="text-sm font-medium text-foreground mb-1">Ma'lumot yo'q</p>
-        <p className="text-xs text-muted-foreground mb-4">Bu kategoriya uchun bozorlar tez orada qo'shiladi.</p>
+        <p className="text-sm font-medium text-foreground mb-1">{t("business.categoryHub.emptyMarkets.title")}</p>
+        <p className="text-xs text-muted-foreground mb-4">{t("business.categoryHub.emptyMarkets.subtitle")}</p>
       </div>
     );
   }
@@ -333,7 +337,7 @@ const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: s
                     : "bg-white/[0.04] text-foreground border-white/10 hover:bg-white/[0.07]"
                 )}
               >
-                {c === "all" ? "Hammasi" : c}
+                {c === "all" ? t("business.categoryHub.all") : c}
               </button>
             ))}
           </div>
@@ -345,7 +349,7 @@ const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: s
           <div key={city}>
             <div className="flex items-center justify-between mb-2">
               <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">{city} 🇨🇳</p>
-              <span className="text-[10px] text-muted-foreground">{items.length} ta</span>
+              <span className="text-[10px] text-muted-foreground">{t("business.categoryHub.itemsCount", { count: items.length })}</span>
             </div>
             <div className="space-y-2">
               {items.map((m) => (
@@ -392,8 +396,10 @@ type SubTab = "china" | "world" | "upcoming";
 
 const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; categorySlug: string }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { getField } = useTranslatedField();
   const [activeSub, setActiveSub] = useState<SubTab>("china");
+  const months = t("business.months", { returnObjects: true }) as string[];
 
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const sixMonthsStr = useMemo(() => {
@@ -425,10 +431,10 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
 
   const emptyMsg =
     activeSub === "china"
-      ? "Bu kategoriya uchun Xitoyda ko'rgazma yo'q. Dunyo tabini ko'rib chiqing."
+      ? t("business.categoryHub.exhibitions.emptyChina")
       : activeSub === "world"
-      ? "Bu kategoriya uchun dunyoda ko'rgazma ma'lumotlari tez orada qo'shiladi."
-      : "Yaqin 6 oyda ko'rgazma yo'q. Xitoy yoki Dunyo tabidan to'liq ro'yxatni ko'ring.";
+      ? t("business.categoryHub.exhibitions.emptyWorld")
+      : t("business.categoryHub.exhibitions.emptyUpcoming");
 
   const SubBtn = ({ k, label }: { k: SubTab; label: string }) => (
     <button
@@ -446,9 +452,9 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
   return (
     <div>
       <section className="px-5 mb-3 flex gap-2 overflow-x-auto scrollbar-hide">
-        <SubBtn k="china" label="🇨🇳 Xitoy" />
-        <SubBtn k="world" label="🌍 Dunyo" />
-        <SubBtn k="upcoming" label="📅 Yaqin 6 oy" />
+        <SubBtn k="china" label={t("business.categoryHub.exhibitions.subTabs.china")} />
+        <SubBtn k="world" label={t("business.categoryHub.exhibitions.subTabs.world")} />
+        <SubBtn k="upcoming" label={t("business.categoryHub.exhibitions.subTabs.upcoming")} />
       </section>
 
       <section className="px-5">
@@ -457,13 +463,13 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
             <div className="w-10 h-10 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-3">
               <Info className="w-5 h-5 text-emerald-400" />
             </div>
-            <p className="text-sm font-medium text-foreground mb-1">Ma'lumot yo'q</p>
+            <p className="text-sm font-medium text-foreground mb-1">{t("business.categoryHub.exhibitions.emptyTitle")}</p>
             <p className="text-xs text-muted-foreground mb-4 px-6">{emptyMsg}</p>
           </div>
         ) : (
           <div className="space-y-2.5">
             {filtered.map((ex) => {
-              const cd = countdownInfo(ex.start_date as string, ex.end_date as string);
+              const cd = countdownInfo(t, ex.start_date as string, ex.end_date as string);
               const flag = exhibitionFlag(ex.country_code as string | undefined);
               const showCountry = ex.country_code && ex.country_code !== "CN" && ex.country_name;
               return (
@@ -482,20 +488,20 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
                           </p>
                           {ex.phase_number ? (
                             <span className="text-[9px] bg-amber-500/15 text-amber-400 rounded-full px-1.5 py-0.5 font-semibold uppercase tracking-wide whitespace-nowrap">
-                              Phase {ex.phase_number as number}
+                              {t("business.categoryHub.exhibitions.phase", { n: ex.phase_number as number })}
                             </span>
                           ) : null}
                         </div>
                         {(ex.world_rank || ex.china_rank || ex.regional_rank) && (
                           <div className="text-[11px] text-amber-400/90 mt-0.5 flex items-center gap-1 flex-wrap">
                             <span>⭐</span>
-                            {ex.china_rank ? <span>Xitoyda №{ex.china_rank as number}</span> : null}
+                            {ex.china_rank ? <span>{t("business.categoryHub.exhibitions.chinaRank", { n: ex.china_rank as number })}</span> : null}
                             {ex.china_rank && ex.world_rank ? <span className="text-muted-foreground">·</span> : null}
-                            {ex.world_rank ? <span>Dunyoda №{ex.world_rank as number}</span> : null}
+                            {ex.world_rank ? <span>{t("business.categoryHub.exhibitions.worldRank", { n: ex.world_rank as number })}</span> : null}
                             {!ex.china_rank && !ex.world_rank && ex.regional_rank ? <span>{ex.regional_rank as string}</span> : null}
                           </div>
                         )}
-                        <p className="text-[11px] text-muted-foreground mt-1">📅 {fmtRange(ex.start_date as string, ex.end_date as string)}</p>
+                        <p className="text-[11px] text-muted-foreground mt-1">📅 {fmtRange(months, ex.start_date as string, ex.end_date as string)}</p>
                         <p className="text-[11px] text-muted-foreground">
                           📍 {ex.city as string} {flag}
                           {showCountry ? ` (${ex.country_name as string})` : ""}

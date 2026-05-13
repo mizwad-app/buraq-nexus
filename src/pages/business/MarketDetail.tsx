@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChevronLeft, Phone, Navigation, Share2, Globe, Clock, MapPin, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
@@ -68,6 +69,7 @@ const InfoRow = ({ label, value, href }: { label: string; value: string; href?: 
 
 const MarketDetail = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { categorySlug = "", marketId = "" } = useParams();
   const { getField } = useTranslatedField();
   useSwipeBack();
@@ -115,7 +117,7 @@ const MarketDetail = () => {
   if (!market) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center text-sm text-muted-foreground">
-        Bozor topilmadi
+        {t("business.marketDetail.notFound")}
       </div>
     );
   }
@@ -134,7 +136,7 @@ const MarketDetail = () => {
       } catch { /* cancelled */ }
     }
     await navigator.clipboard.writeText(url);
-    toast.success("Havola nusxalandi");
+    toast.success(t("business.marketDetail.linkCopied"));
   };
 
   const handleNavigate = () => {
@@ -174,25 +176,25 @@ const MarketDetail = () => {
       </div>
 
       <div className="px-5 mt-4 grid grid-cols-4 gap-2">
-        <Action icon={Phone} label="Qo'ng'iroq" onClick={() => market.phone && (window.location.href = `tel:${market.phone}`)} disabled={!market.phone} />
-        <Action icon={Navigation} label="Yo'l ko'rsat" onClick={handleNavigate} disabled={!market.latitude && !address} />
-        <Action icon={Globe} label="Sayt" onClick={() => market.website && window.open(market.website, "_blank")} disabled={!market.website} />
-        <Action icon={Share2} label="Ulashish" onClick={handleShare} />
+        <Action icon={Phone} label={t("business.marketDetail.actions.call")} onClick={() => market.phone && (window.location.href = `tel:${market.phone}`)} disabled={!market.phone} />
+        <Action icon={Navigation} label={t("business.marketDetail.actions.directions")} onClick={handleNavigate} disabled={!market.latitude && !address} />
+        <Action icon={Globe} label={t("business.marketDetail.actions.website")} onClick={() => market.website && window.open(market.website, "_blank")} disabled={!market.website} />
+        <Action icon={Share2} label={t("business.marketDetail.actions.share")} onClick={handleShare} />
       </div>
 
       <section className="px-5 mt-5">
         <div className="bg-card border border-border/40 rounded-xl px-3 py-1">
-          {address && <InfoRow label="Manzil" value={address as string} />}
+          {address && <InfoRow label={t("business.marketDetail.info.address")} value={address as string} />}
           {market.address_zh && market.address_zh !== address && (
-            <InfoRow label="Manzil (中文)" value={market.address_zh} />
+            <InfoRow label={t("business.marketDetail.info.addressZh")} value={market.address_zh} />
           )}
           {market.address_chinese && market.address_chinese !== address && market.address_chinese !== market.address_zh && (
-            <InfoRow label="中文地址" value={market.address_chinese} />
+            <InfoRow label={t("business.marketDetail.info.addressChinese")} value={market.address_chinese} />
           )}
-          {market.working_hours && <InfoRow label="Ish vaqti" value={market.working_hours} />}
-          {market.phone && <InfoRow label="Telefon" value={market.phone} href={`tel:${market.phone}`} />}
-          {market.website && <InfoRow label="Sayt" value={market.website} href={market.website} />}
-          {market.market_type && <InfoRow label="Mahsulotlar" value={market.market_type} />}
+          {market.working_hours && <InfoRow label={t("business.marketDetail.info.hours")} value={market.working_hours} />}
+          {market.phone && <InfoRow label={t("business.marketDetail.info.phone")} value={market.phone} href={`tel:${market.phone}`} />}
+          {market.website && <InfoRow label={t("business.marketDetail.info.website")} value={market.website} href={market.website} />}
+          {market.market_type && <InfoRow label={t("business.marketDetail.info.products")} value={market.market_type} />}
         </div>
       </section>
 
@@ -200,7 +202,7 @@ const MarketDetail = () => {
         <section className="px-5 mt-4">
           <div className="rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-3">
             <div className="text-[11px] font-semibold text-emerald-400 uppercase tracking-wide mb-2">
-              🚇 Yo'l ko'rsatma
+              {t("business.marketDetail.directionsBlock.title")}
             </div>
             {market.nearest_metro && (
               <div className="flex items-start gap-2 mb-2">
@@ -210,7 +212,7 @@ const MarketDetail = () => {
                   <div className="text-[11px] text-muted-foreground">
                     {market.metro_exit && `${market.metro_exit}`}
                     {market.metro_exit && market.metro_walk_minutes && ` · `}
-                    {market.metro_walk_minutes && `${market.metro_walk_minutes} daq piyoda`}
+                    {market.metro_walk_minutes && t("business.marketDetail.walkMinutes", { count: market.metro_walk_minutes })}
                   </div>
                 </div>
               </div>
@@ -221,8 +223,8 @@ const MarketDetail = () => {
                 <div className="flex-1">
                   <div className="text-[13px] font-medium text-foreground">{market.nearest_airport}</div>
                   <div className="text-[11px] text-muted-foreground">
-                    {market.airport_taxi_cost_yuan && <>Taxi: {market.airport_taxi_cost_yuan} ¥</>}
-                    {market.airport_taxi_minutes && ` · ~${market.airport_taxi_minutes} daq`}
+                    {market.airport_taxi_cost_yuan && t("business.marketDetail.taxiCost", { cost: market.airport_taxi_cost_yuan })}
+                    {market.airport_taxi_minutes && ` · ${t("business.marketDetail.taxiMinutes", { count: market.airport_taxi_minutes })}`}
                   </div>
                 </div>
               </div>
@@ -250,13 +252,13 @@ const MarketDetail = () => {
 
       {filledFields < 2 && (
         <p className="px-5 mt-4 text-[11px] text-muted-foreground italic">
-          Bu bozor haqida to'liq ma'lumot tez orada qo'shiladi.
+          {t("business.marketDetail.moreSoon")}
         </p>
       )}
 
       {related.length > 0 && (
         <section className="px-5 mt-6">
-          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">Shu shaharda yana</p>
+          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">{t("business.marketDetail.nearbyInCity")}</p>
           <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-5 px-5">
             {related.map((r) => (
               <button

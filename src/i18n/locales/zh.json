@@ -67,6 +67,140 @@
   "business": {
     "title": "贸易中心",
     "subtitle": "商业中心",
+    "tradeDataTag": "贸易信息",
+    "months": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+    "monthsShort": ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+    "categoryHub": {
+      "loading": "加载中...",
+      "tabs": {
+        "cities": "城市",
+        "markets": "市场",
+        "exhibitions": "展览"
+      },
+      "countdown": {
+        "ended": "已结束",
+        "live": "🔴 进行中",
+        "daysLeft": "还剩 {{count}} 天"
+      },
+      "emptyCity": {
+        "title": "此类别暂无城市数据",
+        "subtitle": "请尝试市场或展览选项卡"
+      },
+      "topCitiesTitle": "🏙️ 顶级生产城市",
+      "cityStats": {
+        "markets": "{{count}} 个市场",
+        "hubs": "{{count}} 个工厂",
+        "exhibitions": "{{count}} 个展览"
+      },
+      "emptyMarkets": {
+        "title": "暂无数据",
+        "subtitle": "此类别的市场即将添加。"
+      },
+      "all": "全部",
+      "itemsCount": "{{count}}",
+      "exhibitions": {
+        "subTabs": {
+          "china": "🇨🇳 中国",
+          "world": "🌍 世界",
+          "upcoming": "📅 未来6个月"
+        },
+        "emptyTitle": "暂无数据",
+        "emptyChina": "此类别在中国暂无展览。请查看世界选项卡。",
+        "emptyWorld": "此类别的世界展览数据即将添加。",
+        "emptyUpcoming": "未来6个月内无展览。请在中国或世界选项卡查看完整列表。",
+        "phase": "第 {{n}} 期",
+        "chinaRank": "中国第 {{n}} 名",
+        "worldRank": "世界第 {{n}} 名"
+      }
+    },
+    "marketDetail": {
+      "notFound": "未找到市场",
+      "linkCopied": "链接已复制",
+      "actions": {
+        "call": "电话",
+        "directions": "导航",
+        "website": "网站",
+        "share": "分享"
+      },
+      "info": {
+        "address": "地址",
+        "addressZh": "地址 (中文)",
+        "addressChinese": "中文地址",
+        "hours": "营业时间",
+        "phone": "电话",
+        "website": "网站",
+        "products": "产品"
+      },
+      "directionsBlock": {
+        "title": "🚇 路线指引"
+      },
+      "walkMinutes": "步行 {{count}} 分钟",
+      "taxiCost": "出租车: {{cost}} ¥",
+      "taxiMinutes": "约 {{count}} 分钟",
+      "moreSoon": "此市场的详细信息即将添加。",
+      "nearbyInCity": "本市更多"
+    },
+    "exhibitionDetail": {
+      "notFound": "未找到展览",
+      "linkCopied": "链接已复制",
+      "ratingBlock": {
+        "title": "⭐ 排名与统计"
+      },
+      "chinaRank": "🇨🇳 中国",
+      "worldRank": "🌍 世界",
+      "stats": {
+        "attendees": "参观者",
+        "countries": "国家",
+        "exhibitors": "参展商"
+      },
+      "phase": {
+        "titleWithNum": "第 {{n}} 期信息",
+        "title": "期次信息"
+      },
+      "mizwadAdvice": "Mizwad 提示",
+      "sourceNote": {
+        "before": "日期每年可能变化。前往前请在",
+        "officialSite": "官方网站",
+        "after": "上确认。",
+        "source": "来源: {{source}}"
+      },
+      "actions": {
+        "calendar": "日历",
+        "directions": "路线",
+        "website": "网站",
+        "share": "分享"
+      },
+      "info": {
+        "date": "日期",
+        "location": "地点",
+        "website": "网站",
+        "category": "类别"
+      },
+      "travelPrep": "旅行准备",
+      "travelOptions": {
+        "hotel": "酒店",
+        "translator": "翻译",
+        "halal": "清真餐厅"
+      },
+      "moreInCategory": "本类别更多"
+    },
+    "upcomingExhibitions": {
+      "title": "即将到来的展览",
+      "tabs": {
+        "china": "中国",
+        "world": "世界"
+      },
+      "daysLeft": "还剩 {{count}} 天",
+      "today": "今天!",
+      "live": "进行中",
+      "chinaRank": "中国第 {{n}} 名",
+      "worldRank": "世界第 {{n}} 名",
+      "emptyChina": "暂无中国展览",
+      "emptyWorld": "暂无世界展览"
+    },
+    "lawyers": {
+      "verifiedLawyers": "Mizwad 认证律师"
+    },
     "deepCheck": "深度核查",
     "deepCheckDesc": "全面分析产品或公司",
     "markets": "批发市场",

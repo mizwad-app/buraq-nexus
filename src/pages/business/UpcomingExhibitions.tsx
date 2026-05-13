@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
@@ -31,25 +32,25 @@ const flagEmoji = (code?: string | null) => {
   return flags[code] ?? "🌍";
 };
 
-const MONTHS = ["yan", "fev", "mar", "apr", "may", "iyun", "iyul", "avg", "sen", "okt", "noy", "dek"];
-
-const formatDateRange = (start: string, end: string) => {
+const formatDateRange = (months: string[], start: string, end: string) => {
   const s = new Date(start);
   const e = new Date(end);
   if (s.getMonth() === e.getMonth() && s.getFullYear() === e.getFullYear()) {
-    return `${s.getDate()}–${e.getDate()} ${MONTHS[s.getMonth()]}`;
+    return `${s.getDate()}–${e.getDate()} ${months[s.getMonth()]}`;
   }
-  return `${s.getDate()} ${MONTHS[s.getMonth()]} – ${e.getDate()} ${MONTHS[e.getMonth()]}`;
+  return `${s.getDate()} ${months[s.getMonth()]} – ${e.getDate()} ${months[e.getMonth()]}`;
 };
 
 const daysUntil = (iso: string) => Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000);
 
 const ExhibitionCard = ({ exhibition: ex }: { exhibition: Exhibition }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { getField } = useTranslatedField();
   const days = daysUntil(ex.start_date);
   const flag = flagEmoji(ex.country_code);
   const name = getField(ex, "name") || ex.name;
+  const monthsShort = t("business.monthsShort", { returnObjects: true }) as string[];
 
   return (
     <button
@@ -65,15 +66,15 @@ const ExhibitionCard = ({ exhibition: ex }: { exhibition: Exhibition }) => {
         </div>
         <div className="text-[11px] text-muted-foreground mt-0.5">📍 {ex.city}</div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-1 flex-wrap">
-          <span>{formatDateRange(ex.start_date, ex.end_date)}</span>
+          <span>{formatDateRange(monthsShort, ex.start_date, ex.end_date)}</span>
           <span>·</span>
           <span className={cn(days <= 7 && days >= 0 && "text-amber-400 font-semibold")}>
-            {days > 0 ? `${days} kun qoldi` : days === 0 ? "Bugun!" : "Hozir ketmoqda"}
+            {days > 0 ? t("business.upcomingExhibitions.daysLeft", { count: days }) : days === 0 ? t("business.upcomingExhibitions.today") : t("business.upcomingExhibitions.live")}
           </span>
         </div>
         {(ex.world_rank || ex.china_rank) && (
           <div className="text-[10px] text-amber-400/80 mt-1">
-            ⭐ {ex.world_rank ? `Dunyoda №${ex.world_rank}` : `Xitoyda №${ex.china_rank}`}
+            ⭐ {ex.world_rank ? t("business.upcomingExhibitions.worldRank", { n: ex.world_rank }) : t("business.upcomingExhibitions.chinaRank", { n: ex.china_rank })}
           </div>
         )}
       </div>
@@ -83,6 +84,7 @@ const ExhibitionCard = ({ exhibition: ex }: { exhibition: Exhibition }) => {
 
 const UpcomingExhibitions = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   useSwipeBack();
 
   const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
@@ -119,14 +121,14 @@ const UpcomingExhibitions = () => {
         <button
           onClick={() => navigate(-1)}
           className="p-2 -ml-2 rounded-xl hover:bg-muted active:scale-95"
-          aria-label="Back"
+          aria-label={t("business.home.back")}
         >
           <ChevronLeft className="w-5 h-5 text-foreground" />
         </button>
         <div className="flex-1 min-w-0">
-          <span className="text-[10px] text-muted-foreground">Tijorat ma'lumotlari</span>
+          <span className="text-[10px] text-muted-foreground">{t("business.tradeDataTag")}</span>
           <h1 className="text-[18px] italic font-medium text-foreground leading-tight" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
-            Yaqin ko'rgazmalar
+            {t("business.upcomingExhibitions.title")}
           </h1>
         </div>
       </header>
@@ -141,7 +143,7 @@ const UpcomingExhibitions = () => {
               : "bg-white/[0.04] text-foreground border-white/10",
           )}
         >
-          🇨🇳 <span>Xitoy</span> <span className="opacity-70">({counts.china})</span>
+          🇨🇳 <span>{t("business.upcomingExhibitions.tabs.china")}</span> <span className="opacity-70">({counts.china})</span>
         </button>
         <button
           onClick={() => setTab("world")}
@@ -152,7 +154,7 @@ const UpcomingExhibitions = () => {
               : "bg-white/[0.04] text-foreground border-white/10",
           )}
         >
-          🌍 <span>Dunyo</span> <span className="opacity-70">({counts.world})</span>
+          🌍 <span>{t("business.upcomingExhibitions.tabs.world")}</span> <span className="opacity-70">({counts.world})</span>
         </button>
       </div>
 
@@ -166,7 +168,7 @@ const UpcomingExhibitions = () => {
         <div className="px-5 py-12 text-center">
           <div className="text-4xl mb-2">📅</div>
           <p className="text-sm text-muted-foreground">
-            {tab === "china" ? "Xitoy" : "Dunyo"} ko'rgazmalari yo'q
+            {tab === "china" ? t("business.upcomingExhibitions.emptyChina") : t("business.upcomingExhibitions.emptyWorld")}
           </p>
         </div>
       ) : (

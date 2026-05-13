@@ -67,6 +67,140 @@
   "business": {
     "title": "مركز التجارة",
     "subtitle": "مركز B2B",
+    "tradeDataTag": "معلومات تجارية",
+    "months": ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"],
+    "monthsShort": ["ينا", "فبر", "مار", "أبر", "ماي", "يون", "يول", "أغس", "سبت", "أكت", "نوف", "ديس"],
+    "categoryHub": {
+      "loading": "جارٍ التحميل...",
+      "tabs": {
+        "cities": "المدن",
+        "markets": "الأسواق",
+        "exhibitions": "المعارض"
+      },
+      "countdown": {
+        "ended": "انتهى",
+        "live": "🔴 جارٍ الآن",
+        "daysLeft": "بقي {{count}} يوم"
+      },
+      "emptyCity": {
+        "title": "لا توجد بيانات مدن لهذه الفئة",
+        "subtitle": "جرّب علامة تبويب الأسواق أو المعارض"
+      },
+      "topCitiesTitle": "🏙️ أهم مدن التصنيع",
+      "cityStats": {
+        "markets": "{{count}} سوق",
+        "hubs": "{{count}} مصنع",
+        "exhibitions": "{{count}} معرض"
+      },
+      "emptyMarkets": {
+        "title": "لا توجد بيانات",
+        "subtitle": "ستُضاف أسواق لهذه الفئة قريبًا."
+      },
+      "all": "الكل",
+      "itemsCount": "{{count}}",
+      "exhibitions": {
+        "subTabs": {
+          "china": "🇨🇳 الصين",
+          "world": "🌍 العالم",
+          "upcoming": "📅 6 أشهر القادمة"
+        },
+        "emptyTitle": "لا توجد بيانات",
+        "emptyChina": "لا توجد معارض في الصين لهذه الفئة. تصفّح علامة تبويب العالم.",
+        "emptyWorld": "ستُضاف بيانات المعارض العالمية لهذه الفئة قريبًا.",
+        "emptyUpcoming": "لا توجد معارض في الأشهر الستة القادمة. شاهد القائمة الكاملة في علامة التبويب الصين أو العالم.",
+        "phase": "المرحلة {{n}}",
+        "chinaRank": "في الصين #{{n}}",
+        "worldRank": "في العالم #{{n}}"
+      }
+    },
+    "marketDetail": {
+      "notFound": "السوق غير موجود",
+      "linkCopied": "تم نسخ الرابط",
+      "actions": {
+        "call": "اتصال",
+        "directions": "الاتجاهات",
+        "website": "الموقع",
+        "share": "مشاركة"
+      },
+      "info": {
+        "address": "العنوان",
+        "addressZh": "العنوان (中文)",
+        "addressChinese": "中文地址",
+        "hours": "ساعات العمل",
+        "phone": "الهاتف",
+        "website": "الموقع",
+        "products": "المنتجات"
+      },
+      "directionsBlock": {
+        "title": "🚇 الاتجاهات"
+      },
+      "walkMinutes": "{{count}} دقيقة سيرًا",
+      "taxiCost": "تاكسي: {{cost}} ¥",
+      "taxiMinutes": "~{{count}} دقيقة",
+      "moreSoon": "ستُضاف معلومات كاملة عن هذا السوق قريبًا.",
+      "nearbyInCity": "المزيد في هذه المدينة"
+    },
+    "exhibitionDetail": {
+      "notFound": "المعرض غير موجود",
+      "linkCopied": "تم نسخ الرابط",
+      "ratingBlock": {
+        "title": "⭐ التصنيف والإحصائيات"
+      },
+      "chinaRank": "🇨🇳 في الصين",
+      "worldRank": "🌍 في العالم",
+      "stats": {
+        "attendees": "الزوار",
+        "countries": "الدول",
+        "exhibitors": "العارضون"
+      },
+      "phase": {
+        "titleWithNum": "معلومات المرحلة {{n}}",
+        "title": "معلومات المرحلة"
+      },
+      "mizwadAdvice": "نصيحة Mizwad",
+      "sourceNote": {
+        "before": "قد تتغير التواريخ سنويًا. قبل الزيارة، تحقق من",
+        "officialSite": "الموقع الرسمي",
+        "after": ".",
+        "source": "المصدر: {{source}}"
+      },
+      "actions": {
+        "calendar": "التقويم",
+        "directions": "المسار",
+        "website": "الموقع",
+        "share": "مشاركة"
+      },
+      "info": {
+        "date": "التاريخ",
+        "location": "المكان",
+        "website": "الموقع الإلكتروني",
+        "category": "الفئة"
+      },
+      "travelPrep": "التحضير للسفر",
+      "travelOptions": {
+        "hotel": "فندق",
+        "translator": "مترجم",
+        "halal": "أماكن حلال"
+      },
+      "moreInCategory": "المزيد في هذه الفئة"
+    },
+    "upcomingExhibitions": {
+      "title": "المعارض القادمة",
+      "tabs": {
+        "china": "الصين",
+        "world": "العالم"
+      },
+      "daysLeft": "بقي {{count}} يوم",
+      "today": "اليوم!",
+      "live": "جارٍ الآن",
+      "chinaRank": "في الصين #{{n}}",
+      "worldRank": "في العالم #{{n}}",
+      "emptyChina": "لا توجد معارض في الصين",
+      "emptyWorld": "لا توجد معارض في العالم"
+    },
+    "lawyers": {
+      "verifiedLawyers": "محامون موثوقون من Mizwad"
+    },
     "deepCheck": "الفحص العميق",
     "deepCheckDesc": "تحليل كامل للمنتج أو الشركة",
     "markets": "الأسواق",

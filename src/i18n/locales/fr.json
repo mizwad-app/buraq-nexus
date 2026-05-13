@@ -67,6 +67,140 @@
   "business": {
     "title": "Centre commercial",
     "subtitle": "Centre d'affaires",
+    "tradeDataTag": "Informations commerciales",
+    "months": ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"],
+    "monthsShort": ["janv", "févr", "mars", "avr", "mai", "juin", "juil", "août", "sept", "oct", "nov", "déc"],
+    "categoryHub": {
+      "loading": "Chargement...",
+      "tabs": {
+        "cities": "Villes",
+        "markets": "Marchés",
+        "exhibitions": "Expositions"
+      },
+      "countdown": {
+        "ended": "Terminé",
+        "live": "🔴 En cours",
+        "daysLeft": "{{count}} jours restants"
+      },
+      "emptyCity": {
+        "title": "Aucune donnée de ville pour cette catégorie",
+        "subtitle": "Essayez l'onglet marchés ou expositions"
+      },
+      "topCitiesTitle": "🏙️ Top villes manufacturières",
+      "cityStats": {
+        "markets": "{{count}} marchés",
+        "hubs": "{{count}} usines",
+        "exhibitions": "{{count}} expositions"
+      },
+      "emptyMarkets": {
+        "title": "Aucune donnée",
+        "subtitle": "Des marchés pour cette catégorie seront ajoutés bientôt."
+      },
+      "all": "Tous",
+      "itemsCount": "{{count}}",
+      "exhibitions": {
+        "subTabs": {
+          "china": "🇨🇳 Chine",
+          "world": "🌍 Monde",
+          "upcoming": "📅 6 prochains mois"
+        },
+        "emptyTitle": "Aucune donnée",
+        "emptyChina": "Aucune exposition en Chine pour cette catégorie. Consultez l'onglet Monde.",
+        "emptyWorld": "Les données sur les expositions mondiales pour cette catégorie seront ajoutées bientôt.",
+        "emptyUpcoming": "Aucune exposition dans les 6 prochains mois. Voir la liste complète sous les onglets Chine ou Monde.",
+        "phase": "Phase {{n}}",
+        "chinaRank": "Chine n°{{n}}",
+        "worldRank": "Monde n°{{n}}"
+      }
+    },
+    "marketDetail": {
+      "notFound": "Marché introuvable",
+      "linkCopied": "Lien copié",
+      "actions": {
+        "call": "Appeler",
+        "directions": "Itinéraire",
+        "website": "Site web",
+        "share": "Partager"
+      },
+      "info": {
+        "address": "Adresse",
+        "addressZh": "Adresse (中文)",
+        "addressChinese": "中文地址",
+        "hours": "Horaires",
+        "phone": "Téléphone",
+        "website": "Site web",
+        "products": "Produits"
+      },
+      "directionsBlock": {
+        "title": "🚇 Itinéraire"
+      },
+      "walkMinutes": "{{count}} min à pied",
+      "taxiCost": "Taxi : {{cost}} ¥",
+      "taxiMinutes": "~{{count}} min",
+      "moreSoon": "Des informations complètes sur ce marché seront ajoutées bientôt.",
+      "nearbyInCity": "Plus dans cette ville"
+    },
+    "exhibitionDetail": {
+      "notFound": "Exposition introuvable",
+      "linkCopied": "Lien copié",
+      "ratingBlock": {
+        "title": "⭐ Classement et statistiques"
+      },
+      "chinaRank": "🇨🇳 Chine",
+      "worldRank": "🌍 Monde",
+      "stats": {
+        "attendees": "Visiteurs",
+        "countries": "Pays",
+        "exhibitors": "Exposants"
+      },
+      "phase": {
+        "titleWithNum": "Infos Phase {{n}}",
+        "title": "Infos sur la phase"
+      },
+      "mizwadAdvice": "Conseil Mizwad",
+      "sourceNote": {
+        "before": "Les dates peuvent changer chaque année. Avant de partir, vérifiez sur le",
+        "officialSite": "site officiel",
+        "after": ".",
+        "source": "Source : {{source}}"
+      },
+      "actions": {
+        "calendar": "Calendrier",
+        "directions": "Itinéraire",
+        "website": "Site web",
+        "share": "Partager"
+      },
+      "info": {
+        "date": "Date",
+        "location": "Lieu",
+        "website": "Site web",
+        "category": "Catégorie"
+      },
+      "travelPrep": "Préparation du voyage",
+      "travelOptions": {
+        "hotel": "Hôtel",
+        "translator": "Traducteur",
+        "halal": "Lieux halal"
+      },
+      "moreInCategory": "Plus dans cette catégorie"
+    },
+    "upcomingExhibitions": {
+      "title": "Prochaines expositions",
+      "tabs": {
+        "china": "Chine",
+        "world": "Monde"
+      },
+      "daysLeft": "{{count}} jours restants",
+      "today": "Aujourd'hui !",
+      "live": "En cours",
+      "chinaRank": "Chine n°{{n}}",
+      "worldRank": "Monde n°{{n}}",
+      "emptyChina": "Aucune exposition en Chine",
+      "emptyWorld": "Aucune exposition mondiale"
+    },
+    "lawyers": {
+      "verifiedLawyers": "Avocats vérifiés par Mizwad"
+    },
     "deepCheck": "Vérification approfondie",
     "deepCheckDesc": "Analyse complète du produit ou de l'entreprise",
     "markets": "Marchés",

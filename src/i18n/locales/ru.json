@@ -67,6 +67,140 @@
   "business": {
     "title": "Торговый центр",
     "subtitle": "Бизнес центр",
+    "tradeDataTag": "Торговая информация",
+    "months": ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"],
+    "monthsShort": ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"],
+    "categoryHub": {
+      "loading": "Загрузка...",
+      "tabs": {
+        "cities": "Города",
+        "markets": "Рынки",
+        "exhibitions": "Выставки"
+      },
+      "countdown": {
+        "ended": "Завершено",
+        "live": "🔴 Сейчас идёт",
+        "daysLeft": "Осталось {{count}} дн."
+      },
+      "emptyCity": {
+        "title": "Нет данных о городах для этой категории",
+        "subtitle": "Попробуйте вкладку рынков или выставок"
+      },
+      "topCitiesTitle": "🏙️ Топ производственные города",
+      "cityStats": {
+        "markets": "{{count}} рынков",
+        "hubs": "{{count}} заводов",
+        "exhibitions": "{{count}} выставок"
+      },
+      "emptyMarkets": {
+        "title": "Нет данных",
+        "subtitle": "Рынки для этой категории скоро будут добавлены."
+      },
+      "all": "Все",
+      "itemsCount": "{{count}}",
+      "exhibitions": {
+        "subTabs": {
+          "china": "🇨🇳 Китай",
+          "world": "🌍 Мир",
+          "upcoming": "📅 Ближайшие 6 мес."
+        },
+        "emptyTitle": "Нет данных",
+        "emptyChina": "Для этой категории нет выставок в Китае. Посмотрите вкладку Мир.",
+        "emptyWorld": "Данные о выставках в мире для этой категории скоро будут добавлены.",
+        "emptyUpcoming": "В ближайшие 6 месяцев выставок нет. Полный список во вкладках Китай или Мир.",
+        "phase": "Phase {{n}}",
+        "chinaRank": "В Китае №{{n}}",
+        "worldRank": "В мире №{{n}}"
+      }
+    },
+    "marketDetail": {
+      "notFound": "Рынок не найден",
+      "linkCopied": "Ссылка скопирована",
+      "actions": {
+        "call": "Позвонить",
+        "directions": "Маршрут",
+        "website": "Сайт",
+        "share": "Поделиться"
+      },
+      "info": {
+        "address": "Адрес",
+        "addressZh": "Адрес (中文)",
+        "addressChinese": "中文地址",
+        "hours": "Часы работы",
+        "phone": "Телефон",
+        "website": "Сайт",
+        "products": "Товары"
+      },
+      "directionsBlock": {
+        "title": "🚇 Как добраться"
+      },
+      "walkMinutes": "{{count}} мин. пешком",
+      "taxiCost": "Такси: {{cost}} ¥",
+      "taxiMinutes": "~{{count}} мин.",
+      "moreSoon": "Подробная информация об этом рынке скоро будет добавлена.",
+      "nearbyInCity": "Ещё в этом городе"
+    },
+    "exhibitionDetail": {
+      "notFound": "Выставка не найдена",
+      "linkCopied": "Ссылка скопирована",
+      "ratingBlock": {
+        "title": "⭐ Рейтинг и статистика"
+      },
+      "chinaRank": "🇨🇳 В Китае",
+      "worldRank": "🌍 В мире",
+      "stats": {
+        "attendees": "Посетителей",
+        "countries": "Стран",
+        "exhibitors": "Экспонентов"
+      },
+      "phase": {
+        "titleWithNum": "Информация о фазе {{n}}",
+        "title": "Информация о фазе"
+      },
+      "mizwadAdvice": "Совет Mizwad",
+      "sourceNote": {
+        "before": "Даты могут меняться ежегодно. Перед поездкой проверьте на",
+        "officialSite": "официальном сайте",
+        "after": ".",
+        "source": "Источник: {{source}}"
+      },
+      "actions": {
+        "calendar": "Календарь",
+        "directions": "Маршрут",
+        "website": "Сайт",
+        "share": "Поделиться"
+      },
+      "info": {
+        "date": "Дата",
+        "location": "Место",
+        "website": "Веб-сайт",
+        "category": "Категория"
+      },
+      "travelPrep": "Подготовка к поездке",
+      "travelOptions": {
+        "hotel": "Отель",
+        "translator": "Переводчик",
+        "halal": "Халяль места"
+      },
+      "moreInCategory": "Ещё в этой категории"
+    },
+    "upcomingExhibitions": {
+      "title": "Ближайшие выставки",
+      "tabs": {
+        "china": "Китай",
+        "world": "Мир"
+      },
+      "daysLeft": "Осталось {{count}} дн.",
+      "today": "Сегодня!",
+      "live": "Сейчас идёт",
+      "chinaRank": "В Китае №{{n}}",
+      "worldRank": "В мире №{{n}}",
+      "emptyChina": "Нет выставок в Китае",
+      "emptyWorld": "Нет выставок в мире"
+    },
+    "lawyers": {
+      "verifiedLawyers": "Юристы, проверенные Mizwad"
+    },
     "deepCheck": "Глубокая Проверка",
     "deepCheckDesc": "Полный анализ продукта или компании",
     "markets": "Рынки",
