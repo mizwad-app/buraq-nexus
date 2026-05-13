@@ -876,6 +876,50 @@ export type Database = {
         }
         Relationships: []
       }
+      exhibition_editions: {
+        Row: {
+          city: string | null
+          created_at: string | null
+          edition_name: string | null
+          end_date: string
+          exhibition_id: string
+          id: string
+          notes: string | null
+          start_date: string
+          year: number
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string | null
+          edition_name?: string | null
+          end_date: string
+          exhibition_id: string
+          id?: string
+          notes?: string | null
+          start_date: string
+          year: number
+        }
+        Update: {
+          city?: string | null
+          created_at?: string | null
+          edition_name?: string | null
+          end_date?: string
+          exhibition_id?: string
+          id?: string
+          notes?: string | null
+          start_date?: string
+          year?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exhibition_editions_exhibition_id_fkey"
+            columns: ["exhibition_id"]
+            isOneToOne: false
+            referencedRelation: "exhibitions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       exhibitions: {
         Row: {
           area_sqm: number | null
