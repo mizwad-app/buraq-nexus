@@ -126,7 +126,7 @@ const ExhibitionDetail = () => {
       setLoading(true);
       const [catR, exR] = await Promise.all([
         supabase.from("product_categories").select("*").eq("slug", categorySlug).maybeSingle(),
-        supabase.from("exhibitions").select("*").eq("id", exhibitionId).maybeSingle(),
+        supabase.from("exhibitions").select("*, exhibition_category:exhibition_categories!exhibitions_category_id_fkey(id, slug, emoji, name_uz, name_en, name_ru, name_ar, name_zh)").eq("id", exhibitionId).maybeSingle(),
       ]);
       const cat = catR.data as Category | null;
       const e = exR.data as Exhibition | null;
