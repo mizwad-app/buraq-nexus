@@ -39,7 +39,7 @@ const ExhibitionCard = ({ exhibition: ex }: { exhibition: ExhibitionWithCategory
   const monthsShort = t("business.monthsShort", { returnObjects: true }) as string[];
   const lang = i18n.language;
   const catName = ex.category
-    ? ((ex.category as Record<string, unknown>)[`name_${lang}`] as string | undefined) ??
+    ? ((ex.category as unknown as Record<string, unknown>)[`name_${lang}`] as string | undefined) ??
       ex.category.name_en ??
       ex.category.name_uz
     : null;
