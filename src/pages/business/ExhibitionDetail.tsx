@@ -108,11 +108,12 @@ END:VCALENDAR`;
 
 const ExhibitionDetail = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { categorySlug = "", exhibitionId = "" } = useParams();
   const { getField } = useTranslatedField();
   useSwipeBack();
   const months = t("business.months", { returnObjects: true }) as string[];
+  const lang = i18n.language;
 
   const [category, setCategory] = useState<Category | null>(null);
   const [ex, setEx] = useState<Exhibition | null>(null);
