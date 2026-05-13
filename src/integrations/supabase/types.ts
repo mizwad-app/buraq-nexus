@@ -876,6 +876,54 @@ export type Database = {
         }
         Relationships: []
       }
+      exhibition_categories: {
+        Row: {
+          created_at: string
+          emoji: string
+          id: number
+          insight_slug: string | null
+          is_active: boolean
+          name_ar: string | null
+          name_en: string
+          name_ru: string
+          name_uz: string
+          name_zh: string | null
+          slug: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          emoji: string
+          id?: number
+          insight_slug?: string | null
+          is_active?: boolean
+          name_ar?: string | null
+          name_en: string
+          name_ru: string
+          name_uz: string
+          name_zh?: string | null
+          slug: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          emoji?: string
+          id?: number
+          insight_slug?: string | null
+          is_active?: boolean
+          name_ar?: string | null
+          name_en?: string
+          name_ru?: string
+          name_uz?: string
+          name_zh?: string | null
+          slug?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       exhibition_editions: {
         Row: {
           city: string | null
@@ -927,6 +975,7 @@ export type Database = {
           category: string
           category_ar: string | null
           category_en: string | null
+          category_id: number | null
           category_ru: string | null
           category_uz: string | null
           category_zh: string | null
@@ -998,6 +1047,7 @@ export type Database = {
           category: string
           category_ar?: string | null
           category_en?: string | null
+          category_id?: number | null
           category_ru?: string | null
           category_uz?: string | null
           category_zh?: string | null
@@ -1069,6 +1119,7 @@ export type Database = {
           category?: string
           category_ar?: string | null
           category_en?: string | null
+          category_id?: number | null
           category_ru?: string | null
           category_uz?: string | null
           category_zh?: string | null
@@ -1134,7 +1185,15 @@ export type Database = {
           working_hours?: string | null
           world_rank?: number | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "exhibitions_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "exhibition_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       gift_redemptions: {
         Row: {
