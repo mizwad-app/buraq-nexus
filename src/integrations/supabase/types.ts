@@ -897,7 +897,9 @@ export type Database = {
           country: string
           country_code: string | null
           country_name: string | null
+          country_type: string | null
           created_at: string
+          data_confidence: string | null
           data_source: string | null
           data_sources: Json | null
           data_verified_date: string | null
@@ -914,6 +916,7 @@ export type Database = {
           frequency: string | null
           id: string
           is_active: boolean
+          is_international: boolean | null
           last_verified_at: string | null
           mizwad_note_en: string | null
           mizwad_note_ru: string | null
@@ -932,6 +935,7 @@ export type Database = {
           phone: string | null
           recurring_pattern: string | null
           regional_rank: string | null
+          slug: string
           start_date: string
           venue: string | null
           venue_ar: string | null
@@ -964,7 +968,9 @@ export type Database = {
           country?: string
           country_code?: string | null
           country_name?: string | null
+          country_type?: string | null
           created_at?: string
+          data_confidence?: string | null
           data_source?: string | null
           data_sources?: Json | null
           data_verified_date?: string | null
@@ -981,6 +987,7 @@ export type Database = {
           frequency?: string | null
           id?: string
           is_active?: boolean
+          is_international?: boolean | null
           last_verified_at?: string | null
           mizwad_note_en?: string | null
           mizwad_note_ru?: string | null
@@ -999,6 +1006,7 @@ export type Database = {
           phone?: string | null
           recurring_pattern?: string | null
           regional_rank?: string | null
+          slug: string
           start_date: string
           venue?: string | null
           venue_ar?: string | null
@@ -1031,7 +1039,9 @@ export type Database = {
           country?: string
           country_code?: string | null
           country_name?: string | null
+          country_type?: string | null
           created_at?: string
+          data_confidence?: string | null
           data_source?: string | null
           data_sources?: Json | null
           data_verified_date?: string | null
@@ -1048,6 +1058,7 @@ export type Database = {
           frequency?: string | null
           id?: string
           is_active?: boolean
+          is_international?: boolean | null
           last_verified_at?: string | null
           mizwad_note_en?: string | null
           mizwad_note_ru?: string | null
@@ -1066,6 +1077,7 @@ export type Database = {
           phone?: string | null
           recurring_pattern?: string | null
           regional_rank?: string | null
+          slug?: string
           start_date?: string
           venue?: string | null
           venue_ar?: string | null
