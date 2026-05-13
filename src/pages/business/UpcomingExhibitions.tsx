@@ -1,26 +1,12 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { useExhibitions, type ExhibitionWithCategory } from "@/hooks/useExhibitions";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
+import { ExhibitionFilters, type FilterState } from "@/components/exhibitions/ExhibitionFilters";
 import { cn } from "@/lib/utils";
-
-type FilterTab = "china" | "world";
-
-interface Exhibition {
-  id: string;
-  name: string;
-  city: string;
-  country_code?: string | null;
-  start_date: string;
-  end_date: string;
-  world_rank?: number | null;
-  china_rank?: number | null;
-  category?: string | null;
-  [key: string]: unknown;
-}
 
 const flagEmoji = (code?: string | null) => {
   if (!code) return "🌍";
@@ -43,42 +29,86 @@ const formatDateRange = (months: string[], start: string, end: string) => {
 
 const daysUntil = (iso: string) => Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000);
 
-const ExhibitionCard = ({ exhibition: ex }: { exhibition: Exhibition }) => {
+const ExhibitionCard = ({ exhibition: ex }: { exhibition: ExhibitionWithCategory }) => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { getField } = useTranslatedField();
   const days = daysUntil(ex.start_date);
   const flag = flagEmoji(ex.country_code);
-  const name = getField(ex, "name") || ex.name;
+  const name = getField(ex as unknown as Record<string, unknown>, "name") || ex.name;
   const monthsShort = t("business.monthsShort", { returnObjects: true }) as string[];
+  const lang = i18n.language;
+  const catName = ex.category
+    ? ((ex.category as Record<string, unknown>)[`name_${lang}`] as string | undefined) ??
+      ex.category.name_en ??
+      ex.category.name_uz
+    : null;
 
   return (
     <button
-      onClick={() => navigate(`/business/exhibitions/${ex.category || "all"}/${ex.id}`)}
+      onClick={() => navigate(`/business/exhibitions/${ex.category?.slug || "all"}/${ex.id}`)}
       className="w-full flex items-start gap-3 bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30 rounded-xl p-3 text-left transition-colors"
     >
       <div className="w-10 h-10 rounded-lg bg-amber-500/15 flex items-center justify-center text-lg shrink-0">
-        📅
+        {ex.category?.emoji ?? "📅"}
       </div>
       <div className="flex-1 min-w-0">
         <div className="text-[14px] font-medium text-foreground">
-          <span className="mr-1">{flag}</span>{name}
+          <span className="mr-1">{flag}</span>
+          {name}
         </div>
         <div className="text-[11px] text-muted-foreground mt-0.5">📍 {ex.city}</div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-1 flex-wrap">
           <span>{formatDateRange(monthsShort, ex.start_date, ex.end_date)}</span>
           <span>·</span>
           <span className={cn(days <= 7 && days >= 0 && "text-amber-400 font-semibold")}>
-            {days > 0 ? t("business.upcomingExhibitions.daysLeft", { count: days }) : days === 0 ? t("business.upcomingExhibitions.today") : t("business.upcomingExhibitions.live")}
+            {days > 0
+              ? t("business.upcomingExhibitions.daysLeft", { count: days })
+              : days === 0
+                ? t("business.upcomingExhibitions.today")
+                : t("business.upcomingExhibitions.live")}
           </span>
         </div>
-        {(ex.world_rank || ex.china_rank) && (
-          <div className="text-[10px] text-amber-400/80 mt-1">
-            ⭐ {ex.world_rank ? t("business.upcomingExhibitions.worldRank", { n: ex.world_rank }) : t("business.upcomingExhibitions.chinaRank", { n: ex.china_rank })}
-          </div>
-        )}
+        <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">
+          {ex.is_international === true && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              🌐 {t("exhibitions.badge.international")}
+            </span>
+          )}
+          {ex.is_international === false && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 border border-amber-500/20">
+              🇨🇳 {t("exhibitions.badge.domestic")}
+            </span>
+          )}
+          {catName && (
+            <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/[0.05] text-foreground/80 border border-white/10">
+              {ex.category?.emoji} {catName}
+            </span>
+          )}
+        </div>
       </div>
     </button>
+  );
+};
+
+const EmptyState = ({ filters }: { filters: FilterState }) => {
+  const { t } = useTranslation();
+  if (filters.location === "domestic") {
+    return (
+      <div className="px-5 py-12 text-center">
+        <div className="text-4xl mb-3">🇨🇳</div>
+        <p className="text-[14px] font-semibold text-foreground mb-1">{t("exhibitions.empty.domesticTitle")}</p>
+        <p className="text-[12px] text-muted-foreground max-w-[280px] mx-auto leading-relaxed">
+          {t("exhibitions.empty.domesticDesc")}
+        </p>
+      </div>
+    );
+  }
+  return (
+    <div className="px-5 py-12 text-center">
+      <div className="text-4xl mb-2">📅</div>
+      <p className="text-sm text-muted-foreground">{t("exhibitions.empty.generic")}</p>
+    </div>
   );
 };
 
@@ -87,33 +117,22 @@ const UpcomingExhibitions = () => {
   const { t } = useTranslation();
   useSwipeBack();
 
-  const [exhibitions, setExhibitions] = useState<Exhibition[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<FilterTab>("china");
+  const [filters, setFilters] = useState<FilterState>({ location: "all", categoryId: null });
 
-  useEffect(() => {
-    (async () => {
-      const today = new Date().toISOString().slice(0, 10);
-      const { data } = await supabase
-        .from("exhibitions")
-        .select("*")
-        .gte("end_date", today)
-        .eq("is_active", true)
-        .order("start_date", { ascending: true });
-      setExhibitions((data ?? []) as Exhibition[]);
-      setLoading(false);
-    })();
-  }, []);
+  const allResult = useExhibitions({ locationFilter: "all" });
+  const filtered = useExhibitions({
+    locationFilter: filters.location,
+    categoryId: filters.categoryId,
+  });
 
-  const filtered = useMemo(() => {
-    if (tab === "china") return exhibitions.filter((e) => e.country_code === "CN" || !e.country_code);
-    return exhibitions.filter((e) => e.country_code && e.country_code !== "CN");
-  }, [exhibitions, tab]);
-
-  const counts = useMemo(() => ({
-    china: exhibitions.filter((e) => e.country_code === "CN" || !e.country_code).length,
-    world: exhibitions.filter((e) => e.country_code && e.country_code !== "CN").length,
-  }), [exhibitions]);
+  const counts = useMemo(
+    () => ({
+      all: allResult.data.length,
+      international: allResult.data.filter((e) => e.is_international === true).length,
+      domestic: allResult.data.filter((e) => e.is_international === false).length,
+    }),
+    [allResult.data],
+  );
 
   return (
     <div className="min-h-screen bg-background safe-bottom pb-24">
@@ -127,53 +146,30 @@ const UpcomingExhibitions = () => {
         </button>
         <div className="flex-1 min-w-0">
           <span className="text-[10px] text-muted-foreground">{t("business.tradeDataTag")}</span>
-          <h1 className="text-[18px] italic font-medium text-foreground leading-tight" style={{ fontFamily: "'Fraunces', Georgia, serif" }}>
+          <h1
+            className="text-[18px] italic font-medium text-foreground leading-tight"
+            style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+          >
             {t("business.upcomingExhibitions.title")}
           </h1>
         </div>
       </header>
 
-      <div className="px-5 mb-4 flex gap-2">
-        <button
-          onClick={() => setTab("china")}
-          className={cn(
-            "shrink-0 flex items-center gap-1.5 rounded-full py-2 px-3 text-[12px] border transition-colors min-h-[36px]",
-            tab === "china"
-              ? "bg-emerald-500 text-emerald-950 border-emerald-500 font-medium"
-              : "bg-white/[0.04] text-foreground border-white/10",
-          )}
-        >
-          🇨🇳 <span>{t("business.upcomingExhibitions.tabs.china")}</span> <span className="opacity-70">({counts.china})</span>
-        </button>
-        <button
-          onClick={() => setTab("world")}
-          className={cn(
-            "shrink-0 flex items-center gap-1.5 rounded-full py-2 px-3 text-[12px] border transition-colors min-h-[36px]",
-            tab === "world"
-              ? "bg-emerald-500 text-emerald-950 border-emerald-500 font-medium"
-              : "bg-white/[0.04] text-foreground border-white/10",
-          )}
-        >
-          🌍 <span>{t("business.upcomingExhibitions.tabs.world")}</span> <span className="opacity-70">({counts.world})</span>
-        </button>
+      <div className="px-5 mb-4">
+        <ExhibitionFilters value={filters} onChange={setFilters} counts={counts} />
       </div>
 
-      {loading ? (
+      {filtered.loading ? (
         <div className="px-5 space-y-2">
           {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="h-[80px] rounded-xl bg-white/[0.04] animate-pulse" />
           ))}
         </div>
-      ) : filtered.length === 0 ? (
-        <div className="px-5 py-12 text-center">
-          <div className="text-4xl mb-2">📅</div>
-          <p className="text-sm text-muted-foreground">
-            {tab === "china" ? t("business.upcomingExhibitions.emptyChina") : t("business.upcomingExhibitions.emptyWorld")}
-          </p>
-        </div>
+      ) : filtered.data.length === 0 ? (
+        <EmptyState filters={filters} />
       ) : (
         <div className="px-5 space-y-2">
-          {filtered.map((ex) => (
+          {filtered.data.map((ex) => (
             <ExhibitionCard key={ex.id} exhibition={ex} />
           ))}
         </div>
