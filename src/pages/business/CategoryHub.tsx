@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 import { ChevronLeft, ChevronRight, Info, MapPin, Calendar } from "lucide-react";
-import { toast } from "sonner";
+
 import { supabase } from "@/integrations/supabase/client";
 import { CategoryBadge } from "@/components/business/CategoryBadge";
 import { MizwadInsightBox } from "@/components/business/MizwadInsightBox";
