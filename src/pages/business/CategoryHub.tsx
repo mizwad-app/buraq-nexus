@@ -86,6 +86,7 @@ const CategoryHub = () => {
   const [exhibitions, setExhibitions] = useState<Row[]>([]);
   const [hubs, setHubs] = useState<Row[]>([]);
   const [insight, setInsight] = useState<Insight | null>(null);
+  const [mfgCities, setMfgCities] = useState<MfgCity[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
