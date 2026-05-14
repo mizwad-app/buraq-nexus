@@ -11,6 +11,7 @@ import { PlacePlaceholder } from "@/components/business/PlacePlaceholder";
 import { MizwadInsightBox } from "@/components/business/MizwadInsightBox";
 import { exhibitionFlag } from "@/lib/exhibitionFlags";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface Category {
   id: string;
