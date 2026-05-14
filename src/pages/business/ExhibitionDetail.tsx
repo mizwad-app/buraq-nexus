@@ -32,6 +32,7 @@ interface Exhibition {
   description?: string | null;
   country_code?: string | null;
   country_name?: string | null;
+  country_emoji?: string | null;
   world_rank?: number | null;
   china_rank?: number | null;
   regional_rank?: string | null;
@@ -191,7 +192,7 @@ const ExhibitionDetail = () => {
               <ArrowRight className="w-3 h-3" />
             </Link>
           ) : ex.city}
-          {exhibitionFlag(ex.country_code)}
+          {ex.country_emoji || exhibitionFlag(ex.country_code)}
           {ex.country_code && ex.country_code !== "CN" && ex.country_name ? ` (${ex.country_name})` : ""}
           {venue ? ` · ${venue}` : ""}
         </p>
