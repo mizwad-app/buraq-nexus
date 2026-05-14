@@ -42,6 +42,7 @@ export interface ExhibitionWithCategory {
 export interface UseExhibitionsOptions {
   locationFilter?: LocationFilter;
   categoryId?: number | null;
+  cityName?: string | null;
   limit?: number;
   activeOnly?: boolean;
   upcomingOnly?: boolean;
@@ -51,6 +52,7 @@ export function useExhibitions(options: UseExhibitionsOptions = {}) {
   const {
     locationFilter = "all",
     categoryId = null,
+    cityName = null,
     limit,
     activeOnly = true,
     upcomingOnly = true,
@@ -80,6 +82,7 @@ export function useExhibitions(options: UseExhibitionsOptions = {}) {
         if (locationFilter === "international") query = query.eq("is_international", true);
         else if (locationFilter === "domestic") query = query.eq("is_international", false);
         if (categoryId !== null) query = query.eq("category_id", categoryId);
+        if (cityName) query = query.ilike("city", `%${cityName}%`);
         if (limit) query = query.limit(limit);
 
         const { data: rows, error: qErr } = await query;
@@ -97,7 +100,7 @@ export function useExhibitions(options: UseExhibitionsOptions = {}) {
     return () => {
       cancelled = true;
     };
-  }, [locationFilter, categoryId, limit, activeOnly, upcomingOnly]);
+  }, [locationFilter, categoryId, cityName, limit, activeOnly, upcomingOnly]);
 
   return { data, loading, error };
 }
