@@ -387,7 +387,7 @@ const CitiesTab = ({ cities, insight, topExhibitions, categorySlug, onSeeAllExhi
           <div className="space-y-2">
             {topExhibitions.map((ex) => {
               const cd = countdownInfo(t, ex.start_date as string, ex.end_date as string);
-              const flag = exhibitionFlag(ex.country_code as string | undefined);
+              const flag = (ex.country_emoji as string | null) || exhibitionFlag(ex.country_code as string | undefined);
               return (
                 <button
                   key={ex.id as string}
@@ -566,16 +566,24 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
     return d.toISOString().slice(0, 10);
   }, []);
 
+  const isChina = (e: Row) =>
+    (e.country_type as string) === "china" ||
+    (!e.country_type && (!e.country_code || e.country_code === "CN"));
+  const isWorld = (e: Row) =>
+    (e.country_type as string) === "world" ||
+    (!!e.country_type && (e.country_type as string) !== "china") ||
+    (!e.country_type && !!e.country_code && e.country_code !== "CN");
+
   const counts = useMemo(() => ({
-    china: exhibitions.filter((e) => !e.country_code || e.country_code === "CN").length,
-    world: exhibitions.filter((e) => e.country_code && e.country_code !== "CN").length,
+    china: exhibitions.filter(isChina).length,
+    world: exhibitions.filter(isWorld).length,
     upcoming: exhibitions.filter((e) => (e.start_date as string) >= today && (e.start_date as string) <= sixMonthsStr).length,
   }), [exhibitions, today, sixMonthsStr]);
 
   const filtered = useMemo(() => {
     let list = exhibitions;
-    if (activeSub === "china") list = list.filter((e) => !e.country_code || e.country_code === "CN");
-    else if (activeSub === "world") list = list.filter((e) => e.country_code && e.country_code !== "CN");
+    if (activeSub === "china") list = list.filter(isChina);
+    else if (activeSub === "world") list = list.filter(isWorld);
     else list = list.filter((e) => (e.start_date as string) >= today && (e.start_date as string) <= sixMonthsStr);
 
     return [...list].sort((a, b) => {
@@ -630,7 +638,7 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
           <div className="space-y-2.5">
             {filtered.map((ex) => {
               const cd = countdownInfo(t, ex.start_date as string, ex.end_date as string);
-              const flag = exhibitionFlag(ex.country_code as string | undefined);
+              const flag = (ex.country_emoji as string | null) || exhibitionFlag(ex.country_code as string | undefined);
               const showCountry = ex.country_code && ex.country_code !== "CN" && ex.country_name;
               return (
                 <button
