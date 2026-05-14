@@ -12,6 +12,7 @@ interface Exhibition {
   name_en?: string | null;
   city: string;
   country_code?: string | null;
+  country_emoji?: string | null;
   start_date: string;
   end_date: string;
   world_rank?: number | null;
