@@ -14,7 +14,7 @@ const getName = (c: ExhibitionCategory, lang: string): string => {
 
 export function CategoryFilterDropdown({ value, onChange }: Props) {
   const { t, i18n } = useTranslation();
-  const { data: categories } = useExhibitionCategories();
+  const { data: categories, tree } = useExhibitionCategories();
   const lang = i18n.language;
   const stringValue = value === null ? "all" : String(value);
   const selected = value !== null ? categories.find((c) => c.id === value) : null;
@@ -36,14 +36,36 @@ export function CategoryFilterDropdown({ value, onChange }: Props) {
             <span>{t("exhibitions.filter.allCategories")}</span>
           </span>
         </SelectItem>
-        {categories.map((c) => (
-          <SelectItem key={c.id} value={String(c.id)}>
-            <span className="flex items-center gap-2">
-              <span>{c.emoji ?? "📂"}</span>
-              <span>{getName(c, lang)}</span>
-            </span>
-          </SelectItem>
-        ))}
+        {tree.map((parent) => {
+          const isGroup = (parent.children?.length ?? 0) > 0;
+          return (
+            <div key={parent.id}>
+              {isGroup ? (
+                <div className="px-2 pt-2 pb-1 text-[11px] uppercase tracking-wide text-muted-foreground flex items-center gap-1.5">
+                  <span>{parent.emoji ?? "📂"}</span>
+                  <span>{getName(parent, lang)}</span>
+                  <span className="opacity-60">({parent.children?.length})</span>
+                </div>
+              ) : (
+                <SelectItem value={String(parent.id)}>
+                  <span className="flex items-center gap-2">
+                    <span>{parent.emoji ?? "📂"}</span>
+                    <span>{getName(parent, lang)}</span>
+                  </span>
+                </SelectItem>
+              )}
+              {isGroup &&
+                parent.children?.map((sub) => (
+                  <SelectItem key={sub.id} value={String(sub.id)} className="pl-7">
+                    <span className="flex items-center gap-2">
+                      <span>{sub.emoji ?? "📂"}</span>
+                      <span>{getName(sub, lang)}</span>
+                    </span>
+                  </SelectItem>
+                ))}
+            </div>
+          );
+        })}
       </SelectContent>
     </Select>
   );

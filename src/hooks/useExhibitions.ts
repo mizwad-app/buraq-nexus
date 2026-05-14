@@ -117,10 +117,13 @@ export interface ExhibitionCategory {
   name_ar: string | null;
   name_zh: string | null;
   sort_order: number | null;
+  parent_id?: number | null;
+  children?: ExhibitionCategory[];
 }
 
 export function useExhibitionCategories() {
   const [data, setData] = useState<ExhibitionCategory[]>([]);
+  const [tree, setTree] = useState<ExhibitionCategory[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -132,7 +135,14 @@ export function useExhibitionCategories() {
         .eq("is_active", true)
         .order("sort_order", { ascending: true });
       if (!cancelled) {
-        setData((rows ?? []) as unknown as ExhibitionCategory[]);
+        const flat = (rows ?? []) as unknown as ExhibitionCategory[];
+        const parents = flat.filter((c) => c.parent_id == null);
+        const built = parents.map((p) => ({
+          ...p,
+          children: flat.filter((c) => c.parent_id === p.id),
+        }));
+        setData(flat);
+        setTree(built);
         setLoading(false);
       }
     })();
@@ -141,5 +151,5 @@ export function useExhibitionCategories() {
     };
   }, []);
 
-  return { data, loading };
+  return { data, tree, loading };
 }
