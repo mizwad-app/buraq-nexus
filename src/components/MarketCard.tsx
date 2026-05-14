@@ -205,7 +205,18 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
       <div className="px-4 py-2 bg-muted/20 border-t border-border/30 flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
           <MapPin className="w-3 h-3" />
-          <span>{translatedCity}, {market.country}</span>
+          {translatedCity && cityExists && citySlug ? (
+            <Link
+              to={`/city/${citySlug}`}
+              onClick={(e) => e.stopPropagation()}
+              className="text-emerald-400 hover:underline"
+            >
+              {translatedCity}
+            </Link>
+          ) : (
+            <span>{translatedCity}</span>
+          )}
+          <span>, {market.country}</span>
         </div>
         <span className="text-[10px] text-primary font-medium">{t("common.more")} →</span>
       </div>
