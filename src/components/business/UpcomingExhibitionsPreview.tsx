@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useExhibitions } from "@/hooks/useExhibitions";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { cn } from "@/lib/utils";
 
 interface Exhibition {
