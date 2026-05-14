@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { 
   Store, 
   MapPin, 
@@ -11,6 +12,7 @@ import {
   Navigation
 } from "lucide-react";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
