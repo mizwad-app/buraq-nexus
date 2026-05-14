@@ -27,6 +27,8 @@ export interface ExhibitionWithCategory {
   venue: string | null;
   country_code: string | null;
   country_name: string | null;
+  country: string | null;
+  country_emoji: string | null;
   start_date: string;
   end_date: string;
   is_international: boolean | null;
