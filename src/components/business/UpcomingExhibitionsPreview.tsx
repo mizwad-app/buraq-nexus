@@ -43,7 +43,7 @@ const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
   const navigate = useNavigate();
   const { getField } = useTranslatedField();
   const days = daysUntil(exhibition.start_date);
-  const flag = flagEmoji(exhibition.country_code);
+  const flag = exhibition.country_emoji || flagEmoji(exhibition.country_code);
   const name = getField(exhibition as unknown as Record<string, unknown>, "name") || exhibition.name;
   const citySlug = cityNameToSlug(exhibition.city);
   const { data: cityExists } = useCityExists(exhibition.city);
