@@ -27,10 +27,10 @@ export function LocationFilterChips({ value, onChange, counts }: Props) {
             type="button"
             onClick={() => onChange(chip.key)}
             className={cn(
-              "shrink-0 inline-flex items-center gap-1.5 px-4 rounded-full text-[13px] min-h-[44px] transition-colors border",
+              "shrink-0 inline-flex items-center gap-1.5 px-4 rounded-full text-[13px] min-h-[44px] border touch-manipulation select-none transition-all duration-150 active:scale-95",
               isActive
-                ? "bg-emerald-500 text-emerald-950 border-emerald-500 font-semibold"
-                : "bg-card text-foreground border-border hover:border-amber-500",
+                ? "bg-emerald-500 text-emerald-950 border-emerald-500 font-semibold shadow-sm"
+                : "bg-card text-foreground border-border hover:border-amber-500 active:bg-muted",
             )}
           >
             <span>{chip.emoji}</span>
