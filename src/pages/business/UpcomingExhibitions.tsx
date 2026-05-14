@@ -45,9 +45,23 @@ const ExhibitionCard = ({ exhibition: ex }: { exhibition: ExhibitionWithCategory
       ex.category.name_uz
     : null;
 
+  const citySlug = cityNameToSlug(ex.city);
+  const { data: cityExists } = useCityExists(ex.city);
+
+  const handleCardClick = () => {
+    navigate(`/business/exhibitions/${ex.category?.slug || "all"}/${ex.id}`);
+  };
+
+  const handleCityClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (citySlug) {
+      navigate(`/city/${citySlug}`);
+    }
+  };
+
   return (
     <button
-      onClick={() => navigate(`/business/exhibitions/${ex.category?.slug || "all"}/${ex.id}`)}
+      onClick={handleCardClick}
       className="w-full flex items-start gap-3 bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30 rounded-xl p-3 text-left transition-colors"
     >
       <div className="w-10 h-10 rounded-lg bg-amber-500/15 flex items-center justify-center text-lg shrink-0">
@@ -58,7 +72,19 @@ const ExhibitionCard = ({ exhibition: ex }: { exhibition: ExhibitionWithCategory
           <span className="mr-1">{flag}</span>
           {name}
         </div>
-        <div className="text-[11px] text-muted-foreground mt-0.5">📍 {ex.city}</div>
+        <div className="text-[11px] text-muted-foreground mt-0.5">
+          {ex.city && cityExists && citySlug ? (
+            <span
+              onClick={handleCityClick}
+              role="link"
+              className="inline-flex items-center gap-0.5 text-emerald-400 hover:underline cursor-pointer"
+            >
+              📍 {ex.city}
+            </span>
+          ) : (
+            <span>📍 {ex.city}</span>
+          )}
+        </div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-1 flex-wrap">
           <span>{formatDateRange(monthsShort, ex.start_date, ex.end_date)}</span>
           <span>·</span>
