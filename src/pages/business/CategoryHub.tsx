@@ -225,8 +225,8 @@ const CategoryHub = () => {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const topExhibitions = useMemo(() => {
     return exhibitions
-      .filter((e) => (e.start_date as string) >= today)
-      .sort((a, b) => (a.start_date as string).localeCompare(b.start_date as string))
+      .filter((e) => !!e.start_date && (e.start_date as string) >= today)
+      .sort((a, b) => ((a.start_date as string) ?? "").localeCompare((b.start_date as string) ?? ""))
       .slice(0, 3);
   }, [exhibitions, today]);
 
@@ -578,11 +578,13 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
     else list = list.filter((e) => (e.start_date as string) >= today && (e.start_date as string) <= sixMonthsStr);
 
     return [...list].sort((a, b) => {
-      if (activeSub === "upcoming") return (a.start_date as string).localeCompare(b.start_date as string);
+      const aDate = (a.start_date as string | null) ?? "";
+      const bDate = (b.start_date as string | null) ?? "";
+      if (activeSub === "upcoming") return aDate.localeCompare(bDate);
       const aRank = (a.world_rank as number) ?? (a.china_rank as number) ?? 999;
       const bRank = (b.world_rank as number) ?? (b.china_rank as number) ?? 999;
       if (aRank !== bRank) return aRank - bRank;
-      return (a.start_date as string).localeCompare(b.start_date as string);
+      return aDate.localeCompare(bDate);
     });
   }, [exhibitions, activeSub, today, sixMonthsStr]);
 
