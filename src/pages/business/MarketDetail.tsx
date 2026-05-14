@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ChevronLeft, Phone, Navigation, Share2, Globe, Clock, MapPin, ChevronRight } from "lucide-react";
+import { ChevronLeft, Phone, Navigation, Share2, Globe, Clock, MapPin, ChevronRight, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { fetchMarketsForCategory } from "@/lib/businessFetchers";
 import { PlacePlaceholder } from "@/components/business/PlacePlaceholder";
 import { MizwadInsightBox } from "@/components/business/MizwadInsightBox";
