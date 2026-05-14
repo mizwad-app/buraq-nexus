@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 import { ChevronLeft, ChevronRight, Info, MapPin, Calendar } from "lucide-react";
@@ -11,6 +11,7 @@ import { fetchMarketsForCategory, fetchExhibitionsForCategory } from "@/lib/busi
 import { matchesCategory } from "@/lib/businessCategoryMatch";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { exhibitionFlag } from "@/lib/exhibitionFlags";
 import { cn } from "@/lib/utils";
 
