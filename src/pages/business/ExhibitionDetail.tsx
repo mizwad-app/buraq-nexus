@@ -149,6 +149,14 @@ const ExhibitionDetail = () => {
           .maybeSingle();
         if (ins.data) setInsight((ins.data as { insight_uz: string }).insight_uz);
       }
+      if (e) {
+        const { data: links } = await supabase
+          .from("exhibition_category_links")
+          .select("is_primary, category:exhibition_categories(slug, emoji, name_uz, name_en, name_ru, name_ar, name_zh)")
+          .eq("exhibition_id", e.id)
+          .order("is_primary", { ascending: false });
+        setLinkedCategories((links ?? []).filter((l: { category: unknown }) => l.category) as typeof linkedCategories);
+      }
       setLoading(false);
     })();
   }, [categorySlug, exhibitionId]);
