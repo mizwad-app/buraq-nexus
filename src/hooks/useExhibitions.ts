@@ -80,7 +80,7 @@ export function useExhibitions(options: UseExhibitionsOptions = {}) {
           query = query.gte("end_date", today);
         }
         if (locationFilter === "international") query = query.eq("is_international", true);
-        else if (locationFilter === "domestic") query = query.eq("is_international", false);
+        else if (locationFilter === "domestic") query = query.eq("is_international", false).eq("country_type", "china");
         if (categoryId !== null) query = query.eq("category_id", categoryId);
         if (cityName) query = query.ilike("city", `%${cityName}%`);
         if (limit) query = query.limit(limit);

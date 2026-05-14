@@ -1229,7 +1229,7 @@
     "filter": {
       "all": "全部",
       "international": "国际",
-      "domestic": "本地",
+      "domestic": "本地（中国）",
       "allCategories": "所有类别"
     },
     "badge": {
