@@ -192,7 +192,7 @@ const ExhibitionDetail = () => {
               <ArrowRight className="w-3 h-3" />
             </Link>
           ) : ex.city}
-          {exhibitionFlag(ex.country_code)}
+          {ex.country_emoji || exhibitionFlag(ex.country_code)}
           {ex.country_code && ex.country_code !== "CN" && ex.country_name ? ` (${ex.country_name})` : ""}
           {venue ? ` · ${venue}` : ""}
         </p>
