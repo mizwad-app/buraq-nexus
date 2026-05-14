@@ -185,7 +185,13 @@ const ExhibitionDetail = () => {
         <h1 className="text-lg font-semibold text-foreground leading-tight">{name}</h1>
         <p className="text-[12px] text-muted-foreground mt-1">📅 {fmtRange(months, ex.start_date, ex.end_date)}</p>
         <p className="text-[12px] text-muted-foreground">
-          📍 {ex.city} {exhibitionFlag(ex.country_code)}
+          📍 {ex.city && cityExists && citySlug ? (
+            <Link to={`/city/${citySlug}`} className="inline-flex items-center gap-0.5 text-emerald-400 hover:underline">
+              {ex.city}
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          ) : ex.city}
+          {exhibitionFlag(ex.country_code)}
           {ex.country_code && ex.country_code !== "CN" && ex.country_name ? ` (${ex.country_name})` : ""}
           {venue ? ` · ${venue}` : ""}
         </p>
