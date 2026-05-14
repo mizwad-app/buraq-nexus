@@ -137,6 +137,10 @@
         "phase": "Phase {{n}}",
         "chinaRank": "China #{{n}}",
         "worldRank": "World #{{n}}"
+      },
+      "emptyMfgCity": {
+        "title": "No manufacturing cities added for this category yet",
+        "cta": "See exhibitions tab"
       }
     },
     "marketDetail": {
