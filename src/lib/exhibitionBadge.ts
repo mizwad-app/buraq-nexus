@@ -26,10 +26,8 @@ export function getExhibitionBadgeStyle(
   if (daysRemaining <= 30) {
     return { bgColor: "bg-emerald-100", textColor: "text-emerald-800" };
   }
-  if (daysRemaining <= 90) {
-    return { bgColor: "bg-emerald-50", textColor: "text-emerald-700" };
-  }
-  return { bgColor: "bg-gray-100", textColor: "text-gray-600" };
+  // 31+ days (mid-range and far future) — blue (gray reserved for ended only)
+  return { bgColor: "bg-blue-100", textColor: "text-blue-800" };
 }
 
 export function computeDaysRemaining(startDate?: string | null): number | null {
