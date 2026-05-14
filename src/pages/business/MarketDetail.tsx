@@ -175,7 +175,13 @@ const MarketDetail = () => {
           </p>
         )}
         <p className="text-[12px] text-muted-foreground mt-1">
-          {market.city} 🇨🇳 {market.market_type ? `· ${market.market_type}` : ""}
+          {market.city && cityExists && citySlug ? (
+            <Link to={`/city/${citySlug}`} className="inline-flex items-center gap-0.5 text-emerald-400 hover:underline">
+              {market.city}
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          ) : market.city}
+          {" "}🇨🇳 {market.market_type ? `· ${market.market_type}` : ""}
         </p>
       </div>
 
