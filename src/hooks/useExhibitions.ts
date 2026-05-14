@@ -82,6 +82,7 @@ export function useExhibitions(options: UseExhibitionsOptions = {}) {
         if (locationFilter === "international") query = query.eq("is_international", true);
         else if (locationFilter === "domestic") query = query.eq("is_international", false);
         if (categoryId !== null) query = query.eq("category_id", categoryId);
+        if (cityName) query = query.ilike("city", `%${cityName}%`);
         if (limit) query = query.limit(limit);
 
         const { data: rows, error: qErr } = await query;
