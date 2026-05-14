@@ -32,6 +32,17 @@ interface Insight {
   insight_uz: string;
 }
 
+interface MfgCity {
+  slug: string;
+  name: string;
+  country_emoji: string | null;
+  is_top: boolean;
+  rank: number | null;
+  markets: number;
+  hubs: number;
+  exhibitions: number;
+}
+
 const fmtRange = (months: string[], start: string, end: string) => {
   const s = new Date(start);
   const e = new Date(end);
@@ -86,6 +97,7 @@ const CategoryHub = () => {
   const [exhibitions, setExhibitions] = useState<Row[]>([]);
   const [hubs, setHubs] = useState<Row[]>([]);
   const [insight, setInsight] = useState<Insight | null>(null);
+  const [mfgCities, setMfgCities] = useState<MfgCity[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -133,6 +145,45 @@ const CategoryHub = () => {
     })();
   }, [categorySlug]);
 
+  // Manufacturing cities for this category (from city_product_categories bridge)
+  useEffect(() => {
+    (async () => {
+      const { data } = await (supabase as unknown as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (k: string, v: string | boolean) => {
+              eq: (k: string, v: string | boolean) => {
+                order: (col: string, opts: { ascending: boolean; nullsFirst?: boolean }) => Promise<{ data: unknown }>;
+              };
+            };
+          };
+        };
+      })
+        .from("city_product_categories")
+        .select("rank, is_top, cities!inner(slug, name_en, name_uz, name_ru, name_ar, name_zh, name_fr, country_emoji, is_active)")
+        .eq("category_slug", categorySlug)
+        .eq("cities.is_active", true)
+        .order("rank", { ascending: true, nullsFirst: false });
+      const rows = (data ?? []) as Array<{
+        rank: number | null;
+        is_top: boolean | null;
+        cities: Record<string, unknown>;
+      }>;
+      setMfgCities(
+        rows.map((r) => ({
+          slug: r.cities.slug as string,
+          name: (getField(r.cities, "name") as string) || (r.cities.name_en as string),
+          country_emoji: (r.cities.country_emoji as string | null) ?? null,
+          is_top: !!r.is_top,
+          rank: r.rank,
+          markets: 0,
+          hubs: 0,
+          exhibitions: 0,
+        }))
+      );
+    })();
+  }, [categorySlug, getField]);
+
   const handleTabChange = (tab: TabKey) => {
     setActiveTab(tab);
     setSearchParams({ tab }, { replace: true });
@@ -143,23 +194,27 @@ const CategoryHub = () => {
     [markets, exhibitions]
   );
 
-  const topCities = useMemo(() => {
-    const cityMap = new Map<string, { city: string; markets: number; hubs: number; exhibitions: number }>();
-    const ensure = (city: string) => {
-      if (!city) return null;
-      if (!cityMap.has(city)) cityMap.set(city, { city, markets: 0, hubs: 0, exhibitions: 0 });
-      return cityMap.get(city)!;
-    };
-    markets.forEach((m) => { const e = ensure(m.city as string); if (e) e.markets++; });
-    hubs.forEach((h) => { const e = ensure(h.city as string); if (e) e.hubs++; });
-    exhibitions
-      .filter((ex) => !ex.country_code || ex.country_code === "CN")
-      .forEach((ex) => { const e = ensure(ex.city as string); if (e) e.exhibitions++; });
-    return Array.from(cityMap.values())
-      .map((c) => ({ ...c, score: c.markets + c.hubs * 2 + c.exhibitions }))
-      .filter((c) => c.score > 0)
-      .sort((a, b) => b.score - a.score);
-  }, [markets, hubs, exhibitions]);
+  // Manufacturing cities enriched with stats from markets/hubs/exhibitions
+  const enrichedMfgCities = useMemo(() => {
+    const norm = (s: string) => s.toLowerCase().trim();
+    const cnExhibitions = exhibitions.filter((ex) => !ex.country_code || ex.country_code === "CN");
+    return mfgCities
+      .map((c) => {
+        const slugMatch = (cityVal: string) =>
+          norm(cityVal) === norm(c.slug) || norm(cityVal) === norm(c.name);
+        return {
+          ...c,
+          markets: markets.filter((m) => slugMatch(m.city as string)).length,
+          hubs: hubs.filter((h) => slugMatch(h.city as string)).length,
+          exhibitions: cnExhibitions.filter((ex) => slugMatch(ex.city as string)).length,
+        };
+      })
+      .sort((a, b) => {
+        if (a.is_top !== b.is_top) return a.is_top ? -1 : 1;
+        return (a.rank ?? 999) - (b.rank ?? 999);
+      });
+  }, [mfgCities, markets, hubs, exhibitions]);
+
 
   const topMarkets = useMemo(() => {
     return [...markets]
@@ -208,7 +263,7 @@ const CategoryHub = () => {
         <>
           {activeTab === "cities" && (
             <CitiesTab
-              topCities={topCities}
+              cities={enrichedMfgCities}
               insight={insight}
               topExhibitions={topExhibitions}
               categorySlug={categorySlug}
@@ -240,20 +295,20 @@ const TabButton = ({ active, onClick, icon, label, count }: { active: boolean; o
 /* ---------------- CitiesTab ---------------- */
 
 interface CitiesTabProps {
-  topCities: { city: string; markets: number; hubs: number; exhibitions: number; score: number }[];
+  cities: MfgCity[];
   insight: Insight | null;
   topExhibitions: Row[];
   categorySlug: string;
   onSeeAllExhibitions: () => void;
 }
 
-const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllExhibitions }: CitiesTabProps) => {
+const CitiesTab = ({ cities, insight, topExhibitions, categorySlug, onSeeAllExhibitions }: CitiesTabProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { getField } = useTranslatedField();
   const months = t("business.months", { returnObjects: true }) as string[];
 
-  const hasCities = topCities.length > 0;
+  const hasCities = cities.length > 0;
   const hasExhibitions = topExhibitions.length > 0;
 
   if (!hasCities && !hasExhibitions) {
@@ -274,42 +329,48 @@ const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllE
 
   return (
     <div className="px-5 space-y-3">
-      {hasCities && (
+      {hasCities ? (
         <>
           <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
             {t("business.categoryHub.topCitiesTitle")}
           </p>
-          {topCities.map((c, i) => {
-            const citySlug = c.city
-              .toLowerCase()
-              .replace(/\s+/g, "-")
-              .replace(/[^a-z0-9-]/g, "");
-            return (
-              <button
-                key={c.city}
-                onClick={() => navigate(`/city/${citySlug}`)}
-                className="w-full text-left bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5 cursor-pointer active:scale-[0.98] transition-transform"
-              >
-                <div className="flex items-center gap-2.5">
-                  <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
-                    {i + 1}
-                  </div>
-                  <span className="text-sm font-medium text-foreground flex-1">{c.city}</span>
-                  <span className="text-sm">🇨🇳</span>
-                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
+          {cities.map((c, i) => (
+            <button
+              key={c.slug}
+              onClick={() => navigate(`/city/${c.slug}`)}
+              className="w-full text-left bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5 cursor-pointer active:scale-[0.98] transition-transform"
+            >
+              <div className="flex items-center gap-2.5">
+                <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
+                  {i + 1}
                 </div>
-                <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
-                  {c.markets > 0 && <span>{t("business.categoryHub.cityStats.markets", { count: c.markets })}</span>}
-                  {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
-                  {c.hubs > 0 && <span>{t("business.categoryHub.cityStats.hubs", { count: c.hubs })}</span>}
-                  {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
-                  {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
-                </div>
-                {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
-              </button>
-            );
-          })}
+                <span className="text-sm font-medium text-foreground flex-1">{c.name}</span>
+                <span className="text-sm">{c.country_emoji ?? "🌍"}</span>
+                <ChevronRight className="w-4 h-4 text-muted-foreground" />
+              </div>
+              <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
+                {c.markets > 0 && <span>{t("business.categoryHub.cityStats.markets", { count: c.markets })}</span>}
+                {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
+                {c.hubs > 0 && <span>{t("business.categoryHub.cityStats.hubs", { count: c.hubs })}</span>}
+                {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
+                {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
+              </div>
+              {i === 0 && insight && insight.city === c.name && <MizwadInsightBox text={insight.insight_uz} />}
+            </button>
+          ))}
         </>
+      ) : (
+        hasExhibitions && (
+          <div className="bg-white/[0.03] border border-white/[0.08] rounded-xl px-4 py-5 text-center">
+            <p className="text-sm text-foreground mb-1">{t("business.categoryHub.emptyMfgCity.title")}</p>
+            <button
+              onClick={onSeeAllExhibitions}
+              className="text-[12px] text-emerald-400 font-medium mt-1"
+            >
+              🎪 {t("business.categoryHub.emptyMfgCity.cta")}
+            </button>
+          </div>
+        )
       )}
 
       {hasExhibitions && (

@@ -137,6 +137,10 @@
         "phase": "Phase {{n}}",
         "chinaRank": "Chine n°{{n}}",
         "worldRank": "Monde n°{{n}}"
+      },
+      "emptyMfgCity": {
+        "title": "Aucune ville de fabrication ajoutée pour cette catégorie",
+        "cta": "Voir l'onglet expositions"
       }
     },
     "marketDetail": {

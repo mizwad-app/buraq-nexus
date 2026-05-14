@@ -137,6 +137,10 @@
         "phase": "第 {{n}} 期",
         "chinaRank": "中国第 {{n}} 名",
         "worldRank": "世界第 {{n}} 名"
+      },
+      "emptyMfgCity": {
+        "title": "此类别暂无制造城市",
+        "cta": "查看展会标签"
       }
     },
     "marketDetail": {
