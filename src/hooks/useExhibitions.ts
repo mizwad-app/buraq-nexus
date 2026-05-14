@@ -100,7 +100,7 @@ export function useExhibitions(options: UseExhibitionsOptions = {}) {
     return () => {
       cancelled = true;
     };
-  }, [locationFilter, categoryId, limit, activeOnly, upcomingOnly]);
+  }, [locationFilter, categoryId, cityName, limit, activeOnly, upcomingOnly]);
 
   return { data, loading, error };
 }
