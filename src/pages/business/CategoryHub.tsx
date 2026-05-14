@@ -240,12 +240,6 @@ const TabButton = ({ active, onClick, icon, label, count }: { active: boolean; o
 interface CitiesTabProps {
   topCities: { city: string; markets: number; hubs: number; exhibitions: number; score: number }[];
   insight: Insight | null;
-}
-
-const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
-interface CitiesTabProps {
-  topCities: { city: string; markets: number; hubs: number; exhibitions: number; score: number }[];
-  insight: Insight | null;
   topExhibitions: Row[];
   categorySlug: string;
   onSeeAllExhibitions: () => void;
