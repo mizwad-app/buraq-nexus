@@ -2915,7 +2915,9 @@ export type Database = {
           name_ru: string | null
           name_uz: string | null
           name_zh: string | null
+          parent_id: string | null
           slug: string
+          sort_order: number
         }
         Insert: {
           created_at?: string
@@ -2929,7 +2931,9 @@ export type Database = {
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          parent_id?: string | null
           slug: string
+          sort_order?: number
         }
         Update: {
           created_at?: string
@@ -2943,9 +2947,19 @@ export type Database = {
           name_ru?: string | null
           name_uz?: string | null
           name_zh?: string | null
+          parent_id?: string | null
           slug?: string
+          sort_order?: number
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "product_categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "product_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       production_hubs: {
         Row: {

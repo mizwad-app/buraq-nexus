@@ -24,6 +24,8 @@ export const CategoryGrid = () => {
         .from("product_categories")
         .select("*")
         .eq("is_active", true)
+        .is("parent_id", null)
+        .order("sort_order", { ascending: true })
         .order("name", { ascending: true });
       setCategories((data ?? []) as unknown as Category[]);
       setLoading(false);
