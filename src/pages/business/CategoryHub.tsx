@@ -205,7 +205,13 @@ const CategoryHub = () => {
       ) : (
         <>
           {activeTab === "cities" && (
-            <CitiesTab topCities={topCities} insight={insight} />
+            <CitiesTab
+              topCities={topCities}
+              insight={insight}
+              topExhibitions={topExhibitions}
+              categorySlug={categorySlug}
+              onSeeAllExhibitions={() => handleTabChange("exhibitions")}
+            />
           )}
           {activeTab === "markets" && <MarketsTab markets={markets} categorySlug={categorySlug} />}
           {activeTab === "exhibitions" && <ExhibitionsTab exhibitions={exhibitions} categorySlug={categorySlug} />}
