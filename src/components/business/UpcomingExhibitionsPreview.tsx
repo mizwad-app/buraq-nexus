@@ -39,7 +39,7 @@ const formatShortDate = (iso: string) => {
   return `${d.getDate()} ${MONTHS[d.getMonth()]}`;
 };
 
-const daysUntil = (iso: string) => Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000);
+
 
 const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
   const navigate = useNavigate();
