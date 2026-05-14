@@ -121,6 +121,7 @@ const ExhibitionDetail = () => {
   const [ex, setEx] = useState<Exhibition | null>(null);
   const [related, setRelated] = useState<Exhibition[]>([]);
   const [insight, setInsight] = useState<string | null>(null);
+  const [linkedCategories, setLinkedCategories] = useState<Array<{ is_primary: boolean; category: { slug: string; emoji: string | null; name_uz: string | null; name_en: string | null; name_ru: string | null; name_ar: string | null; name_zh: string | null } }>>([]);
   const [loading, setLoading] = useState(true);
 
   const citySlug = cityNameToSlug(ex?.city ?? null);
