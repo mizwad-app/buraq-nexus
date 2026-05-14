@@ -66,10 +66,13 @@ const CityDetail = () => {
 
   const { data: city, loading } = useCity(slug);
   const cityNameEn = city?.name_en;
+  // Some cities share an exhibition cluster (e.g. Foshan ↔ Guangzhou for CIFF/Canton Fair).
+  const exhibitionCityName =
+    slug === "foshan" ? "Guangzhou" : cityNameEn ?? null;
   const { data: mosques } = useMosquesByCity(cityNameEn ?? undefined, 3);
   const { data: markets, total: marketsTotal } = useMarketsByCity(cityNameEn ?? undefined, 3);
   const { data: exhibitions } = useExhibitions({
-    cityName: cityNameEn ?? null,
+    cityName: exhibitionCityName,
     limit: 3,
   });
 
