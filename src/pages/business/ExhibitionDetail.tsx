@@ -122,6 +122,9 @@ const ExhibitionDetail = () => {
   const [insight, setInsight] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const citySlug = cityNameToSlug(ex?.city ?? null);
+  const { data: cityExists } = useCityExists(ex?.city ?? null);
+
   useEffect(() => {
     (async () => {
       setLoading(true);
