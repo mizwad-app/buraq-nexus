@@ -225,8 +225,8 @@ const CategoryHub = () => {
   const today = useMemo(() => new Date().toISOString().slice(0, 10), []);
   const topExhibitions = useMemo(() => {
     return exhibitions
-      .filter((e) => (e.start_date as string) >= today)
-      .sort((a, b) => (a.start_date as string).localeCompare(b.start_date as string))
+      .filter((e) => !!e.start_date && (e.start_date as string) >= today)
+      .sort((a, b) => ((a.start_date as string) ?? "").localeCompare((b.start_date as string) ?? ""))
       .slice(0, 3);
   }, [exhibitions, today]);
 
