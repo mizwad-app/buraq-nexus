@@ -1241,7 +1241,10 @@
     },
     "badge": {
       "international": "دولية",
-      "domestic": "محلية"
+      "domestic": "محلية",
+      "ended": "انتهى",
+      "today": "اليوم!",
+      "daysLeft": "{{count}} يوم متبقي"
     },
     "explore": {
       "label": "اكتشف المدينة",
