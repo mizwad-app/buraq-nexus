@@ -52,6 +52,7 @@ export function useExhibitions(options: UseExhibitionsOptions = {}) {
   const {
     locationFilter = "all",
     categoryId = null,
+    cityName = null,
     limit,
     activeOnly = true,
     upcomingOnly = true,
