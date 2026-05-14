@@ -278,33 +278,36 @@ const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllE
           <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
             {t("business.categoryHub.topCitiesTitle")}
           </p>
-          {topCities.map((c, i) => (
-            <div
-              key={c.city}
-              onClick={() => toast.info(t("cities.comingSoonToast"), { description: t("cities.comingSoonDesc"), duration: 3000 })}
-              className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5 cursor-pointer active:scale-[0.98] transition-transform"
-            >
-              <div className="flex items-center gap-2.5">
-                <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
-                  {i + 1}
+          {topCities.map((c, i) => {
+            const citySlug = c.city
+              .toLowerCase()
+              .replace(/\s+/g, "-")
+              .replace(/[^a-z0-9-]/g, "");
+            return (
+              <button
+                key={c.city}
+                onClick={() => navigate(`/city/${citySlug}`)}
+                className="w-full text-left bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5 cursor-pointer active:scale-[0.98] transition-transform"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
+                    {i + 1}
+                  </div>
+                  <span className="text-sm font-medium text-foreground flex-1">{c.city}</span>
+                  <span className="text-sm">🇨🇳</span>
+                  <ChevronRight className="w-4 h-4 text-muted-foreground" />
                 </div>
-                <span className="text-sm font-medium text-foreground flex-1">{c.city}</span>
-                <span className="text-sm">🇨🇳</span>
-              </div>
-              <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
-                {c.markets > 0 && <span>{t("business.categoryHub.cityStats.markets", { count: c.markets })}</span>}
-                {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
-                {c.hubs > 0 && <span>{t("business.categoryHub.cityStats.hubs", { count: c.hubs })}</span>}
-                {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
-                {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
-              </div>
-              {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
-              <div className="mt-2 flex items-center gap-1 text-[11px] text-amber-500">
-                <span>🚧</span>
-                <span>{t("cities.comingSoonBadge")}</span>
-              </div>
-            </div>
-          ))}
+                <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
+                  {c.markets > 0 && <span>{t("business.categoryHub.cityStats.markets", { count: c.markets })}</span>}
+                  {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
+                  {c.hubs > 0 && <span>{t("business.categoryHub.cityStats.hubs", { count: c.hubs })}</span>}
+                  {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
+                  {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
+                </div>
+                {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
+              </button>
+            );
+          })}
         </>
       )}
 
