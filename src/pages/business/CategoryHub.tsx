@@ -361,6 +361,23 @@ const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllE
   );
 };
 
+const CityHeader = ({ city }: { city: string }) => {
+  const slug = cityNameToSlug(city);
+  const { data: exists } = useCityExists(city);
+
+  if (exists && slug) {
+    return (
+      <Link
+        to={`/city/${slug}`}
+        className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium hover:text-emerald-400 transition-colors"
+      >
+        {city} 🇨🇳
+      </Link>
+    );
+  }
+  return <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">{city} 🇨🇳</p>;
+};
+
 const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: string }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
