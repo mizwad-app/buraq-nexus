@@ -638,7 +638,7 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
           <div className="space-y-2.5">
             {filtered.map((ex) => {
               const cd = countdownInfo(t, ex.start_date as string, ex.end_date as string);
-              const flag = exhibitionFlag(ex.country_code as string | undefined);
+              const flag = (ex.country_emoji as string | null) || exhibitionFlag(ex.country_code as string | undefined);
               const showCountry = ex.country_code && ex.country_code !== "CN" && ex.country_name;
               return (
                 <button
