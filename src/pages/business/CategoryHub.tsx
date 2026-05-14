@@ -205,7 +205,13 @@ const CategoryHub = () => {
       ) : (
         <>
           {activeTab === "cities" && (
-            <CitiesTab topCities={topCities} insight={insight} />
+            <CitiesTab
+              topCities={topCities}
+              insight={insight}
+              topExhibitions={topExhibitions}
+              categorySlug={categorySlug}
+              onSeeAllExhibitions={() => handleTabChange("exhibitions")}
+            />
           )}
           {activeTab === "markets" && <MarketsTab markets={markets} categorySlug={categorySlug} />}
           {activeTab === "exhibitions" && <ExhibitionsTab exhibitions={exhibitions} categorySlug={categorySlug} />}
@@ -234,11 +240,21 @@ const TabButton = ({ active, onClick, icon, label, count }: { active: boolean; o
 interface CitiesTabProps {
   topCities: { city: string; markets: number; hubs: number; exhibitions: number; score: number }[];
   insight: Insight | null;
+  topExhibitions: Row[];
+  categorySlug: string;
+  onSeeAllExhibitions: () => void;
 }
 
-const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
+const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllExhibitions }: CitiesTabProps) => {
   const { t } = useTranslation();
-  if (topCities.length === 0) {
+  const navigate = useNavigate();
+  const { getField } = useTranslatedField();
+  const months = t("business.months", { returnObjects: true }) as string[];
+
+  const hasCities = topCities.length > 0;
+  const hasExhibitions = topExhibitions.length > 0;
+
+  if (!hasCities && !hasExhibitions) {
     return (
       <div className="px-6 py-12 text-center">
         <div className="w-12 h-12 rounded-full bg-emerald-500/10 flex items-center justify-center mx-auto mb-3">
@@ -256,28 +272,78 @@ const CitiesTab = ({ topCities, insight }: CitiesTabProps) => {
 
   return (
     <div className="px-5 space-y-3">
-      <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
-        {t("business.categoryHub.topCitiesTitle")}
-      </p>
-      {topCities.map((c, i) => (
-        <div key={c.city} className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5">
-          <div className="flex items-center gap-2.5">
-            <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
-              {i + 1}
+      {hasCities && (
+        <>
+          <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-1 font-medium">
+            {t("business.categoryHub.topCitiesTitle")}
+          </p>
+          {topCities.map((c, i) => (
+            <div key={c.city} className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5">
+              <div className="flex items-center gap-2.5">
+                <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
+                  {i + 1}
+                </div>
+                <span className="text-sm font-medium text-foreground flex-1">{c.city}</span>
+                <span className="text-sm">🇨🇳</span>
+              </div>
+              <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
+                {c.markets > 0 && <span>{t("business.categoryHub.cityStats.markets", { count: c.markets })}</span>}
+                {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
+                {c.hubs > 0 && <span>{t("business.categoryHub.cityStats.hubs", { count: c.hubs })}</span>}
+                {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
+                {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
+              </div>
+              {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
             </div>
-            <span className="text-sm font-medium text-foreground flex-1">{c.city}</span>
-            <span className="text-sm">🇨🇳</span>
+          ))}
+        </>
+      )}
+
+      {hasExhibitions && (
+        <div className={cn(hasCities && "pt-2")}>
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">
+              🎪 {t("business.upcomingExhibitions")}
+            </p>
+            <button onClick={onSeeAllExhibitions} className="text-[11px] text-emerald-400 font-medium">
+              {t("business.viewAll")} →
+            </button>
           </div>
-          <div className="flex items-center gap-1.5 mt-1.5 ml-8 text-[11px] text-muted-foreground flex-wrap">
-            {c.markets > 0 && <span>{t("business.categoryHub.cityStats.markets", { count: c.markets })}</span>}
-            {c.markets > 0 && (c.hubs > 0 || c.exhibitions > 0) && <span className="text-emerald-500">●</span>}
-            {c.hubs > 0 && <span>{t("business.categoryHub.cityStats.hubs", { count: c.hubs })}</span>}
-            {c.hubs > 0 && c.exhibitions > 0 && <span className="text-emerald-500">●</span>}
-            {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
+          <div className="space-y-2">
+            {topExhibitions.map((ex) => {
+              const cd = countdownInfo(t, ex.start_date as string, ex.end_date as string);
+              const flag = exhibitionFlag(ex.country_code as string | undefined);
+              return (
+                <button
+                  key={ex.id as string}
+                  onClick={() => navigate(`/business/exhibitions/${categorySlug}/${ex.id}`)}
+                  className="w-full bg-card hover:bg-emerald-500/5 border border-border/50 hover:border-emerald-500/30 rounded-xl p-3 text-left transition-colors"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start gap-2 flex-1 min-w-0">
+                      <Calendar className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium text-foreground line-clamp-2">
+                          {getField(ex, "name") || (ex.name as string)}
+                        </p>
+                        <p className="text-[11px] text-muted-foreground mt-0.5">
+                          📅 {fmtRange(months, ex.start_date as string, ex.end_date as string)}
+                        </p>
+                        <p className="text-[11px] text-muted-foreground">
+                          📍 {ex.city as string} {flag}
+                        </p>
+                      </div>
+                    </div>
+                    <span className={cn("rounded-full px-2 py-0.5 text-[10px] font-medium whitespace-nowrap", cd.cls)}>
+                      {cd.text}
+                    </span>
+                  </div>
+                </button>
+              );
+            })}
           </div>
-          {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
         </div>
-      ))}
+      )}
     </div>
   );
 };
