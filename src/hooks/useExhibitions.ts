@@ -42,6 +42,7 @@ export interface ExhibitionWithCategory {
 export interface UseExhibitionsOptions {
   locationFilter?: LocationFilter;
   categoryId?: number | null;
+  cityName?: string | null;
   limit?: number;
   activeOnly?: boolean;
   upcomingOnly?: boolean;
