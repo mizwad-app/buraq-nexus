@@ -32,6 +32,7 @@ interface Exhibition {
   description?: string | null;
   country_code?: string | null;
   country_name?: string | null;
+  country_emoji?: string | null;
   world_rank?: number | null;
   china_rank?: number | null;
   regional_rank?: string | null;
