@@ -387,7 +387,7 @@ const CitiesTab = ({ cities, insight, topExhibitions, categorySlug, onSeeAllExhi
           <div className="space-y-2">
             {topExhibitions.map((ex) => {
               const cd = countdownInfo(t, ex.start_date as string, ex.end_date as string);
-              const flag = exhibitionFlag(ex.country_code as string | undefined);
+              const flag = (ex.country_emoji as string | null) || exhibitionFlag(ex.country_code as string | undefined);
               return (
                 <button
                   key={ex.id as string}
