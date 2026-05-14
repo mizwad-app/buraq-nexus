@@ -427,7 +427,7 @@ const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: s
         {grouped.map(([city, items]) => (
           <div key={city}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">{city} 🇨🇳</p>
+              <CityHeader city={city} />
               <span className="text-[10px] text-muted-foreground">{t("business.categoryHub.itemsCount", { count: items.length })}</span>
             </div>
             <div className="space-y-2">
