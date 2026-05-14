@@ -328,6 +328,30 @@ const ExhibitionDetail = () => {
         </div>
       </section>
 
+      {cityExists && citySlug && (
+        <section className="px-5 mt-3">
+          <Link
+            to={`/city/${citySlug}`}
+            className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-3 hover:bg-emerald-500/[0.08] transition-colors"
+          >
+            <div className="w-9 h-9 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
+              <MapPin className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div
+                className="text-[14px] font-medium text-emerald-400 italic"
+                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+              >
+                {ex.city} →
+              </div>
+              <div className="text-[11px] text-muted-foreground">
+                {t("exhibitions.explore.hint")}
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
+
       {description && (
         <section className="px-5 mt-3">
           <p className="text-[13px] text-muted-foreground leading-relaxed">{description}</p>
