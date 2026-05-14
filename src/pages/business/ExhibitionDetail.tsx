@@ -218,16 +218,37 @@ const ExhibitionDetail = () => {
             🇨🇳 {t("exhibitions.badge.domestic")}
           </span>
         )}
-        {(() => {
-          const cat = ex.exhibition_category as { emoji?: string | null; name_en?: string | null; name_uz?: string | null; [k: string]: unknown } | null | undefined;
-          if (!cat) return null;
-          const name = (cat[`name_${lang}`] as string | undefined) ?? cat.name_en ?? cat.name_uz;
-          return (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/[0.05] text-foreground/80 border border-white/10">
-              {cat.emoji ?? "📂"} {name}
-            </span>
-          );
-        })()}
+        {(linkedCategories.length > 0
+          ? linkedCategories.map((l) => ({
+              slug: l.category.slug,
+              emoji: l.category.emoji,
+              name: (l.category[`name_${lang}` as keyof typeof l.category] as string | null) ?? l.category.name_en ?? l.category.name_uz ?? l.category.slug,
+              isPrimary: l.is_primary,
+            }))
+          : (() => {
+              const cat = ex.exhibition_category as { slug?: string; emoji?: string | null; name_en?: string | null; name_uz?: string | null; [k: string]: unknown } | null | undefined;
+              if (!cat) return [];
+              return [{
+                slug: cat.slug ?? "",
+                emoji: cat.emoji ?? null,
+                name: (cat[`name_${lang}`] as string | undefined) ?? cat.name_en ?? cat.name_uz ?? "",
+                isPrimary: true,
+              }];
+            })()
+        ).map((c) => (
+          <Link
+            key={c.slug}
+            to={`/business/category/${c.slug}?tab=exhibitions`}
+            className={cn(
+              "text-[10px] px-2 py-0.5 rounded-full border transition-colors",
+              c.isPrimary
+                ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/30 font-semibold"
+                : "bg-white/[0.05] text-foreground/80 border-white/10 hover:bg-white/[0.08]"
+            )}
+          >
+            {c.emoji ?? "📂"} {c.name}
+          </Link>
+        ))}
       </div>
 
       {(ex.world_rank || ex.china_rank || ex.regional_rank || ex.attendees_count) && (
