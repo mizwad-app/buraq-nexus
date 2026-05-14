@@ -1255,6 +1255,10 @@
       "international": "International",
       "domestic": "Domestic"
     },
+    "explore": {
+      "label": "Explore the city",
+      "hint": "Airport, mosque, halal"
+    },
     "empty": {
       "generic": "No exhibitions match filter",
       "domesticTitle": "Domestic exhibitions coming soon",

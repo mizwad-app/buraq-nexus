@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useExhibitions } from "@/hooks/useExhibitions";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { cn } from "@/lib/utils";
 
 interface Exhibition {
@@ -43,10 +44,23 @@ const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
   const days = daysUntil(exhibition.start_date);
   const flag = flagEmoji(exhibition.country_code);
   const name = getField(exhibition as unknown as Record<string, unknown>, "name") || exhibition.name;
+  const citySlug = cityNameToSlug(exhibition.city);
+  const { data: cityExists } = useCityExists(exhibition.city);
+
+  const handleCardClick = () => {
+    navigate(`/business/exhibitions/${exhibition.category || "all"}/${exhibition.id}`);
+  };
+
+  const handleCityClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (citySlug) {
+      navigate(`/city/${citySlug}`);
+    }
+  };
 
   return (
     <button
-      onClick={() => navigate(`/business/exhibitions/${exhibition.category || "all"}/${exhibition.id}`)}
+      onClick={handleCardClick}
       className={cn(
         "w-full flex items-center gap-3 bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30",
         "rounded-xl py-2.5 px-3 text-left transition-colors min-h-[60px]",
@@ -60,6 +74,18 @@ const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
           <span className="mr-1">{flag}</span>{name}
         </div>
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-0.5 flex-wrap">
+          {exhibition.city && cityExists && citySlug ? (
+            <span
+              onClick={handleCityClick}
+              role="link"
+              className="inline-flex items-center gap-0.5 text-emerald-400 hover:underline cursor-pointer"
+            >
+              📍 {exhibition.city}
+            </span>
+          ) : (
+            <span>📍 {exhibition.city}</span>
+          )}
+          <span>·</span>
           <span>{formatShortDate(exhibition.start_date)}</span>
           <span>·</span>
           <span className={cn(days <= 7 && days >= 0 && "text-amber-400 font-semibold")}>

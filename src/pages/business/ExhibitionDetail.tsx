@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ChevronLeft, CalendarPlus, Globe, Share2, Navigation, Hotel, Users, UtensilsCrossed } from "lucide-react";
+import { ChevronLeft, CalendarPlus, Globe, Share2, Navigation, Hotel, Users, UtensilsCrossed, MapPin, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { fetchExhibitionsForCategory } from "@/lib/businessFetchers";
 import { PlacePlaceholder } from "@/components/business/PlacePlaceholder";
 import { MizwadInsightBox } from "@/components/business/MizwadInsightBox";
@@ -121,6 +122,9 @@ const ExhibitionDetail = () => {
   const [insight, setInsight] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const citySlug = cityNameToSlug(ex?.city ?? null);
+  const { data: cityExists } = useCityExists(ex?.city ?? null);
+
   useEffect(() => {
     (async () => {
       setLoading(true);
@@ -181,7 +185,13 @@ const ExhibitionDetail = () => {
         <h1 className="text-lg font-semibold text-foreground leading-tight">{name}</h1>
         <p className="text-[12px] text-muted-foreground mt-1">📅 {fmtRange(months, ex.start_date, ex.end_date)}</p>
         <p className="text-[12px] text-muted-foreground">
-          📍 {ex.city} {exhibitionFlag(ex.country_code)}
+          📍 {ex.city && cityExists && citySlug ? (
+            <Link to={`/city/${citySlug}`} className="inline-flex items-center gap-0.5 text-emerald-400 hover:underline">
+              {ex.city}
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          ) : ex.city}
+          {exhibitionFlag(ex.country_code)}
           {ex.country_code && ex.country_code !== "CN" && ex.country_name ? ` (${ex.country_name})` : ""}
           {venue ? ` · ${venue}` : ""}
         </p>
@@ -318,6 +328,30 @@ const ExhibitionDetail = () => {
         </div>
       </section>
 
+      {cityExists && citySlug && (
+        <section className="px-5 mt-3">
+          <Link
+            to={`/city/${citySlug}`}
+            className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-3 hover:bg-emerald-500/[0.08] transition-colors"
+          >
+            <div className="w-9 h-9 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
+              <MapPin className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div
+                className="text-[14px] font-medium text-emerald-400 italic"
+                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+              >
+                {ex.city} →
+              </div>
+              <div className="text-[11px] text-muted-foreground">
+                {t("exhibitions.explore.hint")}
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
+
       {description && (
         <section className="px-5 mt-3">
           <p className="text-[13px] text-muted-foreground leading-relaxed">{description}</p>
@@ -353,20 +387,36 @@ const ExhibitionDetail = () => {
           <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">{t("business.exhibitionDetail.moreInCategory")}</p>
           <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-5 px-5">
             {related.map((r) => (
-              <button
-                key={r.id}
-                onClick={() => navigate(`/business/exhibitions/${categorySlug}/${r.id}`)}
-                className="shrink-0 w-44 bg-card border border-border/40 rounded-xl p-3 text-left"
-              >
-                <p className="text-[12px] font-medium text-foreground line-clamp-2">{getField(r as unknown as Record<string, unknown>, "name") || r.name}</p>
-                <p className="text-[10px] text-muted-foreground mt-1">{r.city}</p>
-                <p className="text-[10px] text-muted-foreground">{fmtRange(months, r.start_date, r.end_date)}</p>
-              </button>
+              <RelatedExhibitionCard key={r.id} exhibition={r} categorySlug={categorySlug} months={months} />
             ))}
           </div>
         </section>
       )}
     </div>
+  );
+};
+
+const RelatedExhibitionCard = ({ exhibition, categorySlug, months }: { exhibition: Exhibition; categorySlug: string; months: string[] }) => {
+  const navigate = useNavigate();
+  const { getField } = useTranslatedField();
+  const rSlug = cityNameToSlug(exhibition.city);
+  const { data: rCityExists } = useCityExists(exhibition.city);
+
+  return (
+    <button
+      onClick={() => navigate(`/business/exhibitions/${categorySlug}/${exhibition.id}`)}
+      className="shrink-0 w-44 bg-card border border-border/40 rounded-xl p-3 text-left"
+    >
+      <p className="text-[12px] font-medium text-foreground line-clamp-2">{getField(exhibition as unknown as Record<string, unknown>, "name") || exhibition.name}</p>
+      <p className="text-[10px] text-muted-foreground mt-1">
+        {exhibition.city && rCityExists && rSlug ? (
+          <Link to={`/city/${rSlug}`} onClick={(e) => e.stopPropagation()} className="text-emerald-400 hover:underline">
+            {exhibition.city}
+          </Link>
+        ) : exhibition.city}
+      </p>
+      <p className="text-[10px] text-muted-foreground">{fmtRange(months, exhibition.start_date, exhibition.end_date)}</p>
+    </button>
   );
 };
 

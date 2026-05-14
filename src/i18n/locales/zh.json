@@ -1236,6 +1236,10 @@
       "international": "国际",
       "domestic": "本地"
     },
+    "explore": {
+      "label": "了解城市",
+      "hint": "机场、清真寺、清真"
+    },
     "empty": {
       "generic": "未找到符合条件的展会",
       "domesticTitle": "本地展会即将推出",

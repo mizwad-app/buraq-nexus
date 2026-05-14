@@ -1235,6 +1235,10 @@
       "international": "Xalqaro",
       "domestic": "Mahalliy"
     },
+    "explore": {
+      "label": "Shahar haqida ko'proq",
+      "hint": "Aeroport, masjid, halol"
+    },
     "empty": {
       "generic": "Filtr bo'yicha ko'rgazma topilmadi",
       "domesticTitle": "Mahalliy ko'rgazmalar tez orada",
