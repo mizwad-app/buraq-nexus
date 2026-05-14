@@ -137,6 +137,10 @@
         "phase": "Phase {{n}}",
         "chinaRank": "Xitoyda №{{n}}",
         "worldRank": "Dunyoda №{{n}}"
+      },
+      "emptyMfgCity": {
+        "title": "Bu kategoriya uchun ishlab chiqarish shahar hali qo'shilmagan",
+        "cta": "Ko'rgazmalar tabini ko'ring"
       }
     },
     "marketDetail": {
