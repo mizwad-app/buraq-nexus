@@ -1251,6 +1251,10 @@
       "international": "International",
       "domestic": "National"
     },
+    "explore": {
+      "label": "Découvrir la ville",
+      "hint": "Aéroport, mosquée, halal"
+    },
     "empty": {
       "generic": "Aucune exposition ne correspond au filtre",
       "domesticTitle": "Expositions nationales bientôt disponibles",
