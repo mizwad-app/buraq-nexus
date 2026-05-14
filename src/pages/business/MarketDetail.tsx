@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { ChevronLeft, Phone, Navigation, Share2, Globe, Clock, MapPin, ChevronRight } from "lucide-react";
+import { ChevronLeft, Phone, Navigation, Share2, Globe, Clock, MapPin, ChevronRight, ArrowRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { fetchMarketsForCategory } from "@/lib/businessFetchers";
 import { PlacePlaceholder } from "@/components/business/PlacePlaceholder";
 import { MizwadInsightBox } from "@/components/business/MizwadInsightBox";
@@ -79,6 +80,9 @@ const MarketDetail = () => {
   const [related, setRelated] = useState<Market[]>([]);
   const [insight, setInsight] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const citySlug = cityNameToSlug(market?.city ?? null);
+  const { data: cityExists } = useCityExists(market?.city ?? null);
 
   useEffect(() => {
     (async () => {
@@ -171,7 +175,13 @@ const MarketDetail = () => {
           </p>
         )}
         <p className="text-[12px] text-muted-foreground mt-1">
-          {market.city} 🇨🇳 {market.market_type ? `· ${market.market_type}` : ""}
+          {market.city && cityExists && citySlug ? (
+            <Link to={`/city/${citySlug}`} className="inline-flex items-center gap-0.5 text-emerald-400 hover:underline">
+              {market.city}
+              <ArrowRight className="w-3 h-3" />
+            </Link>
+          ) : market.city}
+          {" "}🇨🇳 {market.market_type ? `· ${market.market_type}` : ""}
         </p>
       </div>
 
@@ -197,6 +207,30 @@ const MarketDetail = () => {
           {market.market_type && <InfoRow label={t("business.marketDetail.info.products")} value={market.market_type} />}
         </div>
       </section>
+
+      {cityExists && citySlug && (
+        <section className="px-5 mt-3">
+          <Link
+            to={`/city/${citySlug}`}
+            className="flex items-center gap-3 rounded-xl border border-emerald-500/20 bg-emerald-500/[0.04] p-3 hover:bg-emerald-500/[0.08] transition-colors"
+          >
+            <div className="w-9 h-9 rounded-lg bg-emerald-500/15 flex items-center justify-center shrink-0">
+              <MapPin className="w-4 h-4 text-emerald-400" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div
+                className="text-[14px] font-medium text-emerald-400 italic"
+                style={{ fontFamily: "'Fraunces', Georgia, serif" }}
+              >
+                {market.city} →
+              </div>
+              <div className="text-[11px] text-muted-foreground">
+                {t("markets.explore.hint")}
+              </div>
+            </div>
+          </Link>
+        </section>
+      )}
 
       {(market.nearest_metro || market.nearest_airport) && (
         <section className="px-5 mt-4">

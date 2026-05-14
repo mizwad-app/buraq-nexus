@@ -1245,5 +1245,11 @@
       "domesticTitle": "本地展会即将推出",
       "domesticDesc": "我们将在下一阶段添加中国国内展会"
     }
+  },
+  "markets": {
+    "explore": {
+      "label": "了解城市",
+      "hint": "机场、清真寺、清真"
+    }
   }
 }

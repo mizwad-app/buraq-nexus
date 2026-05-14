@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 import { 
   Store, 
   MapPin, 
@@ -11,6 +12,7 @@ import {
   Navigation
 } from "lucide-react";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
@@ -70,6 +72,9 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
   const translatedCity = getField(market, 'city');
   const translatedTips = getField(market, 'travel_tips');
   const translatedCategory = getField(market, 'category');
+  
+  const citySlug = cityNameToSlug(translatedCity);
+  const { data: cityExists } = useCityExists(translatedCity);
   
   const chineseAddress = market.address_chinese || market.address;
   const travelInfo = parseTravelInfo(translatedTips);
@@ -200,7 +205,18 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
       <div className="px-4 py-2 bg-muted/20 border-t border-border/30 flex items-center justify-between">
         <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
           <MapPin className="w-3 h-3" />
-          <span>{translatedCity}, {market.country}</span>
+          {translatedCity && cityExists && citySlug ? (
+            <Link
+              to={`/city/${citySlug}`}
+              onClick={(e) => e.stopPropagation()}
+              className="text-emerald-400 hover:underline"
+            >
+              {translatedCity}
+            </Link>
+          ) : (
+            <span>{translatedCity}</span>
+          )}
+          <span>, {market.country}</span>
         </div>
         <span className="text-[10px] text-primary font-medium">{t("common.more")} →</span>
       </div>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 import { ChevronLeft, ChevronRight, Info, MapPin, Calendar } from "lucide-react";
@@ -11,6 +11,7 @@ import { fetchMarketsForCategory, fetchExhibitionsForCategory } from "@/lib/busi
 import { matchesCategory } from "@/lib/businessCategoryMatch";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { exhibitionFlag } from "@/lib/exhibitionFlags";
 import { cn } from "@/lib/utils";
 
@@ -360,6 +361,23 @@ const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllE
   );
 };
 
+const CityHeader = ({ city }: { city: string }) => {
+  const slug = cityNameToSlug(city);
+  const { data: exists } = useCityExists(city);
+
+  if (exists && slug) {
+    return (
+      <Link
+        to={`/city/${slug}`}
+        className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium hover:text-emerald-400 transition-colors"
+      >
+        {city} 🇨🇳
+      </Link>
+    );
+  }
+  return <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">{city} 🇨🇳</p>;
+};
+
 const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: string }) => {
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -426,7 +444,7 @@ const MarketsTab = ({ markets, categorySlug }: { markets: Row[]; categorySlug: s
         {grouped.map(([city, items]) => (
           <div key={city}>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">{city} 🇨🇳</p>
+              <CityHeader city={city} />
               <span className="text-[10px] text-muted-foreground">{t("business.categoryHub.itemsCount", { count: items.length })}</span>
             </div>
             <div className="space-y-2">

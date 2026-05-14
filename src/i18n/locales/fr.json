@@ -1260,5 +1260,11 @@
       "domesticTitle": "Expositions nationales bientôt disponibles",
       "domesticDesc": "Nous ajouterons les foires chinoises domestiques dans la prochaine phase"
     }
+  },
+  "markets": {
+    "explore": {
+      "label": "Découvrir la ville",
+      "hint": "Aéroport, mosquée, halal"
+    }
   }
 }

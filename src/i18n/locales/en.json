@@ -1264,5 +1264,11 @@
       "domesticTitle": "Domestic exhibitions coming soon",
       "domesticDesc": "We'll add Chinese domestic-only fairs in the next phase"
     }
+  },
+  "markets": {
+    "explore": {
+      "label": "Explore the city",
+      "hint": "Airport, mosque, halal"
+    }
   }
 }
