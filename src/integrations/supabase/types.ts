@@ -379,6 +379,179 @@ export type Database = {
         }
         Relationships: []
       }
+      cities: {
+        Row: {
+          airport_distance_km: number | null
+          airport_taxi_cost_yuan: number | null
+          airport_taxi_duration_min: number | null
+          country: string
+          country_emoji: string | null
+          created_at: string
+          data_confidence: string | null
+          factory_count_estimated: number | null
+          fun_fact_ar: string | null
+          fun_fact_en: string | null
+          fun_fact_fr: string | null
+          fun_fact_ru: string | null
+          fun_fact_uz: string | null
+          fun_fact_zh: string | null
+          halal_food_note_ar: string | null
+          halal_food_note_en: string | null
+          halal_food_note_fr: string | null
+          halal_food_note_ru: string | null
+          halal_food_note_uz: string | null
+          halal_food_note_zh: string | null
+          id: number
+          is_active: boolean
+          main_products_ar: string | null
+          main_products_en: string | null
+          main_products_fr: string | null
+          main_products_ru: string | null
+          main_products_uz: string | null
+          main_products_zh: string | null
+          name_ar: string | null
+          name_en: string
+          name_fr: string | null
+          name_ru: string | null
+          name_uz: string
+          name_zh: string | null
+          nearest_airport_code: string | null
+          nearest_airport_name_en: string | null
+          nearest_airport_name_uz: string | null
+          phone_code: string | null
+          population: number | null
+          province: string | null
+          slug: string
+          timezone: string | null
+          updated_at: string
+        }
+        Insert: {
+          airport_distance_km?: number | null
+          airport_taxi_cost_yuan?: number | null
+          airport_taxi_duration_min?: number | null
+          country?: string
+          country_emoji?: string | null
+          created_at?: string
+          data_confidence?: string | null
+          factory_count_estimated?: number | null
+          fun_fact_ar?: string | null
+          fun_fact_en?: string | null
+          fun_fact_fr?: string | null
+          fun_fact_ru?: string | null
+          fun_fact_uz?: string | null
+          fun_fact_zh?: string | null
+          halal_food_note_ar?: string | null
+          halal_food_note_en?: string | null
+          halal_food_note_fr?: string | null
+          halal_food_note_ru?: string | null
+          halal_food_note_uz?: string | null
+          halal_food_note_zh?: string | null
+          id?: number
+          is_active?: boolean
+          main_products_ar?: string | null
+          main_products_en?: string | null
+          main_products_fr?: string | null
+          main_products_ru?: string | null
+          main_products_uz?: string | null
+          main_products_zh?: string | null
+          name_ar?: string | null
+          name_en: string
+          name_fr?: string | null
+          name_ru?: string | null
+          name_uz: string
+          name_zh?: string | null
+          nearest_airport_code?: string | null
+          nearest_airport_name_en?: string | null
+          nearest_airport_name_uz?: string | null
+          phone_code?: string | null
+          population?: number | null
+          province?: string | null
+          slug: string
+          timezone?: string | null
+          updated_at?: string
+        }
+        Update: {
+          airport_distance_km?: number | null
+          airport_taxi_cost_yuan?: number | null
+          airport_taxi_duration_min?: number | null
+          country?: string
+          country_emoji?: string | null
+          created_at?: string
+          data_confidence?: string | null
+          factory_count_estimated?: number | null
+          fun_fact_ar?: string | null
+          fun_fact_en?: string | null
+          fun_fact_fr?: string | null
+          fun_fact_ru?: string | null
+          fun_fact_uz?: string | null
+          fun_fact_zh?: string | null
+          halal_food_note_ar?: string | null
+          halal_food_note_en?: string | null
+          halal_food_note_fr?: string | null
+          halal_food_note_ru?: string | null
+          halal_food_note_uz?: string | null
+          halal_food_note_zh?: string | null
+          id?: number
+          is_active?: boolean
+          main_products_ar?: string | null
+          main_products_en?: string | null
+          main_products_fr?: string | null
+          main_products_ru?: string | null
+          main_products_uz?: string | null
+          main_products_zh?: string | null
+          name_ar?: string | null
+          name_en?: string
+          name_fr?: string | null
+          name_ru?: string | null
+          name_uz?: string
+          name_zh?: string | null
+          nearest_airport_code?: string | null
+          nearest_airport_name_en?: string | null
+          nearest_airport_name_uz?: string | null
+          phone_code?: string | null
+          population?: number | null
+          province?: string | null
+          slug?: string
+          timezone?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      city_product_categories: {
+        Row: {
+          category_slug: string
+          city_id: number
+          factory_count_estimated: number | null
+          id: number
+          is_top: boolean | null
+          rank: number | null
+        }
+        Insert: {
+          category_slug: string
+          city_id: number
+          factory_count_estimated?: number | null
+          id?: number
+          is_top?: boolean | null
+          rank?: number | null
+        }
+        Update: {
+          category_slug?: string
+          city_id?: number
+          factory_count_estimated?: number | null
+          id?: number
+          is_top?: boolean | null
+          rank?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "city_product_categories_city_id_fkey"
+            columns: ["city_id"]
+            isOneToOne: false
+            referencedRelation: "cities"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companies: {
         Row: {
           address_zh: string | null
