@@ -81,6 +81,9 @@ const MarketDetail = () => {
   const [insight, setInsight] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const citySlug = cityNameToSlug(market?.city ?? null);
+  const { data: cityExists } = useCityExists(market?.city ?? null);
+
   useEffect(() => {
     (async () => {
       setLoading(true);
