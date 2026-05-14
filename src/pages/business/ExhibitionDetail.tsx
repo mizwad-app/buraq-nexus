@@ -386,31 +386,37 @@ const ExhibitionDetail = () => {
         <section className="px-5 mt-6">
           <p className="text-[11px] uppercase tracking-wide text-muted-foreground mb-2 font-medium">{t("business.exhibitionDetail.moreInCategory")}</p>
           <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-5 px-5">
-            {related.map((r) => {
-              const rSlug = cityNameToSlug(r.city);
-              const { data: rCityExists } = useCityExists(r.city);
-              return (
-                <button
-                  key={r.id}
-                  onClick={() => navigate(`/business/exhibitions/${categorySlug}/${r.id}`)}
-                  className="shrink-0 w-44 bg-card border border-border/40 rounded-xl p-3 text-left"
-                >
-                  <p className="text-[12px] font-medium text-foreground line-clamp-2">{getField(r as unknown as Record<string, unknown>, "name") || r.name}</p>
-                  <p className="text-[10px] text-muted-foreground mt-1">
-                    {r.city && rCityExists && rSlug ? (
-                      <Link to={`/city/${rSlug}`} onClick={(e) => e.stopPropagation()} className="text-emerald-400 hover:underline">
-                        {r.city}
-                      </Link>
-                    ) : r.city}
-                  </p>
-                  <p className="text-[10px] text-muted-foreground">{fmtRange(months, r.start_date, r.end_date)}</p>
-                </button>
-              );
-            })}
+            {related.map((r) => (
+              <RelatedExhibitionCard key={r.id} exhibition={r} categorySlug={categorySlug} months={months} />
+            ))}
           </div>
         </section>
       )}
     </div>
+  );
+};
+
+const RelatedExhibitionCard = ({ exhibition, categorySlug, months }: { exhibition: Exhibition; categorySlug: string; months: string[] }) => {
+  const navigate = useNavigate();
+  const { getField } = useTranslatedField();
+  const rSlug = cityNameToSlug(exhibition.city);
+  const { data: rCityExists } = useCityExists(exhibition.city);
+
+  return (
+    <button
+      onClick={() => navigate(`/business/exhibitions/${categorySlug}/${exhibition.id}`)}
+      className="shrink-0 w-44 bg-card border border-border/40 rounded-xl p-3 text-left"
+    >
+      <p className="text-[12px] font-medium text-foreground line-clamp-2">{getField(exhibition as unknown as Record<string, unknown>, "name") || exhibition.name}</p>
+      <p className="text-[10px] text-muted-foreground mt-1">
+        {exhibition.city && rCityExists && rSlug ? (
+          <Link to={`/city/${rSlug}`} onClick={(e) => e.stopPropagation()} className="text-emerald-400 hover:underline">
+            {exhibition.city}
+          </Link>
+        ) : exhibition.city}
+      </p>
+      <p className="text-[10px] text-muted-foreground">{fmtRange(months, exhibition.start_date, exhibition.end_date)}</p>
+    </button>
   );
 };
 
