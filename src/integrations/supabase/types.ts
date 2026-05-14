@@ -1061,6 +1061,7 @@ export type Database = {
           name_ru: string
           name_uz: string
           name_zh: string | null
+          parent_id: number | null
           slug: string
           sort_order: number
           updated_at: string
@@ -1076,6 +1077,7 @@ export type Database = {
           name_ru: string
           name_uz: string
           name_zh?: string | null
+          parent_id?: number | null
           slug: string
           sort_order?: number
           updated_at?: string
@@ -1091,11 +1093,20 @@ export type Database = {
           name_ru?: string
           name_uz?: string
           name_zh?: string | null
+          parent_id?: number | null
           slug?: string
           sort_order?: number
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "exhibition_categories_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "exhibition_categories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       exhibition_editions: {
         Row: {
