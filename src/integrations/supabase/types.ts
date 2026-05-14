@@ -1108,6 +1108,45 @@ export type Database = {
           },
         ]
       }
+      exhibition_category_links: {
+        Row: {
+          category_id: number
+          created_at: string | null
+          exhibition_id: string
+          id: number
+          is_primary: boolean | null
+        }
+        Insert: {
+          category_id: number
+          created_at?: string | null
+          exhibition_id: string
+          id?: number
+          is_primary?: boolean | null
+        }
+        Update: {
+          category_id?: number
+          created_at?: string | null
+          exhibition_id?: string
+          id?: number
+          is_primary?: boolean | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "exhibition_category_links_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "exhibition_categories"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "exhibition_category_links_exhibition_id_fkey"
+            columns: ["exhibition_id"]
+            isOneToOne: false
+            referencedRelation: "exhibitions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       exhibition_editions: {
         Row: {
           city: string | null
