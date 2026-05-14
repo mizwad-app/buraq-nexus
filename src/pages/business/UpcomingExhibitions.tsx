@@ -172,8 +172,8 @@ const UpcomingExhibitions = () => {
   const counts = useMemo(
     () => ({
       all: allResult.data.length,
-      international: allResult.data.filter((e) => e.is_international === true).length,
-      domestic: allResult.data.filter((e) => e.is_international === false).length,
+      international: allResult.data.filter((e) => (e as any).country_type === "world").length,
+      domestic: allResult.data.filter((e) => (e as any).country_type === "china").length,
     }),
     [allResult.data],
   );
