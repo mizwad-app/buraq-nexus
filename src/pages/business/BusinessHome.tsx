@@ -89,7 +89,8 @@ const BusinessHome = () => {
   let card3Subtitle = t("business.home.upcomingExhibitions");
   if (nextEx) {
     const days = Math.max(0, Math.ceil((new Date(nextEx.start_date).getTime() - Date.now()) / 86400000));
-    const shortName = nextEx.name.length > 18 ? nextEx.name.slice(0, 18) + "…" : nextEx.name;
+    const exName = nextEx.name ?? "";
+    const shortName = exName.length > 18 ? exName.slice(0, 18) + "…" : exName;
     card3Subtitle = t("business.home.daysLeft", { name: shortName, count: days });
   }
 
