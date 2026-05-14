@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { ChevronLeft } from "lucide-react";
 import { useExhibitions, type ExhibitionWithCategory } from "@/hooks/useExhibitions";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
+import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { ExhibitionFilters, type FilterState } from "@/components/exhibitions/ExhibitionFilters";
 import { cn } from "@/lib/utils";
 
