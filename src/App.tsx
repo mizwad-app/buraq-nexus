@@ -30,6 +30,7 @@ import AdminLocations from "./pages/AdminLocations";
 import TravelChecklist from "./pages/TravelChecklist";
 import Translators from "./pages/Translators";
 import NotFound from "./pages/NotFound";
+import CityDetail from "./pages/CityDetail";
 import AdminLogin from "./pages/AdminLogin";
 import AdminLayout from "./layouts/AdminLayout";
 import AdminDashboard from "./pages/AdminDashboard";
