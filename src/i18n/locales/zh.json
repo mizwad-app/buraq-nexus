@@ -334,6 +334,11 @@
       "searchHint": "如果未列出您的类目,请使用上方的搜索栏查找。"
     }
   },
+  "cities": {
+    "comingSoonToast": "城市页面即将推出",
+    "comingSoonDesc": "机场、清真寺、清真餐厅等信息即将推出",
+    "comingSoonBadge": "即将推出"
+  },
   "sourcing": {
     "strategicPlanner": "战略行程规划",
     "subtitle": "选择产品 — 查看应该去哪里",

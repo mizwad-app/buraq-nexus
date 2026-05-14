@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import type { TFunction } from "i18next";
 import { ChevronLeft, ChevronRight, Info, MapPin, Calendar } from "lucide-react";
+import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { CategoryBadge } from "@/components/business/CategoryBadge";
 import { MizwadInsightBox } from "@/components/business/MizwadInsightBox";
@@ -278,7 +279,11 @@ const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllE
             {t("business.categoryHub.topCitiesTitle")}
           </p>
           {topCities.map((c, i) => (
-            <div key={c.city} className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5">
+            <div
+              key={c.city}
+              onClick={() => toast.info(t("cities.comingSoonToast"), { description: t("cities.comingSoonDesc"), duration: 3000 })}
+              className="bg-white/[0.03] border border-white/[0.08] rounded-xl py-3 px-3.5 cursor-pointer active:scale-[0.98] transition-transform"
+            >
               <div className="flex items-center gap-2.5">
                 <div className={cn("w-[22px] h-[22px] rounded-full flex items-center justify-center text-[11px] font-semibold", rankBadgeCls(i + 1))}>
                   {i + 1}
@@ -294,6 +299,10 @@ const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllE
                 {c.exhibitions > 0 && <span>{t("business.categoryHub.cityStats.exhibitions", { count: c.exhibitions })}</span>}
               </div>
               {i === 0 && insight && insight.city === c.city && <MizwadInsightBox text={insight.insight_uz} />}
+              <div className="mt-2 flex items-center gap-1 text-[11px] text-amber-500">
+                <span>🚧</span>
+                <span>{t("cities.comingSoonBadge")}</span>
+              </div>
             </div>
           ))}
         </>
@@ -303,7 +312,7 @@ const CitiesTab = ({ topCities, insight, topExhibitions, categorySlug, onSeeAllE
         <div className={cn(hasCities && "pt-2")}>
           <div className="flex items-center justify-between mb-2">
             <p className="text-[11px] uppercase tracking-wide text-muted-foreground font-medium">
-              🎪 {t("business.upcomingExhibitions")}
+              🎪 {t("business.home.upcomingExhibitions")}
             </p>
             <button onClick={onSeeAllExhibitions} className="text-[11px] text-emerald-400 font-medium">
               {t("business.viewAll")} →

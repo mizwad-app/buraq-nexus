@@ -334,6 +334,11 @@
       "searchHint": "Bu yerda ko'rmagan kategoriyangizni qidirish uchun yuqoridagi qidiruv panelidan foydalaning."
     }
   },
+  "cities": {
+    "comingSoonToast": "Shahar sahifasi tez orada",
+    "comingSoonDesc": "Aeroport, masjid, halol joylar va boshqa ma'lumotlar yaqin orada qo'shiladi",
+    "comingSoonBadge": "Tez orada"
+  },
   "sourcing": {
     "strategicPlanner": "Strategik Sayohat Rejalashtirish",
     "subtitle": "Mahsulot tanlang — qayerga borish kerakligini ko'ring",
