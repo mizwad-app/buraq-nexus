@@ -73,6 +73,9 @@ export const MarketCard = ({ market, onClick }: MarketCardProps) => {
   const translatedTips = getField(market, 'travel_tips');
   const translatedCategory = getField(market, 'category');
   
+  const citySlug = cityNameToSlug(translatedCity);
+  const { data: cityExists } = useCityExists(translatedCity);
+  
   const chineseAddress = market.address_chinese || market.address;
   const travelInfo = parseTravelInfo(translatedTips);
   
