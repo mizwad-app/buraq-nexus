@@ -61,7 +61,8 @@ const countdownInfo = (t: TFunction, start: string, end: string) => {
   const days = Math.ceil((s - now) / 86400000);
   if (days <= 7) return { text: t("business.categoryHub.countdown.daysLeft", { count: days }), cls: "bg-amber-500/15 text-amber-400" };
   if (days <= 30) return { text: t("business.categoryHub.countdown.daysLeft", { count: days }), cls: "bg-emerald-500/15 text-emerald-400" };
-  return { text: t("business.categoryHub.countdown.daysLeft", { count: days }), cls: "bg-white/[0.05] text-muted-foreground" };
+  // 31+ days — blue (gray/white reserved for ended only)
+  return { text: t("business.categoryHub.countdown.daysLeft", { count: days }), cls: "bg-blue-500/15 text-blue-400" };
 };
 
 const rankBadgeCls = (rank: number) => {
