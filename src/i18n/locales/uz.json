@@ -1244,5 +1244,11 @@
       "domesticTitle": "Mahalliy ko'rgazmalar tez orada",
       "domesticDesc": "Xitoyning ichki bozori uchun ko'rgazmalarni keyingi bosqichda qo'shamiz"
     }
+  },
+  "markets": {
+    "explore": {
+      "label": "Shahar haqida ko'proq",
+      "hint": "Aeroport, masjid, halol"
+    }
   }
 }
