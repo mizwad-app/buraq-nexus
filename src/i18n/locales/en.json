@@ -334,6 +334,11 @@
       "searchHint": "If your category is not listed, use the search bar above to find it."
     }
   },
+  "cities": {
+    "comingSoonToast": "City page coming soon",
+    "comingSoonDesc": "Airport, mosque, halal places and more info coming soon",
+    "comingSoonBadge": "Soon"
+  },
   "sourcing": {
     "strategicPlanner": "Strategic Travel Planning",
     "subtitle": "Select a product — see where to go",
