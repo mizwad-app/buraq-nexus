@@ -1244,7 +1244,7 @@
     "filter": {
       "all": "Tous",
       "international": "International",
-      "domestic": "National",
+      "domestic": "Local (Chine)",
       "allCategories": "Toutes les catégories"
     },
     "badge": {

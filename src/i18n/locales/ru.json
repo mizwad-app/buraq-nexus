@@ -1230,7 +1230,7 @@
     "filter": {
       "all": "Все",
       "international": "Международные",
-      "domestic": "Местные",
+      "domestic": "Местные (Китай)",
       "allCategories": "Все категории"
     },
     "badge": {
