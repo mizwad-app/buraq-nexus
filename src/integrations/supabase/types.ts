@@ -1162,6 +1162,7 @@ export type Database = {
           countries_count: number | null
           country: string
           country_code: string | null
+          country_emoji: string | null
           country_name: string | null
           country_type: string | null
           created_at: string
@@ -1234,6 +1235,7 @@ export type Database = {
           countries_count?: number | null
           country?: string
           country_code?: string | null
+          country_emoji?: string | null
           country_name?: string | null
           country_type?: string | null
           created_at?: string
@@ -1306,6 +1308,7 @@ export type Database = {
           countries_count?: number | null
           country?: string
           country_code?: string | null
+          country_emoji?: string | null
           country_name?: string | null
           country_type?: string | null
           created_at?: string
