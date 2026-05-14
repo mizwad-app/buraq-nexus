@@ -1257,7 +1257,10 @@
     },
     "badge": {
       "international": "International",
-      "domestic": "Domestic"
+      "domestic": "Domestic",
+      "ended": "Ended",
+      "today": "Today!",
+      "daysLeft": "{{count}} days left"
     },
     "explore": {
       "label": "Explore the city",

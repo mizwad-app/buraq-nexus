@@ -1237,7 +1237,10 @@
     },
     "badge": {
       "international": "Xalqaro",
-      "domestic": "Mahalliy"
+      "domestic": "Mahalliy",
+      "ended": "Tugagan",
+      "today": "Bugun!",
+      "daysLeft": "{{count}} kun qoldi"
     },
     "explore": {
       "label": "Shahar haqida ko'proq",

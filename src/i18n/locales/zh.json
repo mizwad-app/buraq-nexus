@@ -1238,7 +1238,10 @@
     },
     "badge": {
       "international": "国际",
-      "domestic": "本地"
+      "domestic": "本地",
+      "ended": "已结束",
+      "today": "今天！",
+      "daysLeft": "还剩 {{count}} 天"
     },
     "explore": {
       "label": "了解城市",

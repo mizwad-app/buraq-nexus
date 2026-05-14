@@ -7,6 +7,7 @@ import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { useSwipeBack } from "@/hooks/useSwipeBack";
 import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
 import { ExhibitionFilters, type FilterState } from "@/components/exhibitions/ExhibitionFilters";
+import { getExhibitionBadgeStyle, computeDaysRemaining, isExhibitionEnded } from "@/lib/exhibitionBadge";
 import { cn } from "@/lib/utils";
 
 const flagEmoji = (code?: string | null) => {
@@ -28,13 +29,22 @@ const formatDateRange = (months: string[], start: string, end: string) => {
   return `${s.getDate()} ${months[s.getMonth()]} – ${e.getDate()} ${months[e.getMonth()]}`;
 };
 
-const daysUntil = (iso: string) => Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000);
+
 
 const ExhibitionCard = ({ exhibition: ex }: { exhibition: ExhibitionWithCategory }) => {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { getField } = useTranslatedField();
-  const days = daysUntil(ex.start_date);
+  const days = computeDaysRemaining(ex.start_date);
+  const ended = isExhibitionEnded(ex.end_date);
+  const badge = getExhibitionBadgeStyle(days, ended);
+  const badgeLabel = ended
+    ? t("exhibitions.badge.ended")
+    : days === 0
+      ? t("exhibitions.badge.today")
+      : days !== null && days > 0
+        ? t("exhibitions.badge.daysLeft", { count: days })
+        : t("business.upcomingExhibitions.live");
   const flag = ex.country_emoji || flagEmoji(ex.country_code);
   const name = getField(ex as unknown as Record<string, unknown>, "name") || ex.name;
   const monthsShort = t("business.monthsShort", { returnObjects: true }) as string[];
@@ -62,7 +72,10 @@ const ExhibitionCard = ({ exhibition: ex }: { exhibition: ExhibitionWithCategory
   return (
     <button
       onClick={handleCardClick}
-      className="w-full flex items-start gap-3 bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30 rounded-xl p-3 text-left transition-colors"
+      className={cn(
+        "w-full flex items-start gap-3 bg-card hover:bg-amber-500/5 rounded-xl p-3 text-left transition-colors",
+        badge.borderClass ?? "border border-border/40 hover:border-amber-500/30",
+      )}
     >
       <div className="w-10 h-10 rounded-lg bg-amber-500/15 flex items-center justify-center text-lg shrink-0">
         {ex.category?.emoji ?? "📅"}
@@ -88,12 +101,16 @@ const ExhibitionCard = ({ exhibition: ex }: { exhibition: ExhibitionWithCategory
         <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground mt-1 flex-wrap">
           <span>{formatDateRange(monthsShort, ex.start_date, ex.end_date)}</span>
           <span>·</span>
-          <span className={cn(days <= 7 && days >= 0 && "text-amber-400 font-semibold")}>
-            {days > 0
-              ? t("business.upcomingExhibitions.daysLeft", { count: days })
-              : days === 0
-                ? t("business.upcomingExhibitions.today")
-                : t("business.upcomingExhibitions.live")}
+          <span
+            className={cn(
+              "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold",
+              badge.bgColor,
+              badge.textColor,
+              ended && "opacity-70",
+            )}
+          >
+            {badge.emoji && <span>{badge.emoji}</span>}
+            {badgeLabel}
           </span>
         </div>
         <div className="flex items-center gap-1.5 mt-1.5 flex-wrap">

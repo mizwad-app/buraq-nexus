@@ -1239,7 +1239,10 @@
     },
     "badge": {
       "international": "Международная",
-      "domestic": "Местная"
+      "domestic": "Местная",
+      "ended": "Завершилось",
+      "today": "Сегодня!",
+      "daysLeft": "Осталось {{count}} дней"
     },
     "explore": {
       "label": "Узнать о городе",

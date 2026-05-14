@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useExhibitions } from "@/hooks/useExhibitions";
 import { useTranslatedField } from "@/hooks/useTranslatedField";
 import { cityNameToSlug, useCityExists } from "@/hooks/useCityLink";
+import { getExhibitionBadgeStyle, computeDaysRemaining, isExhibitionEnded } from "@/lib/exhibitionBadge";
 import { cn } from "@/lib/utils";
 
 interface Exhibition {
@@ -37,12 +39,22 @@ const formatShortDate = (iso: string) => {
   return `${d.getDate()} ${MONTHS[d.getMonth()]}`;
 };
 
-const daysUntil = (iso: string) => Math.ceil((new Date(iso).getTime() - Date.now()) / 86400000);
+
 
 const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { getField } = useTranslatedField();
-  const days = daysUntil(exhibition.start_date);
+  const days = computeDaysRemaining(exhibition.start_date);
+  const ended = isExhibitionEnded(exhibition.end_date);
+  const badge = getExhibitionBadgeStyle(days, ended);
+  const badgeLabel = ended
+    ? t("exhibitions.badge.ended")
+    : days === 0
+      ? t("exhibitions.badge.today")
+      : days !== null && days > 0
+        ? t("exhibitions.badge.daysLeft", { count: days })
+        : "Hozir ketmoqda";
   const flag = exhibition.country_emoji || flagEmoji(exhibition.country_code);
   const name = getField(exhibition as unknown as Record<string, unknown>, "name") || exhibition.name;
   const citySlug = cityNameToSlug(exhibition.city);
@@ -63,7 +75,8 @@ const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
     <button
       onClick={handleCardClick}
       className={cn(
-        "w-full flex items-center gap-3 bg-card hover:bg-amber-500/5 border border-border/40 hover:border-amber-500/30",
+        "w-full flex items-center gap-3 bg-card hover:bg-amber-500/5",
+        badge.borderClass ?? "border border-border/40 hover:border-amber-500/30",
         "rounded-xl py-2.5 px-3 text-left transition-colors min-h-[60px]",
       )}
     >
@@ -89,8 +102,16 @@ const ExhibitionMiniCard = ({ exhibition }: { exhibition: Exhibition }) => {
           <span>·</span>
           <span>{formatShortDate(exhibition.start_date)}</span>
           <span>·</span>
-          <span className={cn(days <= 7 && days >= 0 && "text-amber-400 font-semibold")}>
-            {days > 0 ? `${days} kun qoldi` : days === 0 ? "Bugun!" : "Hozir ketmoqda"}
+          <span
+            className={cn(
+              "inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-semibold",
+              badge.bgColor,
+              badge.textColor,
+              ended && "opacity-70",
+            )}
+          >
+            {badge.emoji && <span>{badge.emoji}</span>}
+            {badgeLabel}
           </span>
           {exhibition.world_rank && (
             <>
