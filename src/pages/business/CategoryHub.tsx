@@ -194,23 +194,27 @@ const CategoryHub = () => {
     [markets, exhibitions]
   );
 
-  const topCities = useMemo(() => {
-    const cityMap = new Map<string, { city: string; markets: number; hubs: number; exhibitions: number }>();
-    const ensure = (city: string) => {
-      if (!city) return null;
-      if (!cityMap.has(city)) cityMap.set(city, { city, markets: 0, hubs: 0, exhibitions: 0 });
-      return cityMap.get(city)!;
-    };
-    markets.forEach((m) => { const e = ensure(m.city as string); if (e) e.markets++; });
-    hubs.forEach((h) => { const e = ensure(h.city as string); if (e) e.hubs++; });
-    exhibitions
-      .filter((ex) => !ex.country_code || ex.country_code === "CN")
-      .forEach((ex) => { const e = ensure(ex.city as string); if (e) e.exhibitions++; });
-    return Array.from(cityMap.values())
-      .map((c) => ({ ...c, score: c.markets + c.hubs * 2 + c.exhibitions }))
-      .filter((c) => c.score > 0)
-      .sort((a, b) => b.score - a.score);
-  }, [markets, hubs, exhibitions]);
+  // Manufacturing cities enriched with stats from markets/hubs/exhibitions
+  const enrichedMfgCities = useMemo(() => {
+    const norm = (s: string) => s.toLowerCase().trim();
+    const cnExhibitions = exhibitions.filter((ex) => !ex.country_code || ex.country_code === "CN");
+    return mfgCities
+      .map((c) => {
+        const slugMatch = (cityVal: string) =>
+          norm(cityVal) === norm(c.slug) || norm(cityVal) === norm(c.name);
+        return {
+          ...c,
+          markets: markets.filter((m) => slugMatch(m.city as string)).length,
+          hubs: hubs.filter((h) => slugMatch(h.city as string)).length,
+          exhibitions: cnExhibitions.filter((ex) => slugMatch(ex.city as string)).length,
+        };
+      })
+      .sort((a, b) => {
+        if (a.is_top !== b.is_top) return a.is_top ? -1 : 1;
+        return (a.rank ?? 999) - (b.rank ?? 999);
+      });
+  }, [mfgCities, markets, hubs, exhibitions]);
+
 
   const topMarkets = useMemo(() => {
     return [...markets]
