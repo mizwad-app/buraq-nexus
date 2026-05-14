@@ -145,6 +145,45 @@ const CategoryHub = () => {
     })();
   }, [categorySlug]);
 
+  // Manufacturing cities for this category (from city_product_categories bridge)
+  useEffect(() => {
+    (async () => {
+      const { data } = await (supabase as unknown as {
+        from: (t: string) => {
+          select: (s: string) => {
+            eq: (k: string, v: string | boolean) => {
+              eq: (k: string, v: string | boolean) => {
+                order: (col: string, opts: { ascending: boolean; nullsFirst?: boolean }) => Promise<{ data: unknown }>;
+              };
+            };
+          };
+        };
+      })
+        .from("city_product_categories")
+        .select("rank, is_top, cities!inner(slug, name_en, name_uz, name_ru, name_ar, name_zh, name_fr, country_emoji, is_active)")
+        .eq("category_slug", categorySlug)
+        .eq("cities.is_active", true)
+        .order("rank", { ascending: true, nullsFirst: false });
+      const rows = (data ?? []) as Array<{
+        rank: number | null;
+        is_top: boolean | null;
+        cities: Record<string, unknown>;
+      }>;
+      setMfgCities(
+        rows.map((r) => ({
+          slug: r.cities.slug as string,
+          name: (getField(r.cities, "name") as string) || (r.cities.name_en as string),
+          country_emoji: (r.cities.country_emoji as string | null) ?? null,
+          is_top: !!r.is_top,
+          rank: r.rank,
+          markets: 0,
+          hubs: 0,
+          exhibitions: 0,
+        }))
+      );
+    })();
+  }, [categorySlug, getField]);
+
   const handleTabChange = (tab: TabKey) => {
     setActiveTab(tab);
     setSearchParams({ tab }, { replace: true });
