@@ -32,6 +32,17 @@ interface Insight {
   insight_uz: string;
 }
 
+interface MfgCity {
+  slug: string;
+  name: string;
+  country_emoji: string | null;
+  is_top: boolean;
+  rank: number | null;
+  markets: number;
+  hubs: number;
+  exhibitions: number;
+}
+
 const fmtRange = (months: string[], start: string, end: string) => {
   const s = new Date(start);
   const e = new Date(end);
