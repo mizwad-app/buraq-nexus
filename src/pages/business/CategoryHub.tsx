@@ -604,30 +604,36 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
       ? t("business.categoryHub.exhibitions.emptyWorld")
       : t("business.categoryHub.exhibitions.emptyUpcoming");
 
-  const SubBtn = ({ k, label }: { k: SubTab; label: string }) => (
-    <button
-      type="button"
-      onClick={() => setActiveSub(k)}
-      aria-pressed={activeSub === k}
-      style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation" }}
-      className={cn(
-        "shrink-0 inline-flex items-center gap-1.5 rounded-full px-4 min-h-[44px] text-[13px] border touch-manipulation select-none cursor-pointer transition-colors duration-150 active:scale-95",
-        activeSub === k
-          ? "bg-emerald-500 text-emerald-950 border-emerald-500 font-semibold shadow-sm"
-          : "bg-white/[0.04] text-foreground border-white/10 active:bg-white/[0.08]"
-      )}
-    >
-      {label}
-      <span className="opacity-70">({counts[k]})</span>
-    </button>
-  );
+  const subTabs: { k: SubTab; label: string }[] = [
+    { k: "china", label: t("business.categoryHub.exhibitions.subTabs.china") },
+    { k: "world", label: t("business.categoryHub.exhibitions.subTabs.world") },
+    { k: "upcoming", label: t("business.categoryHub.exhibitions.subTabs.upcoming") },
+  ];
 
   return (
     <div>
       <section className="px-5 mb-3 flex gap-2 overflow-x-auto scrollbar-hide">
-        <SubBtn k="china" label={t("business.categoryHub.exhibitions.subTabs.china")} />
-        <SubBtn k="world" label={t("business.categoryHub.exhibitions.subTabs.world")} />
-        <SubBtn k="upcoming" label={t("business.categoryHub.exhibitions.subTabs.upcoming")} />
+        {subTabs.map(({ k, label }) => {
+          const isActive = activeSub === k;
+          return (
+            <button
+              key={k}
+              type="button"
+              onClick={() => setActiveSub(k)}
+              aria-pressed={isActive}
+              style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation" }}
+              className={cn(
+                "shrink-0 inline-flex items-center gap-1.5 rounded-full px-4 min-h-[44px] text-[13px] border touch-manipulation select-none cursor-pointer transition-colors duration-150 active:scale-95",
+                isActive
+                  ? "bg-emerald-500 text-emerald-950 border-emerald-500 font-semibold shadow-sm"
+                  : "bg-white/[0.04] text-foreground border-white/10 active:bg-white/[0.08]"
+              )}
+            >
+              {label}
+              <span className="opacity-70">({counts[k]})</span>
+            </button>
+          );
+        })}
       </section>
 
       <section className="px-5">
