@@ -606,10 +606,15 @@ const ExhibitionsTab = ({ exhibitions, categorySlug }: { exhibitions: Row[]; cat
 
   const SubBtn = ({ k, label }: { k: SubTab; label: string }) => (
     <button
+      type="button"
       onClick={() => setActiveSub(k)}
+      aria-pressed={activeSub === k}
+      style={{ WebkitTapHighlightColor: "transparent", touchAction: "manipulation" }}
       className={cn(
-        "shrink-0 flex items-center gap-1.5 rounded-full py-1.5 px-3 text-[11px] border transition-colors",
-        activeSub === k ? "bg-emerald-500 text-emerald-950 border-emerald-500" : "bg-white/[0.04] text-foreground border-white/10"
+        "shrink-0 inline-flex items-center gap-1.5 rounded-full px-4 min-h-[44px] text-[13px] border touch-manipulation select-none cursor-pointer transition-colors duration-150 active:scale-95",
+        activeSub === k
+          ? "bg-emerald-500 text-emerald-950 border-emerald-500 font-semibold shadow-sm"
+          : "bg-white/[0.04] text-foreground border-white/10 active:bg-white/[0.08]"
       )}
     >
       {label}
