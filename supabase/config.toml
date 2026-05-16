@@ -1,1 +1,4 @@
 project_id = "wfdnnozfezqdjfkgunlw"
+
+[functions.bulk-import-markets]
+verify_jwt = true
