@@ -4869,6 +4869,14 @@ export type Database = {
         Args: { p_points: number; p_tracking_id: string }
         Returns: Json
       }
+      get_translator_contact: {
+        Args: { _translator_id: string }
+        Returns: {
+          email: string
+          phone: string
+          telegram_username: string
+        }[]
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
