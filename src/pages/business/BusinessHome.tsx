@@ -52,7 +52,7 @@ const BusinessHome = () => {
         supabase.from("production_hubs").select("*", { count: "exact", head: true }),
         supabase.from("exhibitions").select("*", { count: "exact", head: true }).eq("is_active", true),
         supabase.from("legal_advisors").select("*", { count: "exact", head: true }).eq("is_active", true),
-        supabase.from("translators").select("*", { count: "exact", head: true }),
+        supabase.from("translators").select("id", { count: "exact", head: true }),
         supabase.from("exhibitions").select("name,start_date,world_rank,china_rank").gte("start_date", today).eq("is_active", true).order("start_date", { ascending: true }).limit(5),
       ]);
       setCounts({
