@@ -1,15 +1,7 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import { useContext, useEffect, useState, ReactNode } from "react";
 import { User, Session } from "@supabase/supabase-js";
 import { supabase } from "@/integrations/supabase/client";
-
-interface AuthContextType {
-  user: User | null;
-  session: Session | null;
-  loading: boolean;
-  signOut: () => Promise<void>;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { authContext as AuthContext } from "@/contexts/auth-context";
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
